@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Controller
@@ -11,22 +8,33 @@ namespace Assets.Scripts.Controller
      */
     public class StateController : MonoBehaviour
     {
-        public float TransitionSpeed;
-        public List<ViewModeData> ViewModes;
+        public LandingPage landingPage;
+        public IPage trayPage;
+        public IPage analysisPage;
+
+        public Dictionary<ViewMode, IPage> modeToPage;
 
         /**
         * Set Mode to initiate transition between two modes.
         */
-        public ViewMode Mode
+        public ViewMode mode
         {
             get => _mode;
-            set => StartModeTransition(_mode, value);
+            set
+            {
+                modeToPage[_mode].Deactivate();
+                _mode = value;
+                if (modeToPage.ContainsKey(_mode) && modeToPage[_mode] != null)
+                {
+                    modeToPage[_mode].Activate();
+                }
+            }
         }
 
         /**
         * Set CurrentSpecimenId to change current specimen
         */
-        public string CurrentSpecimenId
+        public string currentSpecimenId
         {
             get => _currentSpecimenId;
             set
@@ -37,46 +45,16 @@ namespace Assets.Scripts.Controller
         }
 
         private ViewMode _mode;
-        private ViewModeData _fromData;
-        private ViewModeData _toData;
         private string _currentSpecimenId;
 
-        private void StartModeTransition(ViewMode from, ViewMode to)
+        void Awake()
         {
-            if (_fromData != null || _toData != null) return; // Still in transition.
-
-            _fromData = ViewModes.FirstOrDefault(m => m.Mode == from);
-            _toData = ViewModes.FirstOrDefault(m => m.Mode == to);
-
-            if (_fromData == null || _toData == null)
+            modeToPage = new Dictionary<ViewMode, IPage>
             {
-                throw new Exception(
-                    "Undefined view mode. Make sure all modes are defined in StateController.ViewModes");
-            }
-
-
-            StartCoroutine(ModeTransitioning());
-        }
-
-        private IEnumerator ModeTransitioning()
-        {
-            float progress = 0f;
-
-            while (progress < 1f)
-            {
-                Camera.main.transform.position =
-                    Vector3.Lerp(_fromData.CameraPosition, _toData.CameraPosition, progress);
-                Camera.main.transform.rotation =
-                    Quaternion.Slerp(Quaternion.Euler(_fromData.CameraEulerRotation),
-                        Quaternion.Euler(_toData.CameraEulerRotation), progress);
-                // TODO: add any other animations here.
-
-                progress += Time.deltaTime * TransitionSpeed;
-                yield return null;
-            }
-
-            _mode = _toData.Mode;
-            _fromData = _toData = null;
+                {ViewMode.LANDING, landingPage},
+                {ViewMode.TRAY, trayPage },
+                {ViewMode.ANALYSIS, analysisPage }
+            };
         }
 
         private void RemoveCurrentSpecimen()
