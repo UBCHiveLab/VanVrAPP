@@ -20,7 +20,8 @@ public class LandingPage: MonoBehaviour
 	void StartSession() {
 		doors.GetComponent<Animator>().SetTrigger("Start");
 		mainCamera.GetComponent<Animator>().SetTrigger("Start");
-
+		startButton.gameObject.SetActive(false);
+;
 	}
 
 }
