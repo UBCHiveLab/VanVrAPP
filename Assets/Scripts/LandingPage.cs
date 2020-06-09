@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class LandingPage: MonoBehaviour, IPage
 {
-    public StateController stateController;
-    public Button startButton;
+  public StateController stateController;
+  public Button startButton;
 	public GameObject doorL;
 	public GameObject doorR;
 	public GameObject doors;
@@ -19,21 +19,22 @@ public class LandingPage: MonoBehaviour, IPage
 		btn.onClick.AddListener(StartSession);
 	}
 
-	void StartSession() {
-		doors.GetComponent<Animator>().SetTrigger("Start");
-		mainCamera.GetComponent<Animator>().SetTrigger("Start");
-        stateController.mode = ViewMode.TRAY;
-    }
+	void StartSession() 
+  {
+    doors.GetComponent<Animator>().SetTrigger("Start");
+    mainCamera.GetComponent<Animator>().SetTrigger("Start");
+    stateController.mode = ViewMode.TRAY;
+  }
 
-    public void Activate()
-    {
-        startButton.gameObject.SetActive(true);
-    }
+  public void Activate() 
+  {
+    startButton.gameObject.SetActive(true);
+  }
 
-    public void Deactivate()
-    {
-        startButton.gameObject.SetActive(false);
-    }
+  public void Deactivate()
+  {
+    startButton.gameObject.SetActive(false);
+	}
 
 }
 
