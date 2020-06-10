@@ -34,18 +34,37 @@ namespace Assets.Scripts.Controller
         /**
         * Set CurrentSpecimenId to change current specimen
         */
-        public string currentSpecimenId
-        {
-            get => _currentSpecimenId;
-            set
-            {
-                RemoveCurrentSpecimen();
-                AddNewSpecimen(value);
-            }
-        }
+        public string currentSpecimenId => _currentSpecimenData?.Id;
 
         private ViewMode _mode;
         private string _currentSpecimenId;
+        private SpecimenData _currentSpecimenData;
+        private GameObject _currentSpecimenObject;
+
+        public SpecimenData GetCurrentSpecimenData()
+        {
+            return _currentSpecimenData;
+        }
+
+        public void RemoveCurrentSpecimen() {
+            _currentSpecimenId = null;
+            // TODO: trigger animations etc.
+            if (_currentSpecimenObject != null)
+            {
+                Destroy(_currentSpecimenObject);
+            }
+        }
+
+        public void AddNewSpecimen(SpecimenData data) {
+            RemoveCurrentSpecimen();
+            _currentSpecimenData = data;
+            Debug.Log($"Specimen added: {data.Id}");
+            _currentSpecimenObject = Instantiate(data.Prefab);
+            _currentSpecimenObject.gameObject.SetActive(true);
+            _currentSpecimenObject.transform.position = new Vector3(0, 2, 14);
+
+            // TODO: trigger animations etc.
+        }
 
         void Awake()
         {
@@ -57,16 +76,6 @@ namespace Assets.Scripts.Controller
             };
         }
 
-        private void RemoveCurrentSpecimen()
-        {
-            _currentSpecimenId = null;
-            // TODO: trigger animations etc.
-        }
 
-        private void AddNewSpecimen(string id)
-        {
-            _currentSpecimenId = id;
-            // TODO: trigger animations etc.
-        }
     }
 }
