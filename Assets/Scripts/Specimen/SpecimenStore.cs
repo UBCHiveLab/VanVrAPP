@@ -23,6 +23,7 @@ public class SpecimenStore : MonoBehaviour
         {"skull", "Head"}
     };
 
+    private bool _loading = true;
 
     public List<string> GetSpecimenIdsList()
     {
@@ -63,6 +64,11 @@ public class SpecimenStore : MonoBehaviour
         }
 
         return specimensByRegionByOrgan[region][organ];
+    }
+
+    public bool Loading()
+    {
+        return _loading;
     }
 
     public string DumpCurrentSpecimenStructure()
@@ -110,9 +116,10 @@ public class SpecimenStore : MonoBehaviour
                     prefab = bundle.LoadAsset($"assets/prefabs/organs/{organ}_healthy.prefab") as GameObject;
                 }
 
-
-                SpecimenData specimenData = new SpecimenData($"{organ}_healthy", prefab, organ);
-                specimens.Add(organ, specimenData);
+                // TODO: change this when they have other stuff
+                string id = $"{organ}_healthy";
+                SpecimenData specimenData = new SpecimenData(id, prefab, organ);
+                specimens.Add(id, specimenData);
                 string region = organToRegion[organ];
 
                 if (!specimensByRegionByOrgan.ContainsKey(region))
@@ -128,6 +135,8 @@ public class SpecimenStore : MonoBehaviour
                 specimensByRegionByOrgan[region][organ].Add(specimenData);
             }
         }
+
+        _loading = false;
         watch.Stop();
 
         Debug.Log($"Finished loading specimens.");
