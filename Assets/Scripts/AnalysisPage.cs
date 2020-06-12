@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using Assets.Scripts.Controller;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
 
-public class AnalysisPage : MonoBehaviour
+public class AnalysisPage : MonoBehaviour, IPage
 {
-    public StateController stateController;
     [Header("Control Assistant")]
     public GameObject controlAssistantGO;
     public Button controllerAssistant;
@@ -17,8 +15,6 @@ public class AnalysisPage : MonoBehaviour
     public Button controlButtonRight;
     public Button zoomIn;
     public Button zoomOut;
-	public GameObject mainCamera;
-    public Transform specimenInTray;
 
     [Header("Reset Camera Position")]
     public Button resetButton;
@@ -27,12 +23,72 @@ public class AnalysisPage : MonoBehaviour
     private float yPos;
     private float zPos;
 
-	void Start()
-	{
+
+    public GameObject uiObject;
+    public StateController stateController;
+    public MSCameraController cameraController;
+    public Camera analysisCamera;
+    public Camera mainCamera;
+    public Animator mainCameraAnimator;
+    public MSCameraController cameraControllerPrefab;
+
+    public void Activate()
+    {
+        if (stateController.CurrentSpecimenObject == null)
+        {
+            Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
+        }
+
+        uiObject.SetActive(true);
+        StartCoroutine(WaitUntilAnimationStopToActivateTheCameraController());
+    }
+
+    public void Deactivate()
+    {
+        analysisCamera.transform.parent = null;
+        analysisCamera.gameObject.SetActive(false);
+        mainCamera.gameObject.SetActive(true);
+
+        if (mainCameraAnimator != null)
+        {
+            mainCameraAnimator.enabled = true;
+        }
+
+        if (cameraController != null)
+        {
+            Destroy(cameraController.gameObject);
+        }
+        uiObject.SetActive(false);
+    }
+
+    private IEnumerator WaitUntilAnimationStopToActivateTheCameraController()
+    {
+        mainCameraAnimator = Camera.main.GetComponent<Animator>();
+        mainCameraAnimator.enabled = true;
+        mainCameraAnimator.SetTrigger("Analysis");
+
+        // TODO: check for when animation is done
+        yield return new WaitForSeconds(3f);
+        cameraController = Instantiate(cameraControllerPrefab);
+        cameraController.target = stateController.CurrentSpecimenObject.transform;
+        analysisCamera.gameObject.SetActive(true);
+        MSACC_CameraType cam = new MSACC_CameraType()
+        {
+            _camera = analysisCamera, rotationType = MSACC_CameraType.TipoRotac.Orbital, volume = 0.5f
+        };
+        cameraController.cameras = new[] {cam};
+
+        mainCameraAnimator = Camera.main.GetComponent<Animator>();
+        mainCamera.gameObject.SetActive(false);
+        mainCameraAnimator.enabled = false;
+    }
+
+
+    void Start() {
         // Control Assistant Buttons
 
         Button controlAssistant = controllerAssistant.GetComponent<Button>();
-		Button up = controlButtonUp.GetComponent<Button>();
+        Button up = controlButtonUp.GetComponent<Button>();
         Button down = controlButtonDown.GetComponent<Button>();
         Button left = controlButtonLeft.GetComponent<Button>();
         Button right = controlButtonRight.GetComponent<Button>();
@@ -40,7 +96,7 @@ public class AnalysisPage : MonoBehaviour
         Button zoomOutside = zoomOut.GetComponent<Button>();
 
 
-		up.onClick.AddListener(MoveUp);
+        up.onClick.AddListener(MoveUp);
         down.onClick.AddListener(MoveDown);
         left.onClick.AddListener(MoveLeft);
         right.onClick.AddListener(MoveRight);
@@ -58,10 +114,11 @@ public class AnalysisPage : MonoBehaviour
 
     void Update()
     {
-        xPos = mainCamera.transform.position.x;
-        yPos = mainCamera.transform.position.y;
-        zPos = mainCamera.transform.position.z;
-        mainCamera.transform.LookAt(specimenInTray);
+        if (stateController.mode != ViewMode.ANALYSIS) return;
+        xPos = analysisCamera.transform.position.x;
+        yPos = analysisCamera.transform.position.y;
+        zPos = analysisCamera.transform.position.z;
+        mainCamera.transform.LookAt(stateController.CurrentSpecimenObject.transform);
 
         // print(xPos + "  " + yPos + "  " + zPos);
 
@@ -69,65 +126,64 @@ public class AnalysisPage : MonoBehaviour
 
     // CONTROL ASSISTANT BUTTON METHODS
 
-    void ToggleController()
-    {
+    void ToggleController() {
         print("Toggle Controller On/Off");
         controlAssistantGO.SetActive(!controlAssistantGO.activeInHierarchy);
 
         // Change MS camera setting from Orbital to Look At Player when turning on control assistant.
+        if (controlAssistantGO.activeInHierarchy)
+        {
+            cameraController.cameras[0].rotationType = MSACC_CameraType.TipoRotac.LookAtThePlayer;
+        }
+        else
+        {
+            cameraController.cameras[0].rotationType = MSACC_CameraType.TipoRotac.Orbital;
+        }
 
     }
 
-    void MoveUp() 
-    {
+    void MoveUp() {
         print("UP");
         yPos += 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
+        analysisCamera.transform.position = new Vector3(xPos, yPos, zPos);
     }
 
-    void MoveDown() 
-    {
+    void MoveDown() {
         print("DOWN");
         yPos -= 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
+        analysisCamera.transform.position = new Vector3(xPos, yPos, zPos);
     }
 
-    void MoveLeft() 
-    {
+    void MoveLeft() {
         print("LEFT");
         xPos -= 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
+        analysisCamera.transform.position = new Vector3(xPos, yPos, zPos);
     }
 
-    void MoveRight() 
-    {
+    void MoveRight() {
         print("RIGHT");
         xPos += 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
+        analysisCamera.transform.position = new Vector3(xPos, yPos, zPos);
     }
 
-    void ZoomIn() 
-    {
+    void ZoomIn() {
         print("Zoom In");
         zPos += 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
+        analysisCamera.transform.position = new Vector3(xPos, yPos, zPos);
     }
 
-    void ZoomOut() 
-    {
+    void ZoomOut() {
         print("Zoom Out");
         zPos -= 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
+        analysisCamera.transform.position = new Vector3(xPos, yPos, zPos);
     }
 
     // RESET BUTTON METHOD
 
-    void ResetCameraPosition()
-    {
+    void ResetCameraPosition() {
         print("Reset");
-        mainCamera.transform.position = new Vector3(0, 4, -6);
-        
-        mainCamera.transform.rotation = Quaternion.Euler(10, 0, 0);
+        analysisCamera.transform.position = new Vector3(0, 4, -6);
+
+        analysisCamera.transform.rotation = Quaternion.Euler(10, 0, 0);
     }
-  
 }

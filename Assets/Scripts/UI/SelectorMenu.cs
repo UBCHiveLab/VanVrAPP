@@ -29,10 +29,8 @@ public class SelectorMenu : MonoBehaviour
 
     void Start()
     {
-        if (stateController == null)
-        {
-            stateController = FindObjectOfType<StateController>();
-        }
+        if (stateController == null) stateController = FindObjectOfType<StateController>();
+        if (store == null) store = FindObjectOfType<SpecimenStore>();
 
         title.text = "Loading...";
     }
@@ -125,6 +123,7 @@ public class SelectorMenu : MonoBehaviour
                 break;
             case ListType.SPECIMEN:
                 stateController.AddNewSpecimen(store.specimens[_currentValues[index]]);
+                stateController.mode = ViewMode.ANALYSIS;
                 break;
             case ListType.LAB:
                 // TODO: lab view

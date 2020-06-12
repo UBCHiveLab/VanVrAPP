@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -933,6 +933,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   landingPage: {fileID: 639435458}
+  trayPage: {fileID: 0}
+  analysisPage: {fileID: 639435460}
+  CurrentSpecimenObject: {fileID: 1519370344}
 --- !u!4 &371665492
 Transform:
   m_ObjectHideFlags: 0
@@ -1206,7 +1209,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 6
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -1235,7 +1238,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 1
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1530,11 +1533,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateController: {fileID: 371665491}
+  uiObject: {fileID: 0}
   startButton: {fileID: 1668568675}
   doorL: {fileID: 1723153671}
   doorR: {fileID: 1296154247}
   doors: {fileID: 946454901}
   mainCamera: {fileID: 17259630}
+  mainCameraAnimator: {fileID: 0}
 --- !u!4 &639435459
 Transform:
   m_ObjectHideFlags: 0
@@ -1558,10 +1563,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 639435457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a294a68e2854a7a86e1ab9ea4e8052, type: 3}
+  m_Script: {fileID: 11500000, guid: 941086ec2ea27e3419ed4946e03ef641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateController: {fileID: 371665491}
   controlAssistantGO: {fileID: 565744828}
   controllerAssistant: {fileID: 202408}
   controlButtonUp: {fileID: 2117718277}
@@ -1570,9 +1574,14 @@ MonoBehaviour:
   controlButtonRight: {fileID: 237898762}
   zoomIn: {fileID: 962585177}
   zoomOut: {fileID: 1419926676}
-  mainCamera: {fileID: 17259630}
-  specimenInTray: {fileID: 1519370345}
   resetButton: {fileID: 1105204273}
+  uiObject: {fileID: 0}
+  stateController: {fileID: 371665491}
+  cameraController: {fileID: 1442050610}
+  analysisCamera: {fileID: 17259633}
+  mainCamera: {fileID: 0}
+  mainCameraAnimator: {fileID: 0}
+  cameraControllerPrefab: {fileID: 0}
 --- !u!1 &697556056
 GameObject:
   m_ObjectHideFlags: 0
@@ -3687,7 +3696,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 3
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -3716,7 +3725,7 @@ MonoBehaviour:
     spaceCount: 1
     wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -4434,7 +4443,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 8
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -4463,7 +4472,7 @@ MonoBehaviour:
     spaceCount: 0
     wordCount: 1
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
