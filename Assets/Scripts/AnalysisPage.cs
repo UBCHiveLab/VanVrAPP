@@ -23,13 +23,13 @@ public class AnalysisPage : MonoBehaviour, IPage
     private float yPos;
     private float zPos;
 
+    [Header("Other")]
 
     public GameObject uiObject;
     public StateController stateController;
     public MSCameraController cameraController;
     public Camera analysisCamera;
     public Camera mainCamera;
-    public Animator mainCameraAnimator;
     public MSCameraController cameraControllerPrefab;
 
     public void Activate()
@@ -40,47 +40,33 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
         uiObject.SetActive(true);
-        StartCoroutine(WaitUntilAnimationStopToActivateTheCameraController());
+
+        // We swap out the analysis camera for the main camera, then spawn in the cameraController
+        analysisCamera.transform.position = mainCamera.transform.position;
+        analysisCamera.gameObject.SetActive(true);
+        mainCamera.gameObject.SetActive(false);
+        cameraController = Instantiate(cameraControllerPrefab);
+        cameraController.target = stateController.CurrentSpecimenObject.transform;
+        cameraController.transform.position = stateController.CurrentSpecimenObject.transform.position;
+        MSACC_CameraType cam = new MSACC_CameraType() {
+            _camera = analysisCamera, rotationType = MSACC_CameraType.TipoRotac.Orbital, volume = 0.5f
+        };
+        cameraController.cameras = new[] { cam };
     }
 
     public void Deactivate()
     {
+        // We must swap out the analysis cam and then destroy the cameraController on deactivate,
+        // since we cannot swap focuses for the cameraController
         analysisCamera.transform.parent = null;
         analysisCamera.gameObject.SetActive(false);
         mainCamera.gameObject.SetActive(true);
-
-        if (mainCameraAnimator != null)
-        {
-            mainCameraAnimator.enabled = true;
-        }
 
         if (cameraController != null)
         {
             Destroy(cameraController.gameObject);
         }
         uiObject.SetActive(false);
-    }
-
-    private IEnumerator WaitUntilAnimationStopToActivateTheCameraController()
-    {
-        mainCameraAnimator = Camera.main.GetComponent<Animator>();
-        mainCameraAnimator.enabled = true;
-        mainCameraAnimator.SetTrigger("Analysis");
-
-        // TODO: check for when animation is done
-        yield return new WaitForSeconds(3f);
-        cameraController = Instantiate(cameraControllerPrefab);
-        cameraController.target = stateController.CurrentSpecimenObject.transform;
-        analysisCamera.gameObject.SetActive(true);
-        MSACC_CameraType cam = new MSACC_CameraType()
-        {
-            _camera = analysisCamera, rotationType = MSACC_CameraType.TipoRotac.Orbital, volume = 0.5f
-        };
-        cameraController.cameras = new[] {cam};
-
-        mainCameraAnimator = Camera.main.GetComponent<Animator>();
-        mainCamera.gameObject.SetActive(false);
-        mainCameraAnimator.enabled = false;
     }
 
 
@@ -104,12 +90,10 @@ public class AnalysisPage : MonoBehaviour, IPage
         zoomOutside.onClick.AddListener(ZoomOut);
         controlAssistant.onClick.AddListener(ToggleController);
 
-
         // Reset Specimen Button
 
         Button resetCameraPosition = resetButton.GetComponent<Button>();
         resetCameraPosition.onClick.AddListener(ResetCameraPosition);
-
     }
 
     void Update()
