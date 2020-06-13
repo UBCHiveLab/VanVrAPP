@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,11 +10,12 @@ using Debug = UnityEngine.Debug;
 
 public class SpecimenStore : MonoBehaviour
 {
+    public Dictionary<string, SpecimenData> specimens;
+    public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
 
-    public Dictionary<string, SpecimenData> specimens = new Dictionary<string, SpecimenData>();
-    public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan = new Dictionary<string, Dictionary<string, List<SpecimenData>>>();
     public string[] regions = {"Head", "Thorax", "Abdomen"};
-    public string[] organs = { "brain", "heart", "kidney", "liver", /*"right lung",*/ "skull" };
+    public string[] organs = {"brain", "heart", "kidney", "liver", /*"right lung",*/ "skull"};
+
     public Dictionary<string, string> organToRegion = new Dictionary<string, string>
     {
         {"brain", "Head"},
@@ -23,6 +25,23 @@ public class SpecimenStore : MonoBehaviour
         {"skull", "Head"}
     };
 
+
+    // TODO: This should be received from server when we have structured data
+    public List<SpecimenRequestData> requestData = new List<SpecimenRequestData>
+    {
+        new SpecimenRequestData("brain01", $"assets/prefabs/organs_labeled/brain_healthy.prefab", "brain",
+            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/brain"),
+        new SpecimenRequestData("heart01", $"assets/prefabs/organs/heart_healthy.prefab", "heart",
+            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/heart"),
+        new SpecimenRequestData("kidney01", $"assets/prefabs/organs_labeled/kidney_healthy.prefab", "kidney",
+            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/kidney"),
+        new SpecimenRequestData("liver01", $"assets/prefabs/organs_labeled/liver_healthy.prefab", "liver",
+            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/liver"),
+        new SpecimenRequestData("skull01", $"assets/prefabs/organs_labeled/skull_healthy.prefab", "skull",
+            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/skull")
+    };
+
+    private int _requestsResolved;
     private bool _loading = true;
 
     public List<string> GetSpecimenIdsList()
@@ -43,7 +62,8 @@ public class SpecimenStore : MonoBehaviour
 
     public Dictionary<string, List<SpecimenData>> GetSpecimensByRegion(string region)
     {
-        if (!specimensByRegionByOrgan.ContainsKey(region)) {
+        if (!specimensByRegionByOrgan.ContainsKey(region))
+        {
             Debug.LogWarning($"No specimen region found with id {region}");
             return null;
         }
@@ -52,13 +72,16 @@ public class SpecimenStore : MonoBehaviour
     }
 
 
-    public List<SpecimenData> GetSpecimensByRegionOrgan(string region, string organ) {
-        if (!specimensByRegionByOrgan.ContainsKey(region)) {
+    public List<SpecimenData> GetSpecimensByRegionOrgan(string region, string organ)
+    {
+        if (!specimensByRegionByOrgan.ContainsKey(region))
+        {
             Debug.LogWarning($"No specimen region found for {region}");
             return new List<SpecimenData>();
         }
 
-        if (!specimensByRegionByOrgan.ContainsKey(region)) {
+        if (!specimensByRegionByOrgan.ContainsKey(region))
+        {
             Debug.LogWarning($"No specimen organ found for {organ} in {region}");
             return new List<SpecimenData>();
         }
@@ -91,51 +114,21 @@ public class SpecimenStore : MonoBehaviour
         return sb.ToString();
     }
 
-
-    private void Start() {
-        StartCoroutine(GetAssetBundle());
+    private void Start()
+    {
+        StartCoroutine(GetAssetBundles());
     }
 
-    private IEnumerator GetAssetBundle()
+    private IEnumerator GetAssetBundles()
     {
         Stopwatch watch = Stopwatch.StartNew();
-        // TODO: handle multiple specimen of same organ when server structure known
-        foreach (string organ in organs) {
-            // TODO load concurrently
-            UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle($"https://hivemodelstorage.blob.core.windows.net/win64assetbundle/{organ}");
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError) {
-                Debug.Log(www.error);
-            } else {
-                // TODO: figure out structure of server -- are all these healthy? How should they be stored, id'd?
-                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
-
-                GameObject prefab = bundle.LoadAsset($"assets/prefabs/organs_labeled/{organ}_healthy.prefab") as GameObject;
-                if (prefab == null) {
-                    prefab = bundle.LoadAsset($"assets/prefabs/organs/{organ}_healthy.prefab") as GameObject;
-                }
-
-                // TODO: change this when they have other stuff
-                string id = $"{organ}_healthy";
-                SpecimenData specimenData = new SpecimenData(id, prefab, organ);
-                specimens.Add(id, specimenData);
-                string region = organToRegion[organ];
-
-                if (!specimensByRegionByOrgan.ContainsKey(region))
-                {
-                    specimensByRegionByOrgan.Add(region, new Dictionary<string, List<SpecimenData>>());
-                }
-
-                if (!specimensByRegionByOrgan[region].ContainsKey(organ))
-                {
-                    specimensByRegionByOrgan[region].Add(organ, new List<SpecimenData>());
-                }
-
-                specimensByRegionByOrgan[region][organ].Add(specimenData);
-            }
+        _requestsResolved = 0;
+        foreach (SpecimenRequestData srd in requestData)
+        {
+            StartCoroutine(LoadFromData(srd));
         }
 
+        while (_requestsResolved < requestData.Count) yield return null;
         _loading = false;
         watch.Stop();
 
@@ -145,4 +138,49 @@ public class SpecimenStore : MonoBehaviour
         Debug.Log(DumpCurrentSpecimenStructure());
     }
 
+    private IEnumerator LoadFromData(SpecimenRequestData srd)
+    {
+        Stopwatch watch = Stopwatch.StartNew();
+        Debug.Log($"started load {srd.id}");
+        specimensByRegionByOrgan = new Dictionary<string, Dictionary<string, List<SpecimenData>>>();
+        specimens = new Dictionary<string, SpecimenData>();
+
+        UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(srd.assetUrl);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+        }
+        else
+        {
+            try
+            {
+                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
+                GameObject prefab = bundle.LoadAsset(srd.path) as GameObject;
+
+                SpecimenData specimenData = new SpecimenData(srd.id, prefab, srd.organ);
+                specimens.Add(srd.id, specimenData);
+                string region = organToRegion[srd.organ];
+
+                if (!specimensByRegionByOrgan.ContainsKey(region)) {
+                    specimensByRegionByOrgan.Add(region, new Dictionary<string, List<SpecimenData>>());
+                }
+
+                if (!specimensByRegionByOrgan[region].ContainsKey(srd.organ)) {
+                    specimensByRegionByOrgan[region].Add(srd.organ, new List<SpecimenData>());
+                }
+
+                specimensByRegionByOrgan[region][srd.organ].Add(specimenData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning(e);
+            }
+           
+        }
+        Debug.Log($"finished load {srd.id}, took {watch.Elapsed.TotalSeconds}");
+        watch.Stop();
+        _requestsResolved++;
+    }
 }
