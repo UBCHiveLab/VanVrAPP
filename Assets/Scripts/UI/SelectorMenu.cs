@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Controller;
 using TMPro;
@@ -9,22 +8,30 @@ using UnityEngine.UI;
 public class SelectorMenu : MonoBehaviour
 {
 
-    public bool byLab;
-    public string region;
-    public string organ;
+    private bool byLab;
+    private string region = "";
+    private string organ = "";
 
     public StateController stateController;
     public SelectorButton selectorPrefab;
+    public SelectorButton lightSelectorPrefab;
     public SpecimenStore store;
     public Transform listTransform;
     public TextMeshProUGUI title;
+    public Button backButton;
+    public TextMeshProUGUI subtitle;
 
-    public enum ListType
+    public enum ListMode
     {
-        REGION, ORGAN, SPECIMEN, LAB
+        REGION,
+        REGION_EXPANDED,
+        SPECIMEN,
+        LAB
     }
 
-    private List<string> _currentValues;
+    private List<string> _loadedRegions;
+    private List<string> _loadedOrgans;
+    private List<SpecimenData> _loadedSpecimens;
     private bool _loading = true;
 
     void Start()
@@ -32,7 +39,7 @@ public class SelectorMenu : MonoBehaviour
         if (stateController == null) stateController = FindObjectOfType<StateController>();
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
-        title.text = "Loading...";
+        subtitle.text = "LOADING SPECIMENS...";
     }
 
     void Update()
@@ -43,59 +50,117 @@ public class SelectorMenu : MonoBehaviour
             Populate();
         }
     }
-
+    
+    /**
+     * Determines current population of the ui list and calls layout to output data.
+     */
     public void Populate()
     {
         if (store.Loading()) return;
 
-        ListType type;
+        ListMode mode;
 
+        // Sets current list mode based on set fields.
+        // Then prepares requested data:
         if (byLab)
         {
-            _currentValues = new List<string>();
+            _loadedRegions = new List<string>();
             // TODO
-            type = ListType.LAB;
-        } else if (region == "")
+            mode = ListMode.LAB;
+        }
+        else if (region == "")
         {
-            title.text = $"Choose a region";
-            _currentValues = store.regions.ToList();
-            type = ListType.REGION;
-        } else if (organ == "")
+            title.text = $"SHELF";
+            _loadedRegions = store.regions.ToList();
+            mode = ListMode.REGION;
+        }
+        else if (organ == "")
         {
-            title.text = $"Organs for: {region}";
-            _currentValues = store.specimensByRegionByOrgan[region].Keys.ToList();
-            type = ListType.ORGAN;
+            title.text = $"SHELF";
+            _loadedRegions = store.regions.ToList();
+            _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
+            mode = ListMode.REGION_EXPANDED;
         }
         else
         {
-            title.text = $"Specimens for: {organ}";
-            _currentValues = store.GetSpecimensByRegionOrgan(region, organ).Select(x => x.Id).ToList();
-            type = ListType.SPECIMEN;
+            title.text = $"SPECIMEN LIST";
+            _loadedRegions = store.GetSpecimensByRegionOrgan(region, organ).Select(x => x.Id).ToList();
+            _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
+            _loadedSpecimens = store.specimensByRegionByOrgan[region][organ];
+            mode = ListMode.SPECIMEN;
         }
 
-        Layout(_currentValues, type);
-
+        Layout(mode);
     }
 
-    private void Layout(List<string> values, ListType type)
+    /**
+     * Lays out UI based on requested mode.
+     * Called only through Populate() to ensure that correct data is available.
+     */
+    private void Layout(ListMode mode)
     {
+        // Clears data.
         Clear();
-        for (int i = 0; i < values.Count; i++)
-        {
-            SelectorButton btn = Instantiate(selectorPrefab, listTransform);
-            btn.text.text = values[i];
-            btn.indexValue = i;
-            btn.button.onClick.AddListener(() =>
-            {
-                Selected(btn.indexValue, type);
-            });
-        }
 
-        if (type != ListType.REGION)
+        if (mode == ListMode.SPECIMEN)
         {
-            SelectorButton back = Instantiate(selectorPrefab, listTransform);
-            back.text.text = "<- Back";
-            back.button.onClick.AddListener(() => { Back(type); });
+            // Activate and set shelf subtitle to current organ name
+            subtitle.gameObject.SetActive(true);
+            subtitle.text = organ;
+
+            // TODO: deactivate toggles for labView, bodyView
+
+
+            // Loops through all loaded specimens of organ type and produces a clickable button for each.
+            for (int i = 0; i < _loadedSpecimens.Count; i++)
+            {
+                SelectorButton btn = Instantiate(lightSelectorPrefab, listTransform);
+                btn.text.text = _loadedSpecimens[i].Id;
+                btn.indexValue = i;
+                btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].Id));
+            }
+
+            // Activates the back button, which takes user back to Region/Organ list
+            backButton.onClick.AddListener(Back);
+        }
+        else
+        {
+            // Deactivates the subtitle
+            subtitle.gameObject.SetActive(false);
+            // TODO: activate toggles for labView, bodyView
+
+            // Loops through loaded regions, producing a clickable button for each...
+            for (int i = 0; i < _loadedRegions.Count; i++)
+            {
+                SelectorButton btn = Instantiate(selectorPrefab, listTransform);
+                btn.text.text = _loadedRegions[i];
+                btn.indexValue = i;
+
+                // If a region is the currently selected, output the organs found as buttons below.
+                if (_loadedRegions[i] == region)
+                {
+                    for (int j = 0; j < _loadedOrgans.Count; j++)
+                    {
+                        SelectorButton sbtn = Instantiate(lightSelectorPrefab, listTransform);
+                        sbtn.text.text = _loadedOrgans[j];
+                        sbtn.indexValue = j;
+                        // Bind a click listener that loads the specimen selection view
+                        sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]);});
+                    }
+
+                    // Bind a click listener that closes the region accordion
+                    btn.button.onClick.AddListener(UnselectRegion);
+                }
+                else
+                {
+                    // Bind a click listener that closes the current region accordion and opens a new one
+                    btn.button.onClick.AddListener(() => { SelectRegion(_loadedRegions[btn.indexValue]); });
+                }
+
+            }
+
+            // Bind a click listener that toggles the shelf menu
+            backButton.onClick.AddListener(ToggleMenu);
         }
 
 
@@ -103,48 +168,45 @@ public class SelectorMenu : MonoBehaviour
 
     private void Clear()
     {
+        // Clears all menu options
         foreach (Transform child in listTransform)
         {
             Destroy(child.gameObject);
         }
     }
 
-    private void Selected(int index, ListType type)
+    private void SelectRegion(string region)
     {
-        switch (type)
-        {
-            case ListType.REGION:
-                region = _currentValues[index];
-                Populate();
-                break;
-            case ListType.ORGAN:
-                organ = _currentValues[index];
-                Populate();
-                break;
-            case ListType.SPECIMEN:
-                stateController.AddNewSpecimen(store.specimens[_currentValues[index]]);
-                stateController.mode = ViewMode.ANALYSIS;
-                break;
-            case ListType.LAB:
-                // TODO: lab view
-                break;
-            default:
-                break;
-        }
+        this.region = region;
+        Populate();
     }
 
-    private void Back(ListType type)
+    private void SelectOrgan(string organ)
     {
-        switch (type)
-        {
-            case ListType.ORGAN:
-                region = "";
-                Populate();
-                break;
-            case ListType.SPECIMEN:
-                organ = "";
-                Populate();
-                break;
-        }
+        this.organ = organ;
+        Populate();
+    }
+
+    private void SelectSpecimen(string specimenId)
+    {
+        stateController.AddNewSpecimen(store.specimens[specimenId]);
+        stateController.mode = ViewMode.ANALYSIS;
+    }
+
+    private void UnselectRegion()
+    {
+        region = "";
+        Populate();
+    }
+
+    private void Back()
+    {
+        organ = "";
+        Populate();
+    }
+
+    private void ToggleMenu()
+    {
+        Debug.Log("I'm toggglin' here");
     }
 }
