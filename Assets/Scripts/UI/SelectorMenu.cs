@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Controller;
 using TMPro;
@@ -9,9 +8,9 @@ using UnityEngine.UI;
 public class SelectorMenu : MonoBehaviour
 {
 
-    public bool byLab;
-    public string region;
-    public string organ;
+    private bool byLab;
+    private string region = "";
+    private string organ = "";
 
     public StateController stateController;
     public SelectorButton selectorPrefab;
@@ -51,13 +50,18 @@ public class SelectorMenu : MonoBehaviour
             Populate();
         }
     }
-
+    
+    /**
+     * Determines current population of the ui list and calls layout to output data.
+     */
     public void Populate()
     {
         if (store.Loading()) return;
 
         ListMode mode;
 
+        // Sets current list mode based on set fields.
+        // Then prepares requested data:
         if (byLab)
         {
             _loadedRegions = new List<string>();
@@ -87,17 +91,27 @@ public class SelectorMenu : MonoBehaviour
         }
 
         Layout(mode);
-
     }
 
+    /**
+     * Lays out UI based on requested mode.
+     * Called only through Populate() to ensure that correct data is available.
+     */
     private void Layout(ListMode mode)
     {
+        // Clears data.
         Clear();
 
         if (mode == ListMode.SPECIMEN)
         {
+            // Activate and set shelf subtitle to current organ name
             subtitle.gameObject.SetActive(true);
             subtitle.text = organ;
+
+            // TODO: deactivate toggles for labView, bodyView
+
+
+            // Loops through all loaded specimens of organ type and produces a clickable button for each.
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransform);
@@ -106,17 +120,23 @@ public class SelectorMenu : MonoBehaviour
                 btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].Id));
             }
 
+            // Activates the back button, which takes user back to Region/Organ list
             backButton.onClick.AddListener(Back);
         }
         else
         {
+            // Deactivates the subtitle
             subtitle.gameObject.SetActive(false);
+            // TODO: activate toggles for labView, bodyView
+
+            // Loops through loaded regions, producing a clickable button for each...
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
                 SelectorButton btn = Instantiate(selectorPrefab, listTransform);
                 btn.text.text = _loadedRegions[i];
                 btn.indexValue = i;
 
+                // If a region is the currently selected, output the organs found as buttons below.
                 if (_loadedRegions[i] == region)
                 {
                     for (int j = 0; j < _loadedOrgans.Count; j++)
@@ -124,17 +144,22 @@ public class SelectorMenu : MonoBehaviour
                         SelectorButton sbtn = Instantiate(lightSelectorPrefab, listTransform);
                         sbtn.text.text = _loadedOrgans[j];
                         sbtn.indexValue = j;
+                        // Bind a click listener that loads the specimen selection view
                         sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]);});
                     }
 
+                    // Bind a click listener that closes the region accordion
                     btn.button.onClick.AddListener(UnselectRegion);
                 }
                 else
                 {
+                    // Bind a click listener that closes the current region accordion and opens a new one
                     btn.button.onClick.AddListener(() => { SelectRegion(_loadedRegions[btn.indexValue]); });
                 }
 
             }
+
+            // Bind a click listener that toggles the shelf menu
             backButton.onClick.AddListener(ToggleMenu);
         }
 
@@ -143,6 +168,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void Clear()
     {
+        // Clears all menu options
         foreach (Transform child in listTransform)
         {
             Destroy(child.gameObject);
