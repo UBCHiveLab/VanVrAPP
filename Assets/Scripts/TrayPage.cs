@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Controller;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrayPage : MonoBehaviour, IPage
 {
@@ -7,11 +9,15 @@ public class TrayPage : MonoBehaviour, IPage
     public SelectorMenu selectorMenu;
     public GameObject uiObject;
     public GameObject actionButtons;
+    public Button compareButton;
+    public Button analyzeButton;
     public bool selectingCompareSpecimen;
 
 
     void Start()
     {
+        compareButton.onClick.AddListener(SelectCompare);
+        analyzeButton.onClick.AddListener(SelectAnalysis);
         actionButtons.SetActive(false);
     }
 
@@ -47,11 +53,13 @@ public class TrayPage : MonoBehaviour, IPage
         {
             selectingCompareSpecimen = true;
             selectorMenu.SelectCompare();
+            compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Uncompare";
         }
         else
         {
             selectingCompareSpecimen = false;
             stateController.RemoveCompareSpecimen();
+            compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Compare";
             selectorMenu.EndCompare();
         }
 
