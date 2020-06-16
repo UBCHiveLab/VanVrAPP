@@ -22,6 +22,9 @@ public class CompareMenu : MonoBehaviour
     void OnEnable()
     {
         Populate();
+
+        if (store == null) store = FindObjectOfType<SpecimenStore>();
+        if (stateController == null) stateController = FindObjectOfType<StateController>();
     }
 
     public void TogglePanel() {
@@ -34,7 +37,7 @@ public class CompareMenu : MonoBehaviour
     {
         Clear();
 
-        if (stateController.CompareSpecimenData == null)
+        if (stateController.CurrentSpecimenData == null)
         {
             Debug.LogWarning("No specimen selected; not populating compare menu.");
             return;
