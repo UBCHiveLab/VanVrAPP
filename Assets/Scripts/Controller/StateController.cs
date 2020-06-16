@@ -61,6 +61,7 @@ namespace Assets.Scripts.Controller
             _currentSpecimenData = data;
             Debug.Log($"Specimen added: {data.Id}");
             CurrentSpecimenObject = Instantiate(data.Prefab);
+            CurrentSpecimenObject.gameObject.transform.localScale = new Vector3(7, 7, 7);
             CurrentSpecimenObject.gameObject.SetActive(true);
             CurrentSpecimenObject.transform.position = new Vector3(0.5f, 2, 14);
 

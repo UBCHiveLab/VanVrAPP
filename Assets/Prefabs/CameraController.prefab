@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3578014802151638228}
   - component: {fileID: 3578014802151638229}
   m_Layer: 0
-  m_Name: CameraManager
+  m_Name: CameraController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,11 +79,11 @@ MonoBehaviour:
       sensibility: 0.8
       speedScrool: 1
       speedYAxis: 0.5
-      minDistance: 5
+      minDistance: 3
       maxDistance: 50
       minAngleY: 0
-      maxAngleY: 80
-      ignoreCollision: 0
+      maxAngleY: 85
+      ignoreCollision: 1
       rotateWhenClick: 1
       keyToRotate: mouse 0
       invertXInput: 0
@@ -132,4 +132,4 @@ MonoBehaviour:
   _verticalInputMSACC: 0
   _scrollInputMSACC: 0
   _enableMobileInputs: 0
-  _mobileInputsIndex: 0
+  _mobileInputsIndex: 1

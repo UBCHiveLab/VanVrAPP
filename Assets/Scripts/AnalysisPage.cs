@@ -27,11 +27,12 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public GameObject uiObject;
     public StateController stateController;
-    public MSCameraController cameraController;
+    public OrbitCamera cameraController;
     public Camera analysisCamera;
     public Camera mainCamera;
-    public MSCameraController cameraControllerPrefab;
+    public OrbitCamera cameraControllerPrefab;
 
+    
     public void Activate()
     {
         if (stateController.CurrentSpecimenObject == null)
@@ -40,18 +41,16 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
         uiObject.SetActive(true);
+        mainCamera.GetComponent<Animator>().enabled = false;
+        mainCamera.GetComponent<OrbitCamera>().enabled = true;
 
-        // We swap out the analysis camera for the main camera, then spawn in the cameraController
-        analysisCamera.transform.position = mainCamera.transform.position;
-        analysisCamera.gameObject.SetActive(true);
-        mainCamera.gameObject.SetActive(false);
-        cameraController = Instantiate(cameraControllerPrefab);
-        cameraController.target = stateController.CurrentSpecimenObject.transform;
-        cameraController.transform.position = stateController.CurrentSpecimenObject.transform.position;
-        MSACC_CameraType cam = new MSACC_CameraType() {
+        mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
+       // cameraController.transform.position = stateController.CurrentSpecimenObject.transform.position;
+       /* MSACC_CameraType cam = new MSACC_CameraType() {
             _camera = analysisCamera, rotationType = MSACC_CameraType.TipoRotac.Orbital, volume = 0.5f
         };
         cameraController.cameras = new[] { cam };
+        */
     }
 
     public void Deactivate()
@@ -88,7 +87,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         right.onClick.AddListener(MoveRight);
         zoomInside.onClick.AddListener(ZoomIn);
         zoomOutside.onClick.AddListener(ZoomOut);
-        controlAssistant.onClick.AddListener(ToggleController);
+       // controlAssistant.onClick.AddListener(ToggleController);
 
         // Reset Specimen Button
 
@@ -102,14 +101,14 @@ public class AnalysisPage : MonoBehaviour, IPage
         xPos = analysisCamera.transform.position.x;
         yPos = analysisCamera.transform.position.y;
         zPos = analysisCamera.transform.position.z;
-        mainCamera.transform.LookAt(stateController.CurrentSpecimenObject.transform);
+       // mainCamera.transform.LookAt(stateController.CurrentSpecimenObject.transform);
 
         // print(xPos + "  " + yPos + "  " + zPos);
 
     }
 
     // CONTROL ASSISTANT BUTTON METHODS
-
+    /*
     void ToggleController() {
         print("Toggle Controller On/Off");
         controlAssistantGO.SetActive(!controlAssistantGO.activeInHierarchy);
@@ -125,7 +124,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
     }
-
+    */
     void MoveUp() {
         print("UP");
         yPos += 1f;
