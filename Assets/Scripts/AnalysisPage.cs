@@ -98,6 +98,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void Update()
     {
+
         if (stateController.mode != ViewMode.ANALYSIS) return;
         xPos = analysisCamera.transform.position.x;
         yPos = analysisCamera.transform.position.y;

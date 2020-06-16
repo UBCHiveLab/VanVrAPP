@@ -12,10 +12,15 @@ public class SelectorMenu : MonoBehaviour
     private string region = "";
     private string organ = "";
 
+    [Header("Services")]
     public StateController stateController;
+    public SpecimenStore store;
+
+    [Header("Prefabs")]
     public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
-    public SpecimenStore store;
+
+    [Header("Internal Structures")]
     public Transform listTransform;
     public TextMeshProUGUI title;
     public Button backButton;

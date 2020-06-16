@@ -35,36 +35,88 @@ namespace Assets.Scripts.Controller
         /**
         * Set CurrentSpecimenId to change current specimen
         */
-        public string currentSpecimenId => _currentSpecimenData?.Id;
+        public string currentSpecimenId => CurrentSpecimenData?.Id;
 
+        // Mode state
         private ViewMode _mode;
+
+        // Specimen state
         private string _currentSpecimenId;
-        private SpecimenData _currentSpecimenData;
-        public GameObject CurrentSpecimenObject;
+        public SpecimenData CurrentSpecimenData;
+        // The instantiated current specimen object
+        public GameObject CurrentSpecimenObject; 
+
+        private string _compareSpecimenId;
+        public SpecimenData CompareSpecimenData;
+        // The instantiated compare specimen object
+        public GameObject CompareSpecimenObject; 
 
         public SpecimenData GetCurrentSpecimenData()
         {
-            return _currentSpecimenData;
+            return CurrentSpecimenData;
         }
 
         public void RemoveCurrentSpecimen() {
-            _currentSpecimenId = null;
+            CurrentSpecimenData = null;
             // TODO: trigger animations etc.
             if (CurrentSpecimenObject != null)
             {
                 Destroy(CurrentSpecimenObject);
             }
+
+            if (CompareSpecimenData != null)
+            {
+                SwapSpecimens();
+            }
+            else
+            {
+                mode = ViewMode.TRAY;
+            }
+
+        }
+
+        public void RemoveCompareSpecimen() {
+            CompareSpecimenData = null;
+            // TODO: trigger animations etc.
+            if (CompareSpecimenObject != null) { 
+                Destroy(CompareSpecimenObject);
+            }
         }
 
         public void AddNewSpecimen(SpecimenData data) {
             RemoveCurrentSpecimen();
-            _currentSpecimenData = data;
+            CurrentSpecimenData = data;
             Debug.Log($"Specimen added: {data.Id}");
             CurrentSpecimenObject = Instantiate(data.Prefab);
             CurrentSpecimenObject.gameObject.SetActive(true);
+            // TODO: actually child to tray object and offset
             CurrentSpecimenObject.transform.position = new Vector3(0.5f, 2, 14);
 
             // TODO: trigger animations etc.
+        }
+
+        public void AddCompareSpecimen(SpecimenData data)
+        {
+            RemoveCompareSpecimen();
+            CompareSpecimenData = data;
+            Debug.Log($"Specimen added: {data.Id}");  
+            CompareSpecimenObject = Instantiate(data.Prefab);
+            CompareSpecimenObject.gameObject.SetActive(true);
+            // TODO: actually child to tray object and offset
+
+            CompareSpecimenObject.transform.position = new Vector3(1f, 2, 14);
+        }
+
+        public void SwapSpecimens()
+        {
+            SpecimenData tempData = CompareSpecimenData;
+            GameObject tempObject = CompareSpecimenObject;
+
+            CompareSpecimenData = CurrentSpecimenData;
+            CompareSpecimenObject = CurrentSpecimenObject;
+
+            CurrentSpecimenData = tempData;
+            CurrentSpecimenObject = tempObject;
         }
 
         void Awake()
