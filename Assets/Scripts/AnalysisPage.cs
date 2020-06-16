@@ -31,7 +31,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Camera analysisCamera;
     public Camera mainCamera;
     public MSCameraController cameraControllerPrefab;
-    public GameObject compareMenu;
+    public CompareMenu compareMenu;
 
     public void Activate()
     {
@@ -40,7 +40,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
 
-        compareMenu.SetActive(false);
+        compareMenu.gameObject.SetActive(false);
         uiObject.SetActive(true);
 
         // We swap out the analysis camera for the main camera, then spawn in the cameraController
