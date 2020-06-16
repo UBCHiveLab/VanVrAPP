@@ -19,8 +19,9 @@ public class CompareMenu : MonoBehaviour
     public SpecimenListing addListingPrefab;
 
 
-    void Start()
+    void OnEnable()
     {
+        viewToggle.onClick.RemoveAllListeners();
         viewToggle.onClick.AddListener(TogglePanel);
         Populate();
     }
@@ -34,6 +35,8 @@ public class CompareMenu : MonoBehaviour
 
     public void Populate()
     {
+        Clear();
+        Debug.Log(stateController.CurrentSpecimenData);
         primarySpecimenListing.Populate(stateController.CurrentSpecimenData, () => {Remove(0);});
 
         if (stateController.CompareSpecimenData != null)
@@ -68,14 +71,19 @@ public class CompareMenu : MonoBehaviour
         }
     }
 
+    private void Clear()
+    {
+        foreach (Transform child in addListTransform) {
+            Destroy(child.gameObject);
+        }
+
+        primarySpecimenListing.button.onClick.RemoveAllListeners();
+        secondarySpecimenListing.button.onClick.RemoveAllListeners();
+    }
+
     private void PopulateAddList()
     {
         // TODO: filter this by whatever we choose (maybe same organ?)
-
-        foreach (Transform child in addListTransform)
-        {
-            Destroy(child.gameObject);
-        }
 
 
         foreach (SpecimenData spd in store.GetSpecimenDataFiltered(new List<string>{stateController.currentSpecimenId, stateController.CompareSpecimenData?.Id}))

@@ -15,6 +15,9 @@ namespace Assets.Scripts.Controller
 
         public Dictionary<ViewMode, IPage> modeToPage;
 
+        private readonly Vector3 _primarySpecimenPosition = new Vector3(0.5f, 2, 14);
+        private readonly Vector3 _compareSpecimenPosition = new Vector3(1f, 2, 14);
+
         /**
         * Set Mode to initiate transition between two modes.
         */
@@ -41,20 +44,13 @@ namespace Assets.Scripts.Controller
         private ViewMode _mode;
 
         // Specimen state
-        private string _currentSpecimenId;
         public SpecimenData CurrentSpecimenData;
         // The instantiated current specimen object
         public GameObject CurrentSpecimenObject; 
 
-        private string _compareSpecimenId;
         public SpecimenData CompareSpecimenData;
         // The instantiated compare specimen object
-        public GameObject CompareSpecimenObject; 
-
-        public SpecimenData GetCurrentSpecimenData()
-        {
-            return CurrentSpecimenData;
-        }
+        public GameObject CompareSpecimenObject;
 
         public void RemoveCurrentSpecimen() {
             CurrentSpecimenData = null;
@@ -90,7 +86,7 @@ namespace Assets.Scripts.Controller
             CurrentSpecimenObject = Instantiate(data.Prefab);
             CurrentSpecimenObject.gameObject.SetActive(true);
             // TODO: actually child to tray object and offset
-            CurrentSpecimenObject.transform.position = new Vector3(0.5f, 2, 14);
+            CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
 
             // TODO: trigger animations etc.
         }
@@ -104,7 +100,7 @@ namespace Assets.Scripts.Controller
             CompareSpecimenObject.gameObject.SetActive(true);
             // TODO: actually child to tray object and offset
 
-            CompareSpecimenObject.transform.position = new Vector3(1f, 2, 14);
+            CompareSpecimenObject.transform.position = _compareSpecimenPosition;
         }
 
         public void SwapSpecimens()
@@ -117,6 +113,9 @@ namespace Assets.Scripts.Controller
 
             CurrentSpecimenData = tempData;
             CurrentSpecimenObject = tempObject;
+
+            CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
+            CompareSpecimenObject.transform.position = _compareSpecimenPosition;
         }
 
         void Awake()
