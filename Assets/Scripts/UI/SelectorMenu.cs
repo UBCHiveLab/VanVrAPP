@@ -13,8 +13,8 @@ public class SelectorMenu : MonoBehaviour
     private string organ = "";
 
     [Header("Services")]
-    public StateController stateController;
     public SpecimenStore store;
+    public TrayPage trayPage;
 
     [Header("Prefabs")]
     public SelectorButton selectorPrefab;
@@ -41,7 +41,6 @@ public class SelectorMenu : MonoBehaviour
 
     void Start()
     {
-        if (stateController == null) stateController = FindObjectOfType<StateController>();
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
         subtitle.text = "LOADING SPECIMENS...";
@@ -96,6 +95,19 @@ public class SelectorMenu : MonoBehaviour
         }
 
         Layout(mode);
+    }
+
+
+    public void SelectCompare()
+    {
+        region = "";
+        organ = "";
+        Populate();
+    }
+
+    public void EndCompare()
+    {
+        Populate();
     }
 
     /**
@@ -194,8 +206,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void SelectSpecimen(string specimenId)
     {
-        stateController.AddNewSpecimen(store.specimens[specimenId]);
-        stateController.mode = ViewMode.ANALYSIS;
+        trayPage.SpecimenSelected(store.specimens[specimenId]);
     }
 
     private void UnselectRegion()
