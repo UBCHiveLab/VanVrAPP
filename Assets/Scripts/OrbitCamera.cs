@@ -58,9 +58,6 @@ public class OrbitCamera : MonoBehaviour
     private void Start()
     {
         cameraFieldOfView = camera.fieldOfView;
-        //Sets the camera's rotation along the y axis.
-        //The reason we're dividing by rotationSpeed is because we'll be multiplying by rotationSpeed in LateUpdate.
-        //So we're just accouinting for that at start.
         xRotationAxis = startRotation / rotationSpeed;
     }
 
@@ -72,7 +69,6 @@ public class OrbitCamera : MonoBehaviour
     private void LateUpdate()
     {
         //If auto rotation is enabled, just increment the xVelocity value by the rotationSensitivity.
-        //As that value's tied to the camera's rotation, it'll rotate automatically.
         if (autoRotate)
         {
             xVelocity += rotationSensitivity * Time.deltaTime;
@@ -83,9 +79,6 @@ public class OrbitCamera : MonoBehaviour
             Vector3 position;
             float deltaTime = Time.deltaTime;
 
-            //We only really want to capture the position of the cursor when the screen when the user is holding down left click/touching the screen
-            //That's why we're checking for that before campturing the mouse/finger position.
-            //Otherwise, on a computer, the camera would move whenever the cursor moves. 
             if (Input.GetMouseButton(0))
             {
                 xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity;
