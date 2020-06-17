@@ -84,7 +84,6 @@ namespace Assets.Scripts.Controller
             CurrentSpecimenData = data;
             Debug.Log($"Specimen added: {data.Id}");
             CurrentSpecimenObject = Instantiate(data.Prefab);
-            CurrentSpecimenObject.gameObject.transform.localScale = new Vector3(7, 7, 7);
             CurrentSpecimenObject.gameObject.SetActive(true);
             // TODO: actually child to tray object and offset
             CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
