@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Controller
@@ -9,8 +10,8 @@ namespace Assets.Scripts.Controller
     public class StateController : MonoBehaviour
     {
         public LandingPage landingPage;
-        public IPage trayPage;
-        public IPage analysisPage;
+        public TrayPage trayPage;
+        public AnalysisPage analysisPage;
 
         public Dictionary<ViewMode, IPage> modeToPage;
 
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Controller
         private ViewMode _mode;
         private string _currentSpecimenId;
         private SpecimenData _currentSpecimenData;
-        private GameObject _currentSpecimenObject;
+        public GameObject CurrentSpecimenObject;
 
         public SpecimenData GetCurrentSpecimenData()
         {
@@ -49,9 +50,9 @@ namespace Assets.Scripts.Controller
         public void RemoveCurrentSpecimen() {
             _currentSpecimenId = null;
             // TODO: trigger animations etc.
-            if (_currentSpecimenObject != null)
+            if (CurrentSpecimenObject != null)
             {
-                Destroy(_currentSpecimenObject);
+                Destroy(CurrentSpecimenObject);
             }
         }
 
@@ -59,9 +60,9 @@ namespace Assets.Scripts.Controller
             RemoveCurrentSpecimen();
             _currentSpecimenData = data;
             Debug.Log($"Specimen added: {data.Id}");
-            _currentSpecimenObject = Instantiate(data.Prefab);
-            _currentSpecimenObject.gameObject.SetActive(true);
-            _currentSpecimenObject.transform.position = new Vector3(0, 2, 14);
+            CurrentSpecimenObject = Instantiate(data.Prefab);
+            CurrentSpecimenObject.gameObject.SetActive(true);
+            CurrentSpecimenObject.transform.position = new Vector3(0.5f, 2, 14);
 
             // TODO: trigger animations etc.
         }
@@ -74,6 +75,29 @@ namespace Assets.Scripts.Controller
                 {ViewMode.TRAY, trayPage },
                 {ViewMode.ANALYSIS, analysisPage }
             };
+        }
+
+        void Start()
+        {
+            try {
+                trayPage.Deactivate();
+            } catch (Exception e) {
+                Debug.LogWarning($"Error deactivating trayPage: {e}");
+            }
+
+            try {
+                analysisPage.Deactivate();
+            } catch (Exception e) {
+                Debug.LogWarning($"Error deactivating analysisPage: {e}");
+            }
+
+            try {
+                landingPage.Activate();
+            } catch (Exception e) {
+                Debug.LogWarning($"Error activating landingPage: {e}");
+            }
+
+
         }
 
 
