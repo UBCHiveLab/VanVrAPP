@@ -44,6 +44,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
         compareMenu.gameObject.SetActive(false);
+        annotationMenu.gameObject.SetActive(false);
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
@@ -163,7 +164,6 @@ public class AnalysisPage : MonoBehaviour, IPage
     // ANNOTATIONS
 
     void ToggleAnnotations() {
-        print("Toggle Annotations On/Off");
         annotationMenu.SetActive(!annotationMenu.activeInHierarchy);
 
     }
