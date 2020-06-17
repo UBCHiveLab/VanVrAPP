@@ -23,6 +23,10 @@ public class AnalysisPage : MonoBehaviour, IPage
     private float yPos;
     private float zPos;
 
+    [Header("Annotations")]
+    public Button toggleAnnotation;
+    public GameObject annotationMenu;
+
     [Header("Other")]
 
     public GameObject uiObject;
@@ -77,6 +81,12 @@ public class AnalysisPage : MonoBehaviour, IPage
         zoomInside.onClick.AddListener(ZoomIn);
         zoomOutside.onClick.AddListener(ZoomOut);
        // controlAssistant.onClick.AddListener(ToggleController);
+
+
+        // Annotation Button
+        Button toggleAnnotationButton = toggleAnnotation.GetComponent<Button>();
+        toggleAnnotationButton.onClick.AddListener(ToggleAnnotations);
+
 
         // Reset Specimen Button
 
@@ -148,5 +158,13 @@ public class AnalysisPage : MonoBehaviour, IPage
         mainCamera.transform.position = new Vector3(0, 4, -6);
 
         mainCamera.transform.rotation = Quaternion.Euler(10, 0, 0);
+    }
+
+    // ANNOTATIONS
+
+    void ToggleAnnotations() {
+        print("Toggle Annotations On/Off");
+        annotationMenu.SetActive(!annotationMenu.activeInHierarchy);
+
     }
 }
