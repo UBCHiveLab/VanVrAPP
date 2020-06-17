@@ -89,6 +89,11 @@ public class SpecimenStore : MonoBehaviour
         return specimensByRegionByOrgan[region][organ];
     }
 
+    public List<SpecimenData> GetSpecimenDataFiltered(List<string> filteredOutIds)
+    {
+        return specimens.Values.Where(spd => !filteredOutIds.Contains(spd.Id)).ToList();
+    }
+
     public bool Loading()
     {
         return _loading;

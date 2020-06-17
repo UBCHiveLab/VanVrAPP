@@ -29,6 +29,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public StateController stateController;
     public OrbitCamera cameraController;
     public Camera mainCamera;
+    public CompareMenu compareMenu;
 
     
     public void Activate()
@@ -38,6 +39,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
 
+        compareMenu.gameObject.SetActive(false);
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
@@ -84,6 +86,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void Update()
     {
+
         if (stateController.mode != ViewMode.ANALYSIS) return;
         xPos = mainCamera.transform.position.x;
         yPos = mainCamera.transform.position.y;
