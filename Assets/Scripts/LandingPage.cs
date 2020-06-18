@@ -11,7 +11,6 @@ public class LandingPage : MonoBehaviour, IPage
     public Button startButton;
     public GameObject doorL;
     public GameObject doorR;
-    public GameObject doors;
     public GameObject mainCamera;
     public Animator mainCameraAnimator;
 
@@ -24,7 +23,8 @@ public class LandingPage : MonoBehaviour, IPage
 
     void StartSession()
     {
-        doors.GetComponent<Animator>().SetTrigger("Start");
+        doorL.GetComponent<Animator>().SetTrigger("Start");
+        doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
         stateController.mode = ViewMode.TRAY;
     }
