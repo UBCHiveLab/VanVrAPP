@@ -75,20 +75,20 @@ public class SelectorMenu : MonoBehaviour
         else if (region == "")
         {
             title.text = $"SHELF";
-            _loadedRegions = store.regions.ToList();
+            _loadedRegions = store.regions.OrderBy(region => region.order).Select(region => region.name).ToList();
             mode = ListMode.REGION;
         }
         else if (organ == "")
         {
             title.text = $"SHELF";
-            _loadedRegions = store.regions.ToList();
+            _loadedRegions = store.regions.OrderBy(region => region.order).Select(region => region.name).ToList();
             _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
             mode = ListMode.REGION_EXPANDED;
         }
         else
         {
             title.text = $"SPECIMEN LIST";
-            _loadedRegions = store.GetSpecimensByRegionOrgan(region, organ).Select(x => x.Id).ToList();
+            _loadedRegions = store.GetSpecimensByRegionOrgan(region, organ).Select(x => x.id).ToList();
             _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region][organ];
             mode = ListMode.SPECIMEN;
@@ -132,9 +132,9 @@ public class SelectorMenu : MonoBehaviour
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransform);
-                btn.text.text = _loadedSpecimens[i].Id;
+                btn.text.text = _loadedSpecimens[i].id;
                 btn.indexValue = i;
-                btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].Id));
+                btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].id));
             }
 
             // Activates the back button, which takes user back to Region/Organ list

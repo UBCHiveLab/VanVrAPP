@@ -16,7 +16,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button zoomIn;
     public Button zoomOut;
 
-    [Header("Reset Camera Position")]
+    [Header("Reset Camera position")]
     public Button resetButton;
 
     private float xPos;

@@ -38,7 +38,7 @@ namespace Assets.Scripts.Controller
         /**
         * Set CurrentSpecimenId to change current specimen
         */
-        public string currentSpecimenId => CurrentSpecimenData?.Id;
+        public string currentSpecimenId => CurrentSpecimenData?.id;
 
         // Mode state
         private ViewMode _mode;
@@ -82,10 +82,8 @@ namespace Assets.Scripts.Controller
         public void AddNewSpecimen(SpecimenData data) {
             RemoveCurrentSpecimen();
             CurrentSpecimenData = data;
-            Debug.Log($"Specimen added: {data.Id}");
-            CurrentSpecimenObject = Instantiate(data.Prefab);
-            CurrentSpecimenObject.gameObject.SetActive(true);
-            // TODO: actually child to tray object and offset
+            Debug.Log($"Specimen added: {data.id}");
+            CurrentSpecimenObject = InstantiateSpecimen(data);
             CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
 
             // TODO: trigger animations etc.
@@ -95,12 +93,20 @@ namespace Assets.Scripts.Controller
         {
             RemoveCompareSpecimen();
             CompareSpecimenData = data;
-            Debug.Log($"Specimen added: {data.Id}");  
-            CompareSpecimenObject = Instantiate(data.Prefab);
-            CompareSpecimenObject.gameObject.SetActive(true);
-            // TODO: actually child to tray object and offset
+            Debug.Log($"Specimen added: {data.id}");
+            CompareSpecimenObject = InstantiateSpecimen(data);
 
             CompareSpecimenObject.transform.position = _compareSpecimenPosition;
+        }
+
+        private GameObject InstantiateSpecimen(SpecimenData data)
+        {
+            GameObject spObj = new GameObject();
+            spObj.AddComponent<MeshFilter>().mesh = data.mesh;
+            spObj.AddComponent<MeshRenderer>().material = data.material;
+            spObj.transform.localScale = Vector3.one * data.scale;
+            spObj.gameObject.SetActive(true);
+            return spObj;
         }
 
         public void SwapSpecimens()

@@ -5,44 +5,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class SpecimenStore : MonoBehaviour
 {
     public Dictionary<string, SpecimenData> specimens;
+    public Dictionary<string, LabData> labs;
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
-
-    public string[] regions = {"Head", "Thorax", "Abdomen"};
-    public string[] organs = {"brain", "heart", "kidney", "liver", /*"right lung",*/ "skull"};
-
-    public Dictionary<string, string> organToRegion = new Dictionary<string, string>
-    {
-        {"brain", "Head"},
-        {"heart", "Thorax"},
-        {"kidney", "Abdomen"},
-        {"liver", "Abdomen"},
-        {"skull", "Head"}
-    };
-
-
-    // TODO: This should be received from server when we have structured data
-    public List<SpecimenRequestData> requestData = new List<SpecimenRequestData>
-    {
-        new SpecimenRequestData("brain01", $"assets/prefabs/organs_labeled/brain_healthy.prefab", "brain",
-            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/brain", 0),
-        new SpecimenRequestData("heart01", $"assets/prefabs/organs/heart_healthy.prefab", "heart",
-            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/heart", 0),
-        new SpecimenRequestData("kidney01", $"assets/prefabs/organs_labeled/kidney_healthy.prefab", "kidney",
-            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/kidney", 0),
-        new SpecimenRequestData("liver01", $"assets/prefabs/organs_labeled/liver_healthy.prefab", "liver",
-            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/liver", 0),
-        new SpecimenRequestData("skull01", $"assets/prefabs/organs_labeled/skull_healthy.prefab", "skull",
-            "https://hivemodelstorage.blob.core.windows.net/win64assetbundle/skull", 0)
-    };
-
-    private int _requestsResolved;
     private bool _loading = true;
+
+    public List<RegionData> regions;
+    public Dictionary<string, RegionData> organToRegion;
+
 
     public List<string> GetSpecimenIdsList()
     {
@@ -91,7 +67,7 @@ public class SpecimenStore : MonoBehaviour
 
     public List<SpecimenData> GetSpecimenDataFiltered(List<string> filteredOutIds)
     {
-        return specimens.Values.Where(spd => !filteredOutIds.Contains(spd.Id)).ToList();
+        return specimens.Values.Where(spd => !filteredOutIds.Contains(spd.id)).ToList();
     }
 
     public bool Loading()
@@ -111,7 +87,7 @@ public class SpecimenStore : MonoBehaviour
                 sb.Append($"----{org.Key}:\n");
                 foreach (SpecimenData sd in org.Value)
                 {
-                    sb.Append($"------{sd.Id}\n");
+                    sb.Append($"------{sd.id}\n");
                 }
             }
         }
@@ -121,88 +97,53 @@ public class SpecimenStore : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(GetAssetBundles());
+        StartCoroutine(LoadData());
+
+
+
     }
 
-    private IEnumerator GetAssetBundles()
+    private IEnumerator LoadData()
     {
-        Stopwatch watch = Stopwatch.StartNew();
+        DataLoader loader = gameObject.AddComponent<LocalDataLoader>();
+        loader.manifestPath = "manifest";
+        loader.Load();
 
-        // Wait for the Caching system to be ready
-        while (!Caching.ready)
-            yield return null;
+        while (!loader.Loaded()) yield return null;
 
-        _requestsResolved = 0;
-        foreach (SpecimenRequestData srd in requestData)
+        regions = loader.GetRegions().ToList();
+        organToRegion = new Dictionary<string, RegionData>();
+        foreach (RegionData region in regions)
         {
-            StartCoroutine(LoadFromData(srd));
+            foreach (string organ in region.organs)
+            {
+                organToRegion.Add(organ, region);
+            }
         }
 
-        while (_requestsResolved < requestData.Count) yield return null;
-        _loading = false;
-        watch.Stop();
-
-        Debug.Log($"Finished loading specimens.");
-        Debug.Log($"Loaded {specimens.Count} total specimens.");
-        Debug.Log($"Load time: {watch.Elapsed.TotalSeconds} seconds");
-        Debug.Log(DumpCurrentSpecimenStructure());
-    }
-
-    private IEnumerator LoadFromData(SpecimenRequestData srd)
-    {
-
+        labs = loader.GetLabs().ToDictionary((lab => lab.labId), lab => lab);
+        specimens = loader.GetSpecimens().ToDictionary((spec => spec.id), spec => spec);
         specimensByRegionByOrgan = new Dictionary<string, Dictionary<string, List<SpecimenData>>>();
-        specimens = new Dictionary<string, SpecimenData>();
 
-        //UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(srd.assetUrl);
-        using (UnityWebRequest req = UnityWebRequestAssetBundle.GetAssetBundle(srd.assetUrl, Convert.ToUInt32(srd.version), 0U))
+        
+        foreach (SpecimenData spd in loader.GetSpecimens())
         {
-            Debug.Log(Caching.currentCacheForWriting.path);
-            Stopwatch watch = Stopwatch.StartNew();
-            Debug.Log($"started load {srd.id}");
+            RegionData region = organToRegion[spd.organ];
 
-            yield return req.SendWebRequest();
-
-            if (req.isNetworkError || req.isHttpError) {
-                Debug.Log(req.error);
-            } else {
-                // Get downloaded asset bundle
-                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(req);
-                try {
-                    GameObject prefab = bundle.LoadAsset(srd.path) as GameObject;
-
-                    SpecimenData specimenData = new SpecimenData(srd.id, prefab, srd.organ);
-                    specimens.Add(srd.id, specimenData);
-                    string region = organToRegion[srd.organ];
-
-                    if (!specimensByRegionByOrgan.ContainsKey(region)) {
-                        specimensByRegionByOrgan.Add(region, new Dictionary<string, List<SpecimenData>>());
-                    }
-
-                    if (!specimensByRegionByOrgan[region].ContainsKey(srd.organ)) {
-                        specimensByRegionByOrgan[region].Add(srd.organ, new List<SpecimenData>());
-                    }
-
-                    specimensByRegionByOrgan[region][srd.organ].Add(specimenData);
-                } catch (Exception e) {
-                    Debug.LogWarning(e);
-                }
+            if (!specimensByRegionByOrgan.ContainsKey(region.name)) {
+                specimensByRegionByOrgan.Add(region.name, new Dictionary<string, List<SpecimenData>>());
             }
 
-            watch.Stop();
-            _requestsResolved++;
+            if (!specimensByRegionByOrgan[region.name].ContainsKey(spd.organ)) {
+                specimensByRegionByOrgan[region.name].Add(spd.organ, new List<SpecimenData>());
+            }
+
+            specimensByRegionByOrgan[region.name][spd.organ].Add(spd);
         }
 
-       /* if (www.isNetworkError || www.isHttpError)
-        {
-            Debug.Log(www.error);
-        }
-        else
-        {
-            
-           
-        }
-        Debug.Log($"finished load {srd.id}, took {watch.Elapsed.TotalSeconds}");*/
+        _loading = false;
+
 
     }
+
 }

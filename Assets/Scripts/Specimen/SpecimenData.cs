@@ -5,14 +5,13 @@ using UnityEngine;
 public class SpecimenData
 {
 
-    public string Id;
-    public GameObject Prefab;
-    public string OrganType;
+    public string id;
+    public string name;
+    public string organ;
+    public int version;
+    public Mesh mesh;
+    public Material material;
+    public float scale;
+    public List<AnnotationData> annotations;
 
-    public SpecimenData(string id, GameObject prefab, string organType)
-    {
-        Id = id;
-        Prefab = prefab;
-        OrganType = organType;
-    }
 }
