@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections;
-using UnityEngine.Networking;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 public class SpecimenStore : MonoBehaviour
 {
+
+    [Header("Manifest Data")]
+    public bool manifestLocal = true; // If true, we will look for a manifest file in the resources folder; otherwise, we will make a request to a given url
+    public string manifestLocalPath = "manifest"; // The local path to look for current manifest.
+    public string manifestUrlPath = "http://example.net/manifest.json"; // The url location to look for the current manifest.
+
+    [Header("Stored Data")]
+    public List<RegionData> regions;
     public Dictionary<string, SpecimenData> specimens;
     public Dictionary<string, LabData> labs;
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
-    private bool _loading = true;
-
-    public List<RegionData> regions;
     public Dictionary<string, RegionData> organToRegion;
 
+    private bool _loading = true;
 
     public List<string> GetSpecimenIdsList()
     {
@@ -98,19 +100,26 @@ public class SpecimenStore : MonoBehaviour
     private void Start()
     {
         StartCoroutine(LoadData());
-
-
-
     }
 
     private IEnumerator LoadData()
     {
-        DataLoader loader = gameObject.AddComponent<LocalDataLoader>();
-        loader.manifestPath = "manifest";
+        // Attachs the correct loader and sets the manifest path.
+        DataLoader loader;
+        if (manifestLocal)
+        {
+            loader = gameObject.AddComponent<LocalDataLoader>();
+            loader.manifestPath = manifestLocalPath;
+        } else {
+            loader = gameObject.AddComponent<RemoteDataLoader>();
+            loader.manifestPath = manifestUrlPath;
+        }
+
+        // Waits for the loader to load the manifest and all connected bundles (could be long on first load, but once cached should be seconds)
         loader.Load();
-
         while (!loader.Loaded()) yield return null;
-
+        
+        // Builds all store data structures
         regions = loader.GetRegions().ToList();
         organToRegion = new Dictionary<string, RegionData>();
         foreach (RegionData region in regions)
@@ -141,9 +150,11 @@ public class SpecimenStore : MonoBehaviour
             specimensByRegionByOrgan[region.name][spd.organ].Add(spd);
         }
 
+        // Turn loading off so that any listening UI can query for values.
         _loading = false;
 
-
+        // We no longer need loader after the load; disable it.
+        loader.enabled = false;
     }
 
 }

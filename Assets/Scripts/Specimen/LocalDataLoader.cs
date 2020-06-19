@@ -1,12 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class LocalDataLoader: DataLoader
 {
-    protected override DataManifest GetManifest()
+    protected override IEnumerator LoadManifest()
     {
         TextAsset file = Resources.Load<TextAsset>(manifestPath);
-        DataManifest manifest = JsonUtility.FromJson<DataManifest>(file.text);
-        return manifest;
+        manifest = JsonUtility.FromJson<DataManifest>(file.text);
+        _manifestLoaded = true;
+        yield break;
     }
 
 }
