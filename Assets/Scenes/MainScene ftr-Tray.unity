@@ -589,6 +589,11 @@ PrefabInstance:
       propertyPath: stateController
       value: 
       objectReference: {fileID: 1956808370}
+    - target: {fileID: 3222368778621726880, guid: 1e186ae8e3a706e48944d095571d5377,
+        type: 3}
+      propertyPath: cart
+      value: 
+      objectReference: {fileID: 2267160122045760644}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e186ae8e3a706e48944d095571d5377, type: 3}
 --- !u!1 &776191447 stripped
@@ -1687,15 +1692,7 @@ MonoBehaviour:
   compareButton: {fileID: 2122331434}
   analyzeButton: {fileID: 2122331427}
   selectingCompareSpecimen: 0
-  trayParent: {fileID: 2967251783269676688}
-  trayPrefab: {fileID: 1942094193377529895, guid: 2ea050100291bf24facbd379a724e891,
-    type: 3}
-  singleTrayLocalOffset: {x: -0.25, y: 2.25, z: 0.5}
-  compareTray1LocalOffset: {x: -0.75, y: 2.25, z: 0.5}
-  compareTray2LocalOffset: {x: 0.5, y: 2.25, z: 0.5}
-  tray1: {fileID: 0}
-  tray2: {fileID: 0}
-  specimenTrayOffset: {x: 0, y: 0, z: 0.0075}
+  cart: {fileID: 2267160122045760644}
 --- !u!114 &1816968516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16122,6 +16119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2967251783269676688}
+  - component: {fileID: 2267160122045760644}
   m_Layer: 0
   m_Name: Cart
   m_TagString: Untagged
@@ -16129,6 +16127,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2267160122045760644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2267160122045760643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e42c9649bf4c345918db0a37eddc41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trayPrefab: {fileID: 1942094193377529895, guid: 2ea050100291bf24facbd379a724e891,
+    type: 3}
+  singleTrayLocalOffset: {x: -0.25, y: 2.25, z: 0.5}
+  compareTray1LocalOffset: {x: -0.75, y: 2.25, z: 0.5}
+  compareTray2LocalOffset: {x: 0.5, y: 2.25, z: 0.5}
+  tray1: {fileID: 0}
+  tray2: {fileID: 0}
+  specimenTrayOffset: {x: 0, y: 0, z: 0.005}
 --- !u!23 &2273891415988740067
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class CompareMenu : MonoBehaviour
     [Header("Services")]
     public SpecimenStore store;
     public StateController stateController;
+    public SpecimenCart cart;
     
     [Header("Internal Structure")]
     public Button viewToggle;
@@ -17,7 +18,6 @@ public class CompareMenu : MonoBehaviour
 
     [Header("Prefabs")]
     public SpecimenListing addListingPrefab;
-
 
     void OnEnable()
     {
@@ -31,6 +31,15 @@ public class CompareMenu : MonoBehaviour
         gameObject.SetActive(!gameObject.activeSelf);
         viewToggle.onClick.RemoveAllListeners();
         viewToggle.onClick.AddListener(TogglePanel);
+
+        if (gameObject.activeSelf)
+        {
+            cart.SpawnTray2();
+        }
+        else if (stateController.CompareSpecimenData == null)
+        {
+            cart.RemoveTray2();
+        }
     }
 
     public void Populate()
@@ -74,11 +83,17 @@ public class CompareMenu : MonoBehaviour
 
         // If primary specimen is removed, compare specimen becomes the primary.
         secondarySpecimenListing.gameObject.SetActive(false);
+        stateController.CurrentSpecimenObject.transform.SetParent(cart.tray1.transform);
+        cart.ResetPosition(stateController.CurrentSpecimenObject);
 
         // If a specimen remains, populates the ui again.
         if (stateController.CurrentSpecimenData != null)
         {
             Populate();
+        }
+        else
+        {
+            cart.RemoveTray2();
         }
     }
 
