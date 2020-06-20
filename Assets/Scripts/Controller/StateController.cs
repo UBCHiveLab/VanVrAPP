@@ -18,6 +18,7 @@ namespace Assets.Scripts.Controller
         private readonly Vector3 _primarySpecimenPosition = new Vector3(0.5f, 2, 14);
         private readonly Vector3 _compareSpecimenPosition = new Vector3(1f, 2, 14);
 
+
         /**
         * Set Mode to initiate transition between two modes.
         */
@@ -79,28 +80,27 @@ namespace Assets.Scripts.Controller
             }
         }
 
-        public void AddNewSpecimen(SpecimenData data) {
+        public GameObject AddNewSpecimen(SpecimenData data) {
             RemoveCurrentSpecimen();
             CurrentSpecimenData = data;
             Debug.Log($"Specimen added: {data.Id}");
             CurrentSpecimenObject = Instantiate(data.Prefab);
             CurrentSpecimenObject.gameObject.SetActive(true);
-            // TODO: actually child to tray object and offset
             CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
-
+            return CurrentSpecimenObject;
             // TODO: trigger animations etc.
         }
 
-        public void AddCompareSpecimen(SpecimenData data)
+        public GameObject AddCompareSpecimen(SpecimenData data)
         {
             RemoveCompareSpecimen();
             CompareSpecimenData = data;
             Debug.Log($"Specimen added: {data.Id}");  
             CompareSpecimenObject = Instantiate(data.Prefab);
             CompareSpecimenObject.gameObject.SetActive(true);
-            // TODO: actually child to tray object and offset
 
             CompareSpecimenObject.transform.position = _compareSpecimenPosition;
+            return CompareSpecimenObject;
         }
 
         public void SwapSpecimens()
@@ -117,6 +117,7 @@ namespace Assets.Scripts.Controller
             CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
             CompareSpecimenObject.transform.position = _compareSpecimenPosition;
         }
+
 
         void Awake()
         {
