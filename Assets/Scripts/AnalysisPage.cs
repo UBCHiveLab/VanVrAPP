@@ -31,7 +31,6 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public GameObject uiObject;
     public StateController stateController;
-    public OrbitCamera cameraController;
     public Camera mainCamera;
     public CompareMenu compareMenu;
 
@@ -54,12 +53,9 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Deactivate()
     {
-      
-        if (cameraController != null)
-        {
-            Destroy(cameraController.gameObject);
-        }
         uiObject.SetActive(false);
+        mainCamera.GetComponent<OrbitCamera>().enabled = false;
+        mainCamera.GetComponent<OrbitCamera>().target = null;
     }
 
 
