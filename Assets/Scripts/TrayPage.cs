@@ -40,13 +40,16 @@ public class TrayPage : MonoBehaviour, IPage
             Camera.main.fieldOfView = camDefaultFov;
         }
 
+        // If no current specimen...
         if (ReferenceEquals(stateController.CurrentSpecimenData, null))
         {
+            // ... hide the action buttons, turn off compare if relevant.
             actionButtons.SetActive(false);
             if (selectingCompareSpecimen) {
                 CompareOff();
             }
         } else {
+            // Else put compare mode on
             CompareOn();
         }
 

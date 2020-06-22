@@ -60,6 +60,7 @@ public class SpecimenCart : MonoBehaviour
         tray1.transform.localPosition = singleTrayLocalOffset;
     }
 
+    // Resets a specimen location in terms of its tray offset.
     public void ResetPosition(GameObject specimen)
     {
         specimen.transform.localPosition = specimenTrayOffset;
