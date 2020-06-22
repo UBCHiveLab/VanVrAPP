@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44716638, g: 0.4924085, b: 0.5500334, a: 1}
+  m_IndirectSpecularColor: {r: 0.44716638, g: 0.49240905, b: 0.55003405, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1293,16 +1293,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e938899d9b94fd4981a0d156fa8dcc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  manifestLocal: 1
+  manifestPath: manifest
   regions:
-  - Head
-  - Thorax
-  - Abdomen
-  organs:
-  - brain
-  - heart
-  - kidney
-  - liver
-  - skull
+  - name: 
+    organs: []
+    order: 0
+  - name: 
+    organs: []
+    order: 0
+  - name: 
+    organs: []
+    order: 0
 --- !u!4 &1297178034
 Transform:
   m_ObjectHideFlags: 0

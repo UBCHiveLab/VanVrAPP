@@ -1,15 +1,16 @@
-﻿public class SpecimenRequestData
+﻿using System.Collections.Generic;
+
+[System.Serializable]
+public class SpecimenRequestData
 {
     public string id;
-    public string path;
+    public string name;
+    public int version;
     public string organ;
     public string assetUrl;
+    public string meshPath;
+    public string matPath;
+    public float scale;
+    public AnnotationData[] annotations;
 
-    public SpecimenRequestData(string id, string path, string organ, string assetUrl)
-    {
-        this.id = id;
-        this.assetUrl = assetUrl;
-        this.path = path;
-        this.organ = organ;
-    }
 }

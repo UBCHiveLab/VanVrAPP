@@ -97,7 +97,7 @@ public class CompareMenu : MonoBehaviour
         // TODO: filter this by whatever we choose (maybe same organ?)
 
         // Filters given ids from specimen data list and populates those in the ui list.
-        foreach (SpecimenData spd in store.GetSpecimenDataFiltered(new List<string>{stateController.currentSpecimenId, stateController.CompareSpecimenData?.Id}))
+        foreach (SpecimenData spd in store.GetSpecimenDataFiltered(new List<string>{stateController.currentSpecimenId, stateController.CompareSpecimenData?.id}))
         {
             SpecimenListing specimen = Instantiate(addListingPrefab, addListTransform);
             specimen.Populate(spd, () => {Add(spd);});

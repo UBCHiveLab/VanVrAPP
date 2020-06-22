@@ -13,7 +13,7 @@ public class SpecimenListing : MonoBehaviour
     {
         button.onClick.AddListener(action);
         specimen = spd;
-        label.text = specimen.Id;
+        label.text = specimen.id;
         
     }
 }
