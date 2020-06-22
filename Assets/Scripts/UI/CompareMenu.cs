@@ -90,6 +90,7 @@ public class CompareMenu : MonoBehaviour
         if (stateController.CurrentSpecimenData != null)
         {
             Populate();
+            Camera.main.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
         }
         else
         {

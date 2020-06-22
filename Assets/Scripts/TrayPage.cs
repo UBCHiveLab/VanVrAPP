@@ -13,6 +13,13 @@ public class TrayPage : MonoBehaviour, IPage
     public Button analyzeButton;
     public bool selectingCompareSpecimen;
 
+
+    // TEMP: we probably want to animate camera back to tray when finished
+    public bool camSet;
+    public Vector3 camDefaultPosition;
+    public Vector3 camDefaultRotation;
+    public float camDefaultFov;
+
     public SpecimenCart cart;
 
     void Start()
@@ -24,6 +31,25 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void Activate() {
         uiObject.SetActive(true);
+
+        // TEMP: use animation
+        if (camSet)
+        {
+            Camera.main.transform.position = camDefaultPosition;
+            Camera.main.transform.rotation = Quaternion.Euler(camDefaultRotation);
+            Camera.main.fieldOfView = camDefaultFov;
+        }
+
+        if (ReferenceEquals(stateController.CurrentSpecimenData, null))
+        {
+            actionButtons.SetActive(false);
+            if (selectingCompareSpecimen) {
+                CompareOff();
+            }
+        } else {
+            CompareOn();
+        }
+
     }
 
     public void Deactivate() {
@@ -42,10 +68,17 @@ public class TrayPage : MonoBehaviour, IPage
             cart.AddSpecimenPrimary(specimen);
         }
         actionButtons.SetActive(true);
+
     }
 
     public void SelectAnalysis()
     {
+        // TEMP: add animation later
+        camDefaultPosition = Camera.main.transform.position;
+        camDefaultRotation = Camera.main.transform.rotation.eulerAngles;
+        camDefaultFov = Camera.main.fieldOfView;
+        camSet = true;
+
         if (stateController.CompareSpecimenObject == null)
         {
             cart.RemoveTray2();
@@ -58,24 +91,30 @@ public class TrayPage : MonoBehaviour, IPage
     {
         if (!selectingCompareSpecimen)
         {
-            selectingCompareSpecimen = true;
-            selectorMenu.SelectCompare();
-            compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Uncompare";
-            cart.SpawnTray2();
+            CompareOn();
         }
         else
         {
-            selectingCompareSpecimen = false;
-            stateController.RemoveCompareSpecimen();
-            compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Compare";
-            selectorMenu.EndCompare();
-            cart.RemoveTray2();
+            CompareOff();
         }
-
-
     }
 
+    private void CompareOff()
+    {
+        selectingCompareSpecimen = false;
+        stateController.RemoveCompareSpecimen();
+        compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Compare";
+        selectorMenu.EndCompare();
+        cart.RemoveTray2();
+    }
 
+    private void CompareOn()
+    {
+        selectingCompareSpecimen = true;
+        selectorMenu.SelectCompare();
+        compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Uncompare";
+        cart.SpawnTray2();
+    }
    
 
 
