@@ -41,6 +41,9 @@ public class OrbitCamera : MonoBehaviour
     [Tooltip("How sensative the camera zooming is -- the speed of the zooming.")]
     public float zoomSensitivity = 2;
 
+    public float dragSpeed = 2;
+    private Vector3 dragOrigin;
+
     new private Camera camera;
     private float cameraFieldOfView;
     new private Transform transform;
@@ -227,9 +230,10 @@ public class OrbitCamera : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 target = hit.transform;
-                Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
             }
         }
+
+       
     }
 
     //Prevents the camera from locking after rotating a certain amount if the rotation limits are set to 360 degrees.

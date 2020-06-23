@@ -87,6 +87,7 @@ namespace Assets.Scripts.Controller
             CurrentSpecimenObject = InstantiateSpecimen(data);
             CurrentSpecimenObject.gameObject.SetActive(true);
             CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
+     
             return CurrentSpecimenObject;
             // TODO: trigger animations etc.
         }
@@ -109,9 +110,9 @@ namespace Assets.Scripts.Controller
             GameObject spObj = new GameObject();
             spObj.AddComponent<MeshFilter>().mesh = data.mesh;
             spObj.AddComponent<MeshRenderer>().material = data.material;
-            spObj.AddComponent<MeshCollider>();
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
+            spObj.AddComponent<MeshCollider>();
             return spObj;
         }
 
