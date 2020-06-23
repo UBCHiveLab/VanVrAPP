@@ -109,6 +109,7 @@ namespace Assets.Scripts.Controller
             GameObject spObj = new GameObject();
             spObj.AddComponent<MeshFilter>().mesh = data.mesh;
             spObj.AddComponent<MeshRenderer>().material = data.material;
+            spObj.AddComponent<MeshCollider>();
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
             return spObj;

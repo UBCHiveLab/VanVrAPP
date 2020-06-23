@@ -66,6 +66,7 @@ public class OrbitCamera : MonoBehaviour
     private void Update()
     {
         Zoom();
+        SelectCam();
     }
 
     private void LateUpdate()
@@ -214,6 +215,20 @@ public class OrbitCamera : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             camera.fieldOfView = cameraFieldOfView;
+        }
+    }
+
+    private void SelectCam() {
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 100.0f))
+            {
+                target = hit.transform;
+                Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
+            }
         }
     }
 
