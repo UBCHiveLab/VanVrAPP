@@ -33,6 +33,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public StateController stateController;
     public Camera mainCamera;
     public CompareMenu compareMenu;
+    public AnnotationDisplay annotationDisplay;
 
     
     public void Activate()
@@ -48,7 +49,9 @@ public class AnalysisPage : MonoBehaviour, IPage
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
         mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
-     
+
+        annotationDisplay.Activate();
+
     }
 
     public void Deactivate()
