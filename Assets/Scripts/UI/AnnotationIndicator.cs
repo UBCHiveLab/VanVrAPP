@@ -9,18 +9,27 @@ public class AnnotationIndicator : MonoBehaviour
     private AnnotationData _data;
     private SpecimenData _specData;
     private GameObject _specObject;
+    private int _index;
+    private AnnotationDisplay _display;
+
+    public TextMeshProUGUI number;
     public TextMeshProUGUI label;
     public TextMeshProUGUI content;
     public Button button;
 
 
-    public void Populate(AnnotationData data, SpecimenData specData, GameObject obj)
+
+
+    public void Populate(int index, AnnotationData data, SpecimenData specData, GameObject obj,
+        AnnotationDisplay display)
     {
         _data = data;
         _specObject = obj;
         _specData = specData;
+        _index = index;
+        _display = display;
 
-
+        number.text = index.ToString();
 
     }
 
@@ -32,7 +41,7 @@ public class AnnotationIndicator : MonoBehaviour
 
     void Clicked()
     {
-        Debug.Log(_data.annotationId);
+        _display.ShowDetail(_index);
     }
 
     // Update is called once per frame

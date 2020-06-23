@@ -10,6 +10,7 @@
         Tags { "RenderType"="Opaque" }
         LOD 100
 		ZTest Always
+		Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
         {

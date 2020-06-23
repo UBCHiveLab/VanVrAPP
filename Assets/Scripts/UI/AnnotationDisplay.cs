@@ -12,6 +12,7 @@ public class AnnotationDisplay : MonoBehaviour
 
     public List<AnnotationIndicator> activeIndicators = new List<AnnotationIndicator>();
     public AnnotationIndicator indicatorPrefab;
+    public AnnotationDetailPanel detailPanel;
 
     void Start(){
 
@@ -24,14 +25,17 @@ public class AnnotationDisplay : MonoBehaviour
 
         ClearAnnotations();
         DrawAnnotations();
+
+        detailPanel.gameObject.SetActive(false);
     }
 
     void DrawAnnotations()
     {
-        foreach (AnnotationData ad in currentSpecimenData.annotations)
+        for (int i = 0; i < currentSpecimenData.annotations.Count; i++)
         {
+            AnnotationData ad = currentSpecimenData.annotations[i];
             AnnotationIndicator indicator = Instantiate(indicatorPrefab, transform);
-            indicator.Populate(ad, currentSpecimenData, currentSpecimenObject);
+            indicator.Populate(i, ad, currentSpecimenData, currentSpecimenObject, this);
         }
     }
 
@@ -42,10 +46,11 @@ public class AnnotationDisplay : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-    
-    void OnMouseDown()
-    {
 
+    public void ShowDetail(int index)
+    {
+        detailPanel.Populate(currentSpecimenData.annotations[index]);
+        detailPanel.gameObject.SetActive(true);
     }
 
 }
