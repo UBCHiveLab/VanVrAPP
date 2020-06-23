@@ -41,8 +41,6 @@ public class OrbitCamera : MonoBehaviour
     [Tooltip("How sensative the camera zooming is -- the speed of the zooming.")]
     public float zoomSensitivity = 2;
 
-    public float dragSpeed = 2;
-    private Vector3 dragOrigin;
 
     new private Camera camera;
     private float cameraFieldOfView;
@@ -53,7 +51,9 @@ public class OrbitCamera : MonoBehaviour
     private float yRotationAxis;
     private float zoomVelocity;
     private float zoomVelocityZAxis;
-
+    bool wasDraggingCamera = false;
+    Vector3 lastDragPosition;
+    Ray lastMousePosition;
     private void Awake()
     {
         camera = GetComponent<Camera>();
@@ -79,8 +79,7 @@ public class OrbitCamera : MonoBehaviour
         {
             xVelocity += rotationSensitivity * Time.deltaTime;
         }
-        if (target)
-        {
+        
             Quaternion rotation;
             Vector3 position;
             float deltaTime = Time.deltaTime;
@@ -97,7 +96,29 @@ public class OrbitCamera : MonoBehaviour
             //Clamp the rotation along the y-axis between the limits we set. 
             //Limits of 360 or -360 on any axis will allow the camera to rotate unrestricted
             yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
+        if (Input.GetMouseButtonDown(2))
+        {
+            lastDragPosition = Input.mousePosition;
+            target = null;
+        }
+        if (!target)
+        {
+            if (Input.GetMouseButton(2))
+            {
 
+                var delta = lastDragPosition - Input.mousePosition;
+                transform.Translate(delta * Time.deltaTime * 0.1f);
+                lastDragPosition = Input.mousePosition;
+            }
+
+            rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
+      
+            transform.rotation = rotation;
+            xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * 17f);
+            yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * 17f);
+        }
+        else
+        {
             rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
             position = rotation * new Vector3(0f, 0f, -zAxisDistance) + target.position;
 
@@ -107,6 +128,11 @@ public class OrbitCamera : MonoBehaviour
             xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * rotationSmoothing);
             yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * rotationSmoothing);
         }
+        
+
+       
+       
+
     }
 
     private void Zoom()

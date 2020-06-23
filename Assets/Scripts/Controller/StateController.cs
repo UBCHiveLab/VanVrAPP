@@ -113,6 +113,7 @@ namespace Assets.Scripts.Controller
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
             spObj.AddComponent<MeshCollider>();
+            spObj.AddComponent<SpecimenOptions>();
             return spObj;
         }
 
