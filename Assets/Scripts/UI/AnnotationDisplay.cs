@@ -47,9 +47,9 @@ public class AnnotationDisplay : MonoBehaviour
         }
     }
 
-    public void ShowDetail(int index)
+    public void ShowDetail(AnnotationIndicator indicator)
     {
-        detailPanel.Populate(currentSpecimenData.annotations[index]);
+        detailPanel.Populate(currentSpecimenData.annotations[indicator.index], indicator);
         detailPanel.gameObject.SetActive(true);
     }
 

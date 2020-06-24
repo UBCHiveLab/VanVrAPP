@@ -9,7 +9,7 @@ public class AnnotationIndicator : MonoBehaviour
     private AnnotationData _data;
     private SpecimenData _specData;
     private GameObject _specObject;
-    private int _index;
+    public int index;
     private AnnotationDisplay _display;
 
     public TextMeshProUGUI number;
@@ -26,7 +26,7 @@ public class AnnotationIndicator : MonoBehaviour
         _data = data;
         _specObject = obj;
         _specData = specData;
-        _index = index;
+        this.index = index;
         _display = display;
 
         number.text = index.ToString();
@@ -41,7 +41,7 @@ public class AnnotationIndicator : MonoBehaviour
 
     void Clicked()
     {
-        _display.ShowDetail(_index);
+        _display.ShowDetail(this);
     }
 
     // Update is called once per frame
