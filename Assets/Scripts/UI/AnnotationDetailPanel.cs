@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using UnityEngine.Video;
 
 public class AnnotationDetailPanel : MonoBehaviour
@@ -26,17 +29,28 @@ public class AnnotationDetailPanel : MonoBehaviour
     public Transform contentTransform;
 
     public ContentText textPrefab;
-    public ContentVideo ContentVideoPrefab;
+    public ContentVideo videoPrefab;
+    public ContentImage imagePrefab;
+
+    public ScrollRect scrollView;
+    public float maxDetailHeight;
+    public float minDetailHeight;
+    public RectTransform selfTransform;
 
 
     void Start()
     {
         videoPlayer = GetComponent<VideoPlayer>();
+        StartCoroutine(ResetScrollView());
+
     }
+
+
 
     public void Populate(AnnotationData data, AnnotationIndicator ind)
     {
         Clear();
+
 
         title.text = data.title;
         _blocks = new List<IAnnotationContentBlock>();
@@ -49,16 +63,25 @@ public class AnnotationDetailPanel : MonoBehaviour
             if (content == "[" || content == "]")
             {
                 // ignore
-            } else if (content.StartsWith("vid"))
+            }
+            else if (content.StartsWith("vid") || content.StartsWith("video"))
             {
-                ContentVideo vid = Instantiate(ContentVideoPrefab, contentTransform);
+                ContentVideo vid = Instantiate(videoPrefab, contentTransform);
                 Match match = Regex.Match(content, "src=[\'|\"](.*)[\'|\"]");
                 string src = match.Groups[1].Value;
                 vid.Populate(src, this);
                 GenerateThumbnail(vid);
                 _blocks.Add(vid);
             }
-            else
+            else if (content.StartsWith("img") || content.StartsWith("image"))
+            {
+                ContentImage img = Instantiate(imagePrefab, contentTransform);
+                Match match = Regex.Match(content, "src=[\'|\"](.*)[\'|\"]");
+                string src = match.Groups[1].Value;
+                img.Populate(src, this);
+                _blocks.Add(img);
+
+            } else
             {
                 ContentText text = Instantiate(textPrefab, contentTransform);
                 text.Populate(content, this);
@@ -69,7 +92,20 @@ public class AnnotationDetailPanel : MonoBehaviour
         _data = data;
         _ind = ind;
 
+        if (gameObject.activeSelf) // If not active, will be called on Start()
+        {
+            StartCoroutine(ResetScrollView());
+        }
 
+    }
+
+    private IEnumerator ResetScrollView()
+    {
+        yield return new WaitForEndOfFrame();
+        scrollView.verticalScrollbar.value = 0f;
+        float h = Mathf.Clamp(scrollView.content.sizeDelta.y, minDetailHeight, maxDetailHeight);
+        scrollView.GetComponent<RectTransform>().sizeDelta = new Vector2(128f, h);
+        selfTransform.anchoredPosition = new Vector3(selfTransform.anchoredPosition.x, h/2f);
     }
 
     List<string> TokenizeContent(string content)
@@ -81,7 +117,6 @@ public class AnnotationDetailPanel : MonoBehaviour
     {
         // TODO
         vc.canvas.texture = Texture2D.grayTexture;
-
     }
 
     void Clear()
@@ -90,13 +125,17 @@ public class AnnotationDetailPanel : MonoBehaviour
         {
             Destroy(block.gameObject);
         }
+
         _blocks = new List<IAnnotationContentBlock>();
     }
 
     void Update()
     {
         UpdateTargetLine();
+
+
     }
+
 
     private void UpdateTargetLine()
     {
@@ -109,7 +148,8 @@ public class AnnotationDetailPanel : MonoBehaviour
         line.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // Rotate by given angle
         line.sizeDelta =
             new Vector2(lineWeight,
-                dist / 2f - discRadius); // Set line rect; note, height must be divided by two then offset by the disc radius so it doesn't intersect the indicator
+                dist / 2f -
+                discRadius); // Set line rect; note, height must be divided by two then offset by the disc radius so it doesn't intersect the indicator
     }
 
     public void VideoClicked(ContentVideo vc)
@@ -134,6 +174,9 @@ public class AnnotationDetailPanel : MonoBehaviour
             currentVideoCanvas.texture = videoPlayer.targetTexture;
             videoPlayer.Play();
         }
+    }
 
+    public void ImageClicked(ContentImage ic) {
+        
     }
 }
