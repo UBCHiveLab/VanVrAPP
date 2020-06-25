@@ -42,6 +42,9 @@ public class AnnotationDetailPanel : MonoBehaviour
     public Button detailOpenToggle;
 
 
+    public IAnnotationContentBlock fullScreenObject;
+    public FullScreenPlayer fullScreenPlayer;
+
     void Start()
     {
         detailOpenToggle.onClick.AddListener(DetailOpenClicked);
@@ -190,6 +193,33 @@ public class AnnotationDetailPanel : MonoBehaviour
         videoPlayer.time = val * videoPlayer.length;
     }
 
+    public void ToggleFullScreen(IAnnotationContentBlock block)
+    {
+        if (fullScreenPlayer.gameObject.activeSelf)
+        {
+            videoPlayer.Pause();
+            fullScreenPlayer.gameObject.SetActive(false);
+            return;
+        }
+        
+        ContentVideo vidBlock = block as ContentVideo;
+
+        if (vidBlock != null)
+        {
+            fullScreenPlayer.ReceiveVideo(vidBlock);
+            fullScreenPlayer.gameObject.SetActive(true);
+        }
+
+        ContentImage imgBlock = block as ContentImage;
+
+        if (imgBlock != null)
+        {
+            fullScreenPlayer.ReceiveImage(imgBlock);
+            fullScreenPlayer.gameObject.SetActive(true);
+        }
+
+
+    }
 
 
     public void ImageClicked(ContentImage ic) {

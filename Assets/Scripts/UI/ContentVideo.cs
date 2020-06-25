@@ -10,6 +10,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     public TextMeshProUGUI label;
     public string url;
     public string title;
+    public Transform homeParent { get; private set; }
 
     public Button Play;
     public Button Pause;
@@ -24,6 +25,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         Play.onClick.AddListener(PlayVideo);
         Pause.onClick.AddListener(PauseVideo);
         Progress.onValueChanged.AddListener(ScrubVideo);
+        FullScreen.onClick.AddListener(ToggleFullScreen);
     }
 
     void Update()
@@ -58,6 +60,11 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         }
     }
 
+    void ToggleFullScreen()
+    {
+        detailPanel.ToggleFullScreen(this);
+    }
+
     public void StartScrub()
     {
         _scrubbing = true;
@@ -75,6 +82,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         this.url = url;
         this.title = title;
         detailPanel = panel;
+        homeParent = detailPanel.contentTransform;
         label.text = title;
 
     }

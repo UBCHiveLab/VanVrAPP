@@ -9,6 +9,7 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
     public AnnotationDetailPanel detailPanel;
     public RawImage canvas;
     public string url;
+    public Transform homeParent { get; private set; }
 
 
 
@@ -38,6 +39,8 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
 
         this.url = url;
         this.detailPanel = panel;
+        homeParent = detailPanel.contentTransform;
+
     }
 
 
