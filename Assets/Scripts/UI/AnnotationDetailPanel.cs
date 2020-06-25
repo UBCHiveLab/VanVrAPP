@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
+using Button = UnityEngine.UI.Button;
 
 public class AnnotationDetailPanel : MonoBehaviour
 {
@@ -37,10 +38,13 @@ public class AnnotationDetailPanel : MonoBehaviour
     public float minDetailHeight;
     public RectTransform selfTransform;
 
+    private bool _detailOpen;
+    public Button detailOpenToggle;
+
 
     void Start()
     {
-        videoPlayer = GetComponent<VideoPlayer>();
+        detailOpenToggle.onClick.AddListener(DetailOpenClicked);
         StartCoroutine(ResetScrollView());
 
     }
@@ -69,7 +73,13 @@ public class AnnotationDetailPanel : MonoBehaviour
                 ContentVideo vid = Instantiate(videoPrefab, contentTransform);
                 Match match = Regex.Match(content, "src=[\'|\"](.*)[\'|\"]");
                 string src = match.Groups[1].Value;
-                vid.Populate(src, this);
+                match = Regex.Match(content, "title=[\'|\"](.*?)[\'|\"]");
+                string title = src;
+                if (match.Groups.Count > 0)
+                {
+                    title = match.Groups[1].Value;
+                }
+                vid.Populate(src, title, this);
                 GenerateThumbnail(vid);
                 _blocks.Add(vid);
             }
@@ -101,6 +111,7 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     private IEnumerator ResetScrollView()
     {
+        yield return new WaitForEndOfFrame();
         yield return new WaitForEndOfFrame();
         scrollView.verticalScrollbar.value = 0f;
         float h = Mathf.Clamp(scrollView.content.sizeDelta.y, minDetailHeight, maxDetailHeight);
@@ -154,16 +165,9 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     public void VideoClicked(ContentVideo vc)
     {
-        if (currentVideo == vc)
+        if (currentVideo == vc && videoPlayer.isPaused)
         {
-            if (videoPlayer.isPaused)
-            {
-                videoPlayer.Play();
-            }
-            else
-            {
-                videoPlayer.Pause();
-            }
+            videoPlayer.Play();
         }
         else
         {
@@ -176,7 +180,26 @@ public class AnnotationDetailPanel : MonoBehaviour
         }
     }
 
+    public void VideoPaused(ContentVideo vc)
+    {
+        videoPlayer.Pause();
+    }
+
+    public void VideoScrubbed(ContentVideo vc, float val)
+    {
+        videoPlayer.time = val * videoPlayer.length;
+    }
+
+
+
     public void ImageClicked(ContentImage ic) {
         
+    }
+
+    public void DetailOpenClicked()
+    {
+        _detailOpen = !_detailOpen;
+        scrollView.gameObject.SetActive(_detailOpen);
+        StartCoroutine(ResetScrollView());
     }
 }

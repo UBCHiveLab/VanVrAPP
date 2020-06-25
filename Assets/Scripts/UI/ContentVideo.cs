@@ -1,19 +1,37 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 {
-    public Button button;
     public AnnotationDetailPanel detailPanel;
     public RawImage canvas;
+    public TextMeshProUGUI label;
     public string url;
+    public string title;
 
+    public Button Play;
+    public Button Pause;
+    public Slider Progress;
+    public Button FullScreen;
+
+    private bool _scrubbing;
 
 
     void Start()
     {
-        button.onClick.AddListener(Click);
+        Play.onClick.AddListener(PlayVideo);
+        Pause.onClick.AddListener(PauseVideo);
+        Progress.onValueChanged.AddListener(ScrubVideo);
+    }
 
+    void Update()
+    {
+        if (detailPanel.currentVideo == this && detailPanel.videoPlayer.isPlaying && !_scrubbing)
+        {
+            Progress.value = (float) (detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
+        }
     }
 
     void Click()
@@ -21,10 +39,43 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         detailPanel.VideoClicked(this);
     }
 
+    void PlayVideo()
+    {
+        detailPanel.VideoClicked(this);
+    }
 
-    public void Populate(string url, AnnotationDetailPanel panel)
+    void PauseVideo()
+    {
+        detailPanel.VideoPaused(this);
+    }
+
+    void ScrubVideo(float val)
+    {
+        if (_scrubbing)
+        {
+            detailPanel.VideoScrubbed(this, val);
+            Progress.value = val;
+        }
+    }
+
+    public void StartScrub()
+    {
+        _scrubbing = true;
+    }
+
+    public void EndScrub()
+    {
+        _scrubbing = false;
+        Debug.Log(Progress.value);
+        ScrubVideo(Progress.value);
+    }
+
+    public void Populate(string url, string title, AnnotationDetailPanel panel)
     {
         this.url = url;
-        this.detailPanel = panel;
+        this.title = title;
+        detailPanel = panel;
+        label.text = title;
+
     }
 }
