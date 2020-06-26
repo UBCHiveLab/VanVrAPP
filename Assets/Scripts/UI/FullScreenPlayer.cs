@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Video;
+﻿using UnityEngine;
 
 public class FullScreenPlayer : MonoBehaviour
 {
@@ -16,7 +13,7 @@ public class FullScreenPlayer : MonoBehaviour
 
     public void ReceiveImage(ContentImage imgBlock)
     {
-        // TODO
+        // TODO: Image full screen
         Debug.Log("Not implemented yet");
     }
 }

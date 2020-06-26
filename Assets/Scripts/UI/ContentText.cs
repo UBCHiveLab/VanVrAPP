@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class ContentText : MonoBehaviour, IAnnotationContentBlock
@@ -14,5 +12,4 @@ public class ContentText : MonoBehaviour, IAnnotationContentBlock
         tmp.text = text;
         homeParent = panel.contentTransform;
     }
-
 }

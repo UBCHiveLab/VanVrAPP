@@ -12,7 +12,6 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
     public Transform homeParent { get; private set; }
 
 
-
     void Start()
     {
         button.onClick.AddListener(Click);
@@ -25,7 +24,6 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
         {
             gameObject.SetActive(false);
         }
-
     }
 
     void Click()
@@ -36,20 +34,19 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
 
     public void Populate(string url, AnnotationDetailPanel panel)
     {
-
         this.url = url;
         this.detailPanel = panel;
         homeParent = detailPanel.contentTransform;
-
     }
 
 
-    private IEnumerator DownloadImage(string url) {
+    private IEnumerator DownloadImage(string url)
+    {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
         yield return request.SendWebRequest();
         if (request.isNetworkError || request.isHttpError)
             Debug.Log(request.error);
         else
-            canvas.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+            canvas.texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
     }
 }

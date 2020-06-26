@@ -25,7 +25,6 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     [Header("Annotations")]
     public Button toggleAnnotation;
-    public GameObject annotationMenu;
 
     [Header("Other")]
 
@@ -44,14 +43,14 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
         compareMenu.gameObject.SetActive(false);
-        annotationMenu.gameObject.SetActive(false);
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
         mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
 
-        annotationDisplay.Activate();
+        ToggleAnnotations();
 
+        //annotationDisplay.Activate();
     }
 
     public void Deactivate()
@@ -73,7 +72,6 @@ public class AnalysisPage : MonoBehaviour, IPage
         Button zoomInside = zoomIn.GetComponent<Button>();
         Button zoomOutside = zoomOut.GetComponent<Button>();
 
-
         up.onClick.AddListener(MoveUp);
         down.onClick.AddListener(MoveDown);
         left.onClick.AddListener(MoveLeft);
@@ -87,9 +85,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         Button toggleAnnotationButton = toggleAnnotation.GetComponent<Button>();
         toggleAnnotationButton.onClick.AddListener(ToggleAnnotations);
 
-
         // Reset Specimen Button
-
         Button resetCameraPosition = resetButton.GetComponent<Button>();
         resetCameraPosition.onClick.AddListener(ResetCameraPosition);
     }
@@ -163,7 +159,14 @@ public class AnalysisPage : MonoBehaviour, IPage
     // ANNOTATIONS
 
     void ToggleAnnotations() {
-        annotationMenu.SetActive(!annotationMenu.activeInHierarchy);
-
+        annotationDisplay.gameObject.SetActive(!annotationDisplay.gameObject.activeSelf);
+        if (annotationDisplay.gameObject.activeSelf)
+        {
+            annotationDisplay.Activate();
+        }
+        else
+        {
+            annotationDisplay.Deactivate();
+        }
     }
 }
