@@ -74,6 +74,9 @@ public class OrbitCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+
+        if (EventSystem.current.IsPointerOverGameObject()) return;  // Nothing after this will be executed if cursor is over UI object
+
         //If auto rotation is enabled, just increment the xVelocity value by the rotationSensitivity.
         if (autoRotate)
         {
