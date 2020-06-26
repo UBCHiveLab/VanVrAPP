@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Controller;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class SelectorMenu : MonoBehaviour
     private bool byLab;
     private string region = "";
     private string organ = "";
+    private string labId = "";
 
     [Header("Services")]
     public SpecimenStore store;
@@ -19,31 +21,43 @@ public class SelectorMenu : MonoBehaviour
     [Header("Prefabs")]
     public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
+    public LabOption labPrefab;
 
     [Header("Internal Structures")]
     public Transform listTransform;
     public TextMeshProUGUI title;
     public Button backButton;
     public TextMeshProUGUI subtitle;
+    public Slider labToggle;
 
     public enum ListMode
     {
         REGION,
         REGION_EXPANDED,
         SPECIMEN,
-        LAB
+        LAB,
+        LAB_SPECIMENS
     }
 
     private List<string> _loadedRegions;
     private List<string> _loadedOrgans;
     private List<SpecimenData> _loadedSpecimens;
     private bool _loading = true;
+    private List<LabData> _loadedLabs;
 
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
         subtitle.text = "LOADING SPECIMENS...";
+        labToggle.onValueChanged.AddListener((val) =>
+        {
+            byLab = Mathf.RoundToInt(val) == 1;
+            organ = "";
+            labId = "";
+            region = "";
+            Populate();
+        });
     }
 
     void Update()
@@ -68,9 +82,20 @@ public class SelectorMenu : MonoBehaviour
         // Then prepares requested data:
         if (byLab)
         {
-            _loadedRegions = new List<string>();
-            // TODO
-            mode = ListMode.LAB;
+
+            if (labId != "")
+            {
+                mode = ListMode.LAB_SPECIMENS;
+                title.text = "SHELF";
+                subtitle.text = store.labs[labId].labName;
+                _loadedSpecimens = store.GetSpecimenDataForLab(labId);
+            } 
+            else
+            {
+                mode = ListMode.LAB;
+
+                _loadedLabs = store.labs.Values.ToList();
+            }
         }
         else if (region == "")
         {
@@ -88,6 +113,7 @@ public class SelectorMenu : MonoBehaviour
         else
         {
             title.text = $"SPECIMEN LIST";
+            subtitle.text = organ;
             _loadedRegions = store.GetSpecimensByRegionOrgan(region, organ).Select(x => x.id).ToList();
             _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region][organ];
@@ -110,6 +136,12 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
+    public void LabSelected(string labId)
+    {
+        this.labId = labId;
+        Populate();
+    }
+
     /**
      * Lays out UI based on requested mode.
      * Called only through Populate() to ensure that correct data is available.
@@ -119,12 +151,22 @@ public class SelectorMenu : MonoBehaviour
         // Clears data.
         Clear();
 
-        if (mode == ListMode.SPECIMEN)
+        if (mode == ListMode.LAB)
+        {
+            subtitle.gameObject.SetActive(false);
+            for (int i = 0; i < _loadedLabs.Count; i++)
+            {
+                LabOption lo = Instantiate(labPrefab, listTransform);
+                lo.Populate(_loadedLabs[i], this);
+            }
+
+            return;
+        }
+
+        if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
         {
             // Activate and set shelf subtitle to current organ name
             subtitle.gameObject.SetActive(true);
-            subtitle.text = organ;
-
             // TODO: deactivate toggles for labView, bodyView
 
 
@@ -144,7 +186,6 @@ public class SelectorMenu : MonoBehaviour
         {
             // Deactivates the subtitle
             subtitle.gameObject.SetActive(false);
-            // TODO: activate toggles for labView, bodyView
 
             // Loops through loaded regions, producing a clickable button for each...
             for (int i = 0; i < _loadedRegions.Count; i++)
@@ -218,6 +259,7 @@ public class SelectorMenu : MonoBehaviour
     private void Back()
     {
         organ = "";
+        labId = "";
         Populate();
     }
 

@@ -72,6 +72,31 @@ public class SpecimenStore : MonoBehaviour
         return specimens.Values.Where(spd => !filteredOutIds.Contains(spd.id)).ToList();
     }
 
+    public List<SpecimenData> GetSpecimenDataForLab(string labId)
+    {
+        List<SpecimenData> data = new List<SpecimenData>();
+
+        if (!labs.ContainsKey(labId))
+        {
+            Debug.LogWarning($"No lab found with id {labId}");
+            return data;
+        }
+
+        foreach (string specimenId in labs[labId].specimenList)
+        {
+            if (!specimens.ContainsKey(specimenId))
+            {
+                Debug.LogWarning($"No specimen found with id {specimenId} for lab {labId}");
+                continue;
+            }
+
+            data.Add(specimens[specimenId]);
+
+        }
+
+        return data;
+    }
+
     public bool Loading()
     {
         return _loading;
