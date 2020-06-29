@@ -10,6 +10,7 @@ public class SpecimenRequestData
     public string assetUrl;
     public string meshPath;
     public string matPath;
+    public string prefabPath;
     public float scale;
     public AnnotationData[] annotations;
 

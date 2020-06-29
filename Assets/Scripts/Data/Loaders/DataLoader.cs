@@ -103,38 +103,55 @@ public abstract class DataLoader: MonoBehaviour
                 AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(req);
                 try
                 {
-                    /*foreach (string file in bundle.GetAllAssetNames ())
+                    if (srd.prefabPath != null)
                     {
-                        Debug.Log(file);
-                    }*/
+                        GameObject prefab = bundle.LoadAsset<GameObject>(srd.prefabPath);
+                        SpecimenData specimenData = new SpecimenData() {
+                            id = srd.id,
+                            annotations = srd.annotations.ToList(),
+                            prefab = prefab,
+                            version = srd.version,
+                            organ = srd.organ,
+                            scale = srd.scale,
+                            name = srd.name
+                        };
+                        _specimens.Add(specimenData);
+                    }
+                    else
+                    {
+                        // Checks for null material and mesh; if not loadable, will not add the asset.
+                        Material mat = bundle.LoadAsset<Material>(srd.matPath);
+                        if (mat == null) {
+                            Debug.LogWarning($"Could not find material for {srd.id} at path {srd.matPath} in bundle. Please check your bundle structure and try again.");
+                            foreach (string file in bundle.GetAllAssetNames()) {
+                                Debug.Log(file);
+                            }
+                            throw new Exception();
+                        }
 
-                    // Checks for null material and mesh; if not loadable, will not add the asset.
-                    Material mat = bundle.LoadAsset<Material>(srd.matPath);
-                    if (mat == null)
-                    {
-                        Debug.LogWarning($"Could not find material for {srd.id} at path {srd.matPath} in bundle. Please check your bundle structure and try again.");
-                        throw new Exception();
+                        Mesh mesh = bundle.LoadAsset<Mesh>(srd.meshPath);
+                        if (mesh == null) {
+                            Debug.LogWarning($"Could not find mesh for {srd.id} at path {srd.meshPath} in bundle.  Please check your bundle structure and try again.");
+                            throw new Exception();
+                        }
+
+                        // Asset seems good, add to the specimens list.
+                        SpecimenData specimenData = new SpecimenData() {
+                            id = srd.id,
+                            annotations = srd.annotations.ToList(),
+                            material = mat,
+                            mesh = mesh,
+                            version = srd.version,
+                            organ = srd.organ,
+                            scale = srd.scale,
+                            name = srd.name
+                        };
+                        _specimens.Add(specimenData);
                     }
 
-                    Mesh mesh = bundle.LoadAsset<Mesh>(srd.meshPath);
-                    if (mesh == null) {
-                        Debug.LogWarning($"Could not find mesh for {srd.id} at path {srd.meshPath} in bundle.  Please check your bundle structure and try again.");
-                        throw new Exception();
-                    }
+                    
 
-                    // Asset seems good, add to the specimens list.
-                    SpecimenData specimenData = new SpecimenData()
-                    {
-                        id = srd.id,
-                        annotations = srd.annotations.ToList(),
-                        material = mat,
-                        mesh = mesh, 
-                        version = srd.version,
-                        organ = srd.organ,
-                        scale = srd.scale,
-                        name = srd.name
-                    };
-                    _specimens.Add(specimenData);
+
 
                 }
                 catch (Exception e)

@@ -107,6 +107,13 @@ namespace Assets.Scripts.Controller
 
         private GameObject InstantiateSpecimen(SpecimenData data)
         {
+            // If prefab found, instantiate that
+            if (data.prefab != null)
+            {
+                return Instantiate(data.prefab);
+            }
+
+            // Else fallback to old way using meshes and mats
             GameObject spObj = new GameObject();
             spObj.AddComponent<MeshFilter>().mesh = data.mesh;
             spObj.AddComponent<MeshRenderer>().material = data.material;
@@ -115,6 +122,7 @@ namespace Assets.Scripts.Controller
             spObj.AddComponent<MeshCollider>();
             spObj.AddComponent<SpecimenOptions>();
             return spObj;
+
         }
 
         public void SwapSpecimens()

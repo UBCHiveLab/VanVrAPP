@@ -13,5 +13,6 @@ public class SpecimenData
     public Material material;
     public float scale;
     public List<AnnotationData> annotations;
+    public GameObject prefab;
 
 }
