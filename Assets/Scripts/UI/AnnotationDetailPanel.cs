@@ -195,7 +195,9 @@ public class AnnotationDetailPanel : MonoBehaviour
     /**
      * Updates the position and angle of the targeting line; must be called through update.
      */
-    private void UpdateTargetLine() {
+    private void UpdateTargetLine()
+    {
+        if (_displayedIndicator == null) return;
         Vector3 target = _displayedIndicator.transform.position; // The center point of the target indicator
         Vector3 pivot = line.position; // The pivot of the line to be drawn
         float dist = Vector3.Distance(target, pivot); // Distance between pivot and target

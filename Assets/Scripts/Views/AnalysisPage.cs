@@ -44,7 +44,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
         controlAssistant.gameObject.SetActive(false);
         compareMenu.gameObject.SetActive(false);
-        ToggleAnnotations(false);
+        ToggleAnnotations(annotationToggle.on);
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
