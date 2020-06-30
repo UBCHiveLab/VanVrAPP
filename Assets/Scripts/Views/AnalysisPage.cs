@@ -29,8 +29,12 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Camera mainCamera;
     public CompareMenu compareMenu;
     public AnnotationDisplay annotationDisplay;
+    public GameObject leftPanel;
+    public GameObject specimenLabel;
 
-    
+    private bool _focusOn;
+    private UITwoStateIndicator _focusIndicator;
+
     public void Activate()
     {
         if (stateController.CurrentSpecimenObject == null)
@@ -71,7 +75,10 @@ public class AnalysisPage : MonoBehaviour, IPage
         resetButton.onClick.AddListener(ResetCameraPosition);
 
         // Compare toggle
-        compareButton.onClick.AddListener(() => compareMenu.TogglePanel());
+        compareButton.onClick.AddListener(ToggleCompare);
+
+        focusModeButton.onClick.AddListener(() => ToggleFocus());
+        _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
     }
 
     void Update()
@@ -86,22 +93,34 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void ResetCameraPosition() {
         print("Reset");
-        mainCamera.transform.position = new Vector3(0, 4, -6);
 
-        mainCamera.transform.rotation = Quaternion.Euler(10, 0, 0);
+        // TODO
+
     }
 
     // ANNOTATIONS
 
     void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
-        if (annotationDisplay.gameObject.activeSelf)
-        {
-            annotationDisplay.Activate();
-        }
-        else
-        {
-            annotationDisplay.Deactivate();
-        }
+    }
+
+    void ToggleCompare()
+    {
+        bool on = !compareMenu.gameObject.activeSelf;
+        compareMenu.gameObject.SetActive(on);
+        leftPanel.gameObject.SetActive(!on);
+    }
+
+
+    void ToggleFocus()
+    {
+        // TODO: animate these
+        _focusOn = !_focusOn;
+
+        annotationDisplay.gameObject.SetActive(!_focusOn && annotationToggle.on);
+        compareMenu.gameObject.SetActive(false); // Always hide compare menu
+        leftPanel.gameObject.SetActive(!_focusOn);
+        specimenLabel.gameObject.SetActive(!_focusOn);
+        _focusIndicator.UpdateState(_focusOn);
     }
 }

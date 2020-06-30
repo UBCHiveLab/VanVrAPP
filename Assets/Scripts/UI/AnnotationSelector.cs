@@ -53,7 +53,7 @@ public class AnnotationSelector : MonoBehaviour
         }
         else
         {
-            label.text = display.activeIndicators[idx].data.title;
+            label.text = idx.ToString() + ". " + display.activeIndicators[idx].data.title;
         }
     }
 

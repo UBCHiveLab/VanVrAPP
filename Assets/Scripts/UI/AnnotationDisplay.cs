@@ -23,7 +23,7 @@ public class AnnotationDisplay : MonoBehaviour
     public AnnotationIndicator indicatorPrefab;
 
 
-    public void Activate()
+    public void OnEnable()
     {
         currentSpecimenData = stateController.CurrentSpecimenData;
         currentSpecimenObject = stateController.CurrentSpecimenObject;
@@ -35,7 +35,7 @@ public class AnnotationDisplay : MonoBehaviour
         annotationSelector.gameObject.SetActive(true);
     }
 
-    public void Deactivate()
+    public void OnDisable()
     {
         detailPanel.gameObject.SetActive(false);
         annotationSelector.gameObject.SetActive(false);
@@ -63,6 +63,7 @@ public class AnnotationDisplay : MonoBehaviour
 
     private void DrawAnnotations()
     {
+        if (currentSpecimenData.annotations == null) return;
         activeIndicators = new List<AnnotationIndicator>();
         for (int i = 0; i < currentSpecimenData.annotations.Count; i++)
         {

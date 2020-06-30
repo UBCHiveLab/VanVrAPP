@@ -10,6 +10,11 @@ public class UIToggle : MonoBehaviour
 
     public Action<bool> toggleFunc;
 
+    void OnEnable()
+    {
+        anim.SetBool("On", on);
+    }
+
     public void Bind(Action<bool> tFunc)
     {
         toggleFunc = tFunc;
@@ -20,6 +25,7 @@ public class UIToggle : MonoBehaviour
     {
         on = !on;
         toggleFunc?.Invoke(on);
+        anim.SetTrigger("Change");
         anim.SetBool("On", on);
     }
 
