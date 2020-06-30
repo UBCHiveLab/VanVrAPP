@@ -10,6 +10,7 @@ public class CompareMenu : MonoBehaviour
     public SpecimenStore store;
     public StateController stateController;
     public SpecimenCart cart;
+    public ProportionIndicator proportionIndicator;
     
     [Header("Internal Structure")]
     public Button viewToggle;
@@ -34,22 +35,24 @@ public class CompareMenu : MonoBehaviour
 
         if (store == null) store = FindObjectOfType<SpecimenStore>();
         if (stateController == null) stateController = FindObjectOfType<StateController>();
+
+        viewToggle.onClick.RemoveAllListeners();
+        viewToggle.onClick.AddListener(TogglePanel);
+        leftPanel.SetActive(!gameObject.activeSelf);
+        cart.SpawnTray2();
+        
+    }
+
+    void OnDisable()
+    {
+        leftPanel.SetActive(!gameObject.activeSelf);
+        if (stateController.CompareSpecimenData == null) {
+            cart.RemoveTray2();
+        }
     }
 
     public void TogglePanel() {
         gameObject.SetActive(!gameObject.activeSelf);
-        viewToggle.onClick.RemoveAllListeners();
-        viewToggle.onClick.AddListener(TogglePanel);
-        leftPanel.SetActive(!gameObject.activeSelf);
-
-        if (gameObject.activeSelf)
-        {
-            cart.SpawnTray2();
-        }
-        else if (stateController.CompareSpecimenData == null)
-        {
-            cart.RemoveTray2();
-        }
     }
 
     public void Populate()
@@ -108,6 +111,8 @@ public class CompareMenu : MonoBehaviour
         {
             cart.RemoveTray2();
         }
+
+        proportionIndicator.HighlightProportionIndicator();
     }
 
     private void Clear()
@@ -137,6 +142,8 @@ public class CompareMenu : MonoBehaviour
     {
         stateController.AddCompareSpecimen(data);
         Populate();
+
+        proportionIndicator.HighlightProportionIndicator();
     }
 
 }
