@@ -23,6 +23,8 @@ public class AnnotationDetailPanel : MonoBehaviour
     public RectTransform selfTransform;
     public Button detailOpenToggle;
     public RectTransform line;
+    public GameObject iconActive;
+    public GameObject iconInactive;
 
     [Header("Video Controls")]
     public ContentVideo currentVideo;
@@ -46,7 +48,8 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     void Start()
     {
-        _detailOpen = scrollView.IsActive(); 
+        _detailOpen = scrollView.IsActive();
+        UpdateIcon();
         detailOpenToggle.onClick.AddListener(ToggleDetailView);
         StartCoroutine(ResetScrollView());
     }
@@ -83,6 +86,18 @@ public class AnnotationDetailPanel : MonoBehaviour
         _detailOpen = !_detailOpen;
         scrollView.gameObject.SetActive(_detailOpen);
         StartCoroutine(ResetScrollView());
+        UpdateIcon();
+    }
+
+    private void UpdateIcon()
+    {
+        if (_detailOpen) {
+            iconActive.SetActive(true);
+            iconInactive.SetActive(false);
+        } else {
+            iconActive.SetActive(false);
+            iconInactive.SetActive(true);
+        }
     }
 
     /**
@@ -92,7 +107,7 @@ public class AnnotationDetailPanel : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();   // Needs to draw content to know what size to make container; waits until that content is drawn at the end of next frame
         yield return new WaitForEndOfFrame();
-        scrollView.verticalScrollbar.value = 0f;
+        scrollView.verticalScrollbar.value = 1f;
         float h = Mathf.Clamp(scrollView.content.sizeDelta.y, minDetailHeight, maxDetailHeight);
         scrollView.GetComponent<RectTransform>().sizeDelta = new Vector2(128f, h);
         selfTransform.anchoredPosition = new Vector3(selfTransform.anchoredPosition.x, h/2f);
