@@ -19,6 +19,11 @@ public class CompareMenu : MonoBehaviour
     [Header("Prefabs")]
     public SpecimenListing addListingPrefab;
 
+    void Start()
+    {
+        viewToggle.onClick.AddListener(TogglePanel);
+    }
+
     void OnEnable()
     {
         Populate();

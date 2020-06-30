@@ -50,7 +50,14 @@ public class TrayPage : MonoBehaviour, IPage
             }
         } else {
             // Else put compare mode on
-            CompareOn();
+            if (stateController.CompareSpecimenData != null)
+            {
+                CompareOn();
+            }
+            else
+            {
+                CompareOff();
+            }
         }
 
     }
@@ -113,6 +120,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     private void CompareOn()
     {
+        Debug.Log("yo");
         selectingCompareSpecimen = true;
         selectorMenu.SelectCompare();
         compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Uncompare";

@@ -1,33 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Controller;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AnalysisPage : MonoBehaviour, IPage
 {
     [Header("Control Assistant")]
-    public GameObject controlAssistantGO;
-    public Button controllerAssistant;
-    public Button controlButtonUp;
-    public Button controlButtonDown;
-    public Button controlButtonLeft;
-    public Button controlButtonRight;
-    public Button zoomIn;
-    public Button zoomOut;
+    public ControlAssist controlAssistant;
 
     [Header("Reset Camera position")]
+
+    [Header("Toggles")]
+    public UIToggle annotationToggle;
+    public UIToggle controlAssistToggle;
+    public UIToggle proportionToggle;
+
+    [Header("Buttons")]
+    public Button focusModeButton;
+    public Button compareButton;
     public Button resetButton;
 
-    private float xPos;
-    private float yPos;
-    private float zPos;
-
-    [Header("Annotations")]
-    public Button toggleAnnotation;
-
     [Header("Other")]
-
+    public TextMeshProUGUI targetSpecimenLabel;
     public GameObject uiObject;
     public StateController stateController;
     public Camera mainCamera;
@@ -42,13 +38,15 @@ public class AnalysisPage : MonoBehaviour, IPage
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
 
+        controlAssistant.gameObject.SetActive(false);
         compareMenu.gameObject.SetActive(false);
+        ToggleAnnotations(false);
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
         mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
 
-        ToggleAnnotations();
+        targetSpecimenLabel.text = stateController.CurrentSpecimenData.name;
 
         //annotationDisplay.Activate();
     }
@@ -63,89 +61,26 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void Start() {
         // Control Assistant Buttons
-
-        Button controlAssistant = controllerAssistant.GetComponent<Button>();
-        Button up = controlButtonUp.GetComponent<Button>();
-        Button down = controlButtonDown.GetComponent<Button>();
-        Button left = controlButtonLeft.GetComponent<Button>();
-        Button right = controlButtonRight.GetComponent<Button>();
-        Button zoomInside = zoomIn.GetComponent<Button>();
-        Button zoomOutside = zoomOut.GetComponent<Button>();
-
-        up.onClick.AddListener(MoveUp);
-        down.onClick.AddListener(MoveDown);
-        left.onClick.AddListener(MoveLeft);
-        right.onClick.AddListener(MoveRight);
-        zoomInside.onClick.AddListener(ZoomIn);
-        zoomOutside.onClick.AddListener(ZoomOut);
-       // controlAssistant.onClick.AddListener(ToggleController);
+        controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
 
         // Annotation Button
-        Button toggleAnnotationButton = toggleAnnotation.GetComponent<Button>();
-        toggleAnnotationButton.onClick.AddListener(ToggleAnnotations);
+        annotationToggle.Bind(ToggleAnnotations);
 
         // Reset Specimen Button
-        Button resetCameraPosition = resetButton.GetComponent<Button>();
-        resetCameraPosition.onClick.AddListener(ResetCameraPosition);
+        resetButton.onClick.AddListener(ResetCameraPosition);
+
+        // Compare toggle
+        compareButton.onClick.AddListener(() => compareMenu.TogglePanel());
     }
 
     void Update()
     {
 
         if (stateController.mode != ViewMode.ANALYSIS) return;
-        xPos = mainCamera.transform.position.x;
-        yPos = mainCamera.transform.position.y;
-        zPos = mainCamera.transform.position.z;
-       // mainCamera.transform.LookAt(stateController.CurrentSpecimenObject.transform);
-
-        // print(xPos + "  " + yPos + "  " + zPos);
 
     }
 
-    // CONTROL ASSISTANT BUTTON METHODS
-
-    void ToggleController() {
-        print("Toggle Controller On/Off");
-        controlAssistantGO.SetActive(!controlAssistantGO.activeInHierarchy);
-
-    }
-
-    void MoveUp() {
-        print("UP");
-        yPos += 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
-    }
-
-    void MoveDown() {
-        print("DOWN");
-        yPos -= 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
-    }
-
-    void MoveLeft() {
-        print("LEFT");
-        xPos -= 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
-    }
-
-    void MoveRight() {
-        print("RIGHT");
-        xPos += 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
-    }
-
-    void ZoomIn() {
-        print("Zoom In");
-        zPos += 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
-    }
-
-    void ZoomOut() {
-        print("Zoom Out");
-        zPos -= 1f;
-        mainCamera.transform.position = new Vector3(xPos, yPos, zPos);
-    }
 
     // RESET BUTTON METHOD
 
@@ -158,8 +93,8 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     // ANNOTATIONS
 
-    void ToggleAnnotations() {
-        annotationDisplay.gameObject.SetActive(!annotationDisplay.gameObject.activeSelf);
+    void ToggleAnnotations(bool on) {
+        annotationDisplay.gameObject.SetActive(on);
         if (annotationDisplay.gameObject.activeSelf)
         {
             annotationDisplay.Activate();
