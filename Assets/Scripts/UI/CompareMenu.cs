@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Controller;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +16,17 @@ public class CompareMenu : MonoBehaviour
     public SpecimenListing primarySpecimenListing;
     public SpecimenListing secondarySpecimenListing;
     public Transform addListTransform;
+    public TextMeshProUGUI organNameLabel;
 
     [Header("Prefabs")]
     public SpecimenListing addListingPrefab;
+
+    [Header("External Structure")] public GameObject leftPanel;
+
+    void Start()
+    {
+        viewToggle.onClick.AddListener(TogglePanel);
+    }
 
     void OnEnable()
     {
@@ -31,6 +40,7 @@ public class CompareMenu : MonoBehaviour
         gameObject.SetActive(!gameObject.activeSelf);
         viewToggle.onClick.RemoveAllListeners();
         viewToggle.onClick.AddListener(TogglePanel);
+        leftPanel.SetActive(!gameObject.activeSelf);
 
         if (gameObject.activeSelf)
         {
@@ -51,6 +61,8 @@ public class CompareMenu : MonoBehaviour
             Debug.LogWarning("No specimen selected; not populating compare menu.");
             return;
         }
+
+        organNameLabel.text = stateController.CurrentSpecimenData.organ;
 
         // Populates the primary specimen holder, including its "remove" button
         primarySpecimenListing.Populate(stateController.CurrentSpecimenData, () => {Remove(0);});

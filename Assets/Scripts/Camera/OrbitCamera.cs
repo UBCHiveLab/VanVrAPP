@@ -41,6 +41,9 @@ public class OrbitCamera : MonoBehaviour
     [Tooltip("How sensative the camera zooming is -- the speed of the zooming.")]
     public float zoomSensitivity = 2;
 
+    [Header("Control Assist")]
+    [Tooltip("Control assist sets this to override camera movement")]
+    public bool controlAssistActive = false;
 
     new private Camera camera;
     private float cameraFieldOfView;
@@ -75,7 +78,7 @@ public class OrbitCamera : MonoBehaviour
     private void LateUpdate()
     {
 
-        if (EventSystem.current.IsPointerOverGameObject()) return;  // Nothing after this will be executed if cursor is over UI object
+        if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Nothing after this will be executed if cursor is over UI object
 
         //If auto rotation is enabled, just increment the xVelocity value by the rotationSensitivity.
         if (autoRotate)
@@ -140,7 +143,7 @@ public class OrbitCamera : MonoBehaviour
 
     private void Zoom()
     {
-        if (EventSystem.current.IsPointerOverGameObject()) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
+        if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
 
         float deltaTime = Time.deltaTime;
 

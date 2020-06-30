@@ -41,10 +41,10 @@ namespace Assets.Scripts.Controller
         */
         public string currentSpecimenId => CurrentSpecimenData?.id;
 
-        // Mode state
+        // Mode on
         private ViewMode _mode;
 
-        // Specimen state
+        // Specimen on
         public SpecimenData CurrentSpecimenData;
         // The instantiated current specimen object
         public GameObject CurrentSpecimenObject; 
