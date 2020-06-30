@@ -27,6 +27,10 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button toggleAnnotation;
     public GameObject annotationMenu;
 
+    [Header("Proportion Indicator")]
+    public ProportionIndicator proportionScript;
+    public GameObject proportionIndicator;
+
     [Header("Other")]
 
     public GameObject uiObject;
@@ -41,9 +45,9 @@ public class AnalysisPage : MonoBehaviour, IPage
         {
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
-
         compareMenu.gameObject.SetActive(false);
         annotationMenu.gameObject.SetActive(false);
+        proportionIndicator.SetActive(true); 
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
@@ -53,13 +57,17 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Deactivate()
     {
+        proportionScript.ResetProportionIndicator(); // Hide selected specimen on proportion
+        proportionIndicator.SetActive(false); 
         uiObject.SetActive(false);
         mainCamera.GetComponent<OrbitCamera>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().target = null;
     }
 
 
-    void Start() {
+    public void Start() {
+        
+       
         // Control Assistant Buttons
 
         Button controlAssistant = controllerAssistant.GetComponent<Button>();
@@ -84,6 +92,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         Button toggleAnnotationButton = toggleAnnotation.GetComponent<Button>();
         toggleAnnotationButton.onClick.AddListener(ToggleAnnotations);
 
+        
+       
 
         // Reset Specimen Button
 
@@ -91,7 +101,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         resetCameraPosition.onClick.AddListener(ResetCameraPosition);
     }
 
-    void Update()
+    public void Update()
     {
 
         if (stateController.mode != ViewMode.ANALYSIS) return;

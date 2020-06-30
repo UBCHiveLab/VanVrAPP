@@ -12,8 +12,11 @@ public class ModeChangeButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         if (controller == null) controller = FindObjectOfType<StateController>();
         GetComponent<Button>().onClick.AddListener(() => { controller.mode = mode; });
+
+        
     }
 
 }

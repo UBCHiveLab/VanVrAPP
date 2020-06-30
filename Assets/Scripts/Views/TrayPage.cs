@@ -11,6 +11,7 @@ public class TrayPage : MonoBehaviour, IPage
     public GameObject actionButtons;
     public Button compareButton;
     public Button analyzeButton;
+    public ProportionIndicator proportionScript;
     public bool selectingCompareSpecimen;
 
 
@@ -86,7 +87,7 @@ public class TrayPage : MonoBehaviour, IPage
         {
             cart.RemoveTray2();
         }
-
+        proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
     }
 
