@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Assets.Scripts.Controller;
 using UnityEngine;
-using TMPro;
 
-public class AnnotationDisplay : MonoBehaviour
-{
+public class AnnotationDisplay : MonoBehaviour {
     [Header("External Structures")]
     public StateController stateController;
     public AnnotationDetailPanel detailPanel;
@@ -23,8 +20,7 @@ public class AnnotationDisplay : MonoBehaviour
     public AnnotationIndicator indicatorPrefab;
 
 
-    public void OnEnable()
-    {
+    public void OnEnable() {
         currentSpecimenData = stateController.CurrentSpecimenData;
         currentSpecimenObject = stateController.CurrentSpecimenObject;
 
@@ -35,8 +31,7 @@ public class AnnotationDisplay : MonoBehaviour
         annotationSelector.gameObject.SetActive(true);
     }
 
-    public void OnDisable()
-    {
+    public void OnDisable() {
         detailPanel.gameObject.SetActive(false);
         annotationSelector.gameObject.SetActive(false);
     }
@@ -61,12 +56,10 @@ public class AnnotationDisplay : MonoBehaviour
         ShowDetail(activeIndicators[selectedSpecimenIndex]);
     }
 
-    private void DrawAnnotations()
-    {
+    private void DrawAnnotations() {
         if (currentSpecimenData.annotations == null) return;
         activeIndicators = new List<AnnotationIndicator>();
-        for (int i = 0; i < currentSpecimenData.annotations.Count; i++)
-        {
+        for (int i = 0; i < currentSpecimenData.annotations.Count; i++) {
             AnnotationData ad = currentSpecimenData.annotations[i];
             AnnotationIndicator indicator = Instantiate(indicatorPrefab, transform);
             indicator.Populate(i, ad, currentSpecimenData, currentSpecimenObject, this);
@@ -74,13 +67,11 @@ public class AnnotationDisplay : MonoBehaviour
         }
     }
 
-    private void ClearAnnotations()
-    {
+    private void ClearAnnotations() {
         selectedSpecimenIndex = -1;
 
         activeIndicators = new List<AnnotationIndicator>();
-        foreach (Transform child in transform)
-        {
+        foreach (Transform child in transform) {
             Destroy(child.gameObject);
         }
     }

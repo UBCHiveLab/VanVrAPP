@@ -22,6 +22,10 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button compareButton;
     public Button resetButton;
 
+    [Header("Proportion Indicator")]
+    public ProportionIndicator proportionScript;
+    public GameObject proportionIndicator;
+
     [Header("Other")]
     public TextMeshProUGUI targetSpecimenLabel;
     public GameObject uiObject;
@@ -45,6 +49,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         controlAssistant.gameObject.SetActive(false);
         compareMenu.gameObject.SetActive(false);
         ToggleAnnotations(annotationToggle.on);
+        proportionIndicator.SetActive(proportionToggle.on); 
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
@@ -57,13 +62,16 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Deactivate()
     {
+        proportionScript.ResetProportionIndicator(); // Hide selected specimen on proportion
         uiObject.SetActive(false);
         mainCamera.GetComponent<OrbitCamera>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().target = null;
     }
 
 
-    void Start() {
+    public void Start() {
+        
+       
         // Control Assistant Buttons
         controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
@@ -77,11 +85,14 @@ public class AnalysisPage : MonoBehaviour, IPage
         // Compare toggle
         compareButton.onClick.AddListener(ToggleCompare);
 
+        // Proportion toggle
+        proportionToggle.Bind(ToggleProportionIndicator);
+
         focusModeButton.onClick.AddListener(() => ToggleFocus());
         _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
     }
 
-    void Update()
+    public void Update()
     {
 
         if (stateController.mode != ViewMode.ANALYSIS) return;
@@ -102,6 +113,11 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
+    }
+
+    void ToggleProportionIndicator(bool on)
+    {
+        proportionIndicator.gameObject.SetActive(on);
     }
 
     void ToggleCompare()
