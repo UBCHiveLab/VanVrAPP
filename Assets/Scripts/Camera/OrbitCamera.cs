@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEditor;
 
 public enum ZoomMode
 {
@@ -258,12 +259,15 @@ public class OrbitCamera : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
+            int layerMask = 9 << 9;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f))
+            if (Physics.Raycast(ray, out hit, 100.0f, layerMask))
             {
-                target = hit.transform;
+                
+                    target = hit.transform;
+                }
             }
-        }
+        
 
        
     }
