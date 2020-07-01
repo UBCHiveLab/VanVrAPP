@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4153650191425948681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4153650191425948683}
+  - component: {fileID: 4153650191425948680}
+  m_Layer: 0
+  m_Name: SpecimenStore
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4153650191425948683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153650191425948681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 57.662903, y: 139.03488, z: 155.60052}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4153650191425948680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4153650191425948681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e938899d9b94fd4981a0d156fa8dcc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manifestLocal: 1
+  manifestLocalPath: manifest
+  manifestUrlPath: http://example.net/manifest.json
+  regions:
+  - name: 
+    organs: []
+    order: 0
+    icon: {fileID: 0}
+  - name: 
+    organs: []
+    order: 0
+    icon: {fileID: 0}
+  - name: 
+    organs: []
+    order: 0
+    icon: {fileID: 0}
+  icons:
+  - region: Head & Neck
+    icon: {fileID: 21300000, guid: 6894d36d94f9d1b4e825189592810d41, type: 3}
+  - region: Thorax
+    icon: {fileID: 21300000, guid: f8c0d8e220d20a845af592a571c1ca43, type: 3}
+  - region: Abdomen
+    icon: {fileID: 21300000, guid: ddceaae1c4828c14ea05d7ec397ea813, type: 3}
+  - region: Back & Core
+    icon: {fileID: 21300000, guid: 7f73a96852dc96d45b67711cbf77bb2e, type: 3}
+  - region: Pelvic
+    icon: {fileID: 21300000, guid: 4e08901cbbac29046af93ab3bc540256, type: 3}
+  - region: Upper Limb
+    icon: {fileID: 21300000, guid: 5355cfebdccc2c74da8367a072eca4ef, type: 3}
+  - region: Lower Limb
+    icon: {fileID: 21300000, guid: fc6b3e9ae36a479488e5b4b70999ee9b, type: 3}
+  - region: Embryology
+    icon: {fileID: 21300000, guid: aecabf6f83c9d54459fdddafee4991a0, type: 3}

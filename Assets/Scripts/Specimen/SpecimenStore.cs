@@ -20,6 +20,10 @@ public class SpecimenStore : MonoBehaviour
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
     public Dictionary<string, RegionData> organToRegion;
 
+
+    [Header("Region Icons")] public RegionIconEntry[] icons;
+    
+ 
     private bool _loading = true;
 
     public List<string> GetSpecimenIdsList()
@@ -67,6 +71,16 @@ public class SpecimenStore : MonoBehaviour
         return specimensByRegionByOrgan[region][organ];
     }
 
+    public List<string> GetOrgansByRegion(string region)
+    {
+        if (!specimensByRegionByOrgan.ContainsKey(region))
+        {
+            return new List<string>();
+        }
+
+        return specimensByRegionByOrgan[region].Keys.ToList();
+    }
+
     public List<SpecimenData> GetSpecimenDataFiltered(List<string> filteredOutIds)
     {
         return specimens.Values.Where(spd => !filteredOutIds.Contains(spd.id)).ToList();
@@ -96,6 +110,8 @@ public class SpecimenStore : MonoBehaviour
 
         return data;
     }
+
+
 
     public bool Loading()
     {
@@ -149,6 +165,14 @@ public class SpecimenStore : MonoBehaviour
         organToRegion = new Dictionary<string, RegionData>();
         foreach (RegionData region in regions)
         {
+            foreach (RegionIconEntry icon in icons)
+            {
+                if (icon.region == region.name)
+                {
+                    region.icon = icon.icon;
+                }
+            }
+
             foreach (string organ in region.organs)
             {
                 organToRegion.Add(organ, region);

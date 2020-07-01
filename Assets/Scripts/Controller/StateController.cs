@@ -27,6 +27,7 @@ namespace Assets.Scripts.Controller
             get => _mode;
             set
             {
+                if (value == _mode) return;
                 modeToPage[_mode].Deactivate();
                 _mode = value;
                 if (modeToPage.ContainsKey(_mode) && modeToPage[_mode] != null)

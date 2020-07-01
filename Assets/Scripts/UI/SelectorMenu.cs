@@ -10,7 +10,7 @@ public class SelectorMenu : MonoBehaviour
 {
 
     private bool byLab;
-    private string region = "";
+    private RegionData region = null;
     private string organ = "";
     private string labId = "";
 
@@ -28,7 +28,8 @@ public class SelectorMenu : MonoBehaviour
     public TextMeshProUGUI title;
     public Button backButton;
     public TextMeshProUGUI subtitle;
-    public Slider labToggle;
+    public Button atlasButton;
+    public Button labButton;
 
     public enum ListMode
     {
@@ -39,7 +40,8 @@ public class SelectorMenu : MonoBehaviour
         LAB_SPECIMENS
     }
 
-    private List<string> _loadedRegions;
+
+    private List<RegionData> _loadedRegions;
     private List<string> _loadedOrgans;
     private List<SpecimenData> _loadedSpecimens;
     private bool _loading = true;
@@ -50,14 +52,11 @@ public class SelectorMenu : MonoBehaviour
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
         subtitle.text = "LOADING SPECIMENS...";
-        labToggle.onValueChanged.AddListener((val) =>
-        {
-            byLab = Mathf.RoundToInt(val) == 1;
-            organ = "";
-            labId = "";
-            region = "";
-            Populate();
-        });
+        labButton.onClick.AddListener(ToggleToLabs);
+        atlasButton.onClick.AddListener(ToggleToAtlas);
+
+        ToggleToAtlas();
+
     }
 
     void Update()
@@ -97,26 +96,26 @@ public class SelectorMenu : MonoBehaviour
                 _loadedLabs = store.labs.Values.ToList();
             }
         }
-        else if (region == "")
+        else if (region == null)
         {
             title.text = $"SHELF";
-            _loadedRegions = store.regions.OrderBy(region => region.order).Select(region => region.name).ToList();
+            _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             mode = ListMode.REGION;
         }
         else if (organ == "")
         {
             title.text = $"SHELF";
-            _loadedRegions = store.regions.OrderBy(region => region.order).Select(region => region.name).ToList();
-            _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
+            _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
+            _loadedOrgans = store.GetOrgansByRegion(region.name);
             mode = ListMode.REGION_EXPANDED;
         }
         else
         {
             title.text = $"SPECIMEN LIST";
             subtitle.text = organ;
-            _loadedRegions = store.GetSpecimensByRegionOrgan(region, organ).Select(x => x.id).ToList();
-            _loadedOrgans = store.specimensByRegionByOrgan[region].Keys.ToList();
-            _loadedSpecimens = store.specimensByRegionByOrgan[region][organ];
+            //_loadedRegions = store.GetSpecimensByRegionOrgan(region.name, organ).Select(x => x.id).ToList();
+            _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
+            _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
             mode = ListMode.SPECIMEN;
         }
 
@@ -126,7 +125,7 @@ public class SelectorMenu : MonoBehaviour
 
     public void SelectCompare()
     {
-        region = "";
+        region = null;
         organ = "";
         Populate();
     }
@@ -160,6 +159,7 @@ public class SelectorMenu : MonoBehaviour
                 lo.Populate(_loadedLabs[i], this);
             }
 
+            backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
             return;
         }
 
@@ -167,15 +167,12 @@ public class SelectorMenu : MonoBehaviour
         {
             // Activate and set shelf subtitle to current organ name
             subtitle.gameObject.SetActive(true);
-            // TODO: deactivate toggles for labView, bodyView
-
 
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransform);
-                btn.text.text = _loadedSpecimens[i].id;
-                btn.indexValue = i;
+                btn.Populate(_loadedSpecimens[i].id, i, null);
                 btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].id));
             }
 
@@ -191,8 +188,7 @@ public class SelectorMenu : MonoBehaviour
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
                 SelectorButton btn = Instantiate(selectorPrefab, listTransform);
-                btn.text.text = _loadedRegions[i];
-                btn.indexValue = i;
+                btn.Populate(_loadedRegions[i].name, i, _loadedRegions[i].icon);
 
                 // If a region is the currently selected, output the organs found as buttons below.
                 if (_loadedRegions[i] == region)
@@ -200,8 +196,9 @@ public class SelectorMenu : MonoBehaviour
                     for (int j = 0; j < _loadedOrgans.Count; j++)
                     {
                         SelectorButton sbtn = Instantiate(lightSelectorPrefab, listTransform);
-                        sbtn.text.text = _loadedOrgans[j];
-                        sbtn.indexValue = j;
+                        sbtn.Populate(_loadedOrgans[j], j, null);
+
+
                         // Bind a click listener that loads the specimen selection view
                         sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]);});
                     }
@@ -215,10 +212,10 @@ public class SelectorMenu : MonoBehaviour
                     btn.button.onClick.AddListener(() => { SelectRegion(_loadedRegions[btn.indexValue]); });
                 }
 
-            }
 
+            }
             // Bind a click listener that toggles the shelf menu
-            backButton.onClick.AddListener(ToggleMenu);
+            backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
         }
 
 
@@ -226,6 +223,8 @@ public class SelectorMenu : MonoBehaviour
 
     private void Clear()
     {
+        backButton.onClick.RemoveAllListeners();
+
         // Clears all menu options
         foreach (Transform child in listTransform)
         {
@@ -233,7 +232,7 @@ public class SelectorMenu : MonoBehaviour
         }
     }
 
-    private void SelectRegion(string region)
+    private void SelectRegion(RegionData region)
     {
         this.region = region;
         Populate();
@@ -252,7 +251,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void UnselectRegion()
     {
-        region = "";
+        region = null;
         Populate();
     }
 
@@ -263,8 +262,26 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    private void ToggleMenu()
+    private void ToggleToAtlas()
     {
-        Debug.Log("I'm toggglin' here");
+        labButton.interactable = true;
+        atlasButton.interactable = false;
+        byLab = false;
+        organ = "";
+        labId = "";
+        region = null;
+        Populate();
     }
+
+    private void ToggleToLabs()
+    {
+        labButton.interactable = false;
+        atlasButton.interactable = true;
+        organ = "";
+        labId = "";
+        region = null;
+        byLab = true;
+        Populate();
+    }
+
 }

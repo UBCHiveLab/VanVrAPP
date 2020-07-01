@@ -57,7 +57,7 @@ public class AnnotationDisplay : MonoBehaviour {
     }
 
     private void DrawAnnotations() {
-        if (currentSpecimenData.annotations == null) return;
+        if (currentSpecimenData == null || currentSpecimenData.annotations == null) return;
         activeIndicators = new List<AnnotationIndicator>();
         for (int i = 0; i < currentSpecimenData.annotations.Count; i++) {
             AnnotationData ad = currentSpecimenData.annotations[i];

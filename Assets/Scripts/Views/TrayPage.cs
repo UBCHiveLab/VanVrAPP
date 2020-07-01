@@ -13,7 +13,7 @@ public class TrayPage : MonoBehaviour, IPage
     public Button analyzeButton;
     public ProportionIndicator proportionScript;
     public bool selectingCompareSpecimen;
-
+    public Button shelfToggle;
 
     // TEMP: we probably want to animate camera back to tray when finished
     public bool camSet;
@@ -27,10 +27,14 @@ public class TrayPage : MonoBehaviour, IPage
     {
         compareButton.onClick.AddListener(SelectCompare);
         analyzeButton.onClick.AddListener(SelectAnalysis);
+        shelfToggle.onClick.AddListener(ToggleShelfMenu); 
         actionButtons.SetActive(false);
+
     }
 
     public void Activate() {
+        selectorMenu.gameObject.SetActive(false);
+
         uiObject.SetActive(true);
 
         // TEMP: use animation
@@ -65,6 +69,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void Deactivate() {
         uiObject.SetActive(false);
+        shelfToggle.gameObject.SetActive(true);
     }
 
     public void SpecimenSelected(SpecimenData data)
@@ -84,7 +89,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void SelectAnalysis()
     {
-        // TEMP: add animation later
+        // TODO: THIS is the source of the camera bug. change later when we have final animations
         camDefaultPosition = Camera.main.transform.position;
         camDefaultRotation = Camera.main.transform.rotation.eulerAngles;
         camDefaultFov = Camera.main.fieldOfView;
@@ -110,21 +115,27 @@ public class TrayPage : MonoBehaviour, IPage
         }
     }
 
+    public void ToggleShelfMenu()
+    {
+        bool showMenu = !selectorMenu.gameObject.activeSelf;
+        selectorMenu.gameObject.SetActive(showMenu);
+        shelfToggle.gameObject.SetActive(!showMenu);
+    }
+
     private void CompareOff()
     {
         selectingCompareSpecimen = false;
         stateController.RemoveCompareSpecimen();
-        compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Compare";
+        compareButton.GetComponent<UITwoStateIndicator>().UpdateState(false);
         selectorMenu.EndCompare();
         cart.RemoveTray2();
     }
 
     private void CompareOn()
     {
-        Debug.Log("yo");
         selectingCompareSpecimen = true;
         selectorMenu.SelectCompare();
-        compareButton.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "Uncompare";
+        compareButton.GetComponent<UITwoStateIndicator>().UpdateState(true);
         cart.SpawnTray2();
     }
    

@@ -52,6 +52,7 @@ public class ProportionIndicator : MonoBehaviour
 
     public void ResetProportionIndicator(){
         // Hide
+        if (stateController.CompareSpecimenData == null) return;
          for (int i = 0; i < proportionIndicatorBody.transform.childCount - 1; i++) 
         {
             if (proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CurrentSpecimenData.organ){
