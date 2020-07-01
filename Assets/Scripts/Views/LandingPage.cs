@@ -13,6 +13,7 @@ public class LandingPage : MonoBehaviour, IPage
     public GameObject doorR;
     public GameObject mainCamera;
     public Animator mainCameraAnimator;
+    public AudioSource startAudio;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class LandingPage : MonoBehaviour, IPage
 
     void StartSession()
     {
+        startAudio.GetComponent<AudioSource>().Play(0);
         doorL.GetComponent<Animator>().SetTrigger("Start");
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
