@@ -35,6 +35,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public AnnotationDisplay annotationDisplay;
     public GameObject leftPanel;
     public GameObject specimenLabel;
+    public GameObject trayObj;
 
     private bool _focusOn;
     private UITwoStateIndicator _focusIndicator;
@@ -54,9 +55,9 @@ public class AnalysisPage : MonoBehaviour, IPage
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
         mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
-
+        //mainCamera.cullingMask = 9 << 9;
         targetSpecimenLabel.text = stateController.CurrentSpecimenData.name;
-
+        trayObj.SetActive(false);
         //annotationDisplay.Activate();
     }
 
@@ -66,6 +67,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         uiObject.SetActive(false);
         mainCamera.GetComponent<OrbitCamera>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().target = null;
+        // mainCamera.cullingMask = -1;
+        trayObj.SetActive(true);
     }
 
 

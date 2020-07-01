@@ -122,6 +122,7 @@ namespace Assets.Scripts.Controller
             spObj.gameObject.SetActive(true);
             spObj.AddComponent<MeshCollider>();
             spObj.AddComponent<SpecimenOptions>();
+            spObj.layer = 9;
             return spObj;
 
         }
