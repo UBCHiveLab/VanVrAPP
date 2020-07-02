@@ -35,6 +35,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public AnnotationDisplay annotationDisplay;
     public GameObject leftPanel;
     public GameObject specimenLabel;
+    public SpecimenCart cart;
     public GameObject trayObj;
 
     private bool _focusOn;
@@ -58,6 +59,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         //mainCamera.cullingMask = 9 << 9;
         targetSpecimenLabel.text = stateController.CurrentSpecimenData.name;
         trayObj.SetActive(false);
+        cart.SetTrayVisibility(true);
         //annotationDisplay.Activate();
     }
 
@@ -69,6 +71,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         mainCamera.GetComponent<OrbitCamera>().target = null;
         // mainCamera.cullingMask = -1;
         trayObj.SetActive(true);
+        cart.SetTrayVisibility(false);
+
     }
 
 

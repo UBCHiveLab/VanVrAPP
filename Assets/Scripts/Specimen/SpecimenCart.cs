@@ -12,6 +12,7 @@ public class SpecimenCart : MonoBehaviour
     public GameObject tray1;
     public GameObject tray2;
     public Vector3 specimenTrayOffset = new Vector3(0, 0, 0.005f);
+    public bool hidden;
 
     void Start()
     {
@@ -38,6 +39,11 @@ public class SpecimenCart : MonoBehaviour
         } else {
             tray1.transform.localPosition = compareTray1LocalOffset;
         }
+
+        if (hidden)
+        {
+            tray1.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 
     public void SpawnTray2() {
@@ -45,6 +51,10 @@ public class SpecimenCart : MonoBehaviour
         tray2 = Instantiate(trayPrefab, transform);
         tray2.transform.localPosition = compareTray2LocalOffset;
         tray1.transform.localPosition = compareTray1LocalOffset;
+
+        if (hidden) {
+            tray2.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
 
     public void RemoveTray1() {
@@ -65,4 +75,15 @@ public class SpecimenCart : MonoBehaviour
     {
         specimen.transform.localPosition = specimenTrayOffset;
     }
+
+    public void SetTrayVisibility(bool hide)
+    {
+        hidden = hide;
+        tray1.GetComponent<MeshRenderer>().enabled = !hidden;
+        if (tray2 != null)
+        {
+            tray2.GetComponent<MeshRenderer>().enabled = !hidden;
+        }
+    }
+
 }
