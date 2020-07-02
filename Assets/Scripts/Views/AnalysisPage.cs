@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Controller;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class AnalysisPage : MonoBehaviour, IPage
@@ -38,6 +39,9 @@ public class AnalysisPage : MonoBehaviour, IPage
     public SpecimenCart cart;
     public GameObject trayObj;
 
+    public PostProcessVolume volume;
+    DepthOfField depthOfField;
+
     private bool _focusOn;
     private UITwoStateIndicator _focusIndicator;
 
@@ -61,6 +65,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         trayObj.SetActive(false);
         cart.SetTrayVisibility(true);
         //annotationDisplay.Activate();
+        depthOfField.active = true;
+
     }
 
     public void Deactivate()
@@ -71,14 +77,14 @@ public class AnalysisPage : MonoBehaviour, IPage
         mainCamera.GetComponent<OrbitCamera>().target = null;
         // mainCamera.cullingMask = -1;
         trayObj.SetActive(true);
+        depthOfField.active = false;
         cart.SetTrayVisibility(false);
-
     }
 
 
     public void Start() {
-        
-       
+
+        volume.profile.TryGetSettings(out depthOfField);
         // Control Assistant Buttons
         controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
