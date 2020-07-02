@@ -15,8 +15,6 @@ namespace Assets.Scripts.Controller
 
         public Dictionary<ViewMode, IPage> modeToPage;
 
-        private readonly Vector3 _primarySpecimenPosition = new Vector3(0.5f, 2, 14);
-        private readonly Vector3 _compareSpecimenPosition = new Vector3(1f, 2, 14);
 
 
         /**
@@ -87,7 +85,6 @@ namespace Assets.Scripts.Controller
             Debug.Log($"Specimen added: {data.id}");
             CurrentSpecimenObject = InstantiateSpecimen(data);
             CurrentSpecimenObject.gameObject.SetActive(true);
-            CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
      
             return CurrentSpecimenObject;
             // TODO: trigger animations etc.
@@ -102,25 +99,38 @@ namespace Assets.Scripts.Controller
             CompareSpecimenObject = InstantiateSpecimen(data);
             CompareSpecimenObject.gameObject.SetActive(true);
 
-            CompareSpecimenObject.transform.position = _compareSpecimenPosition;
             return CompareSpecimenObject;
         }
 
         private GameObject InstantiateSpecimen(SpecimenData data)
         {
+            GameObject spObj;
             // If prefab found, instantiate that
             if (data.prefab != null)
             {
-                return Instantiate(data.prefab);
+                spObj = Instantiate(data.prefab);
+            }
+            else
+            {
+                spObj = new GameObject(data.name);
+                try
+                {
+                    spObj.AddComponent<MeshFilter>().mesh = data.mesh;
+                    spObj.AddComponent<MeshRenderer>().material = data.material;
+                    spObj.AddComponent<MeshCollider>();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning(e);
+                }
+
+
             }
 
             // Else fallback to old way using meshes and mats
-            GameObject spObj = new GameObject();
-            spObj.AddComponent<MeshFilter>().mesh = data.mesh;
-            spObj.AddComponent<MeshRenderer>().material = data.material;
+
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
-            spObj.AddComponent<MeshCollider>();
             spObj.AddComponent<SpecimenOptions>();
             spObj.layer = 9;
             return spObj;
@@ -137,9 +147,6 @@ namespace Assets.Scripts.Controller
 
             CurrentSpecimenData = tempData;
             CurrentSpecimenObject = tempObject;
-
-            CurrentSpecimenObject.transform.position = _primarySpecimenPosition;
-            CompareSpecimenObject.transform.position = _compareSpecimenPosition;
         }
 
 

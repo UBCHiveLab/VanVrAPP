@@ -52,6 +52,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
 
+        leftPanel.gameObject.SetActive(true);
         controlAssistant.gameObject.SetActive(false);
         compareMenu.gameObject.SetActive(false);
         ToggleAnnotations(annotationToggle.on);
@@ -107,9 +108,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Update()
     {
-
         if (stateController.mode != ViewMode.ANALYSIS) return;
-
     }
 
 

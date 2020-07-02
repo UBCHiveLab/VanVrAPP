@@ -98,7 +98,7 @@ public class CompareMenu : MonoBehaviour
 
         // If primary specimen is removed, compare specimen becomes the primary.
         secondarySpecimenListing.gameObject.SetActive(false);
-        stateController.CurrentSpecimenObject.transform.SetParent(cart.tray1.transform);
+        cart.AddSpecimenPrimary(stateController.CurrentSpecimenObject);
         cart.ResetPosition(stateController.CurrentSpecimenObject);
 
         // If a specimen remains, populates the ui again.
@@ -140,7 +140,7 @@ public class CompareMenu : MonoBehaviour
 
     public void Add(SpecimenData data)
     {
-        stateController.AddCompareSpecimen(data);
+        cart.AddSpecimenCompare(stateController.AddCompareSpecimen(data));
         Populate();
 
         proportionIndicator.HighlightProportionIndicator();
