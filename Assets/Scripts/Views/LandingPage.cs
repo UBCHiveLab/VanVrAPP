@@ -24,7 +24,7 @@ public class LandingPage : MonoBehaviour, IPage
 
     void StartSession()
     {
-        //startAudio.GetComponent<AudioSource>().Play(0);
+        startAudio.GetComponent<AudioSource>().Play(0);
         doorL.GetComponent<Animator>().SetTrigger("Start");
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
