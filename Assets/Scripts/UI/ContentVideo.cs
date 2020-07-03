@@ -1,9 +1,12 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 {
+    public BlockType type => BlockType.VIDEO;
+
     [Header("External Structure")]
     public AnnotationDetailPanel detailPanel;
 
@@ -29,24 +32,28 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         Progress.onValueChanged.AddListener(ScrubVideo);
         FullScreen.onClick.AddListener(ToggleFullScreen);
     }
-
+    
     void Update()
     {
-        if (detailPanel.currentVideo == this && detailPanel.videoPlayer.isPlaying && !_scrubbing)
+        if (detailPanel.currentAVSource == this && detailPanel.videoPlayer.isPlaying && !_scrubbing)
         {
             Progress.value = (float) (detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
         }
     }
 
-    public void Populate(string url, string title, AnnotationDetailPanel panel) {
-        this.url = url;
-        this.title = title;
+    public void Populate(ContentBlockData data, AnnotationDetailPanel panel) {
+        if (data.type != BlockType.VIDEO) {
+            throw new Exception("Must be video block to render video data");
+        }
+        url = data.content;
+        title = data.title;
         detailPanel = panel;
         label.text = title;
     }
 
+
     /**
-     * Scrubbing toggles called onDrag of the slider
+     * Scrubbing toggles called onDrag of the progress
      */
     public void StartScrub() {
         _scrubbing = true;
@@ -59,19 +66,19 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 
     private void PlayVideo()
     {
-        detailPanel.VideoPlayed(this);
+        detailPanel.Play(this);
     }
 
     private void PauseVideo()
     {
-        detailPanel.VideoPaused(this);
+        detailPanel.Pause(this);
     }
 
     private void ScrubVideo(float val)
     {
         if (_scrubbing)
         {
-            detailPanel.VideoScrubbed(this, val);
+            detailPanel.Scrub(this, val);
             Progress.value = val;
         }
     }

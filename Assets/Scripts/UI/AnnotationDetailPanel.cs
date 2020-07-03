@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -26,10 +27,11 @@ public class AnnotationDetailPanel : MonoBehaviour
     public GameObject iconActive;
     public GameObject iconInactive;
 
-    [Header("Video Controls")]
-    public ContentVideo currentVideo;
+    [Header("AV Controls")]
+    public IAnnotationContentBlock currentAVSource;
     public RawImage currentVideoCanvas;
     public VideoPlayer videoPlayer;
+    public AudioSource audioSource;
 
     [Header("Full Screen Controls")]
     public IAnnotationContentBlock fullScreenObject;
@@ -39,11 +41,39 @@ public class AnnotationDetailPanel : MonoBehaviour
     public ContentText textPrefab;
     public ContentVideo videoPrefab;
     public ContentImage imagePrefab;
+    public ContentAudio audioPrefab;
+    public ContentSeparator seperatorPrefab;
 
     [Header("Internal State")]
     private bool _detailOpen;
     private AnnotationIndicator _displayedIndicator;
+    private List<ContentBlockData> _blockData;
     private List<IAnnotationContentBlock> _blocks = new List<IAnnotationContentBlock>();
+
+    private Dictionary<BlockType, Func<AnnotationDetailPanel, IAnnotationContentBlock>> blockTypeToBuilder =
+    new Dictionary<BlockType, Func<AnnotationDetailPanel, IAnnotationContentBlock>>
+    {
+        {
+            BlockType.SEPARATOR,
+            p => Instantiate(p.seperatorPrefab, p.contentTransform)
+        },
+        {
+            BlockType.AUDIO,
+            p => Instantiate(p.audioPrefab, p.contentTransform)
+        },
+        {
+            BlockType.VIDEO,
+            p => Instantiate(p.videoPrefab, p.contentTransform)
+        },
+        {
+            BlockType.TEXT,
+            p => Instantiate(p.textPrefab, p.contentTransform)
+        },
+        {
+            BlockType.IMAGE,
+            p => Instantiate(p.imagePrefab, p.contentTransform)
+        }
+    };
 
 
     void Start()
@@ -70,7 +100,9 @@ public class AnnotationDetailPanel : MonoBehaviour
     {
         Clear();
         title.text = data.title;
-        _blocks = ParseAndAddContentBlocks(data.content);
+        AnnotationParser parser = new AnnotationParser();
+        _blockData = parser.ParseAndAddContentBlocks(data.content);
+        _blocks = SpawnBlocks();
         _displayedIndicator = ind;
 
         if (gameObject.activeSelf) // If not active, will be called on Start()
@@ -113,51 +145,71 @@ public class AnnotationDetailPanel : MonoBehaviour
         selfTransform.anchoredPosition = new Vector3(selfTransform.anchoredPosition.x, h/2f);
     }
 
-    private void GenerateThumbnail(ContentVideo vc)
-    {
-        // TODO: Need to add something for video thumbnails
-        vc.canvas.texture = Texture2D.grayTexture;
-    }
-
     /**
      * Destroys all current content.
      */
     private void Clear()
     {
-        foreach (IAnnotationContentBlock block in _blocks)
+        foreach (Transform child in contentTransform)
         {
-            Destroy(block.gameObject);
+            Destroy(child.gameObject);
         }
+
         _blocks = new List<IAnnotationContentBlock>();
     }
 
     // VIDEO CONTROLS
 
-    public void VideoPlayed(ContentVideo vc)
+    public void Play(IAnnotationContentBlock ab)
     {
-        if (currentVideo == vc && videoPlayer.isPaused)
+        if (currentAVSource == ab)
         {
-            videoPlayer.Play();
+            if (ab.type == BlockType.AUDIO)
+            {
+                audioSource.Play();
+            } else if (ab.type == BlockType.VIDEO)
+            {
+                videoPlayer.Play();
+            }
         }
         else
         {
-            currentVideo = vc;
-            currentVideoCanvas = vc.canvas;
-            videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
-            videoPlayer.url = vc.url;
-            currentVideoCanvas.texture = videoPlayer.targetTexture;
-            videoPlayer.Play();
+            currentAVSource = ab;
+
+            if (ab.type == BlockType.VIDEO)
+            {
+                ContentVideo vc = ab as ContentVideo;
+                currentVideoCanvas = vc.canvas;
+                videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
+                videoPlayer.url = vc.url;
+                currentVideoCanvas.texture = videoPlayer.targetTexture;
+                videoPlayer.Play();
+            }
+            else if (ab.type == BlockType.AUDIO) 
+            {
+                ContentAudio ac = ab as ContentAudio;
+                audioSource.clip = ac.clip;
+                audioSource.Play();
+            }
+
         }
     }
 
-    public void VideoPaused(ContentVideo vc)
+    public void Pause(IAnnotationContentBlock ab)
     {
+        audioSource.Pause();
         videoPlayer.Pause();
     }
 
-    public void VideoScrubbed(ContentVideo vc, float val)
+    public void Scrub(IAnnotationContentBlock ab, float val)
     {
-        videoPlayer.time = val * videoPlayer.length;
+        if (ab.type == BlockType.AUDIO)
+        {
+            audioSource.time = val * audioSource.clip.length;
+        } else if (ab.type == BlockType.VIDEO)
+        {
+            videoPlayer.time = val * videoPlayer.length;
+        }
     }
 
     public void ToggleFullScreen(IAnnotationContentBlock block)
@@ -211,52 +263,17 @@ public class AnnotationDetailPanel : MonoBehaviour
                 discRadius); // Set line rect; note, height must be divided by two then offset by the disc radius so it doesn't intersect the indicator
     }
 
-
-    /**
-     * Helper method that splits the given content string to find rich media and split text blocks.
-     */
-    private List<string> TokenizeContent(string content) {
-        return Regex.Split(content, "\\[|\\]").ToList();
-    }
-
-    /**
-     * Parses through tokenized content and creates blocks from prefabs.
-     */
-    private List<IAnnotationContentBlock> ParseAndAddContentBlocks(string parseableString) {
-
+    private List<IAnnotationContentBlock> SpawnBlocks()
+    {
         List<IAnnotationContentBlock> blocks = new List<IAnnotationContentBlock>();
 
-        List<string> contents = TokenizeContent(parseableString);
-
-        foreach (string content in contents) {
-            if (content == "[" || content == "]") {
-                // ignore
-            } else if (content.StartsWith("vid") || content.StartsWith("video")) {
-                ContentVideo vid = Instantiate(videoPrefab, contentTransform);
-                Match match = Regex.Match(content, "src=[\'|\"](.*)[\'|\"]");
-                string src = match.Groups[1].Value;
-                match = Regex.Match(content, "title=[\'|\"](.*?)[\'|\"]");
-                string title = src;
-                if (match.Groups.Count > 0) {
-                    title = match.Groups[1].Value;
-                }
-                vid.Populate(src, title, this);
-                GenerateThumbnail(vid);
-                blocks.Add(vid);
-            } else if (content.StartsWith("img") || content.StartsWith("image")) {
-                ContentImage img = Instantiate(imagePrefab, contentTransform);
-                Match match = Regex.Match(content, "src=[\'|\"](.*)[\'|\"]");
-                string src = match.Groups[1].Value;
-                img.Populate(src, this);
-                blocks.Add(img);
-
-            } else {
-                ContentText text = Instantiate(textPrefab, contentTransform);
-                text.Populate(content, this);
-                blocks.Add(text);
-            }
+        foreach (ContentBlockData data in _blockData)
+        {
+            IAnnotationContentBlock block = blockTypeToBuilder[data.type].Invoke(this);
+            block.Populate(data, this);
+            blocks.Add(block);
         }
-
         return blocks;
     }
+    
 }

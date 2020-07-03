@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class ContentImage : MonoBehaviour, IAnnotationContentBlock
 {
+    public BlockType type => BlockType.IMAGE;
     public Button button;
     public AnnotationDetailPanel detailPanel;
     public RawImage canvas;
@@ -32,10 +34,14 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
     }
 
 
-    public void Populate(string url, AnnotationDetailPanel panel)
+    public void Populate(ContentBlockData data, AnnotationDetailPanel panel)
     {
-        this.url = url;
-        this.detailPanel = panel;
+        if (data.type != BlockType.IMAGE) {
+            throw new Exception("Must be text block to render text data");
+        }
+
+        url = data.content;
+        detailPanel = panel;
         homeParent = detailPanel.contentTransform;
     }
 

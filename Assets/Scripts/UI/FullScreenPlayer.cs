@@ -8,7 +8,8 @@ public class FullScreenPlayer : MonoBehaviour
 
     public void ReceiveVideo(ContentVideo vidBlock)
     {
-        FullScreenVideo.Populate(vidBlock.url, vidBlock.title, detailPanel);
+        // TODO
+        FullScreenVideo.Populate(null, detailPanel);
     }
 
     public void ReceiveImage(ContentImage imgBlock)
