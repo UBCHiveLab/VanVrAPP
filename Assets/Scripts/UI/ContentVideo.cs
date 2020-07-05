@@ -21,9 +21,10 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     [Header("Data")]
     public string url;
     public string title;
+    public bool youtube;
 
     private bool _scrubbing;
-
+    
 
     void Start()
     {
@@ -45,7 +46,12 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         if (data.type != BlockType.VIDEO) {
             throw new Exception("Must be video block to render video data");
         }
+
+
         url = data.content;
+        if (url.Contains("youtube.com")) {
+            youtube = true;
+        }
         title = data.title;
         detailPanel = panel;
         label.text = title;

@@ -32,6 +32,8 @@ public class AnnotationDetailPanel : MonoBehaviour
     public RawImage currentVideoCanvas;
     public VideoPlayer videoPlayer;
     public AudioSource audioSource;
+    public YoutubePlayer youtubePlayer;
+
 
     [Header("Full Screen Controls")]
     public IAnnotationContentBlock fullScreenObject;
@@ -178,12 +180,22 @@ public class AnnotationDetailPanel : MonoBehaviour
 
             if (ab.type == BlockType.VIDEO)
             {
+                videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
+
                 ContentVideo vc = ab as ContentVideo;
                 currentVideoCanvas = vc.canvas;
-                videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
-                videoPlayer.url = vc.url;
                 currentVideoCanvas.texture = videoPlayer.targetTexture;
-                videoPlayer.Play();
+                Debug.Log(vc.youtube);
+                if (vc.youtube) {
+                    youtubePlayer.youtubeUrl = vc.url;
+                    youtubePlayer.Play();
+                }
+                else
+                {
+                    videoPlayer.url = vc.url;
+                    videoPlayer.Play();
+                }
+
             }
             else if (ab.type == BlockType.AUDIO) 
             {
