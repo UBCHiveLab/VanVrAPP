@@ -107,7 +107,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -913,11 +913,11 @@ MonoBehaviour:
   m_Content: {fileID: 6316687236011227677}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 5
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 6316687236157640962}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 6316687235746384100}
@@ -946,7 +946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6316687235746384101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1230,7 +1230,6 @@ GameObject:
   - component: {fileID: 6316687236211308685}
   - component: {fileID: 6316687236211308687}
   - component: {fileID: 3729419495081871282}
-  - component: {fileID: 8282709693034008381}
   m_Layer: 5
   m_Name: AnnotationDetailPanel
   m_TagString: Untagged
@@ -1286,7 +1285,6 @@ MonoBehaviour:
   currentVideoCanvas: {fileID: 0}
   videoPlayer: {fileID: 6316687236211308685}
   audioSource: {fileID: 3729419495081871282}
-  youtubePlayer: {fileID: 8282709693034008381}
   fullScreenPlayer: {fileID: 0}
   textPrefab: {fileID: 5647273578635918357, guid: 08d27760a44a262478455d2106a71d57,
     type: 3}
@@ -1453,76 +1451,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8282709693034008381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6316687236211308683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7418089f4181645b5df8f90e317bf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  youtubeUrl: 
-  videoQuality: 0
-  customPlaylist: 0
-  autoPlayNextVideo: 0
-  youtubeUrls: []
-  startFromSecond: 0
-  startFromSecondTime: 0
-  autoPlayOnStart: 0
-  videoFormat: 0
-  autoPlayOnEnable: 0
-  playUsingInternalDevicePlayer: 0
-  loadYoutubeUrlsOnly: 0
-  objectsToRenderTheVideoImage: []
-  is3DLayoutVideo: 0
-  layout3d: 0
-  videoControllerCanvas: {fileID: 0}
-  mainCamera: {fileID: 0}
-  loadingContent: {fileID: 0}
-  OnYoutubeUrlAreReady:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoReadyToStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoPaused:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  videoPlayer: {fileID: 6316687236211308685}
-  audioPlayer: {fileID: 6316687236211308685}
-  debug: 0
-  _skipOnDrop: 1
-  videoUrl: 
-  audioUrl: 
-  ForceGetWebServer: 0
-  showPlayerControls: 0
-  pauseCalled: 0
-  autoHideControlsTime: 0
-  mainControllerUi: {fileID: 0}
-  progress: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  playbackSpeed: {fileID: 0}
-  currentTimeString: {fileID: 0}
-  totalTimeString: {fileID: 0}
-  isSyncing: 0
-  showThumbnailBeforeVideoLoad: 1
-  encryptedSignatureVideo: 
-  encryptedSignatureAudio: 
-  decryptedUrlForVideo: 0
-  decryptedUrlForAudio: 0
-  decryptedVideoUrlResult: 
-  decryptedAudioUrlResult: 
-  EncryptUrlForVideo: 
-  EncryptUrlForAudio: 
-  jsonForHtmlVersion: 
-  checkIfSync: 0

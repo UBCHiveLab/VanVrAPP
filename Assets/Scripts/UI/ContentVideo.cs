@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 {
@@ -28,6 +29,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     public string url;
     public string title;
     public bool youtube;
+    public Texture2D thumbnail;
 
     private bool _scrubbing;
     
@@ -113,7 +115,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     {
         UnityWebRequest req = UnityWebRequestTexture.GetTexture("https://img.youtube.com/vi/" + id + "/0.jpg");
         yield return req.SendWebRequest();
-        Texture2D thumbnail = DownloadHandlerTexture.GetContent(req);
+        thumbnail = DownloadHandlerTexture.GetContent(req);
         canvas.texture = thumbnail;
     }
 

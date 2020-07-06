@@ -51,8 +51,21 @@ public class ContentImage : MonoBehaviour, IAnnotationContentBlock
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
         yield return request.SendWebRequest();
         if (request.isNetworkError || request.isHttpError)
+        {
             Debug.Log(request.error);
-        else
-            canvas.texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
+        } else
+        {
+            Texture2D tex = ((DownloadHandlerTexture)request.downloadHandler).texture;
+
+            // Ensures we preserve aspect ratio by locking width and setting size to the w/h ratio of the original.
+            float cw = canvas.rectTransform.rect.width;
+            float tw = tex.width;
+            float ctRatio = cw / tw;
+            float height = tex.height * ctRatio;
+            canvas.rectTransform.sizeDelta = new Vector2(cw, height);
+
+            canvas.texture = tex;
+
+        }
     }
 }

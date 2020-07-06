@@ -32,7 +32,6 @@ public class AnnotationDetailPanel : MonoBehaviour
     public RawImage currentVideoCanvas;
     public VideoPlayer videoPlayer;
     public AudioSource audioSource;
-    public YoutubePlayer youtubePlayer;
 
 
     [Header("Full Screen Controls")]
@@ -51,6 +50,7 @@ public class AnnotationDetailPanel : MonoBehaviour
     private AnnotationIndicator _displayedIndicator;
     private List<ContentBlockData> _blockData;
     private List<IAnnotationContentBlock> _blocks = new List<IAnnotationContentBlock>();
+    private int _detailFullScreenViewIndex;
 
     private Dictionary<BlockType, Func<AnnotationDetailPanel, IAnnotationContentBlock>> blockTypeToBuilder =
     new Dictionary<BlockType, Func<AnnotationDetailPanel, IAnnotationContentBlock>>
@@ -121,6 +121,8 @@ public class AnnotationDetailPanel : MonoBehaviour
         scrollView.gameObject.SetActive(_detailOpen);
         StartCoroutine(ResetScrollView());
         UpdateIcon();
+        videoPlayer.Stop();
+        
     }
 
     private void UpdateIcon()
@@ -152,6 +154,8 @@ public class AnnotationDetailPanel : MonoBehaviour
      */
     private void Clear()
     {
+        _detailFullScreenViewIndex = 0;
+
         foreach (Transform child in contentTransform)
         {
             Destroy(child.gameObject);
@@ -225,10 +229,11 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     public void ToggleFullScreen(IAnnotationContentBlock block)
     {
+        _detailFullScreenViewIndex = _blocks.IndexOf(block);
+        bool fullScreen = videoPlayer.renderMode == VideoRenderMode.CameraNearPlane;
+
         if (fullScreenPlayer.gameObject.activeSelf)
         {
-            videoPlayer.Pause();
-            fullScreenPlayer.gameObject.SetActive(false);
             return;
         }
         
@@ -236,7 +241,7 @@ public class AnnotationDetailPanel : MonoBehaviour
 
         if (vidBlock != null)
         {
-            fullScreenPlayer.ReceiveVideo(vidBlock);
+            fullScreenPlayer.Receive(vidBlock);
             fullScreenPlayer.gameObject.SetActive(true);
         }
 
@@ -244,9 +249,15 @@ public class AnnotationDetailPanel : MonoBehaviour
 
         if (imgBlock != null)
         {
-            fullScreenPlayer.ReceiveImage(imgBlock);
+            fullScreenPlayer.Receive(imgBlock);
             fullScreenPlayer.gameObject.SetActive(true);
         }
+    }
+
+    public void FullScreenPage(int offset)
+    {
+        _detailFullScreenViewIndex = (_detailFullScreenViewIndex + offset) % _blocks.Count;
+        
     }
 
     public void ImageClicked(ContentImage ic) {

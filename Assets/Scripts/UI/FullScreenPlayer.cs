@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class FullScreenPlayer : MonoBehaviour
 {
-    public ContentVideo FullScreenVideo;
-    public ContentImage FullScreenImage;
+
     public AnnotationDetailPanel detailPanel;
+    public RawImage canvas;
+    public Button next;
+    public Button prev;
 
-    public void ReceiveVideo(ContentVideo vidBlock)
+    public void Receive(IAnnotationContentBlock block)
     {
-        // TODO
-        FullScreenVideo.Populate(null, detailPanel);
+        canvas.color = Color.white;
+        canvas.texture = detailPanel.videoPlayer.targetTexture;
     }
 
-    public void ReceiveImage(ContentImage imgBlock)
-    {
-        // TODO: Image full screen
-        Debug.Log("Not implemented yet");
-    }
 }
