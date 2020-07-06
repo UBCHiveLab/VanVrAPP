@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
@@ -13,11 +17,12 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     [Header("Internal Structure")]
     public RawImage canvas;
     public TextMeshProUGUI label;
-    public Button Play;
-    public Button Pause;
-    public Slider Progress;
-    public Button FullScreen;
-    public YoutubePlayer YoutubePlayer;
+    public Button play;
+    public Button pause;
+    public Slider progress;
+    public TextMeshProUGUI timeLabel;
+    public Button fullScreen;
+    public YoutubePlayer youtubePlayer;
 
     [Header("Data")]
     public string url;
@@ -29,17 +34,24 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 
     void Start()
     {
-        Play.onClick.AddListener(PlayVideo);
-        Pause.onClick.AddListener(PauseVideo);
-        Progress.onValueChanged.AddListener(ScrubVideo);
-        FullScreen.onClick.AddListener(ToggleFullScreen);
+        play.onClick.AddListener(PlayVideo);
+        pause.onClick.AddListener(PauseVideo);
+        progress.onValueChanged.AddListener(ScrubVideo);
+        fullScreen.onClick.AddListener(ToggleFullScreen);
+        timeLabel.text = "";
+        if (youtube)
+        {
+            StartCoroutine(LoadThumbnail(ExtractVideoId(url)));
+        }
     }
     
     void Update()
     {
         if (detailPanel.currentAVSource == this && detailPanel.videoPlayer.isPlaying && !_scrubbing)
         {
-            Progress.value = (float) (detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
+            progress.value = (float) (detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
+            timeLabel.text = $"{toTime((float) detailPanel.videoPlayer.time)} / {toTime((float) detailPanel.videoPlayer.length)}";
+
         }
     }
 
@@ -52,8 +64,8 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         url = data.content;
         if (url.Contains("youtube.com")) {
             youtube = true;
-            YoutubePlayer.youtubeUrl = url;
-            YoutubePlayer.videoPlayer = panel.videoPlayer;
+            youtubePlayer.youtubeUrl = url;
+            youtubePlayer.videoPlayer = panel.videoPlayer;
         }
         title = data.title;
         detailPanel = panel;
@@ -70,7 +82,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 
     public void EndScrub() {
         _scrubbing = false;
-        ScrubVideo(Progress.value);
+        ScrubVideo(progress.value);
     }
 
     private void PlayVideo()
@@ -88,7 +100,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         if (_scrubbing)
         {
             detailPanel.Scrub(this, val);
-            Progress.value = val;
+            progress.value = val;
         }
     }
 
@@ -96,5 +108,36 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     {
         detailPanel.ToggleFullScreen(this);
     }
+
+    private IEnumerator LoadThumbnail(string id)
+    {
+        UnityWebRequest req = UnityWebRequestTexture.GetTexture("https://img.youtube.com/vi/" + id + "/0.jpg");
+        yield return req.SendWebRequest();
+        Texture2D thumbnail = DownloadHandlerTexture.GetContent(req);
+        canvas.texture = thumbnail;
+    }
+
+    private string ExtractVideoId(string url) {
+
+        Match match = Regex.Match(url, "https:\\/\\/www\\.youtube\\.com\\/watch\\?v=([^&=\\s]*)");
+        if (match.Groups.Count < 1)
+        {
+            Debug.LogWarning($"Can't find id in youtube url {url}");
+            return null;
+        }
+        string id = match.Groups[1].Value;
+
+        return id;
+    }
+
+    private string toTime(float input) {
+        string mins = Mathf.FloorToInt(input / 60f).ToString();
+        string secs = Mathf.FloorToInt(input % 60).ToString();
+        if (secs.Length == 1) secs = "0" + secs;
+
+        return $"{mins}:{secs}";
+    }
+
+
 
 }

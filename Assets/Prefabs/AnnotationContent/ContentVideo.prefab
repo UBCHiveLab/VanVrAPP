@@ -787,11 +787,12 @@ MonoBehaviour:
   detailPanel: {fileID: 0}
   canvas: {fileID: 3559939467870431847}
   label: {fileID: 6974567398195604692}
-  Play: {fileID: 6525540167180714073}
-  Pause: {fileID: 3628635784971322570}
-  Progress: {fileID: 8078881517070328025}
-  FullScreen: {fileID: 4400636297780968130}
-  YoutubePlayer: {fileID: 7624432842699008849}
+  play: {fileID: 6525540167180714073}
+  pause: {fileID: 3628635784971322570}
+  progress: {fileID: 8078881517070328025}
+  timeLabel: {fileID: 6574597900039408057}
+  fullScreen: {fileID: 4400636297780968130}
+  youtubePlayer: {fileID: 7624432842699008849}
   url: 
   title: 
   youtube: 0
@@ -882,7 +883,7 @@ MonoBehaviour:
   currentTimeString: {fileID: 0}
   totalTimeString: {fileID: 0}
   isSyncing: 0
-  showThumbnailBeforeVideoLoad: 1
+  showThumbnailBeforeVideoLoad: 0
   encryptedSignatureVideo: 
   encryptedSignatureAudio: 
   decryptedUrlForVideo: 0
@@ -1288,7 +1289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1:46 / 3:21
+  m_text: 10:46 / 32:21
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1c697061a7ed5d54abd24bff1e24fdd0, type: 2}
   m_sharedMaterial: {fileID: 729959136408263016, guid: 1c697061a7ed5d54abd24bff1e24fdd0,
@@ -1358,7 +1359,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 6574597900039408057}
-    characterCount: 11
+    characterCount: 13
     spriteCount: 0
     spaceCount: 2
     wordCount: 4
@@ -1396,7 +1397,7 @@ MonoBehaviour:
   m_IgnoreLayout: 0
   m_MinWidth: 32
   m_MinHeight: -1
-  m_PreferredWidth: -1
+  m_PreferredWidth: 40
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1

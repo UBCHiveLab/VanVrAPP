@@ -186,7 +186,7 @@ public class AnnotationDetailPanel : MonoBehaviour
                 videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
                 currentVideoCanvas.texture = videoPlayer.targetTexture;
                 if (vc.youtube) {
-                    vc.YoutubePlayer.Play(vc.url);
+                    vc.youtubePlayer.Play(vc.url);
                 }
                 else
                 {
