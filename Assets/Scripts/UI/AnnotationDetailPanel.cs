@@ -180,18 +180,17 @@ public class AnnotationDetailPanel : MonoBehaviour
 
             if (ab.type == BlockType.VIDEO)
             {
-                videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
 
                 ContentVideo vc = ab as ContentVideo;
                 currentVideoCanvas = vc.canvas;
+                videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
                 currentVideoCanvas.texture = videoPlayer.targetTexture;
-                Debug.Log(vc.youtube);
                 if (vc.youtube) {
-                    youtubePlayer.youtubeUrl = vc.url;
-                    youtubePlayer.Play();
+                    vc.YoutubePlayer.Play(vc.url);
                 }
                 else
                 {
+
                     videoPlayer.url = vc.url;
                     videoPlayer.Play();
                 }

@@ -17,6 +17,7 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
     public Button Pause;
     public Slider Progress;
     public Button FullScreen;
+    public YoutubePlayer YoutubePlayer;
 
     [Header("Data")]
     public string url;
@@ -51,6 +52,8 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         url = data.content;
         if (url.Contains("youtube.com")) {
             youtube = true;
+            YoutubePlayer.youtubeUrl = url;
+            YoutubePlayer.videoPlayer = panel.videoPlayer;
         }
         title = data.title;
         detailPanel = panel;
