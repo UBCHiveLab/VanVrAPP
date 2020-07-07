@@ -235,7 +235,6 @@ public class AnnotationDetailPanel : MonoBehaviour
             fullScreenPlayer.gameObject.SetActive(false);
             return;
         }
-
         _detailFullScreenViewIndex = _richMediaBlocks.IndexOf(block);
 
         if (fullScreenPlayer.gameObject.activeSelf)
@@ -244,13 +243,8 @@ public class AnnotationDetailPanel : MonoBehaviour
             return;
         }
 
-<<<<<<< HEAD
         fullScreenPlayer.gameObject.SetActive(true);
         fullScreenPlayer.Receive(block);
-=======
-        fullScreenPlayer.Receive(block);
-        fullScreenPlayer.gameObject.SetActive(true);
->>>>>>> f18ea795fc4d3533a6e4b529352fd6a9c913b468
 
     }
 
@@ -266,17 +260,10 @@ public class AnnotationDetailPanel : MonoBehaviour
             next = 0;
         }
 
-<<<<<<< HEAD
         videoPlayer.Stop();
         audioSource.Stop();
         _detailFullScreenViewIndex = next;
         fullScreenPlayer.Receive(_richMediaBlocks[_detailFullScreenViewIndex]);
-=======
-        _detailFullScreenViewIndex = next;
-        fullScreenPlayer.Receive(_richMediaBlocks[_detailFullScreenViewIndex]);
-
-    }
->>>>>>> f18ea795fc4d3533a6e4b529352fd6a9c913b468
 
     }
 
