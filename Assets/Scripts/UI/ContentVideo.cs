@@ -27,9 +27,10 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 
     [Header("Data")]
     public string url;
-    public string title;
+    public string title { get; set; }
     public bool youtube;
     public Texture2D thumbnail;
+    public bool richMedia => true;
 
     private bool _scrubbing;
     

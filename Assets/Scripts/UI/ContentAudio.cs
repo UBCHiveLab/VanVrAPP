@@ -18,6 +18,8 @@ public class ContentAudio : MonoBehaviour, IAnnotationContentBlock
     public TextMeshProUGUI timeLabel;
     public AnnotationDetailPanel panel;
     private bool _scrubbing;
+    public bool richMedia => true;
+    public string title { get; set; }
 
     public void Populate(ContentBlockData data, AnnotationDetailPanel panel)
     {
@@ -29,6 +31,7 @@ public class ContentAudio : MonoBehaviour, IAnnotationContentBlock
         label.text = data.title;
         src = data.content;
         this.panel = panel;
+        title = data.title;
 
 
     }

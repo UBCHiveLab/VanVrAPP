@@ -50,6 +50,7 @@ public class AnnotationDetailPanel : MonoBehaviour
     private AnnotationIndicator _displayedIndicator;
     private List<ContentBlockData> _blockData;
     private List<IAnnotationContentBlock> _blocks = new List<IAnnotationContentBlock>();
+    private List<IAnnotationContentBlock> _richMediaBlocks = new List<IAnnotationContentBlock>();
     private int _detailFullScreenViewIndex;
 
     private Dictionary<BlockType, Func<AnnotationDetailPanel, IAnnotationContentBlock>> blockTypeToBuilder =
@@ -105,6 +106,7 @@ public class AnnotationDetailPanel : MonoBehaviour
         AnnotationParser parser = new AnnotationParser();
         _blockData = parser.ParseAndAddContentBlocks(data.content);
         _blocks = SpawnBlocks();
+        _richMediaBlocks = _blocks.Where(block => block.richMedia).ToList();
         _displayedIndicator = ind;
 
         if (gameObject.activeSelf) // If not active, will be called on Start()
@@ -229,35 +231,40 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     public void ToggleFullScreen(IAnnotationContentBlock block)
     {
-        _detailFullScreenViewIndex = _blocks.IndexOf(block);
-        bool fullScreen = videoPlayer.renderMode == VideoRenderMode.CameraNearPlane;
+        if (block == null)
+        {
+            fullScreenPlayer.gameObject.SetActive(false);
+            return;
+        }
+
+        _detailFullScreenViewIndex = _richMediaBlocks.IndexOf(block);
 
         if (fullScreenPlayer.gameObject.activeSelf)
         {
+            fullScreenPlayer.gameObject.SetActive(false);
             return;
         }
-        
-        ContentVideo vidBlock = block as ContentVideo;
 
-        if (vidBlock != null)
-        {
-            fullScreenPlayer.Receive(vidBlock);
-            fullScreenPlayer.gameObject.SetActive(true);
-        }
+        fullScreenPlayer.Receive(block);
+        fullScreenPlayer.gameObject.SetActive(true);
 
-        ContentImage imgBlock = block as ContentImage;
-
-        if (imgBlock != null)
-        {
-            fullScreenPlayer.Receive(imgBlock);
-            fullScreenPlayer.gameObject.SetActive(true);
-        }
     }
 
-    public void FullScreenPage(int offset)
+    public void TurnFullScreenPage(int offset)
     {
-        _detailFullScreenViewIndex = (_detailFullScreenViewIndex + offset) % _blocks.Count;
-        
+        int next = _detailFullScreenViewIndex + offset;
+        if (next < 0)
+        {
+            next = _richMediaBlocks.Count - 1;
+        } 
+        else if (next >= _richMediaBlocks.Count)
+        {
+            next = 0;
+        }
+
+        _detailFullScreenViewIndex = next;
+        fullScreenPlayer.Receive(_richMediaBlocks[_detailFullScreenViewIndex]);
+
     }
 
     public void ImageClicked(ContentImage ic) {
