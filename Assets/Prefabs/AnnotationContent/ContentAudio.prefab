@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 4277863023646276767}
   - component: {fileID: 6023652122792093910}
   m_Layer: 5
-  m_Name: Inner
+  m_Name: Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,13 +1278,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7427c59439da73438607a571f17370a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playButton: {fileID: 653081969809535975}
-  pauseButton: {fileID: 2875416406495778696}
+  sizeRect: {x: 0, y: 0}
+  detailPanel: {fileID: 0}
+  canvas: {fileID: 0}
+  controls: {fileID: 587052070907058458}
   label: {fileID: 2498929130518722500}
-  src: 
-  clip: {fileID: 0}
+  play: {fileID: 653081969809535975}
+  pause: {fileID: 2875416406495778696}
   progress: {fileID: 5160423208165061658}
   timeLabel: {fileID: 7138721153001608580}
+  fullScreen: {fileID: 0}
+  src: 
+  clip: {fileID: 0}
   panel: {fileID: 0}
 --- !u!222 &9040697995756641712
 CanvasRenderer:

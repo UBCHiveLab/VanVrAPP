@@ -2,60 +2,41 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FullScreenPlayer : MonoBehaviour
+public class FullScreenPlayer : MultimediaContent
 {
 
-    public AnnotationDetailPanel detailPanel;
-
     [Header("Internal Structure")]
-    public RawImage canvas;
     public TextMeshProUGUI title;
     public Button next;
     public Button prev;
     public Button fullScreenToggle;
 
 
-    [Header("Controls")]
-    public GameObject mediaControls;
-    public Button fullScreen;
-    public Button play;
-    public Button pause;
-    public Slider scrub;
-    public TextMeshProUGUI time;
-
-    private IAnnotationContentBlock _currentBlock;
-    private bool _scrubbing;
-
-    void Start()
+    protected override void PrepareContent()
     {
         next.onClick.AddListener(Next);
         prev.onClick.AddListener(Prev);
-
-        fullScreen.onClick.AddListener(EndFullScreen);
-        fullScreenToggle.onClick.AddListener(EndFullScreen);
-        play.onClick.AddListener(Play);
-        pause.onClick.AddListener(Pause);
-
+        fullScreenToggle.onClick.AddListener(ToggleFullScreen);
         MaximizeScreenHeight();
-
     }
 
-    void Update()
+    protected override void UpdateTime()
     {
-        if (_currentBlock == null)
+        if (contentBlock == null)
         {
-            EndFullScreen();
+            ToggleFullScreen();
             return;
         }
-        if (detailPanel.currentAVSource == _currentBlock) {
-            if (_currentBlock.type == BlockType.VIDEO && detailPanel.videoPlayer.isPlaying && !_scrubbing)
+        if (detailPanel.currentAVSource == contentBlock)
+        {
+            if (contentBlock.type == BlockType.VIDEO && detailPanel.videoPlayer.isPlaying && !scrubbing && detailPanel.videoPlayer.length > 0)
             {
-                scrub.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
-                time.text = $"{toTime((float)detailPanel.videoPlayer.time)} / {toTime((float)detailPanel.videoPlayer.length)}";
-            } else if (_currentBlock.type == BlockType.AUDIO && detailPanel.audioSource.isPlaying && !_scrubbing)
+                progress.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
+                timeLabel.text = $"{toTime((float)detailPanel.videoPlayer.time)} / {toTime((float)detailPanel.videoPlayer.length)}";
+            } else if (contentBlock.type == BlockType.AUDIO && detailPanel.audioSource.isPlaying && !scrubbing && detailPanel.audioSource.clip.length > 0)
             {
-                scrub.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
-                time.text = $"{toTime((float)detailPanel.audioSource.time)} / {toTime((float)detailPanel.audioSource.clip.length)}";
+                progress.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
+                timeLabel.text = $"{toTime((float)detailPanel.audioSource.time)} / {toTime((float)detailPanel.audioSource.clip.length)}";
             }
         }
     }
@@ -64,7 +45,7 @@ public class FullScreenPlayer : MonoBehaviour
     {
         MaximizeScreenHeight();
         title.text = block.title;
-        _currentBlock = block;
+        contentBlock = block;
         switch (block.type)
         {
             case BlockType.VIDEO:
@@ -72,7 +53,9 @@ public class FullScreenPlayer : MonoBehaviour
                 ContentVideo vid = block as ContentVideo;
                 canvas.texture = vid.thumbnail;
                 canvas.rectTransform.sizeDelta = vid.GetConstrainedRec(-1, canvas.rectTransform.rect.height);
-                mediaControls.gameObject.SetActive(true);
+                controls.gameObject.SetActive(true);
+                //progress.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
+                timeLabel.text = $"Ready";
                 break;
 
             case BlockType.IMAGE:
@@ -80,20 +63,23 @@ public class FullScreenPlayer : MonoBehaviour
                 ContentImage img = block as ContentImage;
                 if (img == null) return;
                 canvas.texture = img.image;
-                canvas.rectTransform.sizeDelta = img.GetConstrainedRect(-1, canvas.rectTransform.rect.height);
-                mediaControls.gameObject.SetActive(false);
+                canvas.rectTransform.sizeDelta = img.GetConstrainedRec(-1, canvas.rectTransform.rect.height);
+                controls.gameObject.SetActive(false);
                 break;
 
             case BlockType.AUDIO:
                 detailPanel.Play(block);
                 canvas.color = Color.clear;
-                mediaControls.gameObject.SetActive(true);
+                controls.gameObject.SetActive(true);
+                //progress.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
+                timeLabel.text = $"Ready";
                 break;
 
             default:
                 Debug.LogWarning($"Unexpected block type! {block.type}");
                 return;
         }
+
     }
 
     void MaximizeScreenHeight()
@@ -107,46 +93,17 @@ public class FullScreenPlayer : MonoBehaviour
         detailPanel.TurnFullScreenPage(-1);
     }
 
-    void Next()
-    {
+    void Next() {
         detailPanel.TurnFullScreenPage(1);
     }
 
-    void EndFullScreen()
+    protected override void Play()
     {
-        detailPanel.ToggleFullScreen(null);
+        if (contentBlock.type == BlockType.VIDEO)
+        {
+            canvas.texture = detailPanel.videoPlayer.targetTexture;
+        }
+        MaximizeScreenHeight();
+        base.Play();
     }
-
-    void Play()
-    {
-        detailPanel.Play(_currentBlock);
-        canvas.texture = detailPanel.videoPlayer.targetTexture;
-    }
-
-    void Pause()
-    {
-        detailPanel.Pause(_currentBlock);
-    }
-
-
-    /**
-     * Scrubbing toggles called onDrag of the progress
-     */
-    public void StartScrub() {
-        _scrubbing = true;
-    }
-
-    public void EndScrub() {
-        _scrubbing = false;
-        detailPanel.Scrub(_currentBlock, scrub.value);
-    }
-
-    private string toTime(float input) {
-        string mins = Mathf.FloorToInt(input / 60f).ToString();
-        string secs = Mathf.FloorToInt(input % 60).ToString();
-        if (secs.Length == 1) secs = "0" + secs;
-
-        return $"{mins}:{secs}";
-    }
-
 }

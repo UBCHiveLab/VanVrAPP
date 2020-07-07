@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -8,54 +7,36 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
+public class ContentVideo : MultimediaContent, IAnnotationContentBlock
 {
-    public BlockType type => BlockType.VIDEO;
+    public readonly int DEFAULT_WIDTH = 1600;
+    public readonly int DEFAULT_HEIGHT = 900;
 
-    [Header("External Structure")]
-    public AnnotationDetailPanel detailPanel;
+    public BlockType type => BlockType.VIDEO;
+    
 
     [Header("Internal Structure")]
-    public RawImage canvas;
-    public TextMeshProUGUI label;
-    public Button play;
-    public Button pause;
-    public Slider progress;
-    public TextMeshProUGUI timeLabel;
-    public Button fullScreen;
     public YoutubePlayer youtubePlayer;
+
+    public RectTransform transform;
+    public LayoutElement layoutEl;
 
     [Header("Data")]
     public string url;
     public string title { get; set; }
     public bool youtube;
     public Texture2D thumbnail;
-    public bool richMedia => true;
 
-    private bool _scrubbing;
-
-    public Vector2 sizeRect;
-
-
-    void Start()
+    protected override  void UpdateTime()
     {
-        play.onClick.AddListener(PlayVideo);
-        pause.onClick.AddListener(PauseVideo);
-        progress.onValueChanged.AddListener(ScrubVideo);
-        fullScreen.onClick.AddListener(ToggleFullScreen);
-        timeLabel.text = "";
-
-
-
-    }
-    
-    void Update()
-    {
-        if (detailPanel.currentAVSource == this && detailPanel.videoPlayer.isPlaying && !_scrubbing)
+        if (detailPanel.currentAVSource == this && detailPanel.videoPlayer.isPlaying && !scrubbing)
         {
             progress.value = (float) (detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
             timeLabel.text = $"{toTime((float) detailPanel.videoPlayer.time)} / {toTime((float) detailPanel.videoPlayer.length)}";
-
+        }
+        else
+        {
+            timeLabel.text = "Ready";
         }
     }
 
@@ -64,10 +45,18 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
             throw new Exception("Must be video block to render video data");
         }
 
-
+        contentBlock = this;
         title = data.title;
         detailPanel = panel;
         label.text = title;
+        if (data.widthHeight == new Vector2(-1, -1))
+        {
+            sizeRect = new Vector2(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        } else
+        {
+            sizeRect = data.widthHeight;
+        }
+
 
         url = data.content;
         youtubePlayer.videoPlayer = panel.videoPlayer;
@@ -81,65 +70,15 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         if (youtube) {
             youtubePlayer.enabled = true;
             StartCoroutine(LoadThumbnail(ExtractVideoId(url)));
-            sizeRect = new Vector2(1600, 1200);
-
-        } else {
-            // set width and height in sizeRect
-            youtubePlayer.enabled = false;
-            string temp = detailPanel.videoPlayer.url;
-            detailPanel.videoPlayer.url = url;
-            detailPanel.videoPlayer.Prepare();
-            detailPanel.videoPlayer.Play();
-            float h = 900; // TODO
-            float w = 1600; // TODO
-            Debug.Log(h);
-            Debug.Log(w);
-            detailPanel.videoPlayer.Stop();
-            if (temp != "")
-            {
-                detailPanel.videoPlayer.url = temp;
-            }
-            sizeRect = new Vector2(w, h);
+            //sizeRect = new Vector2(1600, 1200);
 
         }
 
-    }
+        Vector2 rect = GetConstrainedRec(148, -1);
+        canvas.rectTransform.sizeDelta = rect;
+        transform.sizeDelta = new Vector2(transform.sizeDelta.x, rect.y + 50f);
+        layoutEl.minHeight = rect.y;
 
-
-    /**
-     * Scrubbing toggles called onDrag of the progress
-     */
-    public void StartScrub() {
-        _scrubbing = true;
-    }
-
-    public void EndScrub() {
-        _scrubbing = false;
-        ScrubVideo(progress.value);
-    }
-
-    private void PlayVideo()
-    {
-        detailPanel.Play(this);
-    }
-
-    private void PauseVideo()
-    {
-        detailPanel.Pause(this);
-    }
-
-    private void ScrubVideo(float val)
-    {
-        if (_scrubbing)
-        {
-            detailPanel.Scrub(this, val);
-            progress.value = val;
-        }
-    }
-
-    private void ToggleFullScreen()
-    {
-        detailPanel.ToggleFullScreen(this);
     }
 
     private IEnumerator LoadThumbnail(string id)
@@ -162,34 +101,5 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
 
         return id;
     }
-
-    public Vector2 GetConstrainedRec(float cWidth, float cHeight)
-    {
-
-        if (cHeight < 0) {
-            float tw = sizeRect.x;
-            float whRatio = cWidth / tw;
-            float height = sizeRect.y * whRatio;
-            return new Vector2(cWidth, height);
-        } else if (cWidth < 0) {
-            float th = sizeRect.y;
-            float hwRatio = cHeight / th;
-            float width = sizeRect.x * hwRatio;
-            return new Vector2(width, cHeight);
-        }
-
-        //TODO: allow for maxs that aren't -1
-        return new Vector2(cWidth, cHeight);
-    }
-
-    private string toTime(float input) {
-        string mins = Mathf.FloorToInt(input / 60f).ToString();
-        string secs = Mathf.FloorToInt(input % 60).ToString();
-        if (secs.Length == 1) secs = "0" + secs;
-
-        return $"{mins}:{secs}";
-    }
-
-
 
 }

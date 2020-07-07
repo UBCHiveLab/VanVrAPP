@@ -357,8 +357,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d033507eef5317418a9cc1a85c5f8ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sizeRect: {x: 0, y: 0}
   detailPanel: {fileID: 0}
   canvas: {fileID: 3559939467870431847}
+  controls: {fileID: 375009741003892407}
   label: {fileID: 6974567398195604692}
   play: {fileID: 6525540167180714073}
   pause: {fileID: 3628635784971322570}
@@ -366,10 +368,11 @@ MonoBehaviour:
   timeLabel: {fileID: 6574597900039408057}
   fullScreen: {fileID: 4400636297780968130}
   youtubePlayer: {fileID: 7624432842699008849}
+  transform: {fileID: 5844911591132422550}
+  layoutEl: {fileID: 6974007914726048708}
   url: 
   youtube: 0
   thumbnail: {fileID: 0}
-  sizeRect: {x: 0, y: 0}
 --- !u!114 &7509011110947040907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,6 +819,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52d8c7a1b73985f4a9800e0195158990, type: 3}
+--- !u!1 &375009741003892407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9007735462041562168, guid: 52d8c7a1b73985f4a9800e0195158990,
+    type: 3}
+  m_PrefabInstance: {fileID: 8662017415253854863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2066764657211112133 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7249446794446401610, guid: 52d8c7a1b73985f4a9800e0195158990,

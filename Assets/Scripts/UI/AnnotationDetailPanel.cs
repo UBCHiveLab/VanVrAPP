@@ -176,6 +176,11 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     public void Play(IAnnotationContentBlock ab)
     {
+        if (ab == null)
+        {
+            Debug.LogWarning("Can't play null");
+        }
+
         if (currentAVSource == ab)
         {
             if (ab.type == BlockType.AUDIO)
@@ -191,20 +196,23 @@ public class AnnotationDetailPanel : MonoBehaviour
         else
         {
             currentAVSource = ab;
-
             if (ab.type == BlockType.VIDEO)
             {
                 audioSource.Stop();
                 ContentVideo vc = ab as ContentVideo;
                 currentVideoCanvas = vc.canvas;
-                videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
+                if (fullScreenPlayer.gameObject.activeSelf)
+                {
+                    currentVideoCanvas = fullScreenPlayer.canvas;
+                }
+                videoPlayer.targetTexture = RenderTexture.GetTemporary((int)vc.sizeRect.x, (int)vc.sizeRect.y);
+                videoPlayer.Play();
                 currentVideoCanvas.texture = videoPlayer.targetTexture;
                 if (vc.youtube) {
                     vc.youtubePlayer.Play(vc.url);
                 }
                 else
                 {
-
                     videoPlayer.url = vc.url;
                 }
                 videoPlayer.Play();
@@ -244,16 +252,16 @@ public class AnnotationDetailPanel : MonoBehaviour
             return;
         }
         _detailFullScreenViewIndex = _richMediaBlocks.IndexOf(block);
-
         if (fullScreenPlayer.gameObject.activeSelf)
         {
             fullScreenPlayer.gameObject.SetActive(false);
+            audioSource.Stop();
+            videoPlayer.Stop();
             return;
         }
 
         fullScreenPlayer.gameObject.SetActive(true);
         fullScreenPlayer.Receive(block);
-
     }
 
     public void TurnFullScreenPage(int offset)
