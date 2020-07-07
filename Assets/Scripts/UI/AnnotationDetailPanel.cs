@@ -65,7 +65,12 @@ public class AnnotationDetailPanel : MonoBehaviour
         },
         {
             BlockType.VIDEO,
-            p => Instantiate(p.videoPrefab, p.contentTransform)
+            p =>
+            {
+                ContentVideo vid = Instantiate(p.videoPrefab, p.contentTransform);
+                vid.youtubePlayer.loadYoutubeUrlsOnly = false; // Hack to shut up an error;
+                return vid;
+            }
         },
         {
             BlockType.TEXT,
@@ -155,6 +160,8 @@ public class AnnotationDetailPanel : MonoBehaviour
      */
     private void Clear()
     {
+        videoPlayer.Stop();
+        audioSource.Stop();
         _detailFullScreenViewIndex = 0;
 
         foreach (Transform child in contentTransform)
@@ -173,9 +180,11 @@ public class AnnotationDetailPanel : MonoBehaviour
         {
             if (ab.type == BlockType.AUDIO)
             {
+                videoPlayer.Stop();
                 audioSource.Play();
             } else if (ab.type == BlockType.VIDEO)
             {
+                audioSource.Stop();
                 videoPlayer.Play();
             }
         }
@@ -185,7 +194,7 @@ public class AnnotationDetailPanel : MonoBehaviour
 
             if (ab.type == BlockType.VIDEO)
             {
-
+                audioSource.Stop();
                 ContentVideo vc = ab as ContentVideo;
                 currentVideoCanvas = vc.canvas;
                 videoPlayer.targetTexture = RenderTexture.GetTemporary(640, 480);
@@ -197,12 +206,11 @@ public class AnnotationDetailPanel : MonoBehaviour
                 {
 
                     videoPlayer.url = vc.url;
-                    videoPlayer.Play();
                 }
-
-            }
-            else if (ab.type == BlockType.AUDIO) 
+                videoPlayer.Play();
+            } else if (ab.type == BlockType.AUDIO) 
             {
+                videoPlayer.Stop();
                 ContentAudio ac = ab as ContentAudio;
                 audioSource.clip = ac.clip;
                 audioSource.Play();

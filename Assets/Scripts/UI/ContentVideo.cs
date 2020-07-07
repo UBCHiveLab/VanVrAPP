@@ -45,24 +45,6 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         fullScreen.onClick.AddListener(ToggleFullScreen);
         timeLabel.text = "";
 
-        if (youtube)
-        {
-            StartCoroutine(LoadThumbnail(ExtractVideoId(url)));
-            sizeRect = new Vector2(1600, 1200);
-
-        }
-        else
-        {
-            // set width and height in sizeRect
-            string temp = detailPanel.videoPlayer.url;
-            detailPanel.videoPlayer.url = url;
-            detailPanel.videoPlayer.Prepare();
-            float h = detailPanel.videoPlayer.height;
-            float w = detailPanel.videoPlayer.width;
-            detailPanel.videoPlayer.url = temp;
-            sizeRect = new Vector2(w, h);
-
-        }
 
 
     }
@@ -83,15 +65,44 @@ public class ContentVideo : MonoBehaviour, IAnnotationContentBlock
         }
 
 
+        title = data.title;
+        detailPanel = panel;
+        label.text = title;
+
         url = data.content;
+        youtubePlayer.videoPlayer = panel.videoPlayer;
+
         if (url.Contains("youtube.com")) {
             youtube = true;
             youtubePlayer.youtubeUrl = url;
             youtubePlayer.videoPlayer = panel.videoPlayer;
         }
-        title = data.title;
-        detailPanel = panel;
-        label.text = title;
+
+        if (youtube) {
+            youtubePlayer.enabled = true;
+            StartCoroutine(LoadThumbnail(ExtractVideoId(url)));
+            sizeRect = new Vector2(1600, 1200);
+
+        } else {
+            // set width and height in sizeRect
+            youtubePlayer.enabled = false;
+            string temp = detailPanel.videoPlayer.url;
+            detailPanel.videoPlayer.url = url;
+            detailPanel.videoPlayer.Prepare();
+            detailPanel.videoPlayer.Play();
+            float h = 900; // TODO
+            float w = 1600; // TODO
+            Debug.Log(h);
+            Debug.Log(w);
+            detailPanel.videoPlayer.Stop();
+            if (temp != "")
+            {
+                detailPanel.videoPlayer.url = temp;
+            }
+            sizeRect = new Vector2(w, h);
+
+        }
+
     }
 
 

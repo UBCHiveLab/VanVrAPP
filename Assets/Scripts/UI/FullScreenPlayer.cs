@@ -42,10 +42,21 @@ public class FullScreenPlayer : MonoBehaviour
 
     void Update()
     {
-        if (detailPanel.currentAVSource == _currentBlock && detailPanel.videoPlayer.isPlaying && !_scrubbing) {
-            scrub.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
-            time.text = $"{toTime((float)detailPanel.videoPlayer.time)} / {toTime((float)detailPanel.videoPlayer.length)}";
-
+        if (_currentBlock == null)
+        {
+            EndFullScreen();
+            return;
+        }
+        if (detailPanel.currentAVSource == _currentBlock) {
+            if (_currentBlock.type == BlockType.VIDEO && detailPanel.videoPlayer.isPlaying && !_scrubbing)
+            {
+                scrub.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
+                time.text = $"{toTime((float)detailPanel.videoPlayer.time)} / {toTime((float)detailPanel.videoPlayer.length)}";
+            } else if (_currentBlock.type == BlockType.AUDIO && detailPanel.audioSource.isPlaying && !_scrubbing)
+            {
+                scrub.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
+                time.text = $"{toTime((float)detailPanel.audioSource.time)} / {toTime((float)detailPanel.audioSource.clip.length)}";
+            }
         }
     }
 
@@ -74,6 +85,7 @@ public class FullScreenPlayer : MonoBehaviour
                 break;
 
             case BlockType.AUDIO:
+                detailPanel.Play(block);
                 canvas.color = Color.clear;
                 mediaControls.gameObject.SetActive(true);
                 break;
@@ -107,8 +119,8 @@ public class FullScreenPlayer : MonoBehaviour
 
     void Play()
     {
-        canvas.texture = detailPanel.videoPlayer.targetTexture;
         detailPanel.Play(_currentBlock);
+        canvas.texture = detailPanel.videoPlayer.targetTexture;
     }
 
     void Pause()
