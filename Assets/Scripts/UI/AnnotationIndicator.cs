@@ -39,6 +39,7 @@ public class AnnotationIndicator : MonoBehaviour
         this.index = index;
         _display = display;
         number.text = index.ToString();
+        UpdatePosition();
     }
 
     private void Clicked()
