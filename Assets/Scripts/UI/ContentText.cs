@@ -7,6 +7,8 @@ public class ContentText : MonoBehaviour, IAnnotationContentBlock
     public BlockType type => BlockType.TEXT;
     public TextMeshProUGUI tmp;
     public Transform homeParent { get; private set; }
+    public bool richMedia => false;
+    public string title => "Text Content";
 
     public void Populate(ContentBlockData data, AnnotationDetailPanel panel)
     {
