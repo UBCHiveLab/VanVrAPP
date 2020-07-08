@@ -15,6 +15,8 @@ public class TrayPage : MonoBehaviour, IPage
     public bool selectingCompareSpecimen;
     public Button shelfToggle;
 
+    public FocusDistanceFinder focusDistanceFinder;
+
     // TEMP: we probably want to animate camera back to tray when finished
     public bool camSet;
     public Vector3 camDefaultPosition;
@@ -34,7 +36,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void Activate() {
         selectorMenu.gameObject.SetActive(false);
-
+        focusDistanceFinder.enabled = true;
         uiObject.SetActive(true);
 
         // TEMP: use animation

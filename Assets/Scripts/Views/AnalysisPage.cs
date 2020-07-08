@@ -41,6 +41,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public PostProcessVolume volume;
     DepthOfField depthOfField;
+    public FocusDistanceFinder focusDistanceFinder;
 
     private bool _focusOn;
     private UITwoStateIndicator _focusIndicator;
@@ -67,6 +68,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         cart.SetTrayVisibility(true);
         //annotationDisplay.Activate();
         depthOfField.active = true;
+        focusDistanceFinder.enabled = true;
 
     }
 

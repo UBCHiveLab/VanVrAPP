@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts.Controller;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
 public class LandingPage : MonoBehaviour, IPage
@@ -12,14 +13,23 @@ public class LandingPage : MonoBehaviour, IPage
     public GameObject doorL;
     public GameObject doorR;
     public GameObject mainCamera;
+    public GameObject disclaimerPanel;
     public Animator mainCameraAnimator;
     public AudioSource startAudio;
+    public PostProcessVolume volume;
+    public FocusDistanceFinder focusDistanceFinder;
+
+    private DepthOfField depthOfField;
+
 
     void Start()
     {
         Button btn = startButton.GetComponent<Button>();
         btn.onClick.AddListener(StartSession);
         mainCameraAnimator = Camera.main.GetComponent<Animator>();
+
+        volume.profile.TryGetSettings(out depthOfField);
+
     }
 
     void StartSession()
@@ -29,11 +39,18 @@ public class LandingPage : MonoBehaviour, IPage
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
         stateController.mode = ViewMode.TRAY;
+        depthOfField.active = false;
+
+
     }
 
     public void Activate()
     {
+        focusDistanceFinder.enabled = false;
         uiObject.SetActive(true);
+        disclaimerPanel.SetActive(true);
+        depthOfField.active = true;
+        depthOfField.focusDistance.value = 1f;
     }
 
     public void Deactivate()
