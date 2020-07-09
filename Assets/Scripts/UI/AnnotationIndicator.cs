@@ -53,6 +53,6 @@ public class AnnotationIndicator : MonoBehaviour
     private void UpdatePosition()
     {
         transform.position =
-            Camera.main.WorldToScreenPoint(_specObject.transform.position + data.positionVector3 * specData.scale);
+            Camera.main.WorldToScreenPoint(_specObject.transform.TransformPoint(data.positionVector3));
     }
 }

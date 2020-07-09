@@ -46,6 +46,11 @@ public class AnalysisPage : MonoBehaviour, IPage
     private bool _focusOn;
     private UITwoStateIndicator _focusIndicator;
 
+    [Header("Specimen Rotation")]
+    private GameObject _specimenRotating;
+    private float _xRot;
+    private float _yRot;
+
     public void Activate()
     {
         if (stateController.CurrentSpecimenObject == null)
@@ -74,6 +79,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Deactivate()
     {
+        _specimenRotating = null;
         proportionScript.ResetProportionIndicator(); // Hide selected specimen on proportion
         uiObject.SetActive(false);
         mainCamera.GetComponent<OrbitCamera>().enabled = false;
@@ -111,6 +117,31 @@ public class AnalysisPage : MonoBehaviour, IPage
     public void Update()
     {
         if (stateController.mode != ViewMode.ANALYSIS) return;
+        HandleSpecimenRotation();
+    }
+
+    private void HandleSpecimenRotation()
+    {
+        if (Input.GetMouseButtonDown(1)) {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimen"))) {
+                _specimenRotating = hit.transform.gameObject;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(1)) {
+            _specimenRotating = null;
+        }
+
+        if (_specimenRotating != null) {
+            _xRot += -Input.GetAxis("Mouse X") * 5f;
+            _yRot += Input.GetAxis("Mouse Y") * 5f;
+            _specimenRotating.transform.rotation =
+                Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
+
+        }
     }
 
 
