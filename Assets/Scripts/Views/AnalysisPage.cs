@@ -44,13 +44,14 @@ public class AnalysisPage : MonoBehaviour, IPage
     DepthOfField depthOfField;
     public FocusDistanceFinder focusDistanceFinder;
 
-    public GameObject currentFocusObject;
-    public SpecimenData currentFocusData;
+    [Header("Focus Information")]
+    public GameObject currentSelectedObject;
+    public SpecimenData currentSelectedData;
     private bool _focusOn;
     private UITwoStateIndicator _focusIndicator;
 
     [Header("Specimen Rotation")]
-    private GameObject _specimenRotating;
+    private GameObject _rotatingSpecimen;
     private float _xRot;
     private float _yRot;
 
@@ -61,10 +62,10 @@ public class AnalysisPage : MonoBehaviour, IPage
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
 
-        currentFocusObject = stateController.CurrentSpecimenObject;
-        currentFocusData = stateController.CurrentSpecimenData;
+        currentSelectedObject = stateController.CurrentSpecimenObject;
+        currentSelectedData = stateController.CurrentSpecimenData;
         leftPanel.gameObject.SetActive(true);
-        controlAssistant.gameObject.SetActive(false);
+        controlAssistant.gameObject.SetActive(controlAssistToggle.on);
         compareMenu.gameObject.SetActive(false);
         ToggleAnnotations(annotationToggle.on);
         proportionIndicator.SetActive(proportionToggle.on); 
@@ -78,14 +79,11 @@ public class AnalysisPage : MonoBehaviour, IPage
         cart.SetTrayVisibility(true);
         depthOfField.active = true;
         focusDistanceFinder.enabled = true;
-
-        //annotationDisplay.SetFocus(stateController.CurrentSpecimenObject, stateController.CurrentSpecimenData);
-
     }
 
     public void Deactivate()
     {
-        _specimenRotating = null;
+        _rotatingSpecimen = null;
         proportionScript.ResetProportionIndicator(); // Hide selected specimen on proportion
         uiObject.SetActive(false);
         mainCamera.GetComponent<OrbitCamera>().enabled = false;
@@ -139,21 +137,21 @@ public class AnalysisPage : MonoBehaviour, IPage
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
                 orbitCam.target = hit.transform;
-                currentFocusObject = hit.transform.gameObject;
-                if (currentFocusObject == stateController.CurrentSpecimenObject)
+                currentSelectedObject = hit.transform.gameObject;
+                if (currentSelectedObject == stateController.CurrentSpecimenObject)
                 {
-                    currentFocusData = stateController.CurrentSpecimenData;
-                } else if (currentFocusObject == stateController.CompareSpecimenObject)
+                    currentSelectedData = stateController.CurrentSpecimenData;
+                } else if (currentSelectedObject == stateController.CompareSpecimenObject)
                 {
-                    currentFocusData = stateController.CompareSpecimenData;
+                    currentSelectedData = stateController.CompareSpecimenData;
                 }
                 else
                 {
-                    currentFocusObject = null;
-                    currentFocusData = null;
+                    currentSelectedObject = null;
+                    currentSelectedData = null;
                 }
 
-                annotationDisplay.SetFocus(currentFocusObject, currentFocusData);
+                annotationDisplay.SetFocus(currentSelectedObject, currentSelectedData);
             }
         }
     }
@@ -165,18 +163,18 @@ public class AnalysisPage : MonoBehaviour, IPage
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimen"))) {
-                _specimenRotating = hit.transform.gameObject;
+                _rotatingSpecimen = hit.transform.gameObject;
             }
         }
 
         if (Input.GetMouseButtonUp(1)) {
-            _specimenRotating = null;
+            _rotatingSpecimen = null;
         }
 
-        if (_specimenRotating != null) {
+        if (_rotatingSpecimen != null) {
             _xRot += -Input.GetAxis("Mouse X") * 5f;
             _yRot += Input.GetAxis("Mouse Y") * 5f;
-            _specimenRotating.transform.rotation =
+            _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
 
         }
@@ -198,7 +196,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         annotationDisplay.gameObject.SetActive(on);
         if (on)
         {
-            annotationDisplay.SetFocus(currentFocusObject, currentFocusData);
+            annotationDisplay.SetFocus(currentSelectedObject, currentSelectedData);
         }
     }
 

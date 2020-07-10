@@ -23,7 +23,7 @@ public class AnnotationDisplay : MonoBehaviour {
 
     public void OnEnable()
     {
-        SetFocus(analysisPage.currentFocusObject, analysisPage.currentFocusData);
+        SetFocus(analysisPage.currentSelectedObject, analysisPage.currentSelectedData);
         detailPanel.gameObject.SetActive(false);
         selectedSpecimenIndex = -1;
         annotationSelector.gameObject.SetActive(true);
