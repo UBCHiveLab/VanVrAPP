@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
     public string title { get; set; }
     public int width;
     public int height;
+    public TextMeshProUGUI titleLabel;
+    public TextMeshProUGUI citation;
 
 
     protected override void PrepareContent()
@@ -44,6 +47,22 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
         } else {
             sizeRect = data.widthHeight;
         }
+
+        if (data.cite == "") {
+            citation.gameObject.SetActive(false);
+        } else {
+            citation.text = data.cite;
+        }
+
+        if (data.title == "")
+        {
+            titleLabel.gameObject.SetActive(false);
+        }
+        else
+        {
+            titleLabel.text = data.title;
+        }
+
         detailPanel = panel;
         homeParent = detailPanel.contentTransform;
     }
