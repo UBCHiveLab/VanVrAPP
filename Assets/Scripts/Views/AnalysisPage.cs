@@ -32,6 +32,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public GameObject uiObject;
     public StateController stateController;
     public Camera mainCamera;
+    public OrbitCamera orbitCam;
     public CompareMenu compareMenu;
     public AnnotationDisplay annotationDisplay;
     public GameObject leftPanel;
@@ -43,6 +44,8 @@ public class AnalysisPage : MonoBehaviour, IPage
     DepthOfField depthOfField;
     public FocusDistanceFinder focusDistanceFinder;
 
+    public GameObject currentFocusObject;
+    public SpecimenData currentFocusData;
     private bool _focusOn;
     private UITwoStateIndicator _focusIndicator;
 
@@ -58,6 +61,8 @@ public class AnalysisPage : MonoBehaviour, IPage
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
         }
 
+        currentFocusObject = stateController.CurrentSpecimenObject;
+        currentFocusData = stateController.CurrentSpecimenData;
         leftPanel.gameObject.SetActive(true);
         controlAssistant.gameObject.SetActive(false);
         compareMenu.gameObject.SetActive(false);
@@ -71,9 +76,10 @@ public class AnalysisPage : MonoBehaviour, IPage
         targetSpecimenLabel.text = stateController.CurrentSpecimenData.name;
         trayObj.SetActive(false);
         cart.SetTrayVisibility(true);
-        //annotationDisplay.Activate();
         depthOfField.active = true;
         focusDistanceFinder.enabled = true;
+
+        //annotationDisplay.SetFocus(stateController.CurrentSpecimenObject, stateController.CurrentSpecimenData);
 
     }
 
@@ -91,7 +97,10 @@ public class AnalysisPage : MonoBehaviour, IPage
     }
 
 
-    public void Start() {
+    public void Start()
+    {
+
+        orbitCam = mainCamera.GetComponent<OrbitCamera>();
 
         volume.profile.TryGetSettings(out depthOfField);
         // Control Assistant Buttons
@@ -112,12 +121,41 @@ public class AnalysisPage : MonoBehaviour, IPage
 
         focusModeButton.onClick.AddListener(() => ToggleFocus());
         _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
+
     }
 
     public void Update()
     {
         if (stateController.mode != ViewMode.ANALYSIS) return;
         HandleSpecimenRotation();
+        HandleCamSelect();
+    }
+
+    private void HandleCamSelect() {
+
+        if (Input.GetMouseButtonDown(0)) {
+            RaycastHit hit;
+            int layerMask = 9 << 9;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
+                orbitCam.target = hit.transform;
+                currentFocusObject = hit.transform.gameObject;
+                if (currentFocusObject == stateController.CurrentSpecimenObject)
+                {
+                    currentFocusData = stateController.CurrentSpecimenData;
+                } else if (currentFocusObject == stateController.CompareSpecimenObject)
+                {
+                    currentFocusData = stateController.CompareSpecimenData;
+                }
+                else
+                {
+                    currentFocusObject = null;
+                    currentFocusData = null;
+                }
+
+                annotationDisplay.SetFocus(currentFocusObject, currentFocusData);
+            }
+        }
     }
 
     private void HandleSpecimenRotation()
@@ -158,6 +196,10 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
+        if (on)
+        {
+            annotationDisplay.SetFocus(currentFocusObject, currentFocusData);
+        }
     }
 
     void ToggleProportionIndicator(bool on)

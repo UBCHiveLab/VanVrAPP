@@ -73,7 +73,6 @@ public class OrbitCamera : MonoBehaviour
     private void Update()
     {
         Zoom();
-        SelectCam();
     }
 
     private void LateUpdate()
@@ -254,23 +253,12 @@ public class OrbitCamera : MonoBehaviour
         }
     }
 
-    private void SelectCam() {
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            int layerMask = 9 << 9;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f, layerMask))
-            {
-                
-                    target = hit.transform;
-                }
-            }
-        
-
-       
+    public void SetTarget(Transform t)
+    {
+        target = t;
     }
+
 
     //Prevents the camera from locking after rotating a certain amount if the rotation limits are set to 360 degrees.
     private float ClampAngleBetweenMinAndMax(float angle, float min, float max)

@@ -21292,6 +21292,11 @@ PrefabInstance:
       propertyPath: annotationSelector
       value: 
       objectReference: {fileID: 1406050463}
+    - target: {fileID: 1199967041642083313, guid: 0a7ef16a2d4b57841a475e22d00120a9,
+        type: 3}
+      propertyPath: analysisPage
+      value: 
+      objectReference: {fileID: 1816968516}
     - target: {fileID: 1199967041642083315, guid: 0a7ef16a2d4b57841a475e22d00120a9,
         type: 3}
       propertyPath: m_Name
@@ -62256,6 +62261,7 @@ MonoBehaviour:
   uiObject: {fileID: 1639472301}
   stateController: {fileID: 1956808370}
   mainCamera: {fileID: 2057522931}
+  orbitCam: {fileID: 0}
   compareMenu: {fileID: 1415541693}
   annotationDisplay: {fileID: 723005126}
   leftPanel: {fileID: 1123722968}
@@ -62264,6 +62270,7 @@ MonoBehaviour:
   trayObj: {fileID: 1897914537}
   volume: {fileID: 75066198}
   focusDistanceFinder: {fileID: 2057522926}
+  currentFocusObject: {fileID: 0}
 --- !u!1 &1823502515
 GameObject:
   m_ObjectHideFlags: 0

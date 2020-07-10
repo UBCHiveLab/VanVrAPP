@@ -7,6 +7,7 @@ public class AnnotationDisplay : MonoBehaviour {
     public StateController stateController;
     public AnnotationDetailPanel detailPanel;
     public AnnotationSelector annotationSelector;
+    public AnalysisPage analysisPage;
 
     [Header("Data")]
     public SpecimenData currentSpecimenData;
@@ -20,14 +21,11 @@ public class AnnotationDisplay : MonoBehaviour {
     public AnnotationIndicator indicatorPrefab;
 
 
-    public void OnEnable() {
-        currentSpecimenData = stateController.CurrentSpecimenData;
-        currentSpecimenObject = stateController.CurrentSpecimenObject;
-
-        ClearAnnotations();
-        DrawAnnotations();
-
+    public void OnEnable()
+    {
+        SetFocus(analysisPage.currentFocusObject, analysisPage.currentFocusData);
         detailPanel.gameObject.SetActive(false);
+        selectedSpecimenIndex = -1;
         annotationSelector.gameObject.SetActive(true);
     }
 
@@ -36,14 +34,34 @@ public class AnnotationDisplay : MonoBehaviour {
         annotationSelector.gameObject.SetActive(false);
     }
 
+    public void SetFocus(GameObject currentObject, SpecimenData currentData)
+    {
+        currentSpecimenData = currentData;
+        currentSpecimenObject = currentObject;
+        ClearAnnotations();
+        if (currentObject != null)
+        {
+            DrawAnnotations();
+        }
+
+        ShowDetail(null);
+    }
+
     /**
      * Populates the detail panel for the selected specimen
      */
     public void ShowDetail(AnnotationIndicator indicator) {
-        selectedSpecimenIndex = indicator.index;
-        detailPanel.gameObject.SetActive(true);
-        detailPanel.Populate(currentSpecimenData.annotations[indicator.index], indicator);
-        annotationSelector.UpdateIndex();
+        if (indicator == null)
+        {
+            selectedSpecimenIndex = 0;
+            detailPanel.Populate(null, null);
+        } else
+        {
+            selectedSpecimenIndex = indicator.index;
+            detailPanel.gameObject.SetActive(true);
+            detailPanel.Populate(currentSpecimenData.annotations[indicator.index], indicator);
+            annotationSelector.UpdateIndex();
+        }
     }
 
     /**

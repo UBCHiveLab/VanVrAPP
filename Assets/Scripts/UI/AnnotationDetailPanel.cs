@@ -106,6 +106,12 @@ public class AnnotationDetailPanel : MonoBehaviour
     public void Populate(AnnotationData data, AnnotationIndicator ind)
     {
         Clear();
+
+        if (data == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         title.text = data.title;
         AnnotationParser parser = new AnnotationParser();
         _blockData = parser.ParseAndAddContentBlocks(data.content);
