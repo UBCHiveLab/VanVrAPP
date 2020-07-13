@@ -23,6 +23,7 @@ public class AnnotationDetailPanel : MonoBehaviour
     public RectTransform selfTransform;
     public Button detailOpenToggle;
     public RectTransform line;
+    public GameObject lineStub;
     public GameObject iconActive;
     public GameObject iconInactive;
 
@@ -297,6 +298,16 @@ public class AnnotationDetailPanel : MonoBehaviour
     private void UpdateTargetLine()
     {
         if (_displayedIndicator == null) return;
+        if (_displayedIndicator.data.position.global)
+        {
+            lineStub.gameObject.SetActive(false);
+            line.gameObject.SetActive(false);
+        }
+        else
+        {
+            lineStub.gameObject.SetActive(true);
+            line.gameObject.SetActive(true);
+        }
         Vector3 target = _displayedIndicator.transform.position; // The center point of the target indicator
         Vector3 pivot = line.position; // The pivot of the line to be drawn
         float dist = Vector3.Distance(target, pivot); // Distance between pivot and target

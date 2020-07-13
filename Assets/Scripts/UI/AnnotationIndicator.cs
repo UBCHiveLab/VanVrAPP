@@ -52,7 +52,14 @@ public class AnnotationIndicator : MonoBehaviour
      */
     private void UpdatePosition()
     {
-        transform.position =
-            Camera.main.WorldToScreenPoint(_specObject.transform.TransformPoint(data.positionVector3));
+        if (data.positionVector3 != null)
+        {
+            transform.position =
+                Camera.main.WorldToScreenPoint(_specObject.transform.TransformPoint((Vector3)data.positionVector3));
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

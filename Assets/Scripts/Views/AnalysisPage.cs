@@ -137,6 +137,8 @@ public class AnalysisPage : MonoBehaviour, IPage
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
                 orbitCam.target = hit.transform;
+                if (hit.transform.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off button actions (e.g. annotations)
+
                 currentSelectedObject = hit.transform.gameObject;
                 if (currentSelectedObject == stateController.CurrentSpecimenObject)
                 {

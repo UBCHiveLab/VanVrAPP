@@ -15,20 +15,30 @@
                 "annotationId": "t1",
                 "title": "Test Annotation 1",
                 "content": "[img src='https://avatars3.githubusercontent.com/u/14044933?s=400&u=a1870f874f239a7c840c4d32ac040427c16a2368&v=4'] Lorem ipsum dolor sit amet sid adipiscing. [vid title='big buck bunny' src='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' width='180' height='500'] Lorem ipsum dolor sit amet.  [vid src='http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'] ",
-                "position": [ 0.02, 0.01, 0.0 ]
+                "position": {
+                  "x": 0.02,
+                  "y": 0.01,
+                  "z":  0.0 
+                }
               },
                 {
                     "annotationId": "t2",
                     "title": "Test Annotation 2",
                     "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.01, 0.005, 0.01]
+                    "position": {
+                      "global":  true
+                    }
                 },
-                {
-                    "annotationId": "t3",
-                    "title": "Test Annotation 3",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.0, 0.02, 0.01]
+              {
+                "annotationId": "t3",
+                "title": "Test Annotation 3",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.02,
+                  "z": 0.1
                 }
+              }
             ]
         },
         {
@@ -43,24 +53,44 @@
             "scale": 0.2,
             "annotations": [
               {
+                "annotationId": "0",
+                "title": "Main Annotation",
+                "content": "[img src='live.staticflickr.com/7346/27911774922_2587f3ba47_b.jpg' cite='Wikimedia' title='A Bird'] [vid title='test video' src='https://www.youtube.com/watch?v=17mxfO9nklQ' cite='2014 UBC Medicine'] Etiam rhoncus. Praesent ac sem eget est egestas volutpat. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Suspendisse eu ligula.                    Nulla consequat massa quis enim. Cras varius.",
+                "position": {
+                  "global": true
+                }
+              },
+              {
                 "annotationId": "t1",
                 "title": "Test Annotation 1",
                 "content": "[aud src='https://ia802606.us.archive.org/15/items/heartbeat_895/babyheartbeat.ogg' cite='someone on internet archive' title='Heartbeat'] [img src='https://i.pinimg.com/564x/97/89/b0/9789b0dba1b81f2b6ae96cf1d0067f0a.jpg' cite='2018 Disney' title='Baby Yoda Drinking Bone Broth'] [vid title='test video' src='https://www.youtube.com/watch?v=17mxfO9nklQ' cite='2014 UBC Medicine'] Etiam rhoncus. Praesent ac sem eget est egestas volutpat. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Suspendisse eu ligula.                    Nulla consequat massa quis enim. Cras varius.",
-                "position": [ 0.5, 0.3, 0.1 ]
+                "position": {
+                  "x": 0.24,
+                  "y": 0.22,
+                  "z": 0.1
+                }
               },
               {
                 "annotationId": "t2",
                 "title": "Test Annotation 2",
                 "content": "Lorem ipsum dolor sit amet sid adipiscing. [img src='https://lh3.googleusercontent.com/proxy/ukrWGqwUXw1uYW6qFuyol0qWw1KctTvaKzkaP8u3XlVGKXJFWtvsPpI0J7ui9IpA01l2e04Q11U0TmtwtfiXH1zCH0Q_seWRRA']",
-                "position": [ 0.8, 0.3, 0.1 ]
-              },
-                {
-                    "annotationId": "t3",
-                    "title": "Test Annotation 3",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.8, 0.3, 0.5]
+                "position": {
+                  "x": 0.14,
+                  "y": 0.17,
+                  "z": 0.21
                 }
-            ]
+              },
+              {
+                "annotationId": "t3",
+                "title": "Test Annotation 3",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.02,
+                  "z": 0.33
+                }
+              }
+          ]
         },
         {
             "id": "kidney01",
@@ -73,24 +103,36 @@
             "texPath": "assets/materials/organ materials/textures/kidney_suspended_jul25test.jpg",
             "scale": 0.0025,
             "annotations": [
-                {
-                    "annotationId": "t1",
-                    "title": "Test Annotation 1",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [5.5, 9.3, 0.1]
-                },
-                {
-                    "annotationId": "t2",
-                    "title": "Test Annotation 2",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [2.8, 11.3, 6]
-                },
-                {
-                    "annotationId": "t3",
-                    "title": "Test Annotation 3",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.8, 0.3, 1.5]
+              {
+                "annotationId": "t1",
+                "title": "Test Annotation 1",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.02,
+                  "z": 0.1
                 }
+              },
+              {
+                "annotationId": "t2",
+                "title": "Test Annotation 2",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.12,
+                  "z": 0.1
+                }
+              },
+              {
+                "annotationId": "t3",
+                "title": "Test Annotation 3",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.02,
+                  "z": 0.3
+                }
+              }
             ]
         },
         {
@@ -104,24 +146,36 @@
             "texPath": "assets/materials/organ materials/textures/liver_laser_and_photogrammetry.jpg",
             "scale": 0.0008,
             "annotations": [
-                {
-                    "annotationId": "t1",
-                    "title": "Test Annotation 1",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.5, 0.3, 0.1]
-                },
-                {
-                    "annotationId": "t2",
-                    "title": "Test Annotation 2",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.8, 0.3, 0.1]
-                },
-                {
-                    "annotationId": "t3",
-                    "title": "Test Annotation 3",
-                    "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-                    "position": [0.8, 0.3, 0.5]
+              {
+                "annotationId": "t1",
+                "title": "Test Annotation 1",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.32,
+                  "z": 0.1
                 }
+              },
+              {
+                "annotationId": "t2",
+                "title": "Test Annotation 2",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.14,
+                  "y": 0.02,
+                  "z": 0.1
+                }
+              },
+              {
+                "annotationId": "t3",
+                "title": "Test Annotation 3",
+                "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+                "position": {
+                  "x": 0.04,
+                  "y": 0.02,
+                  "z": 0.1
+                }
+              }
             ]
         },
         {
