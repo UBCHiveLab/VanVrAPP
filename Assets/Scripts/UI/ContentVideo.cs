@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class ContentVideo : MultimediaContent, IAnnotationContentBlock
 {
@@ -20,6 +19,7 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
 
     public RectTransform transform;
     public LayoutElement layoutEl;
+    public TextMeshProUGUI citation;
 
     [Header("Data")]
     public string url;
@@ -49,6 +49,7 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
         title = data.title;
         detailPanel = panel;
         label.text = title;
+        
         if (data.widthHeight == new Vector2(-1, -1))
         {
             sizeRect = new Vector2(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -57,6 +58,14 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
             sizeRect = data.widthHeight;
         }
 
+        if (data.cite == "")
+        {
+            citation.gameObject.SetActive(false);
+        }
+        else
+        {
+            citation.text = data.cite;
+        }
 
         url = data.content;
         youtubePlayer.videoPlayer = panel.videoPlayer;

@@ -14,6 +14,9 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
     public AudioClip clip;
     public string title { get; set; }
 
+    public TextMeshProUGUI citationLabel;
+    public TextMeshProUGUI titleLabel;
+
     public void Populate(ContentBlockData data, AnnotationDetailPanel panel)
     {
         if (data.type != BlockType.AUDIO)
@@ -22,10 +25,22 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
         }
 
         contentBlock = this;
-        label.text = data.title;
         src = data.content;
         detailPanel = panel;
         title = data.title;
+
+
+        if (data.cite == "") {
+            citationLabel.gameObject.SetActive(false);
+        } else {
+            citationLabel.text = data.cite;
+        }
+
+        if (data.title == "") {
+            titleLabel.gameObject.SetActive(false);
+        } else {
+            titleLabel.text = data.title;
+        }
     }
 
     protected override void PrepareContent() {

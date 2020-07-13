@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -27,63 +28,83 @@ public class AnnotationParser
             string content = contents[i];
             if (content == "[" || content == "]") {
                 // ignore
-            } else if (content.StartsWith("vid") || content.StartsWith("video")) {
-                Match match = Regex.Match(content, "src=[\'|\"]([^\'\"]*)[\'|\"]");
-                string src = match.Groups[1].Value;
+            } else if (content.StartsWith("vid") || content.StartsWith("video"))
+            {
+                string src = MatchStringAttribute(content, "src"); //source matches anything between two quotations marks
+                string title = MatchStringAttributeDefault(content, "title", src);
+                string cite = MatchStringAttributeDefault(content, "cite", "");
+                int width = MatchIntAttribute(content, "width", -1);
+                int height = MatchIntAttribute(content, "height", -1);
+                blocks.Add(new ContentBlockData(BlockType.VIDEO, title, src, cite, new Vector2Int(width, height)));
 
-                match = Regex.Match(content, "title=[\'|\"](.*?)[\'|\"]");
-                string title = src;
-                if (match.Groups.Count > 0 && match.Groups[1].Value != "") {
-                    title = match.Groups[1].Value;
-                }
-
-                match = Regex.Match(content, "width=[\'|\"](\\d*)[\'|\"]");
-                int width = -1;
-                if (match.Groups.Count > 0 && match.Groups[1].Value != "")
-                {
-                    int.TryParse(match.Groups[1].Value, out width);
-                }
-
-                match = Regex.Match(content, "height=[\'|\"](\\d*)[\'|\"]");
-                int height = -1;
-                if (match.Groups.Count > 0 && match.Groups[1].Value != "") {
-                    int.TryParse(match.Groups[1].Value, out height);
-                }
-
-                blocks.Add(new ContentBlockData(BlockType.VIDEO, title, src, new Vector2Int(width, height)));
             } else if (content.StartsWith("img") || content.StartsWith("image")) {
-                Match match = Regex.Match(content, "src=[\'|\"]([^\'\"]*)[\'|\"]");
-                string src = match.Groups[1].Value;
-                match = Regex.Match(content, "title=[\'|\"](.*?)[\'|\"]");
-                string title = src;
-                if (match.Groups.Count > 0) {
-                    title = match.Groups[1].Value;
-                }
-
-                blocks.Add(new ContentBlockData(BlockType.IMAGE, title, src, Vector2Int.zero));
-
+                string src = MatchStringAttribute(content, "src"); //source matches anything between two quotations marks
+                string title = MatchStringAttributeDefault(content, "title", src);
+                string cite = MatchStringAttributeDefault(content, "cite", "");
+                int width = MatchIntAttribute(content, "width", -1);
+                int height = MatchIntAttribute(content, "height", -1);
+                blocks.Add(new ContentBlockData(BlockType.IMAGE, title, src, cite, new Vector2Int(width, height)));
             } else if (content.StartsWith("aud") || content.StartsWith("audio")) {
-                Match match = Regex.Match(content, "src=[\'|\"]([^\'\"]*)[\'|\"]");
-                string src = match.Groups[1].Value;
-                match = Regex.Match(content, "title=[\'|\"](.*?)[\'|\"]");
-                string title = src;
-                if (match.Groups.Count > 0) {
-                    title = match.Groups[1].Value;
-                }
-                blocks.Add(new ContentBlockData(BlockType.AUDIO, title, src, Vector2Int.zero));
+                string src = MatchStringAttribute(content, "src"); //source matches anything between two quotations marks
+                string title = MatchStringAttributeDefault(content, "title", src);
+                string cite = MatchStringAttributeDefault(content, "cite", "");
+                blocks.Add(new ContentBlockData(BlockType.AUDIO, title, src, cite, Vector2Int.zero));
 
             } else if (content.Trim() != "") {
-                blocks.Add(new ContentBlockData(BlockType.TEXT, null, content, Vector2Int.zero));
+                string title = MatchStringAttributeDefault(content, "title", "");
+                string cite = MatchStringAttributeDefault(content, "cite", "");
+                blocks.Add(new ContentBlockData(BlockType.TEXT, title, content, cite, Vector2Int.zero));
             } else {
                 blank = true;
             }
 
             if (!blank && i > 0 && i < contents.Count - 1) {
-                blocks.Add(new ContentBlockData(BlockType.SEPARATOR, null, null, Vector2Int.zero));
+                blocks.Add(new ContentBlockData(BlockType.SEPARATOR, null, null, "", Vector2Int.zero));
             }
         }
 
         return blocks;
+    }
+
+
+    string MatchStringAttributeDefault(string content, string att, string defaultValue, string pattern = "(.*?)")
+    {
+        Match match = Regex.Match(content, $"{att}=[\'|\"]{pattern}[\'|\"]");
+        string val = defaultValue;
+        if (match.Groups.Count > 0 && match.Groups[1].Value != "") {
+             val = match.Groups[1].Value;
+        }
+
+        return val;
+    }
+
+    string MatchStringAttribute(string content, string att, string pattern="(.*?)") {
+        Match match = Regex.Match(content, $"{att}=[\'|\"]{pattern}[\'|\"]");
+        string val = "";
+        if (match.Groups.Count > 0 && match.Groups[1].Value != "") {
+            val = match.Groups[1].Value;
+        }
+        else
+        {
+            throw new Exception($"Missing required attribute {att}");
+        }
+
+        return val;
+    }
+
+
+    int MatchIntAttribute(string content, string att, int defaultValue, string pattern = "(\\d*)") {
+        Match match = Regex.Match(content, $"{att}=[\'|\"]{pattern}[\'|\"]");
+        int val = defaultValue;
+        if (match.Groups.Count > 0 && match.Groups[1].Value != "") {
+            string sval = match.Groups[1].Value;
+            if (!int.TryParse(sval, out val))
+            {
+                throw new Exception($"Couldn't parse attribute {att} to integer from value {sval}");
+            }
+        }
+
+        return val;
     }
 
 }
