@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.Controller;
+﻿using Assets.Scripts.Controller;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -129,6 +127,9 @@ public class AnalysisPage : MonoBehaviour, IPage
         HandleCamSelect();
     }
 
+    /**
+     * Allows us to switch focus to a different specimen by left clicking
+     */
     private void HandleCamSelect() {
 
         if (Input.GetMouseButtonDown(0)) {
@@ -137,7 +138,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
                 orbitCam.target = hit.transform;
-                if (hit.transform.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off button actions (e.g. annotations)
+                if (hit.transform.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off obscured button actions (e.g. annotations)
 
                 currentSelectedObject = hit.transform.gameObject;
                 if (currentSelectedObject == stateController.CurrentSpecimenObject)
@@ -158,6 +159,10 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
     }
 
+
+    /**
+     * Allows us to rotate the specimen by right clicking and dragging
+     */
     private void HandleSpecimenRotation()
     {
         if (Input.GetMouseButtonDown(1)) {
@@ -192,7 +197,9 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     }
 
-    // ANNOTATIONS
+    /**
+     * Toggles visibility of annotations, annotation bar and detail view
+     */
 
     void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
@@ -202,11 +209,17 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
     }
 
+    /**
+     * Toggles visibility of proportion indicator
+     */
     void ToggleProportionIndicator(bool on)
     {
         proportionIndicator.gameObject.SetActive(on);
     }
 
+    /**
+     * Opens in-analysis compare window
+     */
     void ToggleCompare()
     {
         bool on = !compareMenu.gameObject.activeSelf;
@@ -214,7 +227,9 @@ public class AnalysisPage : MonoBehaviour, IPage
         leftPanel.gameObject.SetActive(!on);
     }
 
-
+    /**
+     * Hides UI (focus mode)
+     */
     void ToggleFocus()
     {
         // TODO: animate these

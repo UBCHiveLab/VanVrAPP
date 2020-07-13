@@ -56,9 +56,10 @@ public class AnnotationIndicator : MonoBehaviour
         {
             transform.position =
                 Camera.main.WorldToScreenPoint(_specObject.transform.TransformPoint((Vector3)data.positionVector3));
-        }
+        } 
         else
         {
+            // TODO: where does the non-local point indicator show up?
             gameObject.SetActive(false);
         }
     }
