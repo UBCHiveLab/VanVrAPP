@@ -118,7 +118,7 @@ namespace Assets.Scripts.Controller
                     spObj.AddComponent<MeshFilter>().mesh = data.mesh;
                     spObj.AddComponent<MeshRenderer>().material = data.material;
                     spObj.AddComponent<MeshCollider>();
-                    spObj.layer = LayerMask.NameToLayer("Specimen");
+                    spObj.layer = LayerMask.NameToLayer("Specimens");
                 }
                 catch (Exception e)
                 {

@@ -162,7 +162,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimen"))) {
+            if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens"))) {
                 _rotatingSpecimen = hit.transform.gameObject;
             }
         }
