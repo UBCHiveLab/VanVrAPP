@@ -49,12 +49,12 @@ public class OrbitCamera : MonoBehaviour
     new private Camera camera;
     private float cameraFieldOfView;
     new private Transform transform;
-    private float xVelocity;
-    private float yVelocity;
-    private float xRotationAxis;
-    private float yRotationAxis;
-    private float zoomVelocity;
-    private float zoomVelocityZAxis;
+    public float xVelocity;
+    public float yVelocity;
+    public float xRotationAxis;
+    public float yRotationAxis;
+    public float zoomVelocity;
+    public float zoomVelocityZAxis;
     bool wasDraggingCamera = false;
     Vector3 lastDragPosition;
     Ray lastMousePosition;
@@ -78,30 +78,33 @@ public class OrbitCamera : MonoBehaviour
     private void LateUpdate()
     {
 
-        if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Nothing after this will be executed if cursor is over UI object
+        //if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Nothing after this will be executed if cursor is over UI object
 
         //If auto rotation is enabled, just increment the xVelocity value by the rotationSensitivity.
         if (autoRotate)
         {
             xVelocity += rotationSensitivity * Time.deltaTime;
         }
-        
-            Quaternion rotation;
-            Vector3 position;
-            float deltaTime = Time.deltaTime;
 
-            if (Input.GetMouseButton(0))
-            {
-                xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity;
-                yVelocity -= Input.GetAxis("Mouse Y") * rotationSensitivity;
-            }
+        Quaternion rotation;
+        Vector3 position;
+        float deltaTime = Time.deltaTime;
 
-            xRotationAxis += xVelocity;
-            yRotationAxis += yVelocity;
+        if (Input.GetMouseButton(0))
+        {
+            xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity;
+            yVelocity -= Input.GetAxis("Mouse Y") * rotationSensitivity;
+        }
 
-            //Clamp the rotation along the y-axis between the limits we set. 
-            //Limits of 360 or -360 on any axis will allow the camera to rotate unrestricted
-            yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
+
+
+        xRotationAxis += xVelocity;
+        yRotationAxis += yVelocity;
+
+        //Clamp the rotation along the y-axis between the limits we set. 
+        //Limits of 360 or -360 on any axis will allow the camera to rotate unrestricted
+        yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
+
         if (Input.GetMouseButtonDown(2))
         {
             lastDragPosition = Input.mousePosition;
@@ -118,7 +121,7 @@ public class OrbitCamera : MonoBehaviour
             }
 
             rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
-      
+
             transform.rotation = rotation;
             xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * 17f);
             yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * 17f);
@@ -134,16 +137,16 @@ public class OrbitCamera : MonoBehaviour
             xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * rotationSmoothing);
             yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * rotationSmoothing);
         }
-        
 
-       
-       
+
+
+
 
     }
 
     private void Zoom()
     {
-        if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
+      //  if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
 
         float deltaTime = Time.deltaTime;
 
@@ -184,7 +187,7 @@ public class OrbitCamera : MonoBehaviour
 
                     break;
                 case ZoomMode.ZAxisDistance:
-                    
+
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
                         deltaTime * zoomSoothness);
 
@@ -206,7 +209,9 @@ public class OrbitCamera : MonoBehaviour
                     zAxisDistance = Mathf.Clamp(zAxisDistance, cameraZoomRangeZAxis.x, cameraZoomRangeZAxis.y);
                     break;
             }
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0f) {
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
             //Zooms the camera out using the mouse scroll wheel
             switch (zoomMode)
             {
@@ -245,7 +250,7 @@ public class OrbitCamera : MonoBehaviour
                     break;
             }
         }
-        
+
         //We're just ensuring that when we're zooming using the camera's FOV, that the FOV will be updated to match the value we got when we scrolled.
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0)
         {
@@ -261,7 +266,7 @@ public class OrbitCamera : MonoBehaviour
 
 
     //Prevents the camera from locking after rotating a certain amount if the rotation limits are set to 360 degrees.
-    private float ClampAngleBetweenMinAndMax(float angle, float min, float max)
+    public float ClampAngleBetweenMinAndMax(float angle, float min, float max)
     {
         if (angle < -360)
         {
