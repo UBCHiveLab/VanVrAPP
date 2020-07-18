@@ -23,12 +23,12 @@ public class FocusDistanceFinder : MonoBehaviour
 
         isHit = false;
 
-        if (Physics.Raycast(raycast, out hit, 100f))
+        int layer_mask = LayerMask.GetMask("Specimens");
+
+        if (Physics.Raycast(raycast, out hit, 100f, layer_mask))
         {
             isHit = true;
             hitDistance = Vector3.Distance(transform.position, hit.point);
-            
-
         }
         else
         {
