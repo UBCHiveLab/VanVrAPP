@@ -147,7 +147,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
                 //orbitCam.target = hit.transform;
-                if (hit.transform.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off obscured button actions (e.g. annotations)
+                if (hit.transform.gameObject == currentSelectedObject || hit.transform.parent.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off obscured button actions (e.g. annotations)
 
                 currentSelectedObject = hit.transform.parent.gameObject;
                 if (currentSelectedObject == stateController.CurrentSpecimenObject)
@@ -180,7 +180,7 @@ public class AnalysisPage : MonoBehaviour, IPage
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens"))) {
-                _rotatingSpecimen = hit.transform.gameObject;
+                _rotatingSpecimen = hit.transform.parent.gameObject;
             }
         }
 
