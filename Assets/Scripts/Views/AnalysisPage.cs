@@ -77,7 +77,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
         mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
         //mainCamera.cullingMask = 9 << 9;
-        targetSpecimenLabel.text = stateController.CurrentSpecimenData.name;
+        targetSpecimenLabel.text = currentSelectedData.name;
         trayObj.SetActive(false);
         cart.SetTrayVisibility(true);
         depthOfField.active = true;
@@ -146,18 +146,19 @@ public class AnalysisPage : MonoBehaviour, IPage
             int layerMask = 9 << 9;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
-                orbitCam.target = hit.transform;
+                //orbitCam.target = hit.transform;
                 if (hit.transform.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off obscured button actions (e.g. annotations)
 
-                currentSelectedObject = hit.transform.gameObject;
+                currentSelectedObject = hit.transform.parent.gameObject;
                 if (currentSelectedObject == stateController.CurrentSpecimenObject)
                 {
-                    currentSelectedData = stateController.CurrentSpecimenData;
+                    ChangeFocus(stateController.CurrentSpecimenObject, stateController.CurrentSpecimenData);
+                    /*currentSelectedData = stateController.CurrentSpecimenData;
+                    targetSpecimenLabel.text = currentSelectedData.name;*/
                 } else if (currentSelectedObject == stateController.CompareSpecimenObject)
                 {
-                    currentSelectedData = stateController.CompareSpecimenData;
-                }
-                else
+                    ChangeFocus(stateController.CompareSpecimenObject, stateController.CompareSpecimenData);
+                } else
                 {
                     currentSelectedObject = null;
                     currentSelectedData = null;
@@ -194,6 +195,14 @@ public class AnalysisPage : MonoBehaviour, IPage
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
 
         }
+    }
+
+    public void ChangeFocus(GameObject focusObject, SpecimenData focusData)
+    {
+        currentSelectedData = focusData;
+        orbitCam.target = focusObject.transform;
+        targetSpecimenLabel.text = currentSelectedData.name;
+
     }
 
 

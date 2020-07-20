@@ -11,6 +11,7 @@ public class CompareMenu : MonoBehaviour
     public StateController stateController;
     public SpecimenCart cart;
     public ProportionIndicator proportionIndicator;
+    public AnalysisPage analysisPage;
     
     [Header("Internal Structure")]
     public Button viewToggle;
@@ -105,7 +106,7 @@ public class CompareMenu : MonoBehaviour
         if (stateController.CurrentSpecimenData != null)
         {
             Populate();
-            Camera.main.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
+            analysisPage.ChangeFocus(stateController.CurrentSpecimenObject, stateController.CurrentSpecimenData);
         }
         else
         {
