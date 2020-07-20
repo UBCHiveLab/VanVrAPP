@@ -29,7 +29,7 @@ public class ProportionIndicator : MonoBehaviour
         if (stateController.CurrentSpecimenData == null) return;
         for (int i = 0; i < proportionIndicatorBody.transform.childCount - 1; i++) 
         {
-            if (proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CurrentSpecimenData.organ)
+            if (proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CurrentSpecimenData.organ.ToLower())
             {
                 proportionIndicatorBody.transform.GetChild(i).gameObject.SetActive(true);
                 //print(stateController.CurrentSpecimenData.organ + "Added to proportion indicator");
@@ -41,7 +41,7 @@ public class ProportionIndicator : MonoBehaviour
 
             if(stateController.CompareSpecimenData != null)
             {
-                if(proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CompareSpecimenData.organ)
+                if(proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CompareSpecimenData.organ.ToLower())
                 {
                     proportionIndicatorBody.transform.GetChild(i).gameObject.SetActive(true);
                     //print(stateController.CompareSpecimenData.organ + "Added to proportion indicator");
@@ -55,13 +55,13 @@ public class ProportionIndicator : MonoBehaviour
         if (stateController.CompareSpecimenData == null) return;
          for (int i = 0; i < proportionIndicatorBody.transform.childCount - 1; i++) 
         {
-            if (proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CurrentSpecimenData.organ){
+            if (proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CurrentSpecimenData.organ.ToLower()) {
             proportionIndicatorBody.transform.GetChild(i).gameObject.SetActive(false);
             } 
 
             if(stateController.CompareSpecimenData != null)
             {
-                if(proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CompareSpecimenData.organ)
+                if(proportionIndicatorBody.transform.GetChild(i).transform.name == stateController.CompareSpecimenData.organ.ToLower())
                 {
                     proportionIndicatorBody.transform.GetChild(i).gameObject.SetActive(false);
                     //print(stateController.CompareSpecimenData.organ + "Added to proportion indicator");
