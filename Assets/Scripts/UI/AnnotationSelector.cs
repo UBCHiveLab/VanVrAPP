@@ -35,25 +35,24 @@ public class AnnotationSelector : MonoBehaviour
      */
     public void UpdateIndex()
     {
+        if (display.activeIndicators.Count == 0) {
+            label.text = "No annotations found.";
+            left.gameObject.SetActive(false);
+            right.gameObject.SetActive(false);
+            return;
+        }
+
         int idx = display.selectedSpecimenIndex;
         if (idx == -1)
         {
-            if (display.activeIndicators.Count == 0)
-            {
-                label.text = "No annotations found.";
-                left.gameObject.SetActive(false);
-                right.gameObject.SetActive(false);
-            }
-            else
-            {
-                label.text = "Select an annotation.";
-                left.gameObject.SetActive(true);
-                right.gameObject.SetActive(true);
-            }
+            label.text = "Select an annotation.";
+            left.gameObject.SetActive(true);
+            right.gameObject.SetActive(true);
+            
         }
         else
         {
-            label.text = idx.ToString() + ". " + display.activeIndicators[idx].data.title;
+            label.text = idx + ". " + display.activeIndicators[idx].data.title;
         }
     }
 

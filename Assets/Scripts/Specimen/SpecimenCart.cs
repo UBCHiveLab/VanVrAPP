@@ -14,7 +14,7 @@ public class SpecimenCart : MonoBehaviour
     public Vector3 specimenTrayOffset = new Vector3(0, 0, 0.005f);
     public bool hidden;
 
-    void Start()
+    void OnEnable()
     {
         SpawnTray1();
     }

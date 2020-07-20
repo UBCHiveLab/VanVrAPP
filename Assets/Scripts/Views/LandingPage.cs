@@ -28,7 +28,10 @@ public class LandingPage : MonoBehaviour, IPage
         btn.onClick.AddListener(StartSession);
         mainCameraAnimator = Camera.main.GetComponent<Animator>();
 
-        volume.profile.TryGetSettings(out depthOfField);
+
+        if (depthOfField == null) {
+            volume.profile.TryGetSettings(out depthOfField);
+        }
 
     }
 
@@ -46,6 +49,10 @@ public class LandingPage : MonoBehaviour, IPage
 
     public void Activate()
     {
+        if (depthOfField == null) {
+            volume.profile.TryGetSettings(out depthOfField);
+        }
+
         focusDistanceFinder.enabled = false;
         uiObject.SetActive(true);
         disclaimerPanel.SetActive(true);

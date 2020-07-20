@@ -39,7 +39,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public GameObject trayObj;
 
     public PostProcessVolume volume;
-    DepthOfField depthOfField;
+    private DepthOfField depthOfField;
     public FocusDistanceFinder focusDistanceFinder;
 
     [Header("Focus Information")]
@@ -58,6 +58,11 @@ public class AnalysisPage : MonoBehaviour, IPage
         if (stateController.CurrentSpecimenObject == null)
         {
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
+        }
+
+        if (depthOfField == null)
+        {
+            volume.profile.TryGetSettings(out depthOfField);
         }
 
         currentSelectedObject = stateController.CurrentSpecimenObject;
@@ -81,6 +86,10 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Deactivate()
     {
+        if (depthOfField == null) {
+            volume.profile.TryGetSettings(out depthOfField);
+        }
+
         _rotatingSpecimen = null;
         proportionScript.ResetProportionIndicator(); // Hide selected specimen on proportion
         uiObject.SetActive(false);
