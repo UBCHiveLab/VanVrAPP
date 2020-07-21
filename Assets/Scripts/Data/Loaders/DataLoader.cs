@@ -21,6 +21,10 @@ public abstract class DataLoader: MonoBehaviour
     private int _requestsResolved;
     private bool _loaded;
 
+    public int totalSpecimens;
+    public int loadedSpecimens;
+    public string status;
+
     public void Load()
     {
         StartCoroutine(Loading());
@@ -49,9 +53,14 @@ public abstract class DataLoader: MonoBehaviour
         _manifestLoaded = false;
         Stopwatch watch = Stopwatch.StartNew();
 
+        status = "Waiting for caching";
+        Debug.Log("Waiting for caching");
+
         // Wait for the caching system to be ready
         while (!Caching.ready) yield return null;
+        Debug.Log("Caching ready, loading manifest.");
 
+        status = "Loading manifest";
         // Gets and verifies manifest file
         StartCoroutine(LoadManifest());
         while (!_manifestLoaded) yield return null;
@@ -61,10 +70,12 @@ public abstract class DataLoader: MonoBehaviour
         _requestsResolved = 0;
 
         _specimens = new List<SpecimenData>();
+        status = $"Loading Specimens [0/{manifest.specimenData.Length}]";
         foreach (SpecimenRequestData sprd in manifest.specimenData)
         {
             // Load specimen data from request. Must increment requestsResolved when finished, even if failed!
             StartCoroutine(LoadFromData(sprd));
+            yield return null;
         }
 
 
@@ -73,9 +84,13 @@ public abstract class DataLoader: MonoBehaviour
         _labs = manifest.labs.ToList();
 
         // Wait until all requests are resolved
-        while (_requestsResolved < manifest.specimenData.Length) yield return null;
+        while (_requestsResolved < manifest.specimenData.Length)
+        {
+            status = $"Loading Specimens [{_requestsResolved}/{manifest.specimenData.Length}]";
+            yield return new WaitForSeconds(0.1f); // The wait allows for ui interactions while loading!
+        }
         watch.Stop();
-
+        status = "Load successful";
         // Listeners can now check IsLoading() and know that the loader has completed.
         _loaded = true;
 

@@ -20,6 +20,8 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
     public RectTransform transform;
     public LayoutElement layoutEl;
     public TextMeshProUGUI citation;
+    public GameObject loadingSpinner;
+
 
     [Header("Data")]
     public string url;
@@ -38,6 +40,11 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
         {
             timeLabel.text = "Ready";
         }
+    }
+
+    protected override void ContentLoaded() {
+        loadingSpinner.SetActive(false);
+        canvas.gameObject.SetActive(true);
     }
 
     public void Populate(ContentBlockData data, AnnotationDetailPanel panel) {
@@ -76,11 +83,13 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
             youtubePlayer.videoPlayer = panel.videoPlayer;
         }
 
-        if (youtube) {
+        if (youtube && gameObject.activeSelf) {
             youtubePlayer.enabled = true;
             StartCoroutine(LoadThumbnail(ExtractVideoId(url)));
-            //sizeRect = new Vector2(1600, 1200);
-
+        }
+        else
+        {
+            ContentLoaded();
         }
 
         Vector2 rect = GetConstrainedRec(148, -1);
@@ -92,8 +101,14 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
 
     private IEnumerator LoadThumbnail(string id)
     {
+        loadingSpinner.SetActive(true);
+        canvas.gameObject.SetActive(false);
+
         UnityWebRequest req = UnityWebRequestTexture.GetTexture("https://img.youtube.com/vi/" + id + "/0.jpg");
         yield return req.SendWebRequest();
+
+        ContentLoaded();
+
         thumbnail = DownloadHandlerTexture.GetContent(req);
         canvas.texture = thumbnail;
     }

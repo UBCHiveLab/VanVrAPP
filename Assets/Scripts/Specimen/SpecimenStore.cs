@@ -20,6 +20,8 @@ public class SpecimenStore : MonoBehaviour
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
     public Dictionary<string, RegionData> organToRegion;
 
+    private DataLoader loader;
+
 
     [Header("Region Icons")] public RegionIconEntry[] icons;
     
@@ -138,6 +140,12 @@ public class SpecimenStore : MonoBehaviour
         return sb.ToString();
     }
 
+    public string GetStatus()
+    {
+        if (loader) return loader.status;
+        return "";
+    }
+
     private void Start()
     {
         StartCoroutine(LoadData());
@@ -146,7 +154,6 @@ public class SpecimenStore : MonoBehaviour
     private IEnumerator LoadData()
     {
         // Attachs the correct loader and sets the manifest path.
-        DataLoader loader;
         if (manifestLocal)
         {
             loader = gameObject.AddComponent<LocalDataLoader>();
@@ -158,6 +165,7 @@ public class SpecimenStore : MonoBehaviour
 
         // Waits for the loader to load the manifest and all connected bundles (could be long on first load, but once cached should be seconds)
         loader.Load();
+
         while (!loader.Loaded()) yield return null;
         
         // Builds all store data structures

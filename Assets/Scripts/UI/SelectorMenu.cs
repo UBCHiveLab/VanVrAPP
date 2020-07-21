@@ -30,6 +30,7 @@ public class SelectorMenu : MonoBehaviour
     public TextMeshProUGUI subtitle;
     public Button atlasButton;
     public Button labButton;
+    public GameObject loadingIndicator;
 
     public enum ListMode
     {
@@ -50,6 +51,8 @@ public class SelectorMenu : MonoBehaviour
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
+
+
 
         subtitle.text = "LOADING SPECIMENS...";
         labButton.onClick.AddListener(ToggleToLabs);
@@ -73,7 +76,15 @@ public class SelectorMenu : MonoBehaviour
      */
     public void Populate()
     {
-        if (store.Loading()) return;
+        if (store.Loading())
+        {
+            subtitle.gameObject.SetActive(false);
+            loadingIndicator.gameObject.SetActive(true);
+            return;
+        }
+
+        subtitle.gameObject.SetActive(true);
+        loadingIndicator.gameObject.SetActive(false);
 
         ListMode mode;
 

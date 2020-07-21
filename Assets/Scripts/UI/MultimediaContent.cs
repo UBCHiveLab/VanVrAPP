@@ -48,6 +48,11 @@ public class MultimediaContent : MonoBehaviour
         // Override
     }
 
+    protected virtual void ContentLoaded()
+    {
+        // Override
+    }
+
     public Vector2 GetConstrainedRec(float cWidth, float cHeight) {
 
         if (cHeight <= 0) {

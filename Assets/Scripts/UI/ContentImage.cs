@@ -19,6 +19,7 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
     public int height;
     public TextMeshProUGUI titleLabel;
     public TextMeshProUGUI citation;
+    public GameObject loadingSpinner;
 
 
     protected override void PrepareContent()
@@ -33,10 +34,16 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
         }
     }
 
+    protected override void ContentLoaded()
+    {
+        loadingSpinner.SetActive(false);
+        canvas.gameObject.SetActive(true);
+    }
+
     public void Populate(ContentBlockData data, AnnotationDetailPanel panel)
     {
         if (data.type != BlockType.IMAGE) {
-            throw new Exception("Must be text block to render text data");
+            throw new Exception("Must be image block to render image data");
         }
 
         contentBlock = this;
@@ -69,16 +76,22 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
 
     private IEnumerator DownloadImage(string url)
     {
+        loadingSpinner.SetActive(true);
+        canvas.gameObject.SetActive(false);
+
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
         yield return request.SendWebRequest();
+        ContentLoaded();
+        yield return null; // Note: necessary for width to resize to fit container and do aspect ratio calcs below.
+
         if (request.isNetworkError || request.isHttpError)
         {
             Debug.Log(request.error);
+            // TODO: output error
         } else
         {
             image = ((DownloadHandlerTexture)request.downloadHandler).texture;
             sizeRect = new Vector2(image.width, image.height);
-
 
             // Ensures we preserve aspect ratio by locking width and setting size to the w/h ratio of the original.
             float cw = canvas.rectTransform.rect.width;
@@ -88,6 +101,8 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
             canvas.rectTransform.sizeDelta = GetConstrainedRec(canvas.rectTransform.rect.width, -1f); //new Vector2(cw, height);
 
             canvas.texture = image;
+
+
 
         }
     }

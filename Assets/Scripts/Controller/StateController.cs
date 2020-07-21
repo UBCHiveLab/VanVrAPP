@@ -82,7 +82,6 @@ namespace Assets.Scripts.Controller
         public GameObject AddNewSpecimen(SpecimenData data) {
             RemoveCurrentSpecimen();
             CurrentSpecimenData = data;
-            Debug.Log($"Specimen added: {data.id}");
             CurrentSpecimenObject = InstantiateSpecimen(data);
             CurrentSpecimenObject.gameObject.SetActive(true);
      
