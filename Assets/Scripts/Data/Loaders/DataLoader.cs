@@ -88,14 +88,18 @@ public abstract class DataLoader: MonoBehaviour
      */
     private IEnumerator LoadFromData(SpecimenRequestData srd)
     {
+        string reqUri = srd.assetUrl;
+#if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
+        reqUri = srd.assetUrlWebGl;
+#endif
         using (UnityWebRequest req =
-            UnityWebRequestAssetBundle.GetAssetBundle(srd.assetUrl, Convert.ToUInt32(srd.version), 0U))
+            UnityWebRequestAssetBundle.GetAssetBundle(reqUri, Convert.ToUInt32(srd.version), 0U))
         {
             yield return req.SendWebRequest();
 
             if (req.isNetworkError || req.isHttpError)
             {
-                Debug.LogWarning($"{req.error} : Could not find bundle for {srd.id} at {srd.assetUrl}");
+                Debug.LogWarning($"{req.error} : Could not find bundle for {srd.id} at {reqUri}");
 
             } else
             {

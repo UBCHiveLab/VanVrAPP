@@ -8,6 +8,7 @@ public class SpecimenRequestData
     public int version;
     public string organ;
     public string assetUrl;
+    public string assetUrlWebGl;
     public string meshPath;
     public string matPath;
     public string prefabPath;

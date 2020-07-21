@@ -9,4 +9,9 @@ public class BundleOptions : MonoBehaviour
     static void PerformBuild() {
         BuildPipeline.BuildAssetBundles("../AssetBundles/", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneWindows);
     }
+
+    [MenuItem("Custom Utilities/Build WebGL")]
+    static void PerformBuildWebGl() {
+        BuildPipeline.BuildAssetBundles("../AssetBundles/", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.WebGL);
+    }
 }
