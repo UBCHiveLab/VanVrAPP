@@ -183,7 +183,7 @@ public class SelectorMenu : MonoBehaviour
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransform);
-                btn.Populate(_loadedSpecimens[i].id, i, null);
+                btn.Populate(_loadedSpecimens[i].name, i, null);
                 btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].id));
             }
 

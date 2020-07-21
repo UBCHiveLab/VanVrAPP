@@ -87,7 +87,7 @@ public abstract class DataLoader: MonoBehaviour
         while (_requestsResolved < manifest.specimenData.Length)
         {
             status = $"Loading Specimens [{_requestsResolved}/{manifest.specimenData.Length}]";
-            yield return new WaitForSeconds(0.1f); // The wait allows for ui interactions while loading!
+            yield return new WaitForSeconds(0.5f); // The wait allows for ui interactions while loading!
         }
         watch.Stop();
         status = "Load successful";

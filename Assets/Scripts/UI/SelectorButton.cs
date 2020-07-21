@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SelectorButton : MonoBehaviour
+public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI text;
     public Button button;
@@ -20,5 +21,15 @@ public class SelectorButton : MonoBehaviour
         {
             icon.sprite = sprite;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        button.OnSelect(null);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        button.OnDeselect(null);
     }
 }
