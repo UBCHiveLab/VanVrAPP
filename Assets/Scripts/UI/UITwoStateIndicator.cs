@@ -16,7 +16,14 @@ public class UITwoStateIndicator : MonoBehaviour
     public void UpdateState(bool newState)
     {
         state = newState;
-        frame.sprite = state ? imageTrue : imageFalse;
-        label.text = state ? textTrue : textFalse;
+        if (frame != null)
+        {
+            frame.sprite = state ? imageTrue : imageFalse;
+        }
+
+        if (label != null)
+        {
+            label.text = state ? textTrue : textFalse;
+        }
     }
 }
