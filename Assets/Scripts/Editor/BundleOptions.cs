@@ -14,4 +14,9 @@ public class BundleOptions : MonoBehaviour
     static void PerformBuildWebGl() {
         BuildPipeline.BuildAssetBundles("../AssetBundles/", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.WebGL);
     }
+
+    [MenuItem("Custom Utilities/Build MacOs")]
+    static void PerformBuildOSX() {
+        BuildPipeline.BuildAssetBundles("../AssetBundles/", BuildAssetBundleOptions.ChunkBasedCompression, BuildTarget.StandaloneOSX);
+    }
 }
