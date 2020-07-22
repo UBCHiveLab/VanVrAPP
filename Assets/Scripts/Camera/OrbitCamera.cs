@@ -49,12 +49,12 @@ public class OrbitCamera : MonoBehaviour
     new private Camera camera;
     private float cameraFieldOfView;
     new private Transform transform;
-    private float xVelocity;
-    private float yVelocity;
-    private float xRotationAxis;
-    private float yRotationAxis;
-    private float zoomVelocity;
-    private float zoomVelocityZAxis;
+    public float xVelocity;
+    public float yVelocity;
+    public float xRotationAxis;
+    public float yRotationAxis;
+    public float zoomVelocity;
+    public float zoomVelocityZAxis;
     bool wasDraggingCamera = false;
     Vector3 lastDragPosition;
     Ray lastMousePosition;
@@ -78,7 +78,7 @@ public class OrbitCamera : MonoBehaviour
     private void LateUpdate()
     {
 
-        if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Nothing after this will be executed if cursor is over UI object
+        //if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Nothing after this will be executed if cursor is over UI object
 
         //If auto rotation is enabled, just increment the xVelocity value by the rotationSensitivity.
         if (autoRotate)
@@ -143,7 +143,7 @@ public class OrbitCamera : MonoBehaviour
 
     private void Zoom()
     {
-        if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
+        //if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
 
         float deltaTime = Time.deltaTime;
 
@@ -261,7 +261,7 @@ public class OrbitCamera : MonoBehaviour
 
 
     //Prevents the camera from locking after rotating a certain amount if the rotation limits are set to 360 degrees.
-    private float ClampAngleBetweenMinAndMax(float angle, float min, float max)
+    public float ClampAngleBetweenMinAndMax(float angle, float min, float max)
     {
         if (angle < -360)
         {

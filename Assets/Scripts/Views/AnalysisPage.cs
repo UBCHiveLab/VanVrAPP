@@ -20,6 +20,12 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button focusModeButton;
     public Button compareButton;
     public Button resetButton;
+    public Button controlButtonUp;
+    public Button controlButtonDown;
+    public Button controlButtonLeft;
+    public Button controlButtonRight;
+    public Button zoomIn;
+    public Button zoomOut;
 
     [Header("Proportion Indicator")]
     public ProportionIndicator proportionScript;
@@ -127,6 +133,20 @@ public class AnalysisPage : MonoBehaviour, IPage
         focusModeButton.onClick.AddListener(() => ToggleFocus());
         _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
 
+        Button up = controlButtonUp.GetComponent<Button>();
+        Button down = controlButtonDown.GetComponent<Button>();
+        Button left = controlButtonLeft.GetComponent<Button>();
+        Button right = controlButtonRight.GetComponent<Button>();
+        Button zoomInside = zoomIn.GetComponent<Button>();
+        Button zoomOutside = zoomOut.GetComponent<Button>();
+
+
+        up.onClick.AddListener(MoveUp);
+        down.onClick.AddListener(MoveDown);
+        left.onClick.AddListener(MoveLeft);
+        right.onClick.AddListener(MoveRight);
+        zoomInside.onClick.AddListener(ZoomIn);
+        zoomOutside.onClick.AddListener(ZoomOut);
     }
 
     public void Update()
@@ -258,5 +278,46 @@ public class AnalysisPage : MonoBehaviour, IPage
         leftPanel.gameObject.SetActive(!_focusOn);
         specimenLabel.gameObject.SetActive(!_focusOn);
         _focusIndicator.UpdateState(_focusOn);
+    }
+
+    void MoveUp()
+    {
+        orbitCam.yVelocity += 1f * orbitCam.rotationSensitivity;
+        orbitCam.yRotationAxis += orbitCam.yVelocity;
+        orbitCam.yRotationAxis = orbitCam.ClampAngleBetweenMinAndMax(orbitCam.yRotationAxis, orbitCam.rotationLimit.x, orbitCam.rotationLimit.y);
+    }
+
+    void MoveDown()
+    {
+        orbitCam.yVelocity -= 1f * orbitCam.rotationSensitivity;
+        orbitCam.yRotationAxis += orbitCam.yVelocity;
+        orbitCam.yRotationAxis = orbitCam.ClampAngleBetweenMinAndMax(orbitCam.yRotationAxis, orbitCam.rotationLimit.x, orbitCam.rotationLimit.y);
+
+    }
+
+    void MoveLeft()
+    {
+        orbitCam.xVelocity += 6f * orbitCam.rotationSensitivity;
+        orbitCam.yRotationAxis += orbitCam.yVelocity;
+
+    }
+
+    void MoveRight()
+    {
+        orbitCam.xVelocity -= 6f * orbitCam.rotationSensitivity;
+        orbitCam.yRotationAxis += orbitCam.yVelocity;
+
+    }
+
+    void ZoomIn()
+    {
+        print("Zoom In");
+
+    }
+
+    void ZoomOut()
+    {
+        print("Zoom Out");
+
     }
 }
