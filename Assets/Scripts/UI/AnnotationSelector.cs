@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,12 @@ public class AnnotationSelector : MonoBehaviour
     public TextMeshProUGUI label;
     public Button left;
     public Button right;
+    public GameObject dropup;
+    public Transform dropupContent;
+    public Button self;
+
+    public DropUpAnnotationEntry dropUpEntryPrefab;
+    public List<DropUpAnnotationEntry> currentDropUpEntries;
 
     [Header("External Structure")]
     public AnnotationDisplay display;
@@ -23,11 +30,20 @@ public class AnnotationSelector : MonoBehaviour
         {
             ChangeAnnotation(1);
         });
+
+        self.onClick.AddListener(() =>
+        {
+            if (display.currentSpecimenData.annotations.Count > 0)
+            {
+                dropup.SetActive(!dropup.activeSelf);
+            }
+        });
     }
 
     void OnEnable()
     {
         UpdateIndex();
+        PopulateDropUp();
     }
 
     /**
@@ -54,6 +70,11 @@ public class AnnotationSelector : MonoBehaviour
         {
             label.text = idx + ". " + display.activeIndicators[idx].data.title;
         }
+
+        for (int i = 0; i < currentDropUpEntries.Count; i++)
+        {
+            currentDropUpEntries[i].SetSelected(i == idx);
+        }
     }
 
 
@@ -64,6 +85,35 @@ public class AnnotationSelector : MonoBehaviour
     {
         display.IncrementAnnotationIndex(delta);
         UpdateIndex();
+    }
+
+
+    public void SelectAnnotation(int index)
+    {
+        display.SelectAnnotationIndex(index);
+        UpdateIndex();
+    }
+
+    public void PopulateDropUp()
+    {
+        currentDropUpEntries = new List<DropUpAnnotationEntry>();
+        foreach (Transform child in dropupContent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (display.currentSpecimenData == null || display.currentSpecimenData.annotations.Count == 0)
+        {
+            dropup.SetActive(false);
+            return;
+        }
+
+        for (int i = 0; i < display.currentSpecimenData.annotations.Count; i++)
+        {
+            DropUpAnnotationEntry entry = Instantiate(dropUpEntryPrefab, dropupContent);
+            entry.Populate(this, i, display.currentSpecimenData.annotations[i]);
+            currentDropUpEntries.Add(entry);
+        }
     }
 
 }

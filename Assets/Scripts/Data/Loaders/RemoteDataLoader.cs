@@ -10,10 +10,16 @@ public class RemoteDataLoader : DataLoader
         using (UnityWebRequest req =
             UnityWebRequest.Get(manifestPath))
         {
-            Debug.Log(req);
             yield return req.SendWebRequest();
-            manifest = JsonUtility.FromJson<DataManifest>(req.downloadHandler.text);
-            _manifestLoaded = true;
+            if (req.isNetworkError || req.isHttpError)
+            {
+                Debug.LogWarning($"Unable to get manifest from ${manifestPath}. Please check your internet connection or contact the administrator.");
+            }
+            else
+            {
+                manifest = JsonUtility.FromJson<DataManifest>(req.downloadHandler.text);
+                _manifestLoaded = true;
+            }
         }
     }
 }

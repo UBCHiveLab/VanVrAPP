@@ -74,6 +74,12 @@ public class AnnotationDisplay : MonoBehaviour {
         ShowDetail(activeIndicators[selectedSpecimenIndex]);
     }
 
+    public void SelectAnnotationIndex(int index)
+    {
+        if (activeIndicators.Count == 0 || activeIndicators.Count <= index) return;
+        ShowDetail(activeIndicators[index]);
+    }
+
     private void DrawAnnotations() {
         if (currentSpecimenData == null || currentSpecimenData.annotations == null) return;
         activeIndicators = new List<AnnotationIndicator>();
