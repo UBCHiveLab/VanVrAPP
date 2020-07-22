@@ -12,6 +12,7 @@ namespace Assets.Scripts.Controller
         public LandingPage landingPage;
         public TrayPage trayPage;
         public AnalysisPage analysisPage;
+  
 
         public Dictionary<ViewMode, IPage> modeToPage;
 
@@ -118,6 +119,7 @@ namespace Assets.Scripts.Controller
                     spObj.AddComponent<MeshRenderer>().material = data.material;
                     spObj.AddComponent<MeshCollider>();
                     spObj.layer = LayerMask.NameToLayer("Specimens");
+                    
                 }
                 catch (Exception e)
                 {
