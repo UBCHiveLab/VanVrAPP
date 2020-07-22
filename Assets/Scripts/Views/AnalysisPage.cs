@@ -43,6 +43,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public GameObject specimenLabel;
     public SpecimenCart cart;
     public GameObject trayObj;
+    public TrayPage trayPageScript;
 
     public PostProcessVolume volume;
     private DepthOfField depthOfField;
@@ -56,8 +57,10 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     [Header("Specimen Rotation")]
     private GameObject _rotatingSpecimen;
+    private Vector3 specimenRotation;
     private float _xRot;
     private float _yRot;
+    private bool resetSpecimen;
 
     public void Activate()
     {
@@ -88,6 +91,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         cart.SetTrayVisibility(true);
         depthOfField.active = true;
         focusDistanceFinder.enabled = true;
+        specimenRotation = currentSelectedObject.transform.rotation.eulerAngles;
     }
 
     public void Deactivate()
@@ -139,6 +143,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         Button right = controlButtonRight.GetComponent<Button>();
         Button zoomInside = zoomIn.GetComponent<Button>();
         Button zoomOutside = zoomOut.GetComponent<Button>();
+     
 
 
         up.onClick.AddListener(MoveUp);
@@ -147,6 +152,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         right.onClick.AddListener(MoveRight);
         zoomInside.onClick.AddListener(ZoomIn);
         zoomOutside.onClick.AddListener(ZoomOut);
+        
     }
 
     public void Update()
@@ -195,12 +201,14 @@ public class AnalysisPage : MonoBehaviour, IPage
      */
     private void HandleSpecimenRotation()
     {
+       
         if (Input.GetMouseButtonDown(1)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens"))) {
                 _rotatingSpecimen = hit.transform.parent.gameObject;
+                
             }
         }
 
@@ -214,6 +222,13 @@ public class AnalysisPage : MonoBehaviour, IPage
             _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
 
+        }
+        if (resetSpecimen) {
+            if (_rotatingSpecimen != null)
+            {
+                _rotatingSpecimen.transform.rotation = Quaternion.Euler(specimenRotation);
+                resetSpecimen = false;
+            }
         }
     }
 
@@ -229,10 +244,8 @@ public class AnalysisPage : MonoBehaviour, IPage
     // RESET BUTTON METHOD
 
     void ResetCameraPosition() {
-        print("Reset");
-
-        // TODO
-
+        currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
+        resetSpecimen = true;
     }
 
     /**

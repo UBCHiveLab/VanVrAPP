@@ -27,6 +27,7 @@ public class SpecimenStore : MonoBehaviour
     
  
     private bool _loading = true;
+    
 
     public List<string> GetSpecimenIdsList()
     {

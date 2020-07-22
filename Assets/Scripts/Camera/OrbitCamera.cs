@@ -58,6 +58,11 @@ public class OrbitCamera : MonoBehaviour
     bool wasDraggingCamera = false;
     Vector3 lastDragPosition;
     Ray lastMousePosition;
+    public Vector3 camDefaultPosition;
+    public Vector3 camDefaultRotation;
+    public float camDefaultFov;
+
+
     private void Awake()
     {
         camera = GetComponent<Camera>();
@@ -68,6 +73,9 @@ public class OrbitCamera : MonoBehaviour
     {
         cameraFieldOfView = camera.fieldOfView;
         xRotationAxis = startRotation / rotationSpeed;
+        camDefaultPosition = Camera.main.transform.position;
+        camDefaultRotation = Camera.main.transform.rotation.eulerAngles;
+        camDefaultFov = Camera.main.fieldOfView;
     }
 
     private void Update()
@@ -85,23 +93,24 @@ public class OrbitCamera : MonoBehaviour
         {
             xVelocity += rotationSensitivity * Time.deltaTime;
         }
-        
-            Quaternion rotation;
-            Vector3 position;
-            float deltaTime = Time.deltaTime;
 
-            if (Input.GetMouseButton(0))
-            {
-                xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity;
-                yVelocity -= Input.GetAxis("Mouse Y") * rotationSensitivity;
-            }
+        Quaternion rotation;
+        Vector3 position;
+        float deltaTime = Time.deltaTime;
 
-            xRotationAxis += xVelocity;
-            yRotationAxis += yVelocity;
+        if (Input.GetMouseButton(0))
+        {
+            xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity;
+            yVelocity -= Input.GetAxis("Mouse Y") * rotationSensitivity;
+        }
 
-            //Clamp the rotation along the y-axis between the limits we set. 
-            //Limits of 360 or -360 on any axis will allow the camera to rotate unrestricted
-            yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
+        xRotationAxis += xVelocity;
+        yRotationAxis += yVelocity;
+
+        //Clamp the rotation along the y-axis between the limits we set. 
+        //Limits of 360 or -360 on any axis will allow the camera to rotate unrestricted
+        yRotationAxis = ClampAngleBetweenMinAndMax(yRotationAxis, rotationLimit.x, rotationLimit.y);
+
         if (Input.GetMouseButtonDown(2))
         {
             lastDragPosition = Input.mousePosition;
@@ -118,7 +127,7 @@ public class OrbitCamera : MonoBehaviour
             }
 
             rotation = Quaternion.Euler(yRotationAxis, xRotationAxis * rotationSpeed, 0);
-      
+
             transform.rotation = rotation;
             xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * 17f);
             yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * 17f);
@@ -134,10 +143,7 @@ public class OrbitCamera : MonoBehaviour
             xVelocity = Mathf.Lerp(xVelocity, 0, deltaTime * rotationSmoothing);
             yVelocity = Mathf.Lerp(yVelocity, 0, deltaTime * rotationSmoothing);
         }
-        
 
-       
-       
 
     }
 
@@ -184,7 +190,7 @@ public class OrbitCamera : MonoBehaviour
 
                     break;
                 case ZoomMode.ZAxisDistance:
-                    
+
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
                         deltaTime * zoomSoothness);
 
@@ -206,7 +212,9 @@ public class OrbitCamera : MonoBehaviour
                     zAxisDistance = Mathf.Clamp(zAxisDistance, cameraZoomRangeZAxis.x, cameraZoomRangeZAxis.y);
                     break;
             }
-        } else if (Input.GetAxis("Mouse ScrollWheel") < 0f) {
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
             //Zooms the camera out using the mouse scroll wheel
             switch (zoomMode)
             {
@@ -245,7 +253,7 @@ public class OrbitCamera : MonoBehaviour
                     break;
             }
         }
-        
+
         //We're just ensuring that when we're zooming using the camera's FOV, that the FOV will be updated to match the value we got when we scrolled.
         if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0)
         {
