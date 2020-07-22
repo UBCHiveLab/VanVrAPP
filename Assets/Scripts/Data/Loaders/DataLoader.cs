@@ -106,6 +106,8 @@ public abstract class DataLoader: MonoBehaviour
         string reqUri = srd.assetUrl;
 #if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
         reqUri = srd.assetUrlWebGl;
+#elif UNITY_STANDALONE_OSX
+        reqUri = srd.assetUrlOsx;
 #endif
         using (UnityWebRequest req =
             UnityWebRequestAssetBundle.GetAssetBundle(reqUri, Convert.ToUInt32(srd.version), 0U))
