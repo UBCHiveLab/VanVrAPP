@@ -76,8 +76,16 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
             }
             else
             {
-                clip = DownloadHandlerAudioClip.GetContent(www);
-                timeLabel.text = $"0:00 / {toTime(clip.length)}";
+                try
+                {
+                    clip = DownloadHandlerAudioClip.GetContent(www);
+                    timeLabel.text = $"0:00 / {toTime(clip.length)}";
+                }
+                catch (Exception e)
+                {
+                    timeLabel.text = "Error";
+                }
+
             }
         }
     }
