@@ -214,6 +214,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
         if (Input.GetMouseButtonUp(1)) {
             _rotatingSpecimen = null;
+
         }
 
         if (_rotatingSpecimen != null) {
@@ -223,13 +224,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
 
         }
-        if (resetSpecimen) {
-            if (_rotatingSpecimen != null)
-            {
-                _rotatingSpecimen.transform.rotation = Quaternion.Euler(specimenRotation);
-                resetSpecimen = false;
-            }
-        }
+       
     }
 
     public void ChangeFocus(GameObject focusObject, SpecimenData focusData)
@@ -245,7 +240,10 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void ResetCameraPosition() {
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
-        resetSpecimen = true;
+        _xRot = 0;
+        _yRot = 0;
+
+
     }
 
     /**
