@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SpecimenCart : MonoBehaviour
 {
-
     public GameObject trayPrefab;
     public Vector3 singleTrayLocalOffset = new Vector3(-0.25f, 2.25f, 0.5f);
     public Vector3 compareTray1LocalOffset = new Vector3(-0.75f, 2.25f, 0.5f);
@@ -21,13 +18,21 @@ public class SpecimenCart : MonoBehaviour
 
     public void AddSpecimenPrimary(GameObject specimen)
     {
-        specimen.transform.SetParent(tray1.transform);
-        ResetPosition(specimen);
+        AddSpecimen(specimen, tray1);
     }
 
     public void AddSpecimenCompare(GameObject specimen)
     {
-        specimen.transform.SetParent(tray2.transform);
+        AddSpecimen(specimen, tray2);
+    }
+
+    public void AddSpecimen(GameObject specimen, GameObject tray)
+    {
+        ClearTray(tray);
+        GameObject holder = new GameObject("SpecimenHolder");
+        holder.transform.SetParent(tray.transform);
+        holder.transform.localPosition = specimenTrayOffset;
+        specimen.transform.SetParent(holder.transform);
         ResetPosition(specimen);
     }
 
@@ -73,7 +78,7 @@ public class SpecimenCart : MonoBehaviour
     // Resets a specimen location in terms of its tray offset.
     public void ResetPosition(GameObject specimen)
     {
-        specimen.transform.localPosition = specimenTrayOffset;
+        specimen.transform.localPosition = Vector3.zero;
     }
 
     public void SetTrayVisibility(bool hide)
@@ -86,4 +91,11 @@ public class SpecimenCart : MonoBehaviour
         }
     }
 
+    private void ClearTray(GameObject tray)
+    {
+        foreach (Transform child in tray.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }
