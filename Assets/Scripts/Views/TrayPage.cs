@@ -19,9 +19,9 @@ public class TrayPage : MonoBehaviour, IPage
 
     // TEMP: we probably want to animate camera back to tray when finished
     public bool camSet;
-    public Vector3 camDefaultPosition;
-    public Vector3 camDefaultRotation;
-    public float camDefaultFov;
+    private Vector3 camDefaultPosition = new Vector3(0.22f, 1.91f, 20.04f);
+    private Vector3 camDefaultRotation = new Vector3(-4.211f, 0f, 0f);
+    private float camDefaultFov = 60f;
 
     public SpecimenCart cart;
 
@@ -42,6 +42,7 @@ public class TrayPage : MonoBehaviour, IPage
         // TEMP: use animation
         if (camSet)
         {
+            shelfToggle.animator.SetBool("Delayed", false);
             Camera.main.transform.position = camDefaultPosition;
             Camera.main.transform.rotation = Quaternion.Euler(camDefaultRotation);
             Camera.main.fieldOfView = camDefaultFov;
@@ -92,9 +93,9 @@ public class TrayPage : MonoBehaviour, IPage
     public void SelectAnalysis()
     {
         // TODO: THIS is the source of the camera bug. change later when we have final animations
-        camDefaultPosition = Camera.main.transform.position;
+        /*camDefaultPosition = Camera.main.transform.position;
         camDefaultRotation = Camera.main.transform.rotation.eulerAngles;
-        camDefaultFov = Camera.main.fieldOfView;
+        camDefaultFov = Camera.main.fieldOfView;*/
         camSet = true;
 
         if (stateController.CompareSpecimenObject == null)
@@ -121,7 +122,10 @@ public class TrayPage : MonoBehaviour, IPage
     {
         bool showMenu = !selectorMenu.gameObject.activeSelf;
         selectorMenu.gameObject.SetActive(showMenu);
-        shelfToggle.gameObject.SetActive(!showMenu);
+
+        shelfToggle.animator.SetBool("Hidden", showMenu);
+        shelfToggle.animator.SetBool("Delayed", false);
+        //shelfToggle.gameObject.SetActive(!showMenu);
     }
 
     private void CompareOff()
