@@ -42,7 +42,7 @@ public class TrayPage : MonoBehaviour, IPage
         // TEMP: use animation
         if (camSet)
         {
-            shelfToggle.animator.SetBool("Delayed", false);
+            shelfToggle.animator.SetBool("Hidden", false);
             Camera.main.transform.position = camDefaultPosition;
             Camera.main.transform.rotation = Quaternion.Euler(camDefaultRotation);
             Camera.main.fieldOfView = camDefaultFov;
@@ -90,6 +90,16 @@ public class TrayPage : MonoBehaviour, IPage
 
     }
 
+    public void HaveArrivedAtTray()
+    {
+        shelfToggle.animator.SetBool("Hidden", false);
+    }
+
+    public void HaveEnteredFromLandingPage()
+    {
+        shelfToggle.animator.SetBool("Hidden", true);
+    }
+
     public void SelectAnalysis()
     {
         // TODO: THIS is the source of the camera bug. change later when we have final animations
@@ -124,7 +134,6 @@ public class TrayPage : MonoBehaviour, IPage
         selectorMenu.gameObject.SetActive(showMenu);
 
         shelfToggle.animator.SetBool("Hidden", showMenu);
-        shelfToggle.animator.SetBool("Delayed", false);
         //shelfToggle.gameObject.SetActive(!showMenu);
     }
 
