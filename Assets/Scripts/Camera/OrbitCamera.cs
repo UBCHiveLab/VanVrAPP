@@ -84,9 +84,10 @@ public class OrbitCamera : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            int layer_mask = LayerMask.GetMask("Specimens");
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f))
+            if (Physics.Raycast(ray, out hit, 100.0f, layer_mask))
             {
                 target = hit.transform;
                 Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
