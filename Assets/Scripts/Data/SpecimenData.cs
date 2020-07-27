@@ -14,5 +14,8 @@ public class SpecimenData
     public float scale;
     public List<AnnotationData> annotations;
     public GameObject prefab;
+    public SpecimenRequestData request;
+
+    public bool dataLoaded => mesh != null && material != null || prefab != null;
 
 }

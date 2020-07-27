@@ -80,11 +80,10 @@ public class TrayPage : MonoBehaviour, IPage
         GameObject specimen;
         if (selectingCompareSpecimen)
         {
-            specimen = stateController.AddCompareSpecimen(data);
-            cart.AddSpecimenCompare(specimen);
+            StartCoroutine(stateController.AddCompareSpecimen(data, cart.AddSpecimenCompare));
         } else { 
-            specimen = stateController.AddNewSpecimen(data);
-            cart.AddSpecimenPrimary(specimen);
+            StartCoroutine(stateController.AddPrimarySpecimen(data, cart.AddSpecimenPrimary));
+            //cart.AddSpecimenPrimary(specimen);
         }
         actionButtons.SetActive(true);
 

@@ -15,6 +15,7 @@ public abstract class DataLoader: MonoBehaviour
     public DataManifest manifest;
     public bool _manifestLoaded;
 
+    public SpecimenStore store;
     private List<LabData> _labs;
     private List<SpecimenData> _specimens;
     private List<RegionData> _regions;
@@ -25,9 +26,9 @@ public abstract class DataLoader: MonoBehaviour
     public int loadedSpecimens;
     public string status;
 
-    public void Load()
+    public void Load(bool loadAllData)
     {
-        StartCoroutine(Loading());
+        StartCoroutine(Loading(loadAllData));
     }
 
     public bool Loaded()
@@ -47,7 +48,99 @@ public abstract class DataLoader: MonoBehaviour
         return _regions;
     }
 
-    private IEnumerator Loading()
+    public IEnumerator LoadSpecimenAssets(string id)
+    {
+        SpecimenData data = store.GetSpecimen(id);
+        SpecimenRequestData srd = data.request;
+        string reqUri = srd.assetUrl;
+#if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
+        reqUri = srd.assetUrlWebGl;
+#elif UNITY_STANDALONE_OSX
+        reqUri = srd.assetUrlOsx;
+#endif
+        using (UnityWebRequest req =
+            UnityWebRequestAssetBundle.GetAssetBundle(reqUri, Convert.ToUInt32(srd.version), 0U))
+        {
+            yield return req.SendWebRequest();
+
+            if (req.isNetworkError || req.isHttpError)
+            {
+                Debug.LogWarning($"{req.error} : Could not find bundle for {srd.id} at {reqUri}");
+
+            }
+            else
+            {
+                // Get downloaded asset bundle
+                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(req);
+                try
+                {
+                    if (srd.prefabPath != null)
+                    {
+                        GameObject prefab = bundle.LoadAsset<GameObject>(srd.prefabPath);
+                        SpecimenData specimenData = new SpecimenData()
+                        {
+                            id = srd.id,
+                            annotations = srd.annotations.ToList(),
+                            prefab = prefab,
+                            version = srd.version,
+                            organ = srd.organ,
+                            scale = srd.scale,
+                            name = srd.name,
+                            request = srd
+                        };
+                        store.specimens[srd.id] = specimenData;
+                    }
+                    else
+                    {
+                        // Checks for null material and mesh; if not loadable, will not add the asset.
+                        Material mat = bundle.LoadAsset<Material>(srd.matPath);
+                        if (mat == null)
+                        {
+                            Debug.LogWarning(
+                                $"Could not find material for {srd.id} at path {srd.matPath} in bundle. Please check your bundle structure and try again.");
+                            foreach (string file in bundle.GetAllAssetNames())
+                            {
+                                Debug.Log(file);
+                            }
+
+                            throw new Exception();
+                        }
+
+                        Mesh mesh = bundle.LoadAsset<Mesh>(srd.meshPath);
+                        if (mesh == null)
+                        {
+                            Debug.LogWarning(
+                                $"Could not find mesh for {srd.id} at path {srd.meshPath} in bundle.  Please check your bundle structure and try again.");
+                            throw new Exception();
+                        }
+
+                        // Asset seems good, add to the specimens list.
+                        SpecimenData specimenData = new SpecimenData()
+                        {
+                            id = srd.id,
+                            annotations = srd.annotations.ToList(),
+                            material = mat,
+                            mesh = mesh,
+                            version = srd.version,
+                            organ = srd.organ,
+                            scale = srd.scale,
+                            name = srd.name,
+                            request = srd
+                        };
+                        store.specimens[srd.id] = specimenData;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"{e} : Problem with {srd.id}");
+                }
+            }
+
+            yield break;
+        }
+    }
+
+    private IEnumerator Loading(bool loadAllData)
     {
         _loaded = false;
         _manifestLoaded = false;
@@ -66,10 +159,29 @@ public abstract class DataLoader: MonoBehaviour
         while (!_manifestLoaded) yield return null;
         VerifyManifest(manifest);
 
+        // Regions and labs are stored directly in the manifests
+        _regions = manifest.regions.ToList();
+        _labs = manifest.labs.ToList();
+
+        _specimens = new List<SpecimenData>();
+
+
+        if (!loadAllData)
+        {
+            foreach (SpecimenRequestData srd in manifest.specimenData)
+            {
+                LoadSpecimenDataNoMeshTex(srd);
+            }
+            _loaded = true;
+            watch.Stop();
+            status = "Load successful";
+            Debug.Log("Loaded manifest and specimen stubs.");
+            yield break;
+        }
+
         // Tracks the number of requests returned, even if failed
         _requestsResolved = 0;
 
-        _specimens = new List<SpecimenData>();
         status = $"Loading Specimens [0/{manifest.specimenData.Length}]";
         foreach (SpecimenRequestData sprd in manifest.specimenData)
         {
@@ -78,10 +190,6 @@ public abstract class DataLoader: MonoBehaviour
             yield return null;
         }
 
-
-        // Regions and labs are stored directly in the manifests
-        _regions = manifest.regions.ToList();
-        _labs = manifest.labs.ToList();
 
         // Wait until all requests are resolved
         while (_requestsResolved < manifest.specimenData.Length)
@@ -134,7 +242,8 @@ public abstract class DataLoader: MonoBehaviour
                             version = srd.version,
                             organ = srd.organ,
                             scale = srd.scale,
-                            name = srd.name
+                            name = srd.name,
+                            request = srd
                         };
                         _specimens.Add(specimenData);
                     }
@@ -165,15 +274,11 @@ public abstract class DataLoader: MonoBehaviour
                             version = srd.version,
                             organ = srd.organ,
                             scale = srd.scale,
-                            name = srd.name
+                            name = srd.name,
+                            request = srd
                         };
                         _specimens.Add(specimenData);
                     }
-
-                    
-
-
-
                 }
                 catch (Exception e)
                 {
@@ -185,6 +290,21 @@ public abstract class DataLoader: MonoBehaviour
             _requestsResolved++;
         }
 
+    }
+
+    private void LoadSpecimenDataNoMeshTex(SpecimenRequestData srd)
+    {
+        SpecimenData specimenData = new SpecimenData() {
+            id = srd.id,
+            annotations = srd.annotations.ToList(),
+            prefab = null,
+            version = srd.version,
+            organ = srd.organ,
+            scale = srd.scale,
+            name = srd.name,
+            request = srd
+        };
+        _specimens.Add(specimenData);
     }
 
     private bool VerifyManifest(DataManifest manifest)

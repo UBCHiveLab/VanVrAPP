@@ -22,6 +22,8 @@ public class SpecimenStore : MonoBehaviour
 
     private DataLoader loader;
 
+    public bool loadAllSpecimens;
+
 
     [Header("Region Icons")] public RegionIconEntry[] icons;
     
@@ -33,6 +35,7 @@ public class SpecimenStore : MonoBehaviour
     {
         return specimens.Keys.ToList();
     }
+
 
     public SpecimenData GetSpecimen(string id)
     {
@@ -152,6 +155,11 @@ public class SpecimenStore : MonoBehaviour
         StartCoroutine(LoadData());
     }
 
+    public IEnumerator LoadSpecimen(string id)
+    {
+        return loader.LoadSpecimenAssets(id);
+    }
+
     private IEnumerator LoadData()
     {
         // Attachs the correct loader and sets the manifest path.
@@ -164,8 +172,10 @@ public class SpecimenStore : MonoBehaviour
             loader.manifestPath = manifestUrlPath;
         }
 
+        loader.store = this;
+
         // Waits for the loader to load the manifest and all connected bundles (could be long on first load, but once cached should be seconds)
-        loader.Load();
+        loader.Load(loadAllSpecimens);
 
         while (!loader.Loaded()) yield return null;
         
@@ -212,7 +222,8 @@ public class SpecimenStore : MonoBehaviour
         _loading = false;
 
         // We no longer need loader after the load; disable it.
-        loader.enabled = false;
+        // or do we???
+        //loader.enabled = false;
     }
 
 }

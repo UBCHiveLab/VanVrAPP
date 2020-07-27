@@ -141,7 +141,7 @@ public class CompareMenu : MonoBehaviour
 
     public void Add(SpecimenData data)
     {
-        cart.AddSpecimenCompare(stateController.AddCompareSpecimen(data));
+        StartCoroutine(stateController.AddCompareSpecimen(data, cart.AddSpecimenCompare));
         Populate();
 
         proportionIndicator.HighlightProportionIndicator();

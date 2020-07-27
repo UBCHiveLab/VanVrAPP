@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using Boo.Lang;
 using UnityEngine;
 
 namespace Assets.Scripts.Controller
@@ -12,6 +15,10 @@ namespace Assets.Scripts.Controller
         public LandingPage landingPage;
         public TrayPage trayPage;
         public AnalysisPage analysisPage;
+        public SpecimenStore store;
+
+        public bool loadingPrimarySpecimen;
+        public bool loadingCompareSpecimen;
   
 
         public Dictionary<ViewMode, IPage> modeToPage;
@@ -80,63 +87,94 @@ namespace Assets.Scripts.Controller
             }
         }
 
-        public GameObject AddNewSpecimen(SpecimenData data) {
+        public IEnumerator AddPrimarySpecimen(SpecimenData data, Action<GameObject> callback) {
             RemoveCurrentSpecimen();
             CurrentSpecimenData = data;
-            CurrentSpecimenObject = InstantiateSpecimen(data);
-            CurrentSpecimenObject.gameObject.SetActive(true);
-     
-            return CurrentSpecimenObject;
+            StartCoroutine(InstantiateSpecimen(data, true)); 
+            //CurrentSpecimenObject.gameObject.SetActive(true); 
+            while (loadingPrimarySpecimen) yield return null;
+            callback(CurrentSpecimenObject);
+
+            yield break;
             // TODO: trigger animations etc.
+
         }
 
-        public GameObject AddCompareSpecimen(SpecimenData data)
+        public IEnumerator AddCompareSpecimen(SpecimenData data, Action<GameObject> callback)
         {
             RemoveCompareSpecimen();
             CompareSpecimenData = data;
 
-            Debug.Log($"Specimen added: {data.id}");
-            CompareSpecimenObject = InstantiateSpecimen(data);
-            CompareSpecimenObject.gameObject.SetActive(true);
+            CompareSpecimenObject = null;
+            StartCoroutine(InstantiateSpecimen(data, false));
+            //CompareSpecimenObject.gameObject.SetActive(true);
+            while (loadingCompareSpecimen) yield return null;
+            callback(CompareSpecimenObject);
 
-            return CompareSpecimenObject;
+            yield break;
         }
 
-        private GameObject InstantiateSpecimen(SpecimenData data)
+        private IEnumerator InstantiateSpecimen(SpecimenData data, bool primary)
         {
-            GameObject spObj;
-            // If prefab found, instantiate that
-            if (data.prefab != null)
+            GameObject spObj = null;
+
+            if (!data.dataLoaded)
             {
-                spObj = Instantiate(data.prefab);
-            }
-            else
-            {
-                spObj = new GameObject(data.name);
-                try
+                if (primary)
                 {
+                    loadingPrimarySpecimen = true;
+                } else
+                {
+                    loadingCompareSpecimen = true;
+                }
+
+                StartCoroutine(store.LoadSpecimen(data.id));
+                while (!store.specimens[data.id].dataLoaded) yield return null;
+
+
+                data = store.specimens[data.id];
+            }
+
+            // If prefab found, instantiate that
+            if (data.prefab != null) {
+                spObj = Instantiate(data.prefab);
+            } else {
+                spObj = new GameObject(data.name);
+                try {
                     spObj.AddComponent<MeshFilter>().mesh = data.mesh;
                     spObj.AddComponent<MeshRenderer>().material = data.material;
                     spObj.AddComponent<MeshCollider>();
                     spObj.layer = LayerMask.NameToLayer("Specimens");
-                    
-                }
-                catch (Exception e)
-                {
+
+                } catch (Exception e) {
                     Debug.LogWarning(e);
                 }
 
 
+            } 
+            {
+                // Else fallback to old way using meshes and mats
+
+                spObj.transform.localScale = Vector3.one * data.scale;
+                spObj.gameObject.SetActive(true);
+                spObj.AddComponent<SpecimenOptions>();
+                spObj.layer = 9;
             }
 
-            // Else fallback to old way using meshes and mats
+            if (primary)
+            {
+                CurrentSpecimenObject = spObj;
+                loadingPrimarySpecimen = false;
 
-            spObj.transform.localScale = Vector3.one * data.scale;
-            spObj.gameObject.SetActive(true);
-            spObj.AddComponent<SpecimenOptions>();
-            spObj.layer = 9;
-            return spObj;
+            } else
+            {
+                CompareSpecimenObject = spObj;
+                loadingCompareSpecimen = false;
+            }
 
+            spObj.SetActive(true);
+
+            yield break;
         }
 
         public void SwapSpecimens()
