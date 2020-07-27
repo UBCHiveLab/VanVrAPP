@@ -67,6 +67,9 @@ public class OrbitCamera : MonoBehaviour
     {
         camera = GetComponent<Camera>();
         transform = GetComponent<Transform>();
+#if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
+        rotationSensitivity = rotationSensitivity * 0.25f;             // Fix for out of control sensitivity on webgl
+#endif
     }
 
     private void Start()
