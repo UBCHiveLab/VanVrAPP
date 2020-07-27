@@ -12,6 +12,8 @@ public class SpecimenStore : MonoBehaviour
     public bool manifestLocal = true; // If true, we will look for a manifest file in the resources folder; otherwise, we will make a request to a given url
     public string manifestLocalPath = "manifest"; // The local path to look for current manifest.
     public string manifestUrlPath = "http://example.net/manifest.json"; // The url location to look for the current manifest.
+    public bool loadAllSpecimenAssets;   // Select this to load ALL specimen data at app start; otherwise, loads asset bundles with mesh/materials when selected
+
 
     [Header("Stored Data")]
     public List<RegionData> regions;
@@ -22,7 +24,6 @@ public class SpecimenStore : MonoBehaviour
 
     private DataLoader loader;
 
-    public bool loadAllSpecimens;
 
 
     [Header("Region Icons")] public RegionIconEntry[] icons;
@@ -155,9 +156,9 @@ public class SpecimenStore : MonoBehaviour
         StartCoroutine(LoadData());
     }
 
-    public IEnumerator LoadSpecimen(string id)
+    public void LoadSpecimen(string id)
     {
-        return loader.LoadSpecimenAssets(id);
+        loader.LoadSpecimenAssets(id);
     }
 
     private IEnumerator LoadData()
@@ -175,13 +176,15 @@ public class SpecimenStore : MonoBehaviour
         loader.store = this;
 
         // Waits for the loader to load the manifest and all connected bundles (could be long on first load, but once cached should be seconds)
-        loader.Load(loadAllSpecimens);
+        // if loadAllSpecimenAssets, will load the meshes/textures of all specimens at app start; otherwise, will smart load the requested assets
+        loader.Load(loadAllSpecimenAssets);
 
         while (!loader.Loaded()) yield return null;
         
-        // Builds all store data structures
+        // Builds all data structures needed for the SpecimenStore
         regions = loader.GetRegions().ToList();
         organToRegion = new Dictionary<string, RegionData>();
+
         foreach (RegionData region in regions)
         {
             foreach (RegionIconEntry icon in icons)
@@ -202,7 +205,6 @@ public class SpecimenStore : MonoBehaviour
         specimens = loader.GetSpecimens().ToDictionary((spec => spec.id), spec => spec);
         specimensByRegionByOrgan = new Dictionary<string, Dictionary<string, List<SpecimenData>>>();
 
-        
         foreach (SpecimenData spd in loader.GetSpecimens())
         {
             RegionData region = organToRegion[spd.organ];
@@ -220,10 +222,6 @@ public class SpecimenStore : MonoBehaviour
 
         // Turn loading off so that any listening UI can query for values.
         _loading = false;
-
-        // We no longer need loader after the load; disable it.
-        // or do we???
-        //loader.enabled = false;
     }
 
 }

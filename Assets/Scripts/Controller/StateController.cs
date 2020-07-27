@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using Boo.Lang;
 using UnityEngine;
 
 namespace Assets.Scripts.Controller
@@ -19,11 +17,8 @@ namespace Assets.Scripts.Controller
 
         public bool loadingPrimarySpecimen;
         public bool loadingCompareSpecimen;
-  
-
+        
         public Dictionary<ViewMode, IPage> modeToPage;
-
-
 
         /**
         * Set Mode to initiate transition between two modes.
@@ -91,27 +86,18 @@ namespace Assets.Scripts.Controller
             RemoveCurrentSpecimen();
             CurrentSpecimenData = data;
             StartCoroutine(InstantiateSpecimen(data, true)); 
-            //CurrentSpecimenObject.gameObject.SetActive(true); 
             while (loadingPrimarySpecimen) yield return null;
             callback(CurrentSpecimenObject);
-
-            yield break;
-            // TODO: trigger animations etc.
-
         }
 
         public IEnumerator AddCompareSpecimen(SpecimenData data, Action<GameObject> callback)
         {
             RemoveCompareSpecimen();
             CompareSpecimenData = data;
-
             CompareSpecimenObject = null;
             StartCoroutine(InstantiateSpecimen(data, false));
-            //CompareSpecimenObject.gameObject.SetActive(true);
             while (loadingCompareSpecimen) yield return null;
             callback(CompareSpecimenObject);
-
-            yield break;
         }
 
         private IEnumerator InstantiateSpecimen(SpecimenData data, bool primary)
@@ -120,17 +106,11 @@ namespace Assets.Scripts.Controller
 
             if (!data.dataLoaded)
             {
-                if (primary)
-                {
-                    loadingPrimarySpecimen = true;
-                } else
-                {
-                    loadingCompareSpecimen = true;
-                }
+                loadingPrimarySpecimen = primary;
+                loadingCompareSpecimen = !primary;
 
-                StartCoroutine(store.LoadSpecimen(data.id));
+                store.LoadSpecimen(data.id);
                 while (!store.specimens[data.id].dataLoaded) yield return null;
-
 
                 data = store.specimens[data.id];
             }
@@ -149,23 +129,19 @@ namespace Assets.Scripts.Controller
                 } catch (Exception e) {
                     Debug.LogWarning(e);
                 }
-
-
             } 
-            {
-                // Else fallback to old way using meshes and mats
+            
+            // Else fallback to old way using meshes and mats
 
-                spObj.transform.localScale = Vector3.one * data.scale;
-                spObj.gameObject.SetActive(true);
-                spObj.AddComponent<SpecimenOptions>();
-                spObj.layer = 9;
-            }
-
+            spObj.transform.localScale = Vector3.one * data.scale;
+            spObj.gameObject.SetActive(true);
+            spObj.AddComponent<SpecimenOptions>();
+            spObj.layer = 9;
+            
             if (primary)
             {
                 CurrentSpecimenObject = spObj;
                 loadingPrimarySpecimen = false;
-
             } else
             {
                 CompareSpecimenObject = spObj;
@@ -222,7 +198,5 @@ namespace Assets.Scripts.Controller
 
 
         }
-
-
     }
 }
