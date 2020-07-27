@@ -164,8 +164,8 @@ public class OrbitCamera : MonoBehaviour
 
     private void Zoom()
     {
-        //if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  // Escapes if we're on a ui object. Necessary for UI scroll view.
-
+        //if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  
+        if (EventSystem.current.IsPointerOverGameObject()) return; // Escapes if we're on a ui object. Necessary for UI scroll view.
         float deltaTime = Time.deltaTime;
 
         /*If the user's on a touch screen device like:
@@ -230,6 +230,7 @@ public class OrbitCamera : MonoBehaviour
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
+
             //Zooms the camera out using the mouse scroll wheel
             switch (zoomMode)
             {
