@@ -77,7 +77,6 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void SpecimenSelected(SpecimenData data)
     {
-        GameObject specimen;
         if (selectingCompareSpecimen)
         {
             StartCoroutine(stateController.AddCompareSpecimen(data, cart.AddSpecimenCompare));

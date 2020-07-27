@@ -184,7 +184,11 @@ public class SelectorMenu : MonoBehaviour
             {
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransform);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
-                btn.button.onClick.AddListener(() => SelectSpecimen(_loadedSpecimens[btn.indexValue].id));
+                btn.button.onClick.AddListener(() =>
+                {
+                    SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
+                    btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
+                });
             }
 
             // Activates the back button, which takes user back to Region/Organ list
