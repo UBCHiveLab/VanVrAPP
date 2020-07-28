@@ -77,6 +77,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void SpecimenSelected(SpecimenData data)
     {
+        analyzeButton.interactable = false;
 
         if (selectingCompareSpecimen)
         {
@@ -86,7 +87,6 @@ public class TrayPage : MonoBehaviour, IPage
             StartCoroutine(stateController.AddPrimarySpecimen(data, OnAddPrimarySpecimen));
             //cart.AddSpecimenPrimary(specimen);
         }
-        analyzeButton.interactable = false;
         actionButtons.SetActive(true);
 
     }
