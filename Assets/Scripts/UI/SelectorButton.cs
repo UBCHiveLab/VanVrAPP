@@ -13,10 +13,12 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public int indexValue;
     public Image icon;
     public GameObject loadingSpinner;
+    public Transform children;
+    public Image background;
 
     public void Populate(string label, int index, Sprite sprite)
     {
-
+        ShowBackground(false);
         SetLoading(false);
         text.text = label;
         indexValue = index;
@@ -55,5 +57,13 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerExit(PointerEventData eventData)
     {
         button.OnDeselect(null);
+    }
+
+    public void ShowBackground(bool show)
+    {
+        if (background)
+        {
+            background.enabled = show;
+        }
     }
 }

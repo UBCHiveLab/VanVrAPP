@@ -13,6 +13,7 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Image icon;
     public Image icon2;
     public TextMeshProUGUI label;
+    public bool hoverBoldText;
 
     private float current;
 
@@ -49,6 +50,10 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             if (label != null) {
                 label.color = color;
+                if (hoverBoldText)
+                {
+                    label.fontStyle = FontStyles.Bold;
+                }
             }
 
             if (icon != null) {
@@ -74,6 +79,9 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
             if (label != null) {
                 label.color = color;
+                if (hoverBoldText) {
+                    label.fontStyle = FontStyles.Normal;
+                }
             }
 
             if (icon != null) {

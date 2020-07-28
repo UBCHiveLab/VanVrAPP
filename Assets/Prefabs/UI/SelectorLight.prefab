@@ -140,6 +140,8 @@ MonoBehaviour:
   indexValue: 0
   icon: {fileID: 0}
   loadingSpinner: {fileID: 4738721686948941074}
+  children: {fileID: 0}
+  background: {fileID: 0}
 --- !u!114 &5823353384719736062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,11 +169,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transitionTime: 0.12
-  baseColor: {r: 0.19607845, g: 0.19607845, b: 0.19607845, a: 1}
+  baseColor: {r: 0, g: 0.043137256, b: 0.24705882, a: 1}
   hoverColor: {r: 0.34901962, g: 0.33333334, b: 1, a: 1}
   icon: {fileID: 0}
   icon2: {fileID: 0}
   label: {fileID: 4933445673072673715}
+  hoverBoldText: 1
 --- !u!1 &5687587907071555296
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,10 +208,10 @@ RectTransform:
   m_Father: {fileID: 9180067143736149266}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 138, y: -20.345}
-  m_SizeDelta: {x: 116, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 39, y: 3.6550007}
+  m_SizeDelta: {x: -90, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6426955924199503404
 CanvasRenderer:
@@ -247,8 +250,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4282321664
+  m_fontColor: {r: 0, g: 0.043137256, b: 0.24705882, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -266,8 +269,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 26
+  m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -22,6 +22,7 @@ public class SelectorMenu : MonoBehaviour
     public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
     public LabOption labPrefab;
+    public SelectorButton noSpecimensPrefab;
 
     [Header("Internal Structures")]
     public Transform listTransform;
@@ -211,14 +212,23 @@ public class SelectorMenu : MonoBehaviour
                 // If a region is the currently selected, output the organs found as buttons below.
                 if (_loadedRegions[i] == region)
                 {
-                    for (int j = 0; j < _loadedOrgans.Count; j++)
+                    btn.ShowBackground(true);
+                    btn.children.gameObject.SetActive(true);
+
+                    if (_loadedOrgans.Count == 0)
                     {
-                        SelectorButton sbtn = Instantiate(lightSelectorPrefab, listTransform);
-                        sbtn.Populate(_loadedOrgans[j], j, null);
+                        SelectorButton sbtn = Instantiate(noSpecimensPrefab, btn.children);
+                        sbtn.button.onClick.AddListener(UnselectRegion);
+                    } else
+                    {
+                        for (int j = 0; j < _loadedOrgans.Count; j++) {
+                            SelectorButton sbtn = Instantiate(lightSelectorPrefab, btn.children);
+                            sbtn.Populate(_loadedOrgans[j], j, null);
 
 
-                        // Bind a click listener that loads the specimen selection view
-                        sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]);});
+                            // Bind a click listener that loads the specimen selection view
+                            sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
+                        }
                     }
 
                     // Bind a click listener that closes the region accordion
@@ -226,6 +236,7 @@ public class SelectorMenu : MonoBehaviour
                 }
                 else
                 {
+                    btn.children.gameObject.SetActive(false);
                     // Bind a click listener that closes the current region accordion and opens a new one
                     btn.button.onClick.AddListener(() => { SelectRegion(_loadedRegions[btn.indexValue]); });
                 }
