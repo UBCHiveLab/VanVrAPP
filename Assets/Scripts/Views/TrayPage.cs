@@ -14,6 +14,7 @@ public class TrayPage : MonoBehaviour, IPage
     public ProportionIndicator proportionScript;
     public bool selectingCompareSpecimen;
     public Button shelfToggle;
+    private bool showMenu;
 
     public FocusDistanceFinder focusDistanceFinder;
 
@@ -35,7 +36,7 @@ public class TrayPage : MonoBehaviour, IPage
     }
 
     public void Activate() {
-        selectorMenu.gameObject.SetActive(false);
+        //selectorMenu.gameObject.SetActive(false);
         focusDistanceFinder.enabled = true;
         uiObject.SetActive(true);
 
@@ -104,12 +105,12 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void HaveArrivedAtTray()
     {
-        shelfToggle.animator.SetBool("Hidden", false);
+        selectorMenu.anim.SetBool("ShowTab", true);
     }
 
     public void HaveEnteredFromLandingPage()
     {
-        shelfToggle.animator.SetBool("Hidden", true);
+        selectorMenu.anim.SetBool("ShowTab", false);
     }
 
     public void SelectAnalysis()
@@ -140,13 +141,12 @@ public class TrayPage : MonoBehaviour, IPage
         }
     }
 
+
+
     public void ToggleShelfMenu()
     {
-        bool showMenu = !selectorMenu.gameObject.activeSelf;
-        selectorMenu.gameObject.SetActive(showMenu);
-
-        shelfToggle.animator.SetBool("Hidden", showMenu);
-        //shelfToggle.gameObject.SetActive(!showMenu);
+        showMenu = !showMenu;
+        selectorMenu.anim.SetBool("ShowMenu", showMenu);
     }
 
     private void CompareOff()

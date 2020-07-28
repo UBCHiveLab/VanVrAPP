@@ -30,7 +30,10 @@ public class SelectorMenu : MonoBehaviour
     public TextMeshProUGUI subtitle;
     public Button atlasButton;
     public Button labButton;
+    public TextMeshProUGUI atlasLabel;
+    public TextMeshProUGUI labLabel;
     public GameObject loadingIndicator;
+    public Animator anim;
 
     public enum ListMode
     {
@@ -281,6 +284,8 @@ public class SelectorMenu : MonoBehaviour
     {
         labButton.interactable = true;
         atlasButton.interactable = false;
+        atlasLabel.color = Color.white;
+        labLabel.color = Color.black;
         byLab = false;
         organ = "";
         labId = "";
@@ -292,6 +297,8 @@ public class SelectorMenu : MonoBehaviour
     {
         labButton.interactable = false;
         atlasButton.interactable = true;
+        labLabel.color = Color.white;
+        atlasLabel.color = Color.black;
         organ = "";
         labId = "";
         region = null;
@@ -299,4 +306,13 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
+
+    // Called by EventTrigger on object
+    public void HoverShelfToggle() {
+        anim.SetBool("PeekMenu", true);
+    }
+
+    public void UnhoverShelfToggle() {
+        anim.SetBool("PeekMenu", false);
+    }
 }
