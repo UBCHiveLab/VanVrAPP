@@ -9,15 +9,17 @@ public class LandingPage : MonoBehaviour, IPage
 {
     public StateController stateController;
     public GameObject uiObject;
+    public Button enterButton;
     public GameObject doorL;
     public GameObject doorR;
+    public GameObject mainCamera;
     public DisclaimerPanel disclaimerPanel;
     public Animator mainCameraAnimator;
     public AudioSource startAudio;
     public PostProcessVolume volume;
     public FocusDistanceFinder focusDistanceFinder;
     public StartButton holdToStartButton;
-    public PostProcessingBlender blender;
+    private DepthOfField depthOfField;
 
 
     void Start()
@@ -27,8 +29,10 @@ public class LandingPage : MonoBehaviour, IPage
         disclaimerPanel.gameObject.SetActive(false);
         disclaimerPanel.enterAction = StartSession;
         disclaimerPanel.backAction = DismissDisclaimer;
-        focusDistanceFinder.enabled = false;
 
+        if (depthOfField == null) {
+            volume.profile.TryGetSettings(out depthOfField);
+        }
 
         if (holdToStartButton == null)
         {
@@ -47,15 +51,14 @@ public class LandingPage : MonoBehaviour, IPage
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
         stateController.mode = ViewMode.TRAY;
-        //depthOfField.active = false;
+        depthOfField.active = false;
         disclaimerPanel.StartDismiss();
     }
 
     public void DismissDisclaimer()
     {
-        blender.SetFocus(5f, 1f);
         disclaimerPanel.StartDismiss();
-        //depthOfField.active = false;
+        depthOfField.active = false;
     }
 
     public void Activate()
@@ -66,10 +69,10 @@ public class LandingPage : MonoBehaviour, IPage
 
     private void EntranceClicked()
     {
-        blender.ActivateDepthOfField(true);
         focusDistanceFinder.enabled = false;
         disclaimerPanel.gameObject.SetActive(true);
-        blender.SetFocus(0.4f, 1f);
+        depthOfField.active = true;
+        depthOfField.focusDistance.value = 1f;
     }
 
     public void Deactivate()

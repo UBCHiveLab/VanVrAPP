@@ -8753,6 +8753,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189855437}
   m_Mesh: {fileID: 1840822241022781651, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
+--- !u!114 &191975844 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2196012150581108360, guid: 3d41eb4c3e2493441b6c76927abeb625,
+    type: 3}
+  m_PrefabInstance: {fileID: 1704747761}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &193053409
 GameObject:
   m_ObjectHideFlags: 0
@@ -63661,15 +63673,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateController: {fileID: 556003938}
   uiObject: {fileID: 1685018987}
+  enterButton: {fileID: 191975844}
   doorL: {fileID: 1100237422}
   doorR: {fileID: 1282007450}
+  mainCamera: {fileID: 1267047}
   disclaimerPanel: {fileID: 174574953}
   mainCameraAnimator: {fileID: 1267050}
   startAudio: {fileID: 1571741865}
   volume: {fileID: 1627171978}
   focusDistanceFinder: {fileID: 1267048}
   holdToStartButton: {fileID: 1413366139}
-  blender: {fileID: 1627171980}
 --- !u!4 &1358552590
 Transform:
   m_ObjectHideFlags: 0
@@ -76158,7 +76171,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1627171979}
   - component: {fileID: 1627171978}
-  - component: {fileID: 1627171980}
   m_Layer: 0
   m_Name: PostProcessing
   m_TagString: Untagged
@@ -76197,21 +76209,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1627171980
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627171977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbc5e4c838ccab74481374bf3c186ead, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volume: {fileID: 1627171978}
-  transitionTimeToGo: 0
-  transitionTimeTotal: 1
 --- !u!1001 &1628047062
 PrefabInstance:
   m_ObjectHideFlags: 0
