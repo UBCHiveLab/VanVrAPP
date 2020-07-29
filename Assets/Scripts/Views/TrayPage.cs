@@ -9,12 +9,20 @@ public class TrayPage : MonoBehaviour, IPage
     public SelectorMenu selectorMenu;
     public GameObject uiObject;
     public GameObject actionButtons;
-    public Button compareButton;
+    public Button compareSameButton;
+    public Button compareDifferentButton;
+    public TextMeshProUGUI compareSameLabel;
     public Button analyzeButton;
+    public Button removeOnlyButton;
+    public Button removePrimaryButton;
+    public Button removeCompareButton;
+    public HoverButton startHover;
+    public UITwoStateIndicator removeCompareIndicator;
     public ProportionIndicator proportionScript;
     public bool selectingCompareSpecimen;
     public Button shelfToggle;
     private bool showMenu;
+    public SpecimenStore store;
 
     public FocusDistanceFinder focusDistanceFinder;
 
@@ -28,22 +36,45 @@ public class TrayPage : MonoBehaviour, IPage
 
     void Start()
     {
-        compareButton.onClick.AddListener(SelectCompare);
+        compareDifferentButton.onClick.AddListener(() => SelectCompare(null));
         analyzeButton.onClick.AddListener(SelectAnalysis);
+        
         shelfToggle.onClick.AddListener(ToggleShelfMenu); 
         actionButtons.SetActive(false);
 
+        removeOnlyButton.onClick.AddListener(() => RemoveSpecimen(true));
+        removeCompareButton.onClick.AddListener(() => RemoveSpecimen(false));
+        removePrimaryButton.onClick.AddListener(() => RemoveSpecimen(true));
+
+    }
+
+    public void SetOrgan(string organId)
+    {
+        if (organId == null)
+        {
+            selectorMenu.SetOrganRegion(null, null);
+            return;
+        }
+
+        if (!store.organToRegion.ContainsKey(organId))
+        {
+            Debug.LogWarning($"No entry for {organId}");
+            return;
+        }
+
+        RegionData region = store.organToRegion[organId];
+        selectorMenu.SetOrganRegion(organId, region);
     }
 
     public void Activate() {
-        //selectorMenu.gameObject.SetActive(false);
         focusDistanceFinder.enabled = true;
         uiObject.SetActive(true);
+        LayoutStateNoSpecimens();
 
         // TEMP: use animation
         if (camSet)
         {
-            shelfToggle.animator.SetBool("Hidden", false);
+            selectorMenu.anim.SetBool("ShowTab", true);
             Camera.main.transform.position = camDefaultPosition;
             Camera.main.transform.rotation = Quaternion.Euler(camDefaultRotation);
             Camera.main.fieldOfView = camDefaultFov;
@@ -83,10 +114,12 @@ public class TrayPage : MonoBehaviour, IPage
         if (selectingCompareSpecimen)
         {
             StartCoroutine(stateController.AddCompareSpecimen(data, OnAddCompareSpecimen));
+
         } else
         {
             StartCoroutine(stateController.AddPrimarySpecimen(data, OnAddPrimarySpecimen));
-            //cart.AddSpecimenPrimary(specimen);
+            LayoutStatePrimaryOnly();
+
         }
         actionButtons.SetActive(true);
 
@@ -95,11 +128,19 @@ public class TrayPage : MonoBehaviour, IPage
     private void OnAddPrimarySpecimen(GameObject obj)
     {
         cart.AddSpecimenPrimary(obj);
-        analyzeButton.interactable = true;
     }
 
     private void OnAddCompareSpecimen(GameObject obj) {
-        cart.AddSpecimenCompare(obj);
+        if (stateController.CurrentSpecimenObject == null)
+        {
+            cart.AddSpecimenPrimary(obj);
+        }
+        else
+        {
+            cart.AddSpecimenCompare(obj);
+            removeCompareIndicator.UpdateState(true);
+        }
+
         analyzeButton.interactable = true;
     }
 
@@ -129,16 +170,71 @@ public class TrayPage : MonoBehaviour, IPage
         stateController.mode = ViewMode.ANALYSIS;
     }
 
-    public void SelectCompare()
+    public void SelectCompare(string organ)
     {
         if (!selectingCompareSpecimen)
         {
             CompareOn();
+            LayoutStateCompareSpecimens();
+        }
+
+        SetOrgan(organ);
+    }
+
+
+    public void RemoveEitherActiveSpecimen(string specId)
+    {
+        bool primary = stateController.currentSpecimenId == specId;
+        if (!primary)
+        {
+            if (stateController.CompareSpecimenData == null || stateController.CompareSpecimenData.id != specId)
+            {
+                Debug.LogWarning("Trying to remove a non-selected specimen");
+                return;
+            }
+        }
+
+        RemoveSpecimen(primary);
+    }
+
+    public void RemoveSpecimen(bool primary)
+    {
+        if (primary)
+        {
+            stateController.RemoveCurrentSpecimen();
+            if (stateController.CurrentSpecimenData != null)
+            {
+                cart.AddSpecimenPrimary(stateController.CurrentSpecimenObject);
+                if (selectingCompareSpecimen)
+                {
+                    LayoutStateCompareSpecimens();
+                } else
+                {
+                    LayoutStatePrimaryOnly();
+                }
+            }
+            else
+            {
+                selectingCompareSpecimen = false;
+                LayoutStateNoSpecimens();
+            }
         }
         else
         {
-            CompareOff();
+            if (stateController.CompareSpecimenData != null)
+            {
+                stateController.RemoveCompareSpecimen();
+            } else
+            {
+                CompareOff();
+                LayoutStatePrimaryOnly();
+            }
+
+            removeCompareIndicator.UpdateState(false);
+
         }
+
+        selectorMenu.UpdateSelected();
     }
 
 
@@ -153,19 +249,73 @@ public class TrayPage : MonoBehaviour, IPage
     {
         selectingCompareSpecimen = false;
         stateController.RemoveCompareSpecimen();
-        compareButton.GetComponent<UITwoStateIndicator>().UpdateState(false);
         selectorMenu.EndCompare();
         cart.RemoveTray2();
+        removeCompareIndicator.UpdateState(false);
     }
 
     private void CompareOn()
     {
         selectingCompareSpecimen = true;
         selectorMenu.SelectCompare();
-        compareButton.GetComponent<UITwoStateIndicator>().UpdateState(true);
         cart.SpawnTray2();
+        removeCompareIndicator.UpdateState(true);
     }
-   
+
+    private void LayoutStatePrimaryOnly()
+    {
+        compareSameButton.gameObject.SetActive(true);
+        compareDifferentButton.gameObject.SetActive(true);
+        removeOnlyButton.gameObject.SetActive(true);
+        removeCompareButton.gameObject.SetActive(false);
+        removePrimaryButton.gameObject.SetActive(false);
+        analyzeButton.interactable = true;
+        compareSameButton.interactable = true;
+        compareSameButton.onClick.RemoveAllListeners();
+        compareSameButton.onClick.AddListener(() =>
+        {
+            SelectCompare(stateController.CurrentSpecimenData.organ);
+        });
+        compareSameLabel.text = $"COMPARE \n {stateController.CurrentSpecimenData.organ.ToUpper()}";
+        compareDifferentButton.interactable = true;
+        removeCompareIndicator.UpdateState(true);
+        startHover.Enable();
+        
+
+    }
+
+    private void LayoutStateNoSpecimens()
+    {
+        removeOnlyButton.gameObject.SetActive(false);
+        removeCompareButton.gameObject.SetActive(false);
+        removePrimaryButton.gameObject.SetActive(false);
+        analyzeButton.interactable = false;
+        compareSameButton.interactable = false;
+        cart.RemoveTray2();
+        compareDifferentButton.interactable = false;
+        compareSameButton.gameObject.SetActive(false);
+        compareDifferentButton.gameObject.SetActive(false);
+        startHover.Disable();
+
+
+    }
+
+    private void LayoutStateCompareSpecimens()
+    {
+        compareSameButton.gameObject.SetActive(true);
+        compareDifferentButton.gameObject.SetActive(true);
+        removeOnlyButton.gameObject.SetActive(false);
+        removeCompareButton.gameObject.SetActive(true);
+        removePrimaryButton.gameObject.SetActive(true);
+        analyzeButton.interactable = true;
+        compareSameButton.interactable = true;
+        compareSameLabel.text = $"COMPARE \n {stateController.CurrentSpecimenData.organ.ToUpper()}";
+        compareDifferentButton.interactable = true;
+        removeCompareIndicator.UpdateState(false);
+        startHover.Enable();
+    }
+
+
 
 
 }

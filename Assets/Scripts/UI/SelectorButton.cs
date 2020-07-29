@@ -45,7 +45,7 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private IEnumerator LoadingUntil(Func<bool> condition)
     {
         SetLoading(true);
-        while (!condition()) yield return null;
+        while (!condition()) yield return new WaitForSeconds(0.2f);
         SetLoading(false);
     }
 

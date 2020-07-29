@@ -36,9 +36,8 @@ public class SelectorMenu : MonoBehaviour
     public GameObject loadingIndicator;
     public Animator anim;
 
-
-    private SelectorButton buttonSelectedPrimary;
-    private SelectorButton buttonSelectedSecondary;
+    private ListMode currentMode;
+    private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
 
     public enum ListMode
     {
@@ -124,7 +123,7 @@ public class SelectorMenu : MonoBehaviour
             labtitle.gameObject.SetActive(false);
             subtitle.gameObject.SetActive(false);
         }
-        else if (organ == "")
+        else if (string.IsNullOrEmpty(organ))
         {
             title.text = $"SHELF";
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
@@ -177,6 +176,8 @@ public class SelectorMenu : MonoBehaviour
     {
         // Clears data.
         Clear();
+        idToButton = new Dictionary<string, SelectorButton>();
+        currentMode = mode;
 
         if (mode == ListMode.LAB)
         {
@@ -201,56 +202,15 @@ public class SelectorMenu : MonoBehaviour
                 string id = _loadedSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenSelectorPrefab, listTransform);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
-                if (id == stateController.currentSpecimenId) 
-                {
-                    btn.ShowBackground(true);
-                    btn.icon.gameObject.SetActive(true);
-                } else if (stateController.CompareSpecimenData != null &&
-                           id == stateController.CompareSpecimenData.id)
-                {
-                    btn.ShowBackground(true);
-                    btn.icon.gameObject.SetActive(true);
-                } else
-                {
-                    btn.ShowBackground(false);
-                    btn.icon.gameObject.SetActive(false);
-                    btn.button.onClick.AddListener(() =>
-                    {
-                        SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
-                        btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
-                        if (id == stateController.currentSpecimenId)
-                        {
-                            if (buttonSelectedPrimary != null)
-                            {
-                                buttonSelectedPrimary.ShowBackground(false);
-                                buttonSelectedPrimary.icon.gameObject.SetActive(false);
-                            }
-                            buttonSelectedPrimary = btn;
-                            buttonSelectedPrimary.ShowBackground(true);
-                            buttonSelectedPrimary.icon.gameObject.SetActive(true);
-
-                        } else
-                        {
-                            if (buttonSelectedSecondary != null) {
-                                buttonSelectedSecondary.ShowBackground(false);
-                                buttonSelectedSecondary.icon.gameObject.SetActive(false);
-                            }
-                            buttonSelectedSecondary = btn;
-                            buttonSelectedSecondary.ShowBackground(true);
-                            buttonSelectedSecondary.icon.gameObject.SetActive(true);
-                        }
-
-                    });
-                }
-
+                idToButton.Add(id, btn);
             }
 
             // Activates the back button, which takes user back to Region/Organ list
             backButton.onClick.AddListener(Back);
+            UpdateSelected();
         }
         else
         {
-            // Deactivates the subtitle
             subtitle.gameObject.SetActive(false);
 
             // Loops through loaded regions, producing a clickable button for each...
@@ -258,6 +218,7 @@ public class SelectorMenu : MonoBehaviour
             {
                 SelectorButton btn = Instantiate(selectorPrefab, listTransform);
                 btn.Populate(_loadedRegions[i].name, i, _loadedRegions[i].icon);
+                idToButton.Add(_loadedRegions[i].name, btn);
 
                 // If a region is the currently selected, output the organs found as buttons below.
                 if (_loadedRegions[i] == region)
@@ -280,6 +241,7 @@ public class SelectorMenu : MonoBehaviour
 
                             // Bind a click listener that loads the specimen selection view
                             sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
+                            idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);
                         }
                     }
 
@@ -324,6 +286,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void SelectSpecimen(string specimenId)
     {
+        SetSpecimenButtonToSelected(specimenId);
         trayPage.SpecimenSelected(store.specimens[specimenId]);
     }
 
@@ -366,6 +329,67 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
+    private void SetSpecimenButtonToSelected(string specId)
+    {
+        if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
+        SelectorButton btn = idToButton[specId];
+        btn.ShowBackground(true);
+        btn.icon.gameObject.SetActive(true);
+        btn.button.onClick.RemoveAllListeners();
+        btn.button.onClick.AddListener(() =>
+        {
+            trayPage.RemoveEitherActiveSpecimen(specId);
+            UpdateSelected();
+        });
+    }
+
+    private void SetSpecimenButtonToDeselected(string specId)
+    {
+        if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
+        SelectorButton btn = idToButton[specId];
+        btn.ShowBackground(false);
+        btn.icon.gameObject.SetActive(false);
+        btn.button.onClick.RemoveAllListeners();
+        btn.button.onClick.AddListener(() => {
+            SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
+            btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
+            UpdateSelected();
+        });
+    }
+
+    public void SetOrganRegion(string organId, RegionData regionData)
+    {
+        organ = organId;
+        region = regionData;
+        Populate();
+    }
+
+    // Scans all active selector buttons and sets them to active if they are a selected specimen
+    public void UpdateSelected()
+    {
+        if (currentMode != ListMode.SPECIMEN && currentMode != ListMode.LAB_SPECIMENS) return;
+        string primaryId = null;
+        string compareId = null;
+
+        if (stateController.currentSpecimenId != null) {
+            primaryId = stateController.currentSpecimenId;
+        }
+        if (stateController.CompareSpecimenData != null) {
+            compareId = stateController.CompareSpecimenData.id;
+        }
+
+        foreach (string key in idToButton.Keys)
+        {
+            if (key == primaryId || key == compareId)
+            {
+                SetSpecimenButtonToSelected(key);
+            }
+            else
+            {
+                SetSpecimenButtonToDeselected(key);
+            }
+        }
+    }
 
     // Called by EventTrigger on object
     public void HoverShelfToggle()

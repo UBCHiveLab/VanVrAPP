@@ -9,6 +9,8 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public float transitionTime = 0.25f;
     public Color baseColor;
     public Color hoverColor;
+    public Color disabledColor;
+    public bool disabled;
 
     public Image icon;
     public Image icon2;
@@ -29,6 +31,7 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (disabled) return;
         StopAllCoroutines();
         StartCoroutine(HoverOn());
 
@@ -36,9 +39,44 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (disabled) return;
         StopAllCoroutines();
         StartCoroutine(HoverOff());
     }
+
+    public void Disable()
+    {
+        disabled = true;
+        if (label != null)
+        {
+            label.color = disabledColor;
+        }
+
+        if (icon != null) {
+            icon.color = disabledColor;
+        }
+
+        if (icon2 != null) {
+            icon2.color = disabledColor;
+        }
+    }
+
+    public void Enable()
+    {
+        disabled = false;
+        if (label != null) {
+            label.color = baseColor;
+        }
+
+        if (icon != null) {
+            icon.color = baseColor;
+        }
+
+        if (icon2 != null) {
+            icon2.color = baseColor;
+        }
+    }
+
 
 
     private IEnumerator HoverOn()
