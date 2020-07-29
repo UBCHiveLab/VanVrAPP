@@ -15,6 +15,7 @@ public class SelectorMenu : MonoBehaviour
 
     [Header("Services")] public SpecimenStore store;
     public TrayPage trayPage;
+    public StateController stateController;
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -34,6 +35,10 @@ public class SelectorMenu : MonoBehaviour
     public TextMeshProUGUI labLabel;
     public GameObject loadingIndicator;
     public Animator anim;
+
+
+    private SelectorButton buttonSelectedPrimary;
+    private SelectorButton buttonSelectedSecondary;
 
     public enum ListMode
     {
@@ -188,17 +193,56 @@ public class SelectorMenu : MonoBehaviour
 
         if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
         {
-
+            // Forgive me for the spaghetti below
+            // TODO: Refactor
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
+                string id = _loadedSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenSelectorPrefab, listTransform);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
-                btn.button.onClick.AddListener(() =>
+                if (id == stateController.currentSpecimenId) 
                 {
-                    SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
-                    btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
-                });
+                    btn.ShowBackground(true);
+                    btn.icon.gameObject.SetActive(true);
+                } else if (stateController.CompareSpecimenData != null &&
+                           id == stateController.CompareSpecimenData.id)
+                {
+                    btn.ShowBackground(true);
+                    btn.icon.gameObject.SetActive(true);
+                } else
+                {
+                    btn.ShowBackground(false);
+                    btn.icon.gameObject.SetActive(false);
+                    btn.button.onClick.AddListener(() =>
+                    {
+                        SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
+                        btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
+                        if (id == stateController.currentSpecimenId)
+                        {
+                            if (buttonSelectedPrimary != null)
+                            {
+                                buttonSelectedPrimary.ShowBackground(false);
+                                buttonSelectedPrimary.icon.gameObject.SetActive(false);
+                            }
+                            buttonSelectedPrimary = btn;
+                            buttonSelectedPrimary.ShowBackground(true);
+                            buttonSelectedPrimary.icon.gameObject.SetActive(true);
+
+                        } else
+                        {
+                            if (buttonSelectedSecondary != null) {
+                                buttonSelectedSecondary.ShowBackground(false);
+                                buttonSelectedSecondary.icon.gameObject.SetActive(false);
+                            }
+                            buttonSelectedSecondary = btn;
+                            buttonSelectedSecondary.ShowBackground(true);
+                            buttonSelectedSecondary.icon.gameObject.SetActive(true);
+                        }
+
+                    });
+                }
+
             }
 
             // Activates the back button, which takes user back to Region/Organ list
