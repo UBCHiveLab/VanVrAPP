@@ -271,9 +271,12 @@ public class AnalysisPage : MonoBehaviour, IPage
      */
     void ToggleCompare()
     {
-        bool on = !compareMenu.gameObject.activeSelf;
+        /*bool on = !compareMenu.gameObject.activeSelf;
         compareMenu.gameObject.SetActive(on);
         leftPanel.gameObject.SetActive(!on);
+        */
+        stateController.mode = ViewMode.TRAY;
+        trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
     }
 
     /**

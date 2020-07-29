@@ -69,8 +69,8 @@ public class TrayPage : MonoBehaviour, IPage
     public void Activate() {
         focusDistanceFinder.enabled = true;
         uiObject.SetActive(true);
-        LayoutStateNoSpecimens();
-
+        //LayoutStateNoSpecimens();
+        SelectLayout();
         // TEMP: use animation
         if (camSet)
         {
@@ -172,6 +172,8 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void SelectCompare(string organ)
     {
+        selectorMenu.anim.SetBool("ShowMenu", true);
+
         if (!selectingCompareSpecimen)
         {
             CompareOn();
@@ -260,6 +262,21 @@ public class TrayPage : MonoBehaviour, IPage
         selectorMenu.SelectCompare();
         cart.SpawnTray2();
         removeCompareIndicator.UpdateState(true);
+    }
+
+    private void SelectLayout()
+    {
+        if (stateController.CurrentSpecimenData == null)
+        {
+            LayoutStateNoSpecimens();
+        } else if (stateController.CompareSpecimenData == null && !selectingCompareSpecimen)
+        {
+            LayoutStatePrimaryOnly();
+        }
+        else
+        {
+            LayoutStateCompareSpecimens();
+        }
     }
 
     private void LayoutStatePrimaryOnly()
