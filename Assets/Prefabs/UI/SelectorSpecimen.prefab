@@ -157,6 +157,8 @@ MonoBehaviour:
   transitionTime: 0.12
   baseColor: {r: 0, g: 0.043137256, b: 0.24705882, a: 1}
   hoverColor: {r: 0.34901962, g: 0.33333334, b: 1, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  disabled: 0
   icon: {fileID: 2297991292677083085}
   icon2: {fileID: 0}
   label: {fileID: 4933445673072673715}
@@ -219,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.043137256, b: 0.24705882, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

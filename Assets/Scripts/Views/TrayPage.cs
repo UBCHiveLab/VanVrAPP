@@ -105,6 +105,7 @@ public class TrayPage : MonoBehaviour, IPage
     public void Deactivate() {
         uiObject.SetActive(false);
         shelfToggle.gameObject.SetActive(true);
+        showMenu = false;
     }
 
     public void SpecimenSelected(SpecimenData data)

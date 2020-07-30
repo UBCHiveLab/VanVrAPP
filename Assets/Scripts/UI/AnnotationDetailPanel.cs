@@ -10,6 +10,8 @@ using Button = UnityEngine.UI.Button;
 
 public class AnnotationDetailPanel : MonoBehaviour
 {
+    public Canvas canvas;
+
     [Header("Layout Parameters")]
     public float lineWeight = 1f;
     public float discRadius = 0.1f;
@@ -308,17 +310,17 @@ public class AnnotationDetailPanel : MonoBehaviour
             lineStub.gameObject.SetActive(true);
             line.gameObject.SetActive(true);
         }
-        Vector3 target = _displayedIndicator.transform.position; // The center point of the target indicator
+
+        Vector3 target = _displayedIndicator.transform.position;
+
         Vector3 pivot = line.position; // The pivot of the line to be drawn
-        float dist = Vector3.Distance(target, pivot); // Distance between pivot and target
+        float dist = Vector3.Distance(new Vector3(target.x, target.y), pivot); // Distance between pivot and target
         Vector3 diff = target - pivot;
         float angle = Mathf.Atan2(diff.x, -diff.y) *
                       Mathf.Rad2Deg; // Find the angle made by a line from pivot to target (in degrees)
         line.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // Rotate by given angle
-        line.sizeDelta =
-            new Vector2(lineWeight,
-                dist / 2f -
-                discRadius); // Set line rect; note, height must be divided by two then offset by the disc radius so it doesn't intersect the indicator
+        line.sizeDelta = new Vector2(lineWeight,
+            dist / (canvas.scaleFactor * 2f)); ;
     }
 
     private List<IAnnotationContentBlock> SpawnBlocks()
