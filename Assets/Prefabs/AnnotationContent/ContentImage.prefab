@@ -113,7 +113,10 @@ MonoBehaviour:
   controls: {fileID: 0}
   label: {fileID: 0}
   play: {fileID: 0}
-  pause: {fileID: 0}
+  audio: {fileID: 0}
+  playPauseIndicator: {fileID: 0}
+  audioOnIndicator: {fileID: 0}
+  playHover: {fileID: 0}
   progress: {fileID: 0}
   timeLabel: {fileID: 0}
   fullScreen: {fileID: 5531982295649313158}
@@ -142,7 +145,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 8
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -450,7 +453,7 @@ PrefabInstance:
     - target: {fileID: 514138145206401657, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 18
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 514138145206401657, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
@@ -485,22 +488,22 @@ PrefabInstance:
     - target: {fileID: 1179156035808831401, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
       propertyPath: m_textInfo.characterCount
-      value: 59
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1179156035808831401, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
       propertyPath: m_textInfo.spaceCount
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1179156035808831401, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
       propertyPath: m_textInfo.wordCount
-      value: 13
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1179156035808831401, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
       propertyPath: m_textInfo.lineCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1179156035808831401, guid: 9f4a60569654b35418c9568c4a84163f,
         type: 3}
@@ -677,7 +680,7 @@ PrefabInstance:
     - target: {fileID: 1122438640024266559, guid: f9e07566ca747b34faadd25fd965996f,
         type: 3}
       propertyPath: m_firstOverflowCharacterIndex
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3394880518216049136, guid: f9e07566ca747b34faadd25fd965996f,
         type: 3}

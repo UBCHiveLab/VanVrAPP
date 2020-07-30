@@ -13,6 +13,7 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
     public string src;
     public AudioClip clip;
     public string title { get; set; }
+    public bool loaded;
 
     public TextMeshProUGUI citationLabel;
     public TextMeshProUGUI titleLabel;
@@ -53,7 +54,7 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
 
     protected override void UpdateTime()
     {
-        if (detailPanel.currentAVSource == this && detailPanel.audioSource.isPlaying && !scrubbing)
+        if (detailPanel.audioSource.clip != null && detailPanel.currentAVSource == this && detailPanel.audioSource.isPlaying && !scrubbing)
         {
             timeLabel.text = $"{toTime(detailPanel.audioSource.time)} / {toTime(detailPanel.audioSource.clip.length)}";
             progress.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
@@ -62,7 +63,9 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
 
     private IEnumerator DownloadAudio(string url)
     {
-
+        playHover.Disable();
+        play.interactable = false;
+        loaded = false;
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(src, AudioType.UNKNOWN))
         {
             UnityWebRequestAsyncOperation request = www.SendWebRequest();
@@ -80,6 +83,9 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
                 {
                     clip = DownloadHandlerAudioClip.GetContent(www);
                     timeLabel.text = $"0:00 / {toTime(clip.length)}";
+                    playHover.Enable();
+                    loaded = true;
+                    play.interactable = true;
                 }
                 catch (Exception e)
                 {

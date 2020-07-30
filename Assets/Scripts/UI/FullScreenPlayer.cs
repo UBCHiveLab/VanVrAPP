@@ -33,7 +33,7 @@ public class FullScreenPlayer : MultimediaContent
             {
                 progress.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
                 timeLabel.text = $"{toTime((float)detailPanel.videoPlayer.time)} / {toTime((float)detailPanel.videoPlayer.length)}";
-            } else if (contentBlock.type == BlockType.AUDIO && detailPanel.audioSource.isPlaying && !scrubbing && detailPanel.audioSource.clip.length > 0)
+            } else if (contentBlock.type == BlockType.AUDIO && detailPanel.audioSource.isPlaying && !scrubbing && detailPanel.audioSource.clip != null && detailPanel.audioSource.clip.length > 0)
             {
                 progress.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
                 timeLabel.text = $"{toTime((float)detailPanel.audioSource.time)} / {toTime((float)detailPanel.audioSource.clip.length)}";
@@ -49,13 +49,16 @@ public class FullScreenPlayer : MultimediaContent
         switch (block.type)
         {
             case BlockType.VIDEO:
+                playHover.Enable();
+                play.interactable = true;
                 canvas.color = Color.white;
                 ContentVideo vid = block as ContentVideo;
                 canvas.texture = vid.thumbnail;
                 canvas.rectTransform.sizeDelta = vid.GetConstrainedRec(-1, canvas.rectTransform.rect.height);
                 controls.gameObject.SetActive(true);
-                //progress.value = (float)(detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
                 timeLabel.text = $"Ready";
+                playPauseIndicator.UpdateState(false);
+                Play();
                 break;
 
             case BlockType.IMAGE:
@@ -68,11 +71,24 @@ public class FullScreenPlayer : MultimediaContent
                 break;
 
             case BlockType.AUDIO:
-                detailPanel.Play(block);
-                canvas.color = Color.clear;
-                controls.gameObject.SetActive(true);
-                //progress.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
-                timeLabel.text = $"Ready";
+                ContentAudio aud = block as ContentAudio;
+                if (!aud.loaded)
+                {
+                    play.interactable = false;
+                    playHover.Disable();
+                    timeLabel.text = $"Loading";
+                } else
+                {
+                    playHover.Enable();
+                    play.interactable = true;
+                    detailPanel.Play(block);
+                    canvas.color = Color.clear;
+                    controls.gameObject.SetActive(true);
+                    progress.value = 0;
+                    timeLabel.text = $"Ready";
+                    playPauseIndicator.UpdateState(false);
+                }
+
                 break;
 
             default:
@@ -91,10 +107,12 @@ public class FullScreenPlayer : MultimediaContent
     void Prev()
     {
         detailPanel.TurnFullScreenPage(-1);
+        playPauseIndicator.UpdateState(!detailPanel.IsPlaying());
     }
 
     void Next() {
         detailPanel.TurnFullScreenPage(1);
+        playPauseIndicator.UpdateState(!detailPanel.IsPlaying());
     }
 
     protected override void Play()
@@ -103,6 +121,7 @@ public class FullScreenPlayer : MultimediaContent
         {
             canvas.texture = detailPanel.videoPlayer.targetTexture;
         }
+        playPauseIndicator.UpdateState(false);
         MaximizeScreenHeight();
         base.Play();
     }

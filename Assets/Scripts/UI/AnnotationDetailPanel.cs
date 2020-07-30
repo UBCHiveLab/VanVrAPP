@@ -92,6 +92,7 @@ public class AnnotationDetailPanel : MonoBehaviour
         UpdateIcon();
         detailOpenToggle.onClick.AddListener(ToggleDetailView);
         StartCoroutine(ResetScrollView());
+        videoPlayer.SetTargetAudioSource(0, audioSource);
     }
 
     void Update() {
@@ -321,6 +322,21 @@ public class AnnotationDetailPanel : MonoBehaviour
         line.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // Rotate by given angle
         line.sizeDelta = new Vector2(lineWeight,
             dist / (canvas.scaleFactor * 2f)); ;
+    }
+
+    public bool IsPlaying()
+    {
+        return videoPlayer.isPlaying || audioSource.isPlaying;
+    }
+
+    public bool AudioIsOn()
+    {
+        return audioSource.mute;
+    }
+
+    public void ToggleAudio(bool on)
+    {
+        audioSource.mute = !on;
     }
 
     private List<IAnnotationContentBlock> SpawnBlocks()

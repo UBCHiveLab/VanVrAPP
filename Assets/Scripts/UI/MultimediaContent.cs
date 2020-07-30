@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,10 @@ public class MultimediaContent : MonoBehaviour
     public GameObject controls;
     public TextMeshProUGUI label;
     public Button play;
-    public Button pause;
+    public Button audio;
+    public UITwoStateIndicator playPauseIndicator;
+    public UITwoStateIndicator audioOnIndicator;
+    public HoverButton playHover;
     public Slider progress;
     public TextMeshProUGUI timeLabel;
     public Button fullScreen;
@@ -25,9 +29,9 @@ public class MultimediaContent : MonoBehaviour
         fullScreen?.onClick.AddListener(ToggleFullScreen);
         if (controls != null)
         {
-            play?.onClick.AddListener(Play);
-            pause?.onClick.AddListener(Pause);
+            play?.onClick.AddListener(TogglePlay);
             progress?.onValueChanged.AddListener(Scrub);
+            audio.onClick?.AddListener(ToggleAudio);
             timeLabel.text = "";
         }
         PrepareContent();
@@ -93,12 +97,27 @@ public class MultimediaContent : MonoBehaviour
             Scrub(progress.value);
         }
 
-        protected virtual void Play() {
+        public void TogglePlay()
+        {
+            if (detailPanel.IsPlaying())
+            {
+                Pause();
+            }
+            else
+            {
+                Play();
+            }
+        }
 
+        protected virtual void Play()
+        {
+            playPauseIndicator.UpdateState(false);
             detailPanel.Play(contentBlock);
         }
 
-        private void Pause() {
+        private void Pause()
+        {
+            playPauseIndicator.UpdateState(true);
             detailPanel.Pause(contentBlock);
         }
 
@@ -107,6 +126,13 @@ public class MultimediaContent : MonoBehaviour
                 detailPanel.Scrub(contentBlock, val);
                 progress.value = val;
             }
+        }
+
+        private void ToggleAudio()
+        {
+            bool on = detailPanel.AudioIsOn();
+            detailPanel.ToggleAudio(on);
+            audioOnIndicator.UpdateState(on);
         }
 
         protected void ToggleFullScreen() {
