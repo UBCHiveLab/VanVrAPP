@@ -69,7 +69,7 @@ public class TrayPage : MonoBehaviour, IPage
     public void Activate() {
         focusDistanceFinder.enabled = true;
         uiObject.SetActive(true);
-        //LayoutStateNoSpecimens();
+        //LayoutStateNoSpecimens()
         SelectLayout();
         // TEMP: use animation
         if (camSet)
@@ -119,7 +119,6 @@ public class TrayPage : MonoBehaviour, IPage
         } else
         {
             StartCoroutine(stateController.AddPrimarySpecimen(data, OnAddPrimarySpecimen));
-            LayoutStatePrimaryOnly();
 
         }
         actionButtons.SetActive(true);
@@ -129,6 +128,7 @@ public class TrayPage : MonoBehaviour, IPage
     private void OnAddPrimarySpecimen(GameObject obj)
     {
         cart.AddSpecimenPrimary(obj);
+        LayoutStatePrimaryOnly();
     }
 
     private void OnAddCompareSpecimen(GameObject obj) {
