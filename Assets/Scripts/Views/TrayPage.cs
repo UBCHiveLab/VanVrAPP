@@ -165,7 +165,7 @@ public class TrayPage : MonoBehaviour, IPage
 
         if (stateController.CompareSpecimenObject == null)
         {
-            cart.RemoveTray2();
+            CompareOff();
         }
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
