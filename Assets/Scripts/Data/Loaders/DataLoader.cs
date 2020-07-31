@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
@@ -158,8 +157,7 @@ public abstract class DataLoader: MonoBehaviour
 
             if (req.isNetworkError || req.isHttpError)
             {
-                // TODO: send warning here
-                Debug.LogWarning($"{req.error} : Could not find bundle for {srd.id} at {reqUri}");
+                SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
                 yield break;
             } else
             {
@@ -255,8 +253,9 @@ public abstract class DataLoader: MonoBehaviour
 
     private bool VerifyManifest(DataManifest manifest)
     {
-        if (manifest == null) {
-            Debug.LogError("Couldn't load manifest. Make sure you are pointing to a correct, existing online or local resource.");
+        if (manifest == null)
+        {
+            SendError("Couldn't load manifest. Make sure you are pointing to a correct, existing online or local resource.");
             return false;
         }
 
@@ -264,21 +263,31 @@ public abstract class DataLoader: MonoBehaviour
 
         if (manifest.regions == null)
         {
-            Debug.LogError("No region data in loaded manifest. Please add region data.");
+            SendWarning("No region data in loaded manifest. Please add region data.");
             verify = false;
         }
 
         if (manifest.labs == null) {
-            Debug.LogError("No lab data in loaded manifest. Please add lab data if desired.");
+            SendWarning("No lab data in loaded manifest. Please add lab data if desired.");
             verify = false;
         }
 
         if (manifest.specimenData == null) {
-            Debug.LogError("No specimen data in loaded manifest. Please add specimen data if desired.");
+            SendWarning("No specimen data in loaded manifest. Please add specimen data if desired.");
             verify = false;
         }
 
         return verify;
     }
 
+    protected void SendError(string message)
+    {
+        Debug.LogWarning(message);
+        store.errorPanel.Populate(message);
+    }
+
+    protected void SendWarning(string message)
+    {
+        Debug.LogWarning(message);
+    }
 }

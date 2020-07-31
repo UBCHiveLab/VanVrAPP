@@ -86,8 +86,7 @@ public class ContentImage : MultimediaContent, IAnnotationContentBlock
 
         if (request.isNetworkError || request.isHttpError)
         {
-            Debug.Log(request.error);
-            // TODO: output error
+            detailPanel.SendError(request.error);
         } else
         {
             image = ((DownloadHandlerTexture)request.downloadHandler).texture;

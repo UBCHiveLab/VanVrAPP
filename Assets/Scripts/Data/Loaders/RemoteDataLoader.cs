@@ -13,9 +13,8 @@ public class RemoteDataLoader : DataLoader
             yield return req.SendWebRequest();
             if (req.isNetworkError || req.isHttpError)
             {
-                Debug.LogWarning($"Unable to get manifest from ${manifestPath}. Please check your internet connection or contact the administrator.");
-            }
-            else
+                SendError($"Unable to get manifest. Please check your internet connection or contact the administrator.");
+            } else
             {
                 manifest = JsonUtility.FromJson<DataManifest>(req.downloadHandler.text);
                 _manifestLoaded = true;

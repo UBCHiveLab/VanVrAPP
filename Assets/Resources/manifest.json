@@ -1,292 +1,333 @@
 {
-    "specimenData": [
-      {
-        "id": "brain01",
-        "name": "Brain #1",
-        "version": 1,
-        "organ": "Brain",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brain",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brain",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brain",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/brain.prefab",
-        "scale": 1.5,
-        "annotations": [
-          {
-            "annotationId": "t1",
-            "title": "Test Annotation 1",
-            "content": "[img src='https://i.imgur.com/ZB60Ttq.jpeg'] Lorem ipsum dolor sit amet sid adipiscing. [vid title='The Brain' src='http://projects.thecdm.ca/anatomic/video/brain_video.mp4'] ",
-            "position": {
-              "x": 0.02,
-              "y": 0.01,
-              "z": 0.0
-            }
-          },
-          {
-            "annotationId": "t2",
-            "title": "Test Annotation 2",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "global": true
-            }
-          },
-          {
-            "annotationId": "t3",
-            "title": "Test Annotation 3",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.02,
-              "z": 0.1
-            }
+  "specimenData": [
+    {
+      "id": "brain01",
+      "name": "Brain #1",
+      "version": 1,
+      "organ": "Brain",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brain",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brain",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brain",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/brain.prefab",
+      "scale": 1.5,
+      "annotations": [
+        {
+          "annotationId": "t1",
+          "title": "Test Annotation 1",
+          "content": "[img src='https://i.imgur.com/ZB60Ttq.jpeg'] Lorem ipsum dolor sit amet sid adipiscing. [vid title='The Brain' src='http://projects.thecdm.ca/anatomic/video/brain_video.mp4'] ",
+          "position": {
+            "x": 0.02,
+            "y": 0.01,
+            "z": 0.0
           }
-        ]
-      },
-      {
-        "id": "heart01",
-        "name": "Heart #1",
-        "version": 1,
-        "organ": "Heart",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/cardiomegalicheart",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/cardiomegalicheart",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/cardiomegalicheart",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/CardiomegalicHeart.prefab",
-        "scale": 0.2,
-        "annotations": [
-          {
-            "annotationId": "0",
-            "title": "Main Annotation",
-            "content": "[img src='live.staticflickr.com/7346/27911774922_2587f3ba47_b.jpg' cite='Wikimedia' title='A Bird'] [vid title='test video' src='https://www.youtube.com/watch?v=17mxfO9nklQ' cite='2014 UBC Medicine'] Etiam rhoncus. Praesent ac sem eget est egestas volutpat. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Suspendisse eu ligula.                    Nulla consequat massa quis enim. Cras varius.",
-            "position": {
-              "global": true
-            }
-          },
-          {
-            "annotationId": "t1",
-            "title": "Test Annotation 1",
-            "content": "[aud src='https://ia801309.us.archive.org/34/items/groks710/groks112515.wav' cite='someone on internet archive' title='Heartbeat'] [img src='https://i.imgur.com/tj9fmPO.jpg' cite='Imgur User Apotheosis33' title='Two Cats in Love'] [vid title='test video' src='https://www.youtube.com/watch?v=17mxfO9nklQ' cite='2014 UBC Medicine'] Etiam rhoncus. Praesent ac sem eget est egestas volutpat. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Suspendisse eu ligula.                    Nulla consequat massa quis enim. Cras varius.",
-            "position": {
-              "x": 0.24,
-              "y": 0.22,
-              "z": 0.1
-            }
-          },
-          {
-            "annotationId": "t2",
-            "title": "Test Annotation 2",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing. [img src='live.staticflickr.com/7346/27911774922_2587f3ba47_b.jpg']",
-            "position": {
-              "x": 0.14,
-              "y": 0.17,
-              "z": 0.21
-            }
-          },
-          {
-            "annotationId": "t3",
-            "title": "Test Annotation 3",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.02,
-              "z": 0.33
-            }
+        },
+        {
+          "annotationId": "t2",
+          "title": "Test Annotation 2",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "global": true
           }
-        ]
-      },
-      {
-        "id": "kidney01",
-        "name": "Kidney #1",
-        "version": 1,
-        "organ": "Kidney",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/kidney",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/kidney",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/kidney",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/kidney.prefab",
-        "scale": 0.25,
-        "annotations": [
-          {
-            "annotationId": "t1",
-            "title": "Test Annotation 1",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.02,
-              "z": 0.1
-            }
-          },
-          {
-            "annotationId": "t2",
-            "title": "Test Annotation 2",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.12,
-              "z": 0.1
-            }
-          },
-          {
-            "annotationId": "t3",
-            "title": "Test Annotation 3",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.02,
-              "z": 0.3
-            }
+        },
+        {
+          "annotationId": "t3",
+          "title": "Test Annotation 3",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.02,
+            "z": 0.1
           }
-        ]
-      },
-      {
-        "id": "liver01",
-        "name": "Liver #1",
-        "version": 1,
-        "organ": "Liver",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/liver",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/liver",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/liver",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/Liver.prefab",
-        "scale": 0.25,
-        "annotations": [
-          {
-            "annotationId": "t1",
-            "title": "Test Annotation 1",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.32,
-              "z": 0.1
-            }
-          },
-          {
-            "annotationId": "t2",
-            "title": "Test Annotation 2",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.14,
-              "y": 0.02,
-              "z": 0.1
-            }
-          },
-          {
-            "annotationId": "t3",
-            "title": "Test Annotation 3",
-            "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-            "position": {
-              "x": 0.04,
-              "y": 0.02,
-              "z": 0.1
-            }
+        }
+      ]
+    },
+    {
+      "id": "brainError",
+      "name": "Brain Error",
+      "version": 1,
+      "organ": "Brain",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brainBADURL",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brainBADURL",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brainBADURL",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/brain.prefab",
+      "scale": 1.5,
+      "annotations": [
+        {
+          "annotationId": "t1",
+          "title": "Test Annotation 1",
+          "content": "[img src='https://i.imgur.com/ZB60Ttq.jpeg'] Lorem ipsum dolor sit amet sid adipiscing. [vid title='The Brain' src='http://projects.thecdm.ca/anatomic/video/brain_video.mp4'] ",
+          "position": {
+            "x": 0.02,
+            "y": 0.01,
+            "z": 0.0
           }
-        ]
-      },
-      {
-        "id": "skull01",
-        "name": "Skull #1",
-        "version": 1,
-        "organ": "Skull",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/skull",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/skull",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/skull",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/Skull.prefab",
-        "scale": 0.4,
-        "annotations": []
-      },
-      {
-        "id": "brainstem01",
-        "name": "Brainstem #1",
-        "version": 0,
-        "organ": "Brainstem",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brainstem",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brainstem",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brainstem",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/Brainstem.prefab",
-        "scale": 0.45,
-        "annotations": []
-      },
-      {
-        "id": "esophagus01",
-        "name": "Esophagus #1",
-        "version": 1,
-        "organ": "Esophagus",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/esophagus",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/esophagus",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/esophagus",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/Esophagus.prefab",
-        "scale": 0.35,
-        "annotations": []
-      },
-      {
-        "id": "femalepelvis01",
-        "name": "Female Pelvis #1",
-        "version": 1,
-        "organ": "Female Pelvis",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/femalepelvis",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/femalepelvis",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/femalepelvis",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/FemalePelvisHemi.prefab",
-        "scale": 1,
-        "annotations": []
-      },
-      {
-        "id": "flexedknee01",
-        "name": "Flexed Knee #1",
-        "version": 0,
-        "organ": "Flexed Knee",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/flexedknee",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/flexedknee",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/flexedknee",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/FlexedKnee.prefab",
-        "scale": 2,
-        "annotations": []
-      },
-      {
-        "id": "suspendedkidney01",
-        "name": "Kidney (Suspended) #1",
-        "version": 1,
-        "organ": "Kidney",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/kidneysuspended",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/kidneysuspended",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/kidneysuspended",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/Kidney(suspended).prefab",
-        "scale": 0.25,
-        "annotations": []
-      },
-      {
-        "id": "lumbar01",
-        "name": "Lumbar Vertical #1",
-        "version": 1,
-        "organ": "Lumbar",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/lumbarvert",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/lumbarvert",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/lumbarvert",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/LumbarVert.prefab",
-        "scale": 1.2,
-        "annotations": []
-      },
-      {
-        "id": "midsagitalhead01",
-        "name": "Midsagital Head #1",
-        "version": 0,
-        "organ": "Head",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/midsagitalhead",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/midsagitalhead",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/midsagitalhead",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/MidsagitalHead.prefab",
-        "scale": 0.25,
-        "annotations": []
-      },
-      {
-        "id": "rightlung01",
-        "name": "Right Lung #1",
-        "version": 1,
-        "organ": "Lung",
-        "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/rightlung",
-        "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/rightlung",
-        "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/rightlung",
-        "prefabPath": "Assets/Models/Specimens/AssetBundles/RightLung.prefab",
-        "scale": 0.25,
-        "annotations": []
-      }
-    ],
+        },
+        {
+          "annotationId": "t2",
+          "title": "Test Annotation 2",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "global": true
+          }
+        },
+        {
+          "annotationId": "t3",
+          "title": "Test Annotation 3",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.02,
+            "z": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "id": "heart01",
+      "name": "Heart #1",
+      "version": 1,
+      "organ": "Heart",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/cardiomegalicheart",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/cardiomegalicheart",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/cardiomegalicheart",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/CardiomegalicHeart.prefab",
+      "scale": 0.2,
+      "annotations": [
+        {
+          "annotationId": "0",
+          "title": "Main Annotation",
+          "content": "[img src='live.staticflickr.com/7346/27911774922_2587f3ba47_b.jpg' cite='Wikimedia' title='A Bird'] [vid title='test video' src='https://www.youtube.com/watch?v=17mxfO9nklQ' cite='2014 UBC Medicine'] Etiam rhoncus. Praesent ac sem eget est egestas volutpat. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Suspendisse eu ligula.                    Nulla consequat massa quis enim. Cras varius.",
+          "position": {
+            "global": true
+          }
+        },
+        {
+          "annotationId": "t1",
+          "title": "Test Annotation 1",
+          "content": "[aud src='https://ia801309.us.archive.org/34/items/groks710/groks112515.wav' cite='someone on internet archive' title='Heartbeat'] [img src='https://i.imgur.com/tj9fmPO.jpg' cite='Imgur User Apotheosis33' title='Two Cats in Love'] [vid title='test video' src='https://www.youtube.com/watch?v=17mxfO9nklQ' cite='2014 UBC Medicine'] Etiam rhoncus. Praesent ac sem eget est egestas volutpat. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Suspendisse eu ligula.                    Nulla consequat massa quis enim. Cras varius.",
+          "position": {
+            "x": 0.24,
+            "y": 0.22,
+            "z": 0.1
+          }
+        },
+        {
+          "annotationId": "t2",
+          "title": "Test Annotation 2",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing. [img src='live.staticflickr.com/7346/27911774922_2587f3ba47_b.jpg']",
+          "position": {
+            "x": 0.14,
+            "y": 0.17,
+            "z": 0.21
+          }
+        },
+        {
+          "annotationId": "t3",
+          "title": "Test Annotation 3",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.02,
+            "z": 0.33
+          }
+        }
+      ]
+    },
+    {
+      "id": "kidney01",
+      "name": "Kidney #1",
+      "version": 1,
+      "organ": "Kidney",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/kidney",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/kidney",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/kidney",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/kidney.prefab",
+      "scale": 0.25,
+      "annotations": [
+        {
+          "annotationId": "t1",
+          "title": "Test Annotation 1",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.02,
+            "z": 0.1
+          }
+        },
+        {
+          "annotationId": "t2",
+          "title": "Test Annotation 2",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.12,
+            "z": 0.1
+          }
+        },
+        {
+          "annotationId": "t3",
+          "title": "Test Annotation 3",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.02,
+            "z": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "liver01",
+      "name": "Liver #1",
+      "version": 1,
+      "organ": "Liver",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/liver",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/liver",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/liver",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/Liver.prefab",
+      "scale": 0.25,
+      "annotations": [
+        {
+          "annotationId": "t1",
+          "title": "Test Annotation 1",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.32,
+            "z": 0.1
+          }
+        },
+        {
+          "annotationId": "t2",
+          "title": "Test Annotation 2",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.14,
+            "y": 0.02,
+            "z": 0.1
+          }
+        },
+        {
+          "annotationId": "t3",
+          "title": "Test Annotation 3",
+          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
+          "position": {
+            "x": 0.04,
+            "y": 0.02,
+            "z": 0.1
+          }
+        }
+      ]
+    },
+    {
+      "id": "skull01",
+      "name": "Skull #1",
+      "version": 1,
+      "organ": "Skull",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/skull",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/skull",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/skull",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/Skull.prefab",
+      "scale": 0.4,
+      "annotations": []
+    },
+    {
+      "id": "brainstem01",
+      "name": "Brainstem #1",
+      "version": 0,
+      "organ": "Brainstem",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brainstem",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brainstem",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brainstem",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/Brainstem.prefab",
+      "scale": 0.45,
+      "annotations": []
+    },
+    {
+      "id": "esophagus01",
+      "name": "Esophagus #1",
+      "version": 1,
+      "organ": "Esophagus",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/esophagus",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/esophagus",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/esophagus",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/Esophagus.prefab",
+      "scale": 0.35,
+      "annotations": []
+    },
+    {
+      "id": "femalepelvis01",
+      "name": "Female Pelvis #1",
+      "version": 1,
+      "organ": "Female Pelvis",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/femalepelvis",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/femalepelvis",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/femalepelvis",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/FemalePelvisHemi.prefab",
+      "scale": 1,
+      "annotations": []
+    },
+    {
+      "id": "flexedknee01",
+      "name": "Flexed Knee #1",
+      "version": 0,
+      "organ": "Flexed Knee",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/flexedknee",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/flexedknee",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/flexedknee",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/FlexedKnee.prefab",
+      "scale": 2,
+      "annotations": []
+    },
+    {
+      "id": "suspendedkidney01",
+      "name": "Kidney (Suspended) #1",
+      "version": 1,
+      "organ": "Kidney",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/kidneysuspended",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/kidneysuspended",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/kidneysuspended",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/Kidney(suspended).prefab",
+      "scale": 0.25,
+      "annotations": []
+    },
+    {
+      "id": "lumbar01",
+      "name": "Lumbar Vertical #1",
+      "version": 1,
+      "organ": "Lumbar",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/lumbarvert",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/lumbarvert",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/lumbarvert",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/LumbarVert.prefab",
+      "scale": 1.2,
+      "annotations": []
+    },
+    {
+      "id": "midsagitalhead01",
+      "name": "Midsagital Head #1",
+      "version": 0,
+      "organ": "Head",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/midsagitalhead",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/midsagitalhead",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/midsagitalhead",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/MidsagitalHead.prefab",
+      "scale": 0.25,
+      "annotations": []
+    },
+    {
+      "id": "rightlung01",
+      "name": "Right Lung #1",
+      "version": 1,
+      "organ": "Lung",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/rightlung",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/rightlung",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/rightlung",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/RightLung.prefab",
+      "scale": 0.25,
+      "annotations": []
+    }
+  ],
   "labs": [
     {
       "labName": "The Back and Posterior Scapular Regions",

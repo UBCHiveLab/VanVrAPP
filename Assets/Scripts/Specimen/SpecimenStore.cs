@@ -13,7 +13,7 @@ public class SpecimenStore : MonoBehaviour
     public string manifestLocalPath = "manifest"; // The local path to look for current manifest.
     public string manifestUrlPath = "http://example.net/manifest.json"; // The url location to look for the current manifest.
     public bool loadAllSpecimenAssets;   // Select this to load ALL specimen data at app start; otherwise, loads asset bundles with mesh/materials when selected
-
+    public string testUrl = "http://google.com";
 
     [Header("Stored Data")]
     public List<RegionData> regions;
@@ -21,6 +21,9 @@ public class SpecimenStore : MonoBehaviour
     public Dictionary<string, LabData> labs;
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
     public Dictionary<string, RegionData> organToRegion;
+
+
+    [Header("External Structure")] public ErrorPanel errorPanel;
 
     private DataLoader loader;
 
@@ -153,12 +156,25 @@ public class SpecimenStore : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(TestInternet());
         StartCoroutine(LoadData());
     }
 
     public void LoadSpecimen(string id)
     {
         loader.LoadSpecimenAssets(id);
+    }
+
+    private IEnumerator TestInternet()
+    {
+        WWW www = new WWW(testUrl);
+        yield return www;
+        if (www.error == null) {
+            // It works!
+        } else {
+            Debug.LogWarning(www.error);
+            errorPanel.Populate($"No internet connection found; please check your connection. If you are certain that you have a connection, contact the department");
+        }
     }
 
     private IEnumerator LoadData()

@@ -11,6 +11,7 @@ using Button = UnityEngine.UI.Button;
 public class AnnotationDetailPanel : MonoBehaviour
 {
     public Canvas canvas;
+    public ErrorPanel errorPanel;
 
     [Header("Layout Parameters")]
     public float lineWeight = 1f;
@@ -351,5 +352,15 @@ public class AnnotationDetailPanel : MonoBehaviour
         }
         return blocks;
     }
-    
+
+
+    public void SendError(string message) {
+        Debug.LogWarning(message);
+        errorPanel.Populate(message);
+    }
+
+    public void SendWarning(string message) {
+        Debug.LogWarning(message);
+    }
+
 }

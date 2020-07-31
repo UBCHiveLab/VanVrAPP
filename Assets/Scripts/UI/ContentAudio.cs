@@ -74,7 +74,7 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.LogWarning(www.error);
+                detailPanel.SendError(www.error);
                 timeLabel.text = "Error!";
             }
             else

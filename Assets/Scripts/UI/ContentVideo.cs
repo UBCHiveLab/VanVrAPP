@@ -107,10 +107,18 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
         UnityWebRequest req = UnityWebRequestTexture.GetTexture("https://img.youtube.com/vi/" + id + "/0.jpg");
         yield return req.SendWebRequest();
 
-        ContentLoaded();
+        if (req.isNetworkError || req.isHttpError)
+        {
+            detailPanel.SendError($"Could not find thumbnail for YouTube video with id {id}");
+        }
+        else
+        {
+            ContentLoaded();
 
-        thumbnail = DownloadHandlerTexture.GetContent(req);
-        canvas.texture = thumbnail;
+            thumbnail = DownloadHandlerTexture.GetContent(req);
+            canvas.texture = thumbnail;
+        }
+
     }
 
     private string ExtractVideoId(string url) {
@@ -118,7 +126,7 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
         Match match = Regex.Match(url, "https:\\/\\/www\\.youtube\\.com\\/watch\\?v=([^&=\\s]*)");
         if (match.Groups.Count < 1)
         {
-            Debug.LogWarning($"Can't find id in youtube url {url}");
+            detailPanel.SendError($"Can't find id in youtube url {url}");
             return null;
         }
         string id = match.Groups[1].Value;
