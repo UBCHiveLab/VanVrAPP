@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,9 +25,13 @@ public class GeneralSettings : MonoBehaviour
     private Vector2Int currentRes;
     private float currentVolume = 0.5f;
     private DisplayResolutionButton clickedButton;
+    public List<Vector2Int> supportedResolutions;
 
     void Start()
     {
+        Resolution[] res = Screen.resolutions;
+        supportedResolutions = GenerateSupportedResolutions();
+
         volumeSlider.value = currentVolume;
         volumeLabel.text = Mathf.RoundToInt(currentVolume * 100f).ToString() + "%";
 
@@ -34,7 +39,7 @@ public class GeneralSettings : MonoBehaviour
         {
             DisplayResolutionButton btn = Instantiate(displayResButtonPrefab, displayParent);
             bool active = new Vector2Int(Screen.width, Screen.height) == displayResolutions[i];
-            btn.Populate(displayResolutions[i], active, this);
+            btn.Populate(displayResolutions[i], active, supportedResolutions.Contains(displayResolutions[i]), this);
             if (active)
             {
                 clickedButton = btn;
@@ -93,8 +98,14 @@ public class GeneralSettings : MonoBehaviour
         notificationPanel.Populate(
             "Do you want to clear the cache? This frees up space and may fix some issues with specimens, but download times may be longer.",
             null, () => Caching.ClearCache()
-    );
-}
+        );
+    }
+
+    private List<Vector2Int> GenerateSupportedResolutions()
+    {
+        HashSet<Vector2Int> supported = new HashSet<Vector2Int>(Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).ToList());
+        return displayResolutions.Where(res => supported.Contains(res)).ToList();
+    }
 
 
 }

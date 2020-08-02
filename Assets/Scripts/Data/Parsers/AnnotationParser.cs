@@ -92,7 +92,6 @@ public class AnnotationParser
         return val;
     }
 
-
     int MatchIntAttribute(string content, string att, int defaultValue, string pattern = "(\\d*)") {
         Match match = Regex.Match(content, $"{att}=[\'|\"]{pattern}[\'|\"]");
         int val = defaultValue;

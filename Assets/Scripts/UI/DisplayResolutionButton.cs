@@ -14,15 +14,23 @@ public class DisplayResolutionButton : MonoBehaviour
     public Vector2Int resolution;
     public GeneralSettings settings;
 
-    public void Populate(Vector2Int res, bool active, GeneralSettings st)
+    public void Populate(Vector2Int res, bool active, bool disabled, GeneralSettings st)
     {
         resolution = res;
         settings = st;
         label.text = res.ToString();
         button.onClick.AddListener(OnSelect);
-        
-        button.interactable = !active;  
-        
+
+        button.interactable = !active && !disabled;
+        if (active)
+        {
+            label.color = Color.green;
+        }
+        else
+        {
+            label.color = Color.black;
+        }
+
     }
 
     public void OnSelect()
