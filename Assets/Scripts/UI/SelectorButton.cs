@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,8 +29,9 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
             icon.sprite = sprite;
         }
 
-
-        gameObject.GetComponent<RectTransform>().sizeDelta = text.GetPreferredValues();
+        Vector2 vals = text.GetPreferredValues();
+        if (vals.y < 64f) vals.y = 64f;
+        gameObject.GetComponent<RectTransform>().sizeDelta = vals;
     }
 
     public void SetLoading(bool loading)
