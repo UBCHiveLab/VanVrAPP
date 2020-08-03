@@ -10,7 +10,7 @@ public class FullScreenPlayer : MultimediaContent
     public Button next;
     public Button prev;
     public Button fullScreenToggle;
-
+    public GameObject loadingIndicator;
 
     protected override void PrepareContent()
     {
@@ -44,7 +44,7 @@ public class FullScreenPlayer : MultimediaContent
     public void Receive(IAnnotationContentBlock block)
     {
         MaximizeScreenHeight();
-        title.text = block.title;
+        title.text = block.type.ToString() + ": " + block.title;
         contentBlock = block;
         switch (block.type)
         {
@@ -59,6 +59,7 @@ public class FullScreenPlayer : MultimediaContent
                 timeLabel.text = $"Ready";
                 playPauseIndicator.UpdateState(false);
                 Play();
+                loadingIndicator.gameObject.SetActive(false);
                 break;
 
             case BlockType.IMAGE:
@@ -68,25 +69,28 @@ public class FullScreenPlayer : MultimediaContent
                 canvas.texture = img.image;
                 canvas.rectTransform.sizeDelta = img.GetConstrainedRec(-1, canvas.rectTransform.rect.height);
                 controls.gameObject.SetActive(false);
+                loadingIndicator.gameObject.SetActive(false);
                 break;
 
             case BlockType.AUDIO:
                 ContentAudio aud = block as ContentAudio;
+                canvas.color = Color.clear;
                 if (!aud.loaded)
                 {
                     play.interactable = false;
                     playHover.Disable();
                     timeLabel.text = $"Loading";
+                    loadingIndicator.gameObject.SetActive(true);
                 } else
                 {
                     playHover.Enable();
                     play.interactable = true;
                     detailPanel.Play(block);
-                    canvas.color = Color.clear;
                     controls.gameObject.SetActive(true);
                     progress.value = 0;
                     timeLabel.text = $"Ready";
                     playPauseIndicator.UpdateState(false);
+                    loadingIndicator.gameObject.SetActive(false);
                 }
 
                 break;
@@ -96,6 +100,14 @@ public class FullScreenPlayer : MultimediaContent
                 return;
         }
 
+    }
+
+    public void ContentDownloaded(IAnnotationContentBlock block)
+    {
+        if (contentBlock == block)
+        {
+            Receive(block);
+        }
     }
 
     void MaximizeScreenHeight()
@@ -121,7 +133,6 @@ public class FullScreenPlayer : MultimediaContent
         {
             canvas.texture = detailPanel.videoPlayer.targetTexture;
         }
-        playPauseIndicator.UpdateState(false);
         MaximizeScreenHeight();
         base.Play();
     }

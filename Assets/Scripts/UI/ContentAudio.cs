@@ -4,7 +4,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
 public class ContentAudio : MultimediaContent, IAnnotationContentBlock
 {
@@ -86,6 +85,9 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
                     playHover.Enable();
                     loaded = true;
                     play.interactable = true;
+
+                    detailPanel.fullScreenPlayer.ContentDownloaded(this);
+
                 }
                 catch (Exception e)
                 {
