@@ -162,9 +162,10 @@ public abstract class DataLoader: MonoBehaviour
             } else
             {
                 // Get downloaded asset bundle
-                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(req);
+
                 try
                 {
+                    AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(req);
                     if (srd.prefabPath != null)
                     {
                         GameObject prefab = bundle.LoadAsset<GameObject>(srd.prefabPath);
@@ -225,7 +226,7 @@ public abstract class DataLoader: MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogWarning($"{e} : Problem with {srd.id}");
+                    SendError($"{e} : Problem with {srd.id}");
                 }
             }
 

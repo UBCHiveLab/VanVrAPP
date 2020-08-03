@@ -27,6 +27,9 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             icon.sprite = sprite;
         }
+
+
+        gameObject.GetComponent<RectTransform>().sizeDelta = text.GetPreferredValues();
     }
 
     public void SetLoading(bool loading)
