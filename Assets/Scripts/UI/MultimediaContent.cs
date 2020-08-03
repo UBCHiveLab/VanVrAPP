@@ -125,10 +125,17 @@ public class MultimediaContent : MonoBehaviour
             if (scrubbing) {
                 detailPanel.Scrub(contentBlock, val);
                 progress.value = val;
-            }
+                if (detailPanel.IsPlaying()) {
+                    Play();
+                } else {
+                    Pause();
+                }
         }
 
-        private void ToggleAudio()
+            
+        }
+
+    private void ToggleAudio()
         {
             bool on = detailPanel.AudioIsOn();
             detailPanel.ToggleAudio(on);

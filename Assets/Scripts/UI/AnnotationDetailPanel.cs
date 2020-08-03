@@ -210,6 +210,7 @@ public class AnnotationDetailPanel : MonoBehaviour
             if (ab.type == BlockType.VIDEO)
             {
                 audioSource.Stop();
+                audioSource.clip = null;
                 ContentVideo vc = ab as ContentVideo;
                 currentVideoCanvas = vc.canvas;
                 if (fullScreenPlayer.gameObject.activeSelf)
@@ -327,7 +328,11 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     public bool IsPlaying()
     {
-        return videoPlayer.isPlaying || audioSource.isPlaying;
+        if (audioSource.clip != null)
+        {
+            return audioSource.isPlaying;
+        }
+        return videoPlayer.isPlaying;
     }
 
     public bool AudioIsOn()
