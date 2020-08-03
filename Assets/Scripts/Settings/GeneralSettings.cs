@@ -1,52 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using Slider = UnityEngine.UI.Slider;
 
 public class GeneralSettings : MonoBehaviour
 {
-    [Header("InternalStructure")]
-    public Slider volumeSlider;
-    public TextMeshProUGUI volumeLabel;
-    public Transform displayParent;
-    public Toggle windowedMode;
-
     [Header("ExternalStructure")]
-    public NotificationPanel notificationPanel;
     public AudioSource[] controlledAudioSources;
 
-    [Header("Options")] public Vector2Int[] displayResolutions;
+    public ErrorPanel error;
 
-    [Header("Prefabs")] public DisplayResolutionButton displayResButtonPrefab;
+    [Header("Options")] public Vector2Int[] displayResolutions; //Legal values for screen resolution in order of preference (most to least).
 
-    [Header("Values")]
-    private Vector2Int currentRes;
-    private float currentVolume = 0.5f;
-    private DisplayResolutionButton clickedButton;
+
+    [Header("Dynamic Values")]
+    public Vector2Int currentRes;
+    public float currentVolume = 0.5f;
     public List<Vector2Int> supportedResolutions;
+    public bool windowed;
 
-    void Start()
+
+    void Awake()
     {
-        Resolution[] res = Screen.resolutions;
         supportedResolutions = GenerateSupportedResolutions();
-
-        volumeSlider.value = currentVolume;
-        volumeLabel.text = Mathf.RoundToInt(currentVolume * 100f).ToString() + "%";
-
-        for (int i = 0; i < displayResolutions.Length; i++)
+        bool fs = Screen.fullScreen;
+        Screen.fullScreen = false;
+        if (supportedResolutions.Count == 0)
         {
-            DisplayResolutionButton btn = Instantiate(displayResButtonPrefab, displayParent);
-            bool active = new Vector2Int(Screen.width, Screen.height) == displayResolutions[i];
-            btn.Populate(displayResolutions[i], active, supportedResolutions.Contains(displayResolutions[i]), this);
-            if (active)
-            {
-                clickedButton = btn;
-            }
+            error.Populate("Your screen does not support any of our recommended resolutions. You may continue to use the application, but there may be issues with button sensitivity.");
+        }
+        else
+        {
+            OnChangeResolution(supportedResolutions[0], fs);
+            Debug.Log($"Set screen resolution to best supported resolution, {supportedResolutions[0].x} x {supportedResolutions[0].y}");
         }
 
-        windowedMode.isOn = !Screen.fullScreen;
         OnChangeVolume(currentVolume);
     }
 
@@ -61,11 +49,14 @@ public class GeneralSettings : MonoBehaviour
         return currentVolume;
     }
 
+    public int GetCurrentResolutionIndex()
+    {
+        return Array.IndexOf(displayResolutions, currentRes);
+    }
+
     public void OnChangeVolume(float val)
     {
         currentVolume = val;
-        volumeLabel.text = Mathf.RoundToInt(currentVolume * 100f).ToString() + "%";
-        volumeSlider.value = val;
 
         foreach (AudioSource src in controlledAudioSources)
         {
@@ -73,32 +64,11 @@ public class GeneralSettings : MonoBehaviour
         }
     }
         
-    public void OnChangeResolution(Vector2Int res, DisplayResolutionButton btn)
+    public void OnChangeResolution(Vector2Int res, bool win)
     {
-        clickedButton.button.interactable = true;
         currentRes = res;
-        Screen.SetResolution(currentRes.x, currentRes.y, !windowedMode.isOn);
-        clickedButton = btn;
-        btn.button.interactable = false;
-
-    }
-
-    public void OnChangeWindowed(bool windowed)
-    {
-        Screen.SetResolution(currentRes.x, currentRes.y, !windowedMode.isOn);
-    }
-
-    public void Quit()
-    {
-        notificationPanel.Populate("Are you sure you want to exit the program?", null, Application.Quit);
-    }
-
-    public void ClearCache()
-    {
-        notificationPanel.Populate(
-            "Do you want to clear the cache? This frees up space and may fix some issues with specimens, but download times may be longer.",
-            null, () => Caching.ClearCache()
-        );
+        windowed = win;
+        Screen.SetResolution(currentRes.x, currentRes.y, !windowed);
     }
 
     private List<Vector2Int> GenerateSupportedResolutions()
@@ -106,6 +76,4 @@ public class GeneralSettings : MonoBehaviour
         HashSet<Vector2Int> supported = new HashSet<Vector2Int>(Screen.resolutions.Select(res => new Vector2Int(res.width, res.height)).ToList());
         return displayResolutions.Where(res => supported.Contains(res)).ToList();
     }
-
-
 }

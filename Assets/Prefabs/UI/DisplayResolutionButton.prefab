@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2987716868508646177}
   - component: {fileID: 2987716868508646178}
   - component: {fileID: 8490405907775804666}
+  - component: {fileID: 5823479704728959820}
   m_Layer: 5
   m_Name: DisplayResolutionButton
   m_TagString: Untagged
@@ -101,7 +102,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.72156864, g: 0.7176471, b: 0.7176471, a: 0.3529412}
+    m_DisabledColor: {r: 0.72156864, g: 0.7176471, b: 0.7176471, a: 0.6117647}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -134,6 +135,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   label: {fileID: 2987716869259259895}
   button: {fileID: 2987716868508646178}
+  indicator: {fileID: 5823479704728959820}
+  buttonFrame: {fileID: 2987716868508646177}
+  resolution: {x: 0, y: 0}
+  settings: {fileID: 0}
+  state: 0
+--- !u!114 &5823479704728959820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2987716868508646180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6383a470866a84399c07af34c343b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageTrue: {fileID: 21300000, guid: db80c5be515d4aa4dada952bc8b6269c, type: 3}
+  imageFalse: {fileID: 21300000, guid: a3790bdbdf2e6b8499963ad4ca4182fb, type: 3}
+  textTrue: 
+  textFalse: 
+  state: 0
+  frame: {fileID: 2987716868508646177}
+  label: {fileID: 0}
 --- !u!1 &2987716869259259897
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,6 @@ public class NotificationPanel : MonoBehaviour
     public void ChooseNo()
     {
         gameObject.SetActive(false);
-        no();
+        no?.Invoke();
     }
 }
