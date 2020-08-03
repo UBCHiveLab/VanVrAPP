@@ -93,7 +93,6 @@ public class OrbitCamera : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100.0f, layer_mask))
             {
                 target = hit.transform;
-                Debug.Log("You selected the " + hit.transform.name); // ensure you picked right object
             }
         }
     }
@@ -164,9 +163,7 @@ public class OrbitCamera : MonoBehaviour
 
     private void Zoom()
     {
-        //if (EventSystem.current.IsPointerOverGameObject() || controlAssistActive) return;  
         if (EventSystem.current.IsPointerOverGameObject()) return; // Escapes if we're on a ui object. Necessary for UI scroll view.
-        float deltaTime = Time.deltaTime;
 
         /*If the user's on a touch screen device like:
         an Android iOS or Windows phone/tablet, we'll detect if there are two fingers touching the screen.
@@ -187,19 +184,20 @@ public class OrbitCamera : MonoBehaviour
                 cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
             }
 #endif
+        DoZoom(Input.GetAxis("Mouse ScrollWheel"), Time.deltaTime);
+    }
 
+    public void DoZoom(float amt, float time)
+    {
         //Zooms the camera in using the mouse scroll wheel
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            switch (zoomMode)
-            {
+        if (amt > 0f) {
+            switch (zoomMode) {
                 case ZoomMode.CameraFieldOfView:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
 
                     //prevents the field of view from going below the minimum value
-                    if (cameraFieldOfView <= cameraZoomRangeFOV.x)
-                    {
+                    if (cameraFieldOfView <= cameraZoomRangeFOV.x) {
                         cameraFieldOfView = cameraZoomRangeFOV.x;
                     }
 
@@ -207,40 +205,35 @@ public class OrbitCamera : MonoBehaviour
                 case ZoomMode.ZAxisDistance:
 
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
 
                     //prevents the z axis distance from going below the minimum value
-                    if (zAxisDistance <= cameraZoomRangeZAxis.x)
-                    {
+                    if (zAxisDistance <= cameraZoomRangeZAxis.x) {
                         zAxisDistance = cameraZoomRangeZAxis.x;
                     }
 
                     break;
                 case ZoomMode.Blended:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
 
                     //prevents the field of view from going below the minimum value
                     cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
                     zAxisDistance = Mathf.Clamp(zAxisDistance, cameraZoomRangeZAxis.x, cameraZoomRangeZAxis.y);
                     break;
             }
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-        {
+        } else if (amt < 0f) {
 
             //Zooms the camera out using the mouse scroll wheel
-            switch (zoomMode)
-            {
+            switch (zoomMode) {
                 case ZoomMode.CameraFieldOfView:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
 
                     //prevents the field of view from going below the minimum value
-                    if (cameraFieldOfView <= cameraZoomRangeFOV.x)
-                    {
+                    if (cameraFieldOfView <= cameraZoomRangeFOV.x) {
                         cameraFieldOfView = cameraZoomRangeFOV.x;
                     }
 
@@ -248,20 +241,19 @@ public class OrbitCamera : MonoBehaviour
                 case ZoomMode.ZAxisDistance:
 
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.y, ref zoomVelocityZAxis,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
 
                     //prevents the z axis distance from going below the minimum value
-                    if (zAxisDistance <= cameraZoomRangeZAxis.x)
-                    {
+                    if (zAxisDistance <= cameraZoomRangeZAxis.x) {
                         zAxisDistance = cameraZoomRangeZAxis.x;
                     }
 
                     break;
                 case ZoomMode.Blended:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.y, ref zoomVelocityZAxis,
-                        deltaTime * zoomSoothness);
+                        time * zoomSoothness);
 
                     //prevents the field of view from going below the minimum value
                     cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
@@ -271,8 +263,7 @@ public class OrbitCamera : MonoBehaviour
         }
 
         //We're just ensuring that when we're zooming using the camera's FOV, that the FOV will be updated to match the value we got when we scrolled.
-        if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0) {
             camera.fieldOfView = cameraFieldOfView;
         }
     }

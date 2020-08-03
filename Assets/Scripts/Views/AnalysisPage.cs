@@ -325,13 +325,13 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     void ZoomIn()
     {
-        print("Zoom In");
+        orbitCam.DoZoom(1f, Time.deltaTime);
 
     }
 
     void ZoomOut()
     {
-        print("Zoom Out");
+        orbitCam.DoZoom(-1f, Time.deltaTime);
 
     }
 }
