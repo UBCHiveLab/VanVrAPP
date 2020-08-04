@@ -22,6 +22,7 @@ public class SelectorMenu : MonoBehaviour
     public LabOption labPrefab;
     public SelectorButton noSpecimensPrefab;
     public SelectorButton specimenSelectorPrefab;
+    public Button seeAllButtonPrefab;
 
     [Header("Internal Structures")] public Transform listTransform;
     public TextMeshProUGUI title;
@@ -203,6 +204,12 @@ public class SelectorMenu : MonoBehaviour
                 SelectorButton btn = Instantiate(specimenSelectorPrefab, listTransform);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
+            }
+
+            if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
+            {
+                Button btn = Instantiate(seeAllButtonPrefab, listTransform);
+                btn.onClick.AddListener(Back);
             }
 
             // Activates the back button, which takes user back to Region/Organ list

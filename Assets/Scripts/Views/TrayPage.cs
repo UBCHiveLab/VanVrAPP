@@ -283,7 +283,7 @@ public class TrayPage : MonoBehaviour, IPage
     private void LayoutStatePrimaryOnly()
     {
         compareSameButton.gameObject.SetActive(true);
-        compareDifferentButton.gameObject.SetActive(true);
+        //compareDifferentButton.gameObject.SetActive(true);
         removeOnlyButton.gameObject.SetActive(true);
         removeCompareButton.gameObject.SetActive(false);
         removePrimaryButton.gameObject.SetActive(false);
@@ -294,7 +294,7 @@ public class TrayPage : MonoBehaviour, IPage
         {
             SelectCompare(stateController.CurrentSpecimenData.organ);
         });
-        compareSameLabel.text = $"COMPARE \n {stateController.CurrentSpecimenData.organ.ToUpper()}";
+        //compareSameLabel.text = $"COMPARE \n {stateController.CurrentSpecimenData.organ.ToUpper()}";
         compareDifferentButton.interactable = true;
         removeCompareIndicator.UpdateState(true);
         startHover.Enable();
@@ -321,14 +321,14 @@ public class TrayPage : MonoBehaviour, IPage
     private void LayoutStateCompareSpecimens()
     {
         compareSameButton.gameObject.SetActive(true);
-        compareDifferentButton.gameObject.SetActive(true);
+        //compareDifferentButton.gameObject.SetActive(true);
         removeOnlyButton.gameObject.SetActive(false);
         removeCompareButton.gameObject.SetActive(true);
         removePrimaryButton.gameObject.SetActive(true);
         analyzeButton.interactable = true;
         compareSameButton.interactable = true;
-        compareSameLabel.text = $"COMPARE \n {stateController.CurrentSpecimenData.organ.ToUpper()}";
-        compareDifferentButton.interactable = true;
+        //compareSameLabel.text = $"COMPARE \n {stateController.CurrentSpecimenData.organ.ToUpper()}";
+        //compareDifferentButton.interactable = true;
         removeCompareIndicator.UpdateState(false);
         startHover.Enable();
     }
