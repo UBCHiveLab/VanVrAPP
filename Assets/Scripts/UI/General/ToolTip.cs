@@ -1,19 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class ToolTip : MonoBehaviour
 {
-    private float tipDelay = 0.2f;
-    private float activeMax = 2f;
+
+    [Header("Internal Structure")]
     public GameObject tip;
     public Animator anim;
-    public bool left;
+
+    [Header("Parameters")] public bool left; // If true, the tip will animate in from right to left rather than left to right.
+
 
     private EventTrigger trigger;
-
+    private float tipDelay = 0.2f;
+    private float activeMax = 2f;
     private bool _entered;
     private float _time = 0f;
     private float _activeTime;
@@ -55,7 +55,6 @@ public class ToolTip : MonoBehaviour
     void HandleExit(BaseEventData data)
     {
         _entered = false;
-
         Deactivate();
     }
 

@@ -9,8 +9,6 @@ public class AnalysisPage : MonoBehaviour, IPage
     [Header("Control Assistant")]
     public ControlAssist controlAssistant;
 
-    [Header("Reset Camera position")]
-
     [Header("Toggles")]
     public UIToggle annotationToggle;
     public UIToggle controlAssistToggle;
@@ -20,31 +18,12 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button focusModeButton;
     public Button compareButton;
     public Button resetButton;
-    public Button controlButtonUp;
-    public Button controlButtonDown;
-    public Button controlButtonLeft;
-    public Button controlButtonRight;
-    public Button zoomIn;
-    public Button zoomOut;
 
     [Header("Proportion Indicator")]
     public ProportionIndicator proportionScript;
     public GameObject proportionIndicator;
 
     [Header("Other")]
-    public TextMeshProUGUI targetSpecimenLabel;
-    public GameObject uiObject;
-    public StateController stateController;
-    public Camera mainCamera;
-    public OrbitCamera orbitCam;
-    public CompareMenu compareMenu;
-    public AnnotationDisplay annotationDisplay;
-    public GameObject leftPanel;
-    public GameObject specimenLabel;
-    public SpecimenCart cart;
-    public GameObject trayObj;
-    public TrayPage trayPageScript;
-
     public PostProcessVolume volume;
     private DepthOfField depthOfField;
     public FocusDistanceFinder focusDistanceFinder;
@@ -62,11 +41,28 @@ public class AnalysisPage : MonoBehaviour, IPage
     private float _yRot;
     private bool resetSpecimen;
 
+    [Header("External")]
+    public ErrorPanel errorPanel;
+    public SpecimenCart cart;
+    public TextMeshProUGUI targetSpecimenLabel;
+    public GameObject uiObject;
+    public StateController stateController;
+    public Camera mainCamera;
+    public OrbitCamera orbitCam;
+    public AnnotationDisplay annotationDisplay;
+    public GameObject leftPanel;
+    public GameObject specimenLabel;
+    public GameObject trayObj;
+    public TrayPage trayPageScript;
+
+
     public void Activate()
     {
         if (stateController.CurrentSpecimenObject == null)
         {
             Debug.LogWarning("Entering analysis view with no subject! Something has gone wrong.");
+            errorPanel.Populate("Entered Analysis Mode without a subject. Something went wrong!");
+            stateController.mode = ViewMode.TRAY;
         }
 
         if (depthOfField == null)
@@ -74,18 +70,18 @@ public class AnalysisPage : MonoBehaviour, IPage
             volume.profile.TryGetSettings(out depthOfField);
         }
 
+        // Sets up all configurations for Analysis mode
+
         currentSelectedObject = stateController.CurrentSpecimenObject;
         currentSelectedData = stateController.CurrentSpecimenData;
         leftPanel.gameObject.SetActive(true);
         controlAssistant.gameObject.SetActive(controlAssistToggle.on);
-        compareMenu.gameObject.SetActive(false);
         ToggleAnnotations(annotationToggle.on);
         proportionIndicator.SetActive(proportionToggle.on); 
         uiObject.SetActive(true);
         mainCamera.GetComponent<Animator>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().enabled = true;
         mainCamera.GetComponent<OrbitCamera>().target = stateController.CurrentSpecimenObject.transform;
-        //mainCamera.cullingMask = 9 << 9;
         targetSpecimenLabel.text = currentSelectedData.name;
         trayObj.SetActive(false);
         cart.SetTrayVisibility(true);
@@ -100,12 +96,13 @@ public class AnalysisPage : MonoBehaviour, IPage
             volume.profile.TryGetSettings(out depthOfField);
         }
 
+        // Cleans up all configurations for Analysis mode
+
         _rotatingSpecimen = null;
         proportionScript.ResetProportionIndicator(); // Hide selected specimen on proportion
         uiObject.SetActive(false);
         mainCamera.GetComponent<OrbitCamera>().enabled = false;
         mainCamera.GetComponent<OrbitCamera>().target = null;
-        // mainCamera.cullingMask = -1;
         trayObj.SetActive(true);
         depthOfField.active = false;
         cart.SetTrayVisibility(false);
@@ -114,13 +111,11 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void Start()
     {
-
         orbitCam = mainCamera.GetComponent<OrbitCamera>();
-
         volume.profile.TryGetSettings(out depthOfField);
-        // Control Assistant Buttons
-        controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
+        // Control Assistant Toggle
+        controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
         // Annotation Button
         annotationToggle.Bind(ToggleAnnotations);
@@ -134,25 +129,10 @@ public class AnalysisPage : MonoBehaviour, IPage
         // Proportion toggle
         proportionToggle.Bind(ToggleProportionIndicator);
 
+        // Focus mode (with icon indicator)
         focusModeButton.onClick.AddListener(() => ToggleFocus());
         _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
 
-        Button up = controlButtonUp.GetComponent<Button>();
-        Button down = controlButtonDown.GetComponent<Button>();
-        Button left = controlButtonLeft.GetComponent<Button>();
-        Button right = controlButtonRight.GetComponent<Button>();
-        Button zoomInside = zoomIn.GetComponent<Button>();
-        Button zoomOutside = zoomOut.GetComponent<Button>();
-     
-
-
-        up.onClick.AddListener(MoveUp);
-        down.onClick.AddListener(MoveDown);
-        left.onClick.AddListener(MoveLeft);
-        right.onClick.AddListener(MoveRight);
-        zoomInside.onClick.AddListener(ZoomIn);
-        zoomOutside.onClick.AddListener(ZoomOut);
-        
     }
 
     public void Update()
@@ -168,19 +148,15 @@ public class AnalysisPage : MonoBehaviour, IPage
     private void HandleCamSelect() {
 
         if (Input.GetMouseButtonDown(0)) {
-            RaycastHit hit;
             int layerMask = 9 << 9;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100.0f, layerMask)) {
-                //orbitCam.target = hit.transform;
+            if (Physics.Raycast(ray, out var hit, 100.0f, layerMask)) {
                 if (hit.transform.gameObject == currentSelectedObject || hit.transform.parent.gameObject == currentSelectedObject) return; // Necessary to escape or we'll cut off obscured button actions (e.g. annotations)
 
                 currentSelectedObject = hit.transform.parent.gameObject;
                 if (currentSelectedObject == stateController.CurrentSpecimenObject)
                 {
                     ChangeFocus(stateController.CurrentSpecimenObject, stateController.CurrentSpecimenData);
-                    /*currentSelectedData = stateController.CurrentSpecimenData;
-                    targetSpecimenLabel.text = currentSelectedData.name;*/
                 } else if (currentSelectedObject == stateController.CompareSpecimenObject)
                 {
                     ChangeFocus(stateController.CompareSpecimenObject, stateController.CompareSpecimenData);
@@ -189,7 +165,6 @@ public class AnalysisPage : MonoBehaviour, IPage
                     currentSelectedObject = null;
                     currentSelectedData = null;
                 }
-
                 annotationDisplay.SetFocus(currentSelectedObject, currentSelectedData);
             }
         }
@@ -222,34 +197,33 @@ public class AnalysisPage : MonoBehaviour, IPage
             _yRot += Input.GetAxis("Mouse Y") * 5f;
             _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
-
         }
        
     }
 
+    /**
+     * Changes current camera focus
+     */
     public void ChangeFocus(GameObject focusObject, SpecimenData focusData)
     {
         currentSelectedData = focusData;
         orbitCam.target = focusObject.transform;
         targetSpecimenLabel.text = currentSelectedData.name;
-
     }
 
 
-    // RESET BUTTON METHOD
-
+    /**
+     * Resets specimen rotation
+     */
     void ResetCameraPosition() {
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
         _xRot = 0;
         _yRot = 0;
-
-
     }
 
     /**
      * Toggles visibility of annotations, annotation bar and detail view
      */
-
     void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
         if (on)
@@ -267,14 +241,10 @@ public class AnalysisPage : MonoBehaviour, IPage
     }
 
     /**
-     * Opens in-analysis compare window
+     * Returns the controller to tray mode and activates compare
      */
     void ToggleCompare()
     {
-        /*bool on = !compareMenu.gameObject.activeSelf;
-        compareMenu.gameObject.SetActive(on);
-        leftPanel.gameObject.SetActive(!on);
-        */
         stateController.mode = ViewMode.TRAY;
         trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
     }
@@ -284,54 +254,10 @@ public class AnalysisPage : MonoBehaviour, IPage
      */
     void ToggleFocus()
     {
-        // TODO: animate these
         _focusOn = !_focusOn;
-
         annotationDisplay.gameObject.SetActive(!_focusOn && annotationToggle.on);
-        compareMenu.gameObject.SetActive(false); // Always hide compare menu
         leftPanel.gameObject.SetActive(!_focusOn);
         specimenLabel.gameObject.SetActive(!_focusOn);
         _focusIndicator.UpdateState(_focusOn);
-    }
-
-    void MoveUp()
-    {
-        orbitCam.yVelocity += 1f * orbitCam.rotationSensitivity;
-        orbitCam.yRotationAxis += orbitCam.yVelocity;
-        orbitCam.yRotationAxis = orbitCam.ClampAngleBetweenMinAndMax(orbitCam.yRotationAxis, orbitCam.rotationLimit.x, orbitCam.rotationLimit.y);
-    }
-
-    void MoveDown()
-    {
-        orbitCam.yVelocity -= 1f * orbitCam.rotationSensitivity;
-        orbitCam.yRotationAxis += orbitCam.yVelocity;
-        orbitCam.yRotationAxis = orbitCam.ClampAngleBetweenMinAndMax(orbitCam.yRotationAxis, orbitCam.rotationLimit.x, orbitCam.rotationLimit.y);
-
-    }
-
-    void MoveLeft()
-    {
-        orbitCam.xVelocity += 6f * orbitCam.rotationSensitivity;
-        orbitCam.yRotationAxis += orbitCam.yVelocity;
-
-    }
-
-    void MoveRight()
-    {
-        orbitCam.xVelocity -= 6f * orbitCam.rotationSensitivity;
-        orbitCam.yRotationAxis += orbitCam.yVelocity;
-
-    }
-
-    void ZoomIn()
-    {
-        orbitCam.DoZoom(1f, Time.deltaTime);
-
-    }
-
-    void ZoomOut()
-    {
-        orbitCam.DoZoom(-1f, Time.deltaTime);
-
     }
 }

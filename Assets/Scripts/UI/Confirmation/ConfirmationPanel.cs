@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NotificationPanel : MonoBehaviour
+public class ConfirmationPanel : MonoBehaviour
 {
+    [Header("Internal Structure")]
     public TextMeshProUGUI messageLabel;
+    public TextMeshProUGUI titleLabel;
     public Button yesButton;
     public Button noButton;
-
 
     private Action yes;
     private Action no;
@@ -21,19 +20,19 @@ public class NotificationPanel : MonoBehaviour
         noButton.onClick.AddListener(ChooseNo);
     }
 
-    public void Populate(string text, Action noAction, Action yesAction)
+    public void Populate(string text, string title, Action noAction, Action yesAction)
     {
         gameObject.SetActive(true);
         yes = yesAction;
         no = noAction;
         messageLabel.text = text;
-
+        titleLabel.text = title;
     }
 
     public void ChooseYes()
     {
         gameObject.SetActive(false);
-        yes();
+        yes?.Invoke();
     }
 
     public void ChooseNo()

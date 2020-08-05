@@ -15,7 +15,7 @@ public class GeneralSettingsPanel : MonoBehaviour
 
     [Header("Services")]
     public GeneralSettings settings;
-    public NotificationPanel notificationPanel;
+    public ConfirmationPanel ConfirmationPanel;
 
 
     private int currentResolutionButtonIndex;
@@ -93,12 +93,13 @@ public class GeneralSettingsPanel : MonoBehaviour
     }
 
     public void Quit() {
-        notificationPanel.Populate("Are you sure you want to exit the program?", null, Application.Quit);
+        ConfirmationPanel.Populate("Are you sure you want to exit the program?", "Quit?", null, Application.Quit);
     }
 
     public void ClearCache() {
-        notificationPanel.Populate(
+        ConfirmationPanel.Populate(
             "Do you want to clear the cache? This frees up space and may fix some issues with specimens, but download times may be longer.",
+            "Clear Cache?",
             null, () => Caching.ClearCache()
         );
     }
