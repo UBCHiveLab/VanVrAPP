@@ -1,10 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
+/**
+ * A UI representation of a single lab for the SelectorMenu
+ */
 public class LabOption : MonoBehaviour
 {
     [Header("Internal Structure")]

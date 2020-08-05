@@ -1,0 +1,12 @@
+﻿
+/**
+ * For deserializing lab data.
+ */
+[System.Serializable]
+public class LabData
+{
+    public string labName;
+    public string labId;
+    public string[] specimenList;
+    public string imgUrl;
+}

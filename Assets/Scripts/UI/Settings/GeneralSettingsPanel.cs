@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Implements UI for the Settings panel.
+ */
 public class GeneralSettingsPanel : MonoBehaviour
 {
     [Header("InternalStructure")]

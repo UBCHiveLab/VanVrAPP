@@ -1,18 +1,21 @@
-﻿using System.Runtime.CompilerServices;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Parent class for rich media content classes; implements common controls and queries.
+ */
 public class MultimediaContent : MonoBehaviour
 {
     public bool richMedia => true;
+
+    [Header("Internal Structure")]
     public Vector2 sizeRect;
-    public AnnotationDetailPanel detailPanel;
     public RawImage canvas;
     public GameObject controls;
     public TextMeshProUGUI label;
     public Button play;
-    public Button audio;
+    public Button audioToggle;
     public UITwoStateIndicator playPauseIndicator;
     public UITwoStateIndicator audioOnIndicator;
     public HoverButton playHover;
@@ -21,9 +24,11 @@ public class MultimediaContent : MonoBehaviour
     public Button fullScreen;
     public IAnnotationContentBlock contentBlock;
 
+    [Header("Services")]
+    public AnnotationDetailPanel detailPanel;
+
 
     protected bool scrubbing;
-
 
     private void Start() {
         fullScreen?.onClick.AddListener(ToggleFullScreen);
@@ -31,7 +36,7 @@ public class MultimediaContent : MonoBehaviour
         {
             play?.onClick.AddListener(TogglePlay);
             progress?.onValueChanged.AddListener(Scrub);
-            audio.onClick?.AddListener(ToggleAudio);
+            audioToggle.onClick?.AddListener(ToggleAudio);
             timeLabel.text = "";
         }
         PrepareContent();

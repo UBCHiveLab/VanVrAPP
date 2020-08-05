@@ -7,13 +7,16 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
 
+/**
+ * Spawned by SpecimenStore and responsible for all processes related to fetching manifest.json and online asset bundles.
+ */
 public abstract class DataLoader: MonoBehaviour
 {
 
     protected abstract IEnumerator LoadManifest();
     public string manifestPath;
     public DataManifest manifest;
-    public bool _manifestLoaded;
+    public bool manifestLoaded;
 
     public SpecimenStore store;
     private List<LabData> _labs;
@@ -24,8 +27,6 @@ public abstract class DataLoader: MonoBehaviour
 
     private HashSet<string> _currentLoadingIds = new HashSet<string>(); // Keeps track of live requests so we don't double up
 
-    public int totalSpecimens;
-    public int loadedSpecimens;
     public string status;
 
     public void Load(bool loadAllData)
@@ -60,7 +61,7 @@ public abstract class DataLoader: MonoBehaviour
     private IEnumerator Loading(bool loadAllData)
     {
         _loaded = false;
-        _manifestLoaded = false;
+        manifestLoaded = false;
         Stopwatch watch = Stopwatch.StartNew();
 
         status = "Waiting for caching";
@@ -73,7 +74,7 @@ public abstract class DataLoader: MonoBehaviour
         status = "Loading manifest";
         // Gets and verifies manifest file
         StartCoroutine(LoadManifest());
-        while (!_manifestLoaded) yield return null;
+        while (!manifestLoaded) yield return null;
         VerifyManifest(manifest);
 
         // Regions and labs are stored directly in the manifests

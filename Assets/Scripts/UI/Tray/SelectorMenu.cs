@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts.Controller;
-using JetBrains.Annotations;
+using Assets.Scripts.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Populates and manages the “Shelf” menu in Tray mode.
+ */
 public class SelectorMenu : MonoBehaviour
 {
     private bool byLab;
@@ -196,7 +198,6 @@ public class SelectorMenu : MonoBehaviour
         if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
         {
             // Forgive me for the spaghetti below
-            // TODO: Refactor
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {

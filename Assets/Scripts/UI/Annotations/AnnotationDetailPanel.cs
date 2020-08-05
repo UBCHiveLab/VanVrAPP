@@ -8,6 +8,9 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using Button = UnityEngine.UI.Button;
 
+/**
+ * Manages and displays all current annotation data; ensures only a single AV source is playing at any time.
+ */
 public class AnnotationDetailPanel : MonoBehaviour
 {
     public Canvas canvas;
@@ -15,7 +18,6 @@ public class AnnotationDetailPanel : MonoBehaviour
 
     [Header("Layout Parameters")]
     public float lineWeight = 1f;
-    public float discRadius = 0.1f;
     public float maxDetailHeight;
     public float minDetailHeight;
 

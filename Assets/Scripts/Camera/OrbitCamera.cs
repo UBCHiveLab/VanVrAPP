@@ -55,7 +55,6 @@ public class OrbitCamera : MonoBehaviour
     public float yRotationAxis;
     public float zoomVelocity;
     public float zoomVelocityZAxis;
-    bool wasDraggingCamera = false;
     Vector3 lastDragPosition;
     Ray lastMousePosition;
     public Vector3 camDefaultPosition;

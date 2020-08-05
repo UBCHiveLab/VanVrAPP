@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+/**
+ * Provides a clickable interface for the orbit camera.
+ */
 
 public class ControlAssist : MonoBehaviour
 {

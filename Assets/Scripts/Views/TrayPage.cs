@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Controller;
+﻿using Assets.Scripts.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -204,7 +204,7 @@ public class TrayPage : MonoBehaviour, IPage
     {
         if (primary)
         {
-            stateController.RemoveCurrentSpecimen();
+            stateController.RemovePrimarySpecimen();
             if (stateController.CurrentSpecimenData != null)
             {
                 cart.AddSpecimenPrimary(stateController.CurrentSpecimenObject);

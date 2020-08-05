@@ -17,7 +17,7 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
     [Header("Internal Structure")]
     public YoutubePlayer youtubePlayer;
 
-    public RectTransform transform;
+    public RectTransform rectTransform;
     public LayoutElement layoutEl;
     public TextMeshProUGUI citation;
     public GameObject loadingSpinner;
@@ -94,7 +94,7 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
 
         Vector2 rect = GetConstrainedRec(148, -1);
         canvas.rectTransform.sizeDelta = rect;
-        transform.sizeDelta = new Vector2(transform.sizeDelta.x, rect.y + 50f);
+        rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, rect.y + 50f);
         layoutEl.minHeight = rect.y;
 
     }

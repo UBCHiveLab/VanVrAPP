@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class SpecimenLoadingIndicator : MonoBehaviour
@@ -16,8 +14,6 @@ public class SpecimenLoadingIndicator : MonoBehaviour
             Debug.LogWarning("No store for specimen indicator");
             return;
         }
-
-
     }
 
     void Update()

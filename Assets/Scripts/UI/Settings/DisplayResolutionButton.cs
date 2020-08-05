@@ -9,6 +9,10 @@ public enum DisplayResolutionButtonState
     UNAVAILABLE
 }
 
+/**
+ * Implements a single selectable resolution button.
+ */
+
 public class DisplayResolutionButton : MonoBehaviour {
 
 
@@ -27,7 +31,7 @@ public class DisplayResolutionButton : MonoBehaviour {
     {
         resolution = res;
         settingsPanel = st;
-        label.text = res.ToString();
+        label.text = $"{res.x} x {res.y}";
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(OnSelect);
         this.state = state;

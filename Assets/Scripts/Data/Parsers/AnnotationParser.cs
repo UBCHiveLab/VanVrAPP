@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
+/**
+ * For converting strings of annotation content to lists of ContentBlock
+ */
 public class AnnotationParser
 {
     /**

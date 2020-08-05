@@ -1,14 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * Extends DataLoader. For fetching a manifest located at manifestPath from Resources within the project.
+ */
 public class LocalDataLoader: DataLoader
 {
     protected override IEnumerator LoadManifest()
     {
         TextAsset file = Resources.Load<TextAsset>(manifestPath);
         manifest = JsonUtility.FromJson<DataManifest>(file.text);
-        _manifestLoaded = true;
+        manifestLoaded = true;
         yield break;
     }
 

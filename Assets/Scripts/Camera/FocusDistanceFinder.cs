@@ -7,7 +7,7 @@ public class FocusDistanceFinder : MonoBehaviour
 {
     Ray raycast;
     RaycastHit hit;
-    bool isHit;
+    //bool isHit;
     float hitDistance;
 
     public PostProcessVolume volume;
@@ -21,13 +21,13 @@ public class FocusDistanceFinder : MonoBehaviour
     {
         raycast = new Ray(transform.position, transform.forward * 100);
 
-        isHit = false;
+        //isHit = false;
 
         int layer_mask = LayerMask.GetMask("Specimens");
 
         if (Physics.Raycast(raycast, out hit, 100f, layer_mask))
         {
-            isHit = true;
+            //isHit = true;
             hitDistance = Vector3.Distance(transform.position, hit.point);
         }
         else

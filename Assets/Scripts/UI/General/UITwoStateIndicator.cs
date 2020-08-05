@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Binds icon/text changes to changes in application state.
+ */
 public class UITwoStateIndicator : MonoBehaviour
 {
     public Sprite imageTrue;

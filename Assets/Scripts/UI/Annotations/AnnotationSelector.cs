@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * A UI bar for selecting annotations on the current specimen either by paging left/right or clicking from a drop-up select menu.
+ */
 public class AnnotationSelector : MonoBehaviour
 {
     [Header("Internal Structure")]

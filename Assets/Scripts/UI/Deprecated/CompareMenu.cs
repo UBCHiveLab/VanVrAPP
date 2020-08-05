@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Controller;
+using Assets.Scripts.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -90,7 +90,7 @@ public class CompareMenu : MonoBehaviour
     {
         if (index == 0)
         {
-            stateController.RemoveCurrentSpecimen();
+            stateController.RemovePrimarySpecimen();
         }
         else
         {

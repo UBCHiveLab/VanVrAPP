@@ -1,0 +1,173 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "version": 0.1,
+    "date": "August 04, 2020",
+    "title": "manifest",
+    "type": "object",
+    "properties": {
+      "specimenData": {
+        "description": "A list of all specimen data objects in the application",
+        "type": "array",
+        "items": [
+          {
+            "title": "specimen",
+            "type": "object",
+            "description": "A single specimen entry.",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "A unique identifier for the specimen used throughout the application."
+              },
+              "name": {
+                "type": "string",
+                "description": "The display name of this specimen. Does not need to be unique, though probably should be to avoid user confusion."
+              },
+              "version": {
+                "type": "number",
+                "description": "The current version of this specimen's asset bundles. Increment this to force clients to download new versions."
+              },
+              "organ": {
+                "type": "string",
+                "description": "The organ that this specimen represents. Should be defined below in the region list too."
+              },
+              "assetUrl": {
+                "type": "string",
+                "description": "The URL at which Windows users can download the asset bundles."
+              },
+              "assetUrlWebGl": {
+                "type": "string",
+                "description": "The URL at which WebGL users can download asset bundles."
+              },
+              "assetUrlOsx": {
+                "type": "string",
+                "description": "The URL at which MacOs users can download asset bundles."
+              },
+              "prefabPath": {
+                "type": "string",
+                "description": "The path within the bundle of the object prefab"
+              },
+              "scale": {
+                "type": "number",
+                "description": "The scale factor of the given specimen in-app."
+              },
+              "annotations": {
+                "type": "array",
+                "description": "The annotations that will appear when the given specimen is selected",
+                "items": [
+                  {
+                    "title": "annotation",
+                    "type": "object",
+                    "properties": {
+                      "annotationId": {
+                        "type": "string",
+                        "description": "A unique id, used throughout the app."
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "The title as it appears to users."
+                      },
+                      "content": {
+                        "type": "string",
+                        "description": "The content of the annotation. Can include rich media tags, like [img src='http://example.com/image.jpeg'] or [vid src='http://youtube.com/v1d30'"
+                      },
+                      "position": {
+                        "type": "object",
+                        "description": "Either defines the relative position of the annotation, or defines the annotation as global (not positioned).",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "description": "Number of scaled units on the given axis away from the center point of the specimen",
+                            "default": 0
+                          },
+                          "y": {
+                            "type": "number",
+                            "description": "Number of scaled units on the given axis away from the center point of the specimen",
+                            "default": 0
+                          },
+                          "z": {
+                            "type": "number",
+                            "description": "Number of scaled units on the given axis away from the center point of the specimen",
+                            "default": 0
+                          },
+                          "global": {
+                            "type": "boolean",
+                            "description": "If true, should ignore any position info in x, y, z.",
+                            "default": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "labs": {
+        "type": "array",
+        "description": "A list of all labs in the application.",
+        "items": [
+          {
+            "title": "lab",
+            "type": "object",
+            "properties": {
+              "labId": {
+                "type": "string",
+                "description": "The unique id for the lab."
+              },
+              "labName": {
+                "type": "string",
+                "description": "The display name of the lab."
+              },
+              "imgUrl": {
+                "type": "string",
+                "description": "An url to an image for the lab background"
+              },
+              "specimenList": {
+                "type": "array",
+                "description": "A list of strings matching unique ids from specimens in the specimenData list",
+                "items": [
+                  {
+                    "title": "id",
+                    "type": "string",
+                    "description": "Must match a unique specimen id."
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "regions": {
+        "type": "array",
+        "description": "Defines regions and their sub-organs for menu organization in-app.",
+        "items": [
+          {
+            "title": "region",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The display name of the region for menus."
+              },
+              "order": {
+                "type": "number",
+                "description": "For sorting in menu."
+              },
+              "organs": {
+                "type": "array",
+                "description": "Defines the organs that are within the given region. Should match organs as written in specimen data.",
+                "items": [
+                  {
+                    "title": "organ",
+                    "type": "string",
+                    "description": "A string representing an organ that is within the given region."
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }

@@ -21,7 +21,7 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
     {
         if (data.type != BlockType.AUDIO)
         {
-            throw new Exception("Must be audio block to render audio data");
+            throw new Exception("Must be audioToggle block to render audioToggle data");
         }
 
         contentBlock = this;
@@ -91,7 +91,7 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
                 }
                 catch (Exception e)
                 {
-                    timeLabel.text = "Error";
+                    timeLabel.text = "Error" + e;
                 }
 
             }

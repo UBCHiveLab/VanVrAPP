@@ -1,12 +1,13 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/**
+ * Generic button class for all selectable content in the SelectorMenu
+ */
 public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI text;

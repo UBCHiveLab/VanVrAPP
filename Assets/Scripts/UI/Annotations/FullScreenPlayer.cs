@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Full-screen player for annotation rich media.
+ */
 public class FullScreenPlayer : MultimediaContent
 {
 

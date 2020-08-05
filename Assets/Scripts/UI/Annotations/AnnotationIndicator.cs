@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * A single instance of a numbered UI indicator, clickable to summon the attached annotation.
+ */
 public class AnnotationIndicator : MonoBehaviour
 {
     [Header("Data")] public AnnotationData data;

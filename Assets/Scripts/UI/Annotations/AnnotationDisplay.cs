@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Controller;
+using Assets.Scripts.State;
 using UnityEngine;
 
+/**
+ * Manages the display and selection of current annotation indicators.
+ */
 public class AnnotationDisplay : MonoBehaviour {
     [Header("External Structures")]
-    public StateController stateController;
+    //public StateController stateController;
     public AnnotationDetailPanel detailPanel;
     public AnnotationSelector annotationSelector;
     public AnalysisPage analysisPage;

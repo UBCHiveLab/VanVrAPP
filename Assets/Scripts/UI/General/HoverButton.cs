@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/**
+ * Binds simple text/icon color animations to PointerEnter/Exit events
+ */
 public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public float transitionTime = 0.25f;

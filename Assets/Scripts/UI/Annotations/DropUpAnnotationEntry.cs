@@ -1,9 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Clickable entry for dropup menu in AnnotationSelector
+ */
 public class DropUpAnnotationEntry : MonoBehaviour
 {
     public Button button;

@@ -1,6 +1,9 @@
-﻿using Assets.Scripts.Controller;
+﻿using Assets.Scripts.State;
 using UnityEngine;
 
+/**
+ * Manages the UI element proportion indicator, highlighting organs based on selected specimen types.
+ */
 public class ProportionIndicator : MonoBehaviour
 {
     [Header("Proportion Indicator")]

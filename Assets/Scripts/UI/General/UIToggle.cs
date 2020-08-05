@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Manages an on/off toggle with simple state and animations (e.g. ControlAssist in analysis mode)
+ */
 public class UIToggle : MonoBehaviour
 {
     public Button interactable;

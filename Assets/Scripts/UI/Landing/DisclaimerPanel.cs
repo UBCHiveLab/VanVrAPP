@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * UI functionality for the disclaimer/policies panel that appears before entrance.
+ */
 public class DisclaimerPanel : MonoBehaviour
 {
     [Header("Internal Structure")]

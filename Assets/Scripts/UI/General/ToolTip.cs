@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
+/**
+ * Binds an animated tooltip, activated on button hover.
+ */
 public class ToolTip : MonoBehaviour
 {
 

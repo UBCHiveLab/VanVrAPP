@@ -3,6 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Displays yes/no choices for users, with bindable behaviour for each.
+ */
 public class ConfirmationPanel : MonoBehaviour
 {
     [Header("Internal Structure")]

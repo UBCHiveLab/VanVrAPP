@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
+/**
+ * Extends DataLoader. For fetching a manifest located at manifestPath as an http resource.
+ */
 public class RemoteDataLoader : DataLoader
 {
 
@@ -17,7 +20,7 @@ public class RemoteDataLoader : DataLoader
             } else
             {
                 manifest = JsonUtility.FromJson<DataManifest>(req.downloadHandler.text);
-                _manifestLoaded = true;
+                manifestLoaded = true;
             }
         }
     }

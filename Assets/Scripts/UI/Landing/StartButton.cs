@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/**
+ * Implements the hold-to-enter button on Landing view.
+ */
 public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private Action buttonAction;
@@ -16,10 +15,7 @@ public class StartButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private float currentTouchTime;
     private bool touching;
-
-
     
-
     public void bindAction(Action action)
     {
         buttonAction = action;
