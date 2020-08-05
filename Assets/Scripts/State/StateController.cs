@@ -182,7 +182,7 @@ namespace Assets.Scripts.State
 
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
-            spObj.AddComponent<SpecimenOptions>();
+            //spObj.AddComponent<SpecimenOptions>();
             spObj.layer = 9;
 
             if (primary) {

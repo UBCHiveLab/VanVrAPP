@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts.State;
+﻿using Assets.Scripts.State;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
+
+/**
+ * Defines logic and composes components for Landing mode.
+ */
 
 public class LandingPage : MonoBehaviour, IPage
 {
     public StateController stateController;
     public GameObject uiObject;
-    public Button enterButton;
     public GameObject doorL;
     public GameObject doorR;
-    public GameObject mainCamera;
     public DisclaimerPanel disclaimerPanel;
     public Animator mainCameraAnimator;
     public AudioSource startAudio;

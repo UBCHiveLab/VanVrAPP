@@ -2,7 +2,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+/**
+ * Defines logic and composes components for Tray mode.
+ */
 public class TrayPage : MonoBehaviour, IPage
 {
     public StateController stateController;

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.EventSystems;
-using UnityEditor;
 
 public enum ZoomMode
 {
@@ -10,6 +8,10 @@ public enum ZoomMode
     Blended
 }
 
+
+/**
+ * Implementation of controlled camera movement in Analysis mode.
+ */
 public class OrbitCamera : MonoBehaviour
 {
 

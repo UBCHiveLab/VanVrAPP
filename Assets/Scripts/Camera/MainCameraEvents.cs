@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
-//These are triggered by animation events
+// For triggering camera events from animations. (Currently only used for the Landing -> Tray transition).
+
 public class MainCameraEvents : MonoBehaviour
 {
     public TrayPage tray;

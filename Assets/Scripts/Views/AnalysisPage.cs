@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
+/**
+ * Defines logic and composes components for Analysis mode
+ */
 public class AnalysisPage : MonoBehaviour, IPage
 {
     [Header("Control Assistant")]

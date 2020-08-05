@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
+/**
+ * For displaying depth-of-field effects on specimens. (Currently not used).
+ */
 public class FocusDistanceFinder : MonoBehaviour
 {
     Ray raycast;

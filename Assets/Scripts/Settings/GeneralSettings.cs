@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/**
+ * Holds general settings for audio and resolution.
+ */
 public class GeneralSettings : MonoBehaviour
 {
     [Header("ExternalStructure")]
