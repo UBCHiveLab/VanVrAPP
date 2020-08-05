@@ -92,6 +92,8 @@ public class AnnotationDisplay : MonoBehaviour {
             indicator.Populate(i, ad, currentSpecimenData, currentSpecimenObject, this);
             activeIndicators.Add(indicator);
         }
+        annotationSelector.UpdateIndex();
+        annotationSelector.PopulateDropUp();
     }
 
     private void ClearAnnotations() {
