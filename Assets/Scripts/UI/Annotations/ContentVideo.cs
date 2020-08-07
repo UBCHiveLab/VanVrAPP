@@ -31,7 +31,7 @@ public class ContentVideo : MultimediaContent, IAnnotationContentBlock
 
     protected override  void UpdateTime()
     {
-        if (detailPanel.currentAVSource == this && detailPanel.videoPlayer.isPlaying && !scrubbing)
+        if ((ContentVideo)detailPanel.currentAVSource == this && detailPanel.videoPlayer.isPlaying && !scrubbing)
         {
             progress.value = (float) (detailPanel.videoPlayer.time / detailPanel.videoPlayer.length);
             timeLabel.text = $"{toTime((float) detailPanel.videoPlayer.time)} / {toTime((float) detailPanel.videoPlayer.length)}";

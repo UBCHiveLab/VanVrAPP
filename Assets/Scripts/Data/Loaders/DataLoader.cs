@@ -13,21 +13,25 @@ using Debug = UnityEngine.Debug;
 public abstract class DataLoader: MonoBehaviour
 {
 
-    protected abstract IEnumerator LoadManifest();
-    public string manifestPath;
-    public DataManifest manifest;
-    public bool manifestLoaded;
-
+    [Header("Services")]
     public SpecimenStore store;
+
+    [Header("Data")]
+    public DataManifest manifest;
+    public string manifestPath;
+    public bool manifestLoaded;
+    public string status;
+    public bool manifestVerified;
+
+
     private List<LabData> _labs;
     private List<SpecimenData> _specimens;
     private List<RegionData> _regions;
     private int _requestsResolved;
     private bool _loaded;
-
     private HashSet<string> _currentLoadingIds = new HashSet<string>(); // Keeps track of live requests so we don't double up
 
-    public string status;
+    protected abstract IEnumerator LoadManifest();
 
     public void Load(bool loadAllData)
     {
@@ -75,7 +79,12 @@ public abstract class DataLoader: MonoBehaviour
         // Gets and verifies manifest file
         StartCoroutine(LoadManifest());
         while (!manifestLoaded) yield return null;
-        VerifyManifest(manifest);
+        manifestVerified = VerifyManifest(manifest);
+
+        if (!manifestVerified)
+        {
+            Debug.LogWarning("Some issues found with the given manifest.");
+        }
 
         // Regions and labs are stored directly in the manifests
         _regions = manifest.regions.ToList();
@@ -253,6 +262,9 @@ public abstract class DataLoader: MonoBehaviour
         _specimens.Add(specimenData);
     }
 
+    /**
+     * Manifest verification -- will need to change this 
+     */
     private bool VerifyManifest(DataManifest manifest)
     {
         if (manifest == null)
@@ -271,7 +283,7 @@ public abstract class DataLoader: MonoBehaviour
 
         if (manifest.labs == null) {
             SendWarning("No lab data in loaded manifest. Please add lab data if desired.");
-            verify = false;
+            verify = true; // Labs are optional
         }
 
         if (manifest.specimenData == null) {
@@ -282,9 +294,12 @@ public abstract class DataLoader: MonoBehaviour
         return verify;
     }
 
+    /**
+     * Convenience methods for sending error messages or logging warnings.
+     */
     protected void SendError(string message)
     {
-        Debug.LogWarning(message);
+        Debug.LogError(message);
         store.errorPanel.Populate(message);
     }
 

@@ -53,7 +53,7 @@ public class ContentAudio : MultimediaContent, IAnnotationContentBlock
 
     protected override void UpdateTime()
     {
-        if (detailPanel.audioSource.clip != null && detailPanel.currentAVSource == this && detailPanel.audioSource.isPlaying && !scrubbing)
+        if (detailPanel.audioSource.clip != null && (ContentAudio)detailPanel.currentAVSource == this && detailPanel.audioSource.isPlaying && !scrubbing)
         {
             timeLabel.text = $"{toTime(detailPanel.audioSource.time)} / {toTime(detailPanel.audioSource.clip.length)}";
             progress.value = (float)(detailPanel.audioSource.time / detailPanel.audioSource.clip.length);
