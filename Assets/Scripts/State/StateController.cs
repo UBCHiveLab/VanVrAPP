@@ -21,6 +21,8 @@ namespace Assets.Scripts.State
         
         public Dictionary<ViewMode, IPage> modeToPage;
 
+        Shader newunlit;
+
         /**
         * Set mode to initiate transition between two modes.
         */
@@ -69,6 +71,8 @@ namespace Assets.Scripts.State
         }
 
         private void Start() {
+            newunlit = Shader.Find("Unlit/NewUnlit");
+
             try {
                 trayPage.Deactivate();
             } catch (Exception e) {
@@ -172,6 +176,8 @@ namespace Assets.Scripts.State
                     spObj.AddComponent<MeshRenderer>().material = data.material;
                     spObj.AddComponent<MeshCollider>();
                     spObj.layer = LayerMask.NameToLayer("Specimens");
+                    spObj.GetComponentInChildren<Renderer>().material.shader = newunlit;
+
 
                 } catch (Exception e) {
                     Debug.LogWarning(e);
@@ -183,6 +189,7 @@ namespace Assets.Scripts.State
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
             spObj.layer = 9;
+            spObj.GetComponentInChildren<Renderer>().material.shader = newunlit;
 
             if (primary) {
                 CurrentSpecimenObject = spObj;
