@@ -8946,18 +8946,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189855437}
   m_Mesh: {fileID: 1840822241022781651, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
---- !u!114 &191975844 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2196012150581108360, guid: 3d41eb4c3e2493441b6c76927abeb625,
-    type: 3}
-  m_PrefabInstance: {fileID: 1704747761}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &193053409
 GameObject:
   m_ObjectHideFlags: 0
@@ -64975,10 +64963,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateController: {fileID: 556003938}
   uiObject: {fileID: 1685018987}
-  enterButton: {fileID: 191975844}
   doorL: {fileID: 1100237422}
   doorR: {fileID: 1282007450}
-  mainCamera: {fileID: 1267047}
   disclaimerPanel: {fileID: 174574953}
   mainCameraAnimator: {fileID: 1267050}
   startAudio: {fileID: 1571741865}
@@ -110577,6 +110563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageLabel: {fileID: 135792793}
+  titleLabel: {fileID: 0}
   yesButton: {fileID: 1795391980}
   noButton: {fileID: 2021842665}
 --- !u!224 &2249992940764539131

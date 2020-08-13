@@ -19,9 +19,15 @@ public class AnnotationIndicator : MonoBehaviour
     public TextMeshProUGUI content;
     public Button button;
 
+    private Camera mainCam;
+    private Image indicatorImage;
+    private bool isTransparencyChanged=false;
+
     private void Start()
     {
         button.onClick.AddListener(Clicked);
+        mainCam = Camera.main;
+        indicatorImage = GetComponent<Image>();
     }
 
     private void Update()
@@ -29,7 +35,11 @@ public class AnnotationIndicator : MonoBehaviour
         if (_specObject == null) return;
         UpdatePosition();
     }
-
+    private void FixedUpdate()
+    {
+        if (_specObject == null) return;
+        UpdateAppearence();
+    }
     /**
      * Populates the indicator with the annotation data
      */
@@ -43,6 +53,7 @@ public class AnnotationIndicator : MonoBehaviour
         _display = display;
         number.text = index.ToString();
         UpdatePosition();
+        UpdateAppearence();
     }
 
     private void Clicked()
@@ -57,13 +68,60 @@ public class AnnotationIndicator : MonoBehaviour
     {
         if (data.positionVector3 != null)
         {
-            transform.position =
-                Camera.main.WorldToScreenPoint(_specObject.transform.TransformPoint((Vector3)data.positionVector3));
+            if (mainCam == null)
+                mainCam = Camera.main;
+            transform.position = 
+                mainCam.WorldToScreenPoint(_specObject.transform.TransformPoint((Vector3)data.positionVector3)); 
         } 
         else
         {
             // TODO: where does the non-local point indicator show up?
             gameObject.SetActive(false);
         }
+    }
+    /// <summary>
+    ///  Updates the transparency of the annotation indicator based on where the camera looks at
+    /// </summary>
+    private void UpdateAppearence()
+    {
+        if (mainCam == null)
+            mainCam = Camera.main;
+        if (indicatorImage==null)
+        indicatorImage = GetComponent<Image>();
+
+        if (data.positionVector3 != null)
+        {
+            Vector3 _annotationScreenPoint = _specObject.transform.TransformPoint((Vector3)data.positionVector3);
+            Vector3 _mainCamPosition = mainCam.transform.position;
+            Vector3 _dir = (_annotationScreenPoint - _mainCamPosition).normalized;
+            float distance = Vector3.Distance(mainCam.transform.position, _annotationScreenPoint);
+
+            if (Physics.Raycast(_mainCamPosition, _dir, distance))
+            {
+                ChangeTransparency(indicatorImage, true);
+            }
+            else
+            {
+                ChangeTransparency(indicatorImage, false);
+            }
+        }
+        
+    }
+    private void ChangeTransparency(Image indicatorImage, bool isChanged)
+    {
+        if (isTransparencyChanged != isChanged)
+        {
+            switch (isChanged)
+            {
+                case true:
+                    indicatorImage.color = new Color(1, 1, 1, 0.3f);
+                    break;
+                case false:
+                    indicatorImage.color = Color.white;
+                    break;
+            }
+            isTransparencyChanged = isChanged;
+        }
+        
     }
 }
