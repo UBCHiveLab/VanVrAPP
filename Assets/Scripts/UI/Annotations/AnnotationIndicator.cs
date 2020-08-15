@@ -95,7 +95,7 @@ public class AnnotationIndicator : MonoBehaviour
             Vector3 _mainCamPosition = mainCam.transform.position;
             Vector3 _dir = (_annotationScreenPoint - _mainCamPosition).normalized;
             float distance = Vector3.Distance(mainCam.transform.position, _annotationScreenPoint);
-
+            Debug.DrawLine(_mainCamPosition, _annotationScreenPoint, Color.red);
             if (Physics.Raycast(_mainCamPosition, _dir, distance))
             {
                 ChangeTransparency(indicatorImage, true);
