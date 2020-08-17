@@ -1,6 +1,54 @@
 {
   "specimenData": [
     {
+        "id": "branchplex1",
+        "name": "Posterior Shoulder",
+        "version": 1,
+        "organ": "Branchplex",
+        "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/branchplex",
+        "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/branchplex",
+        "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/branchplex",
+        "prefabPath": "Assets/Models/Specimens/AssetBundles/Branchplex.prefab",
+        "scale": 0.005,
+        "annotations": []
+    },
+    {
+        "id": "humerus1",
+        "name": "Humerus",
+        "version": 1,
+        "organ": "Humerus",
+        "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/humerus",
+        "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/humerus",
+        "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/humerus",
+        "prefabPath": "Assets/Models/Specimens/AssetBundles/Humerus.prefab",
+        "scale": 0.005,
+        "annotations": []
+    },
+    {
+        "id": "pectoralGirdle1",
+        "name": "Rotator Cuff",
+        "version": 1,
+        "organ": "Pectoral Girdle",
+        "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/pectoralgridle",
+        "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/pectoralgridle",
+        "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/pectoralgridle",
+        "prefabPath": "Assets/Models/Specimens/AssetBundles/PectoralGirdle.prefab",
+        "scale": 0.005,
+        "annotations": []
+    },
+    {
+        "id": "scapula1",
+        "name": "Scapula",
+        "version": 1,
+        "organ": "Scapula",
+        "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/scapula",
+        "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/scapula",
+        "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/scapula",
+        "prefabPath": "Assets/Models/Specimens/AssetBundles/Scapula.prefab",
+        "scale": 0.005,
+        "annotations": []
+    },
+    {
       "id": "brain01",
       "name": "Brain #1",
       "version": 1,
@@ -513,7 +561,11 @@
       "specimenList": [
         "skull01",
         "brain01",
-        "liver01"
+        "liver01",
+        "scapula1",
+        "humerus1",
+        "branchplex1",
+        "pectoralGirdle1"
       ]
     },
     {
@@ -533,7 +585,8 @@
       "specimenList": [
         "heart01",
         "kidney01",
-        "liver01"
+        "liver01",
+        "pectoralGirdle1"
       ]
     }
   ],
@@ -584,7 +637,10 @@
       "name": "Upper Limb",
       "order": 6,
       "organs": [
-
+        "Branchplex",
+        "Humerus",
+        "Scapula",
+        "Pectoral Girdle"
       ]
     },
     {
