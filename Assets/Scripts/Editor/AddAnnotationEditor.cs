@@ -7,7 +7,7 @@ using UnityEditor;
 public class AddAnnotationEditor : Editor
 {
     private AddAnnotation mytarget;
-    private string annotationId, annotationTitle;
+    private string annotationId, annotationTitle, annotationContents;
     bool showWindow = false, startTrackingMouse=false;
 
     private void OnEnable()
@@ -52,7 +52,7 @@ public class AddAnnotationEditor : Editor
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                mytarget.AddAnnotations(annotationId, annotationTitle, hit.point);
+                mytarget.AddAnnotations(annotationId, annotationTitle,annotationContents, hit.point);
             }
 
             startTrackingMouse = false;
@@ -65,6 +65,7 @@ public class AddAnnotationEditor : Editor
         EditorGUILayout.LabelField("Please enter the label text");
         annotationId= EditorGUILayout.TextField("Annotation ID", annotationId);
         annotationTitle = EditorGUILayout.TextField("Annotation Title", annotationTitle);
+        annotationContents = EditorGUILayout.TextField("Annotation Contents", annotationContents);
         if (GUILayout.Button("Ok", GUILayout.Height(30), GUILayout.Width(200)))
         {
             

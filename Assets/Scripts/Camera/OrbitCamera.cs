@@ -135,7 +135,6 @@ public class OrbitCamera : MonoBehaviour
         {
             if (Input.GetMouseButton(2))
             {
-
                 var delta = lastDragPosition - Input.mousePosition;
                 transform.Translate(delta * Time.deltaTime * 0.1f);
                 lastDragPosition = Input.mousePosition;

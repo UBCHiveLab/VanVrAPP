@@ -22,18 +22,19 @@ public class AddAnnotation : MonoBehaviour
 
     public GameObject annotationPlaceHolder;
 
-    public void AddAnnotations(string id, string title,Vector3 position)
+    public void AddAnnotations(string id, string title,string contents, Vector3 position)
     {
         GameObject placeholder = Instantiate(annotationPlaceHolder, position, Quaternion.identity, this.transform);
         AnnotationPlaceHolderData placeHolderData = placeholder.GetComponent<AnnotationPlaceHolderData>();
         placeHolderData.id = id;
         placeHolderData.title = title;
+        placeHolderData.contents = contents;
         AnnotationNullablePosition annotationPosition = new AnnotationNullablePosition();
         Vector3 labelLocalPosition = referenceT.InverseTransformPoint(position);
         annotationPosition.x = labelLocalPosition.x;
         annotationPosition.y = labelLocalPosition.y;
         annotationPosition.z = labelLocalPosition.z;
-        AnnotationData _data = new AnnotationData(id, title, "", annotationPosition);
+        AnnotationData _data = new AnnotationData(id, title, contents, annotationPosition);
         datas.annotationDatas.Add(_data);
     }
     public void SaveToJSON()
