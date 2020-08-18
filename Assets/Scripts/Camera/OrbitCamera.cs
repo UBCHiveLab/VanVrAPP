@@ -115,7 +115,7 @@ public class OrbitCamera : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity;
+            xVelocity += Input.GetAxis("Mouse X") * rotationSensitivity * 2f; 
             yVelocity -= Input.GetAxis("Mouse Y") * rotationSensitivity;
         }
 
