@@ -30,6 +30,7 @@ public class AddAnnotation : MonoBehaviour
         placeHolderData.title = title;
         placeHolderData.contents = contents;
         AnnotationNullablePosition annotationPosition = new AnnotationNullablePosition();
+        referenceT = referenceT == null ? this.transform : referenceT;
         Vector3 labelLocalPosition = referenceT.InverseTransformPoint(position);
         annotationPosition.x = labelLocalPosition.x;
         annotationPosition.y = labelLocalPosition.y;
@@ -53,6 +54,7 @@ public class AddAnnotation : MonoBehaviour
         foreach(AnnotationPlaceHolderData placeHolderData in annotationPlaceHolderDatas)
         {
             AnnotationNullablePosition annotationPosition = new AnnotationNullablePosition();
+            referenceT = referenceT == null ? this.transform : referenceT;
             Vector3 labelLocalPosition = referenceT.InverseTransformPoint(placeHolderData.transform.position);
             annotationPosition.x = labelLocalPosition.x;
             annotationPosition.y = labelLocalPosition.y;
