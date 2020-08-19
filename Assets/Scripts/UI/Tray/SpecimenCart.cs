@@ -29,13 +29,18 @@ public class SpecimenCart : MonoBehaviour
     public void AddSpecimen(GameObject specimen, GameObject tray)
     {
         ClearTray(tray);
-        GameObject holder = new GameObject("SpecimenHolder");
-        holder.transform.SetParent(tray.transform);
-        holder.transform.localPosition = specimenTrayOffset;
-        specimen.transform.SetParent(holder.transform);
+        if (specimen != null)
+        {
+            Vector3 specimenOldPos = specimen.transform.localPosition;
+            GameObject holder = new GameObject("SpecimenHolder");
 
-        // make the specimen's local position, it's position before the holder was made its parent
-        specimen.transform.localPosition = specimen.transform.position;
+            holder.transform.SetParent(tray.transform);
+            holder.transform.localPosition = specimenTrayOffset;
+            specimen.transform.SetParent(holder.transform);
+
+            // make the specimen's local position, it's position before the holder was made its parent
+            specimen.transform.localPosition = specimenOldPos;
+        }
     }
 
     public void SpawnTray1() {
