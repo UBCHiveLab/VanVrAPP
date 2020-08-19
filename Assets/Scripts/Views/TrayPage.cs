@@ -316,8 +316,6 @@ public class TrayPage : MonoBehaviour, IPage
         compareSameButton.gameObject.SetActive(false);
         compareDifferentButton.gameObject.SetActive(false);
         startHover.Disable();
-
-
     }
 
     private void LayoutStateCompareSpecimens()

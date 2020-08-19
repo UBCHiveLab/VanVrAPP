@@ -33,7 +33,9 @@ public class SpecimenCart : MonoBehaviour
         holder.transform.SetParent(tray.transform);
         holder.transform.localPosition = specimenTrayOffset;
         specimen.transform.SetParent(holder.transform);
-        ResetPosition(specimen);
+
+        // make the specimen's local position, it's position before the holder was made its parent
+        specimen.transform.localPosition = specimen.transform.position;
     }
 
     public void SpawnTray1() {
