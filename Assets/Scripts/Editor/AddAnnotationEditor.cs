@@ -8,7 +8,7 @@ public class AddAnnotationEditor : Editor
 {
     private AddAnnotation mytarget;
     private string annotationId, annotationTitle, annotationContents;
-    bool showWindow = false, startTrackingMouse=false;
+    bool showWindow = false, startTrackingMouse = false, showFileNameInquiryWindow = false;
 
     private void OnEnable()
     {
@@ -41,6 +41,11 @@ public class AddAnnotationEditor : Editor
             Rect windowSize = new Rect(0, 100, 300, 200);
             Rect Window = GUI.Window(0, windowSize, TitleInquiryWindow, "Enter Label Name");
         }
+        if (mytarget.specimenName.Length == 0 || showFileNameInquiryWindow)
+        {
+            Rect windowSize = new Rect(0, 100, 300, 150);
+            Rect Window = GUI.Window(0, windowSize, SpecimenNameInquiryWindow, "Enter Specimen Name");
+        }
         if (startTrackingMouse)
         {
             EditorGUILayout.HelpBox("Now, click on where you want to place the label on the object", MessageType.Info);
@@ -68,12 +73,22 @@ public class AddAnnotationEditor : Editor
         annotationContents = EditorGUILayout.TextField("Annotation Contents", annotationContents);
         if (GUILayout.Button("Ok", GUILayout.Height(30), GUILayout.Width(200)))
         {
-            
                 showWindow = false;
 
                 startTrackingMouse = true;
-
-
+            
         }
+    }
+    public void SpecimenNameInquiryWindow(int windowID)
+    {
+        showFileNameInquiryWindow = true;
+        EditorGUILayout.HelpBox("Specimen name will be used as file name which can't be empty.",MessageType.Warning);
+        EditorGUILayout.LabelField("Please enter the specimen name");
+        mytarget.specimenName= EditorGUILayout.TextField("Specimen Name", mytarget.specimenName);
+        if (GUILayout.Button("Ok", GUILayout.Height(30), GUILayout.Width(200)))
+        {
+            showFileNameInquiryWindow = false;
+        }
+
     }
 }
