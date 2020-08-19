@@ -32,6 +32,17 @@ public class HoverButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
+    void OnEnable()
+    {
+        current = 0f; // reset current
+        Enable();
+    }
+
+    void OnDisable()
+    {
+        Disable();
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (disabled) return;
