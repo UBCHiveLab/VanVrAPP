@@ -31,12 +31,16 @@ public class LabOption : MonoBehaviour
 
 
     private IEnumerator DownloadImage(string url) {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        yield return request.SendWebRequest();
-        if (request.isNetworkError || request.isHttpError)
-            Debug.Log(request.error);
-        else
-            imageFrame.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        url = url.Trim();
+        if (url.Length > 0)
+        {
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+                Debug.Log(request.error);
+            else
+                imageFrame.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
     }
 
 }
