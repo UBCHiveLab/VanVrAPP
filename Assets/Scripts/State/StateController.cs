@@ -185,7 +185,7 @@ namespace Assets.Scripts.State
             }
 
             // Else fallback to old way using meshes and mats
-
+            spObj.transform.localPosition = new Vector3(0, data.yPos, 0);
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
             spObj.layer = 9;

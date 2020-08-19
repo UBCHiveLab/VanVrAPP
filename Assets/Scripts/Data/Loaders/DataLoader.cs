@@ -186,6 +186,7 @@ public abstract class DataLoader: MonoBehaviour
                             version = srd.version,
                             organ = srd.organ,
                             scale = srd.scale,
+                            yPos = srd.yPos,
                             name = srd.name,
                             request = srd
                         };
@@ -224,6 +225,7 @@ public abstract class DataLoader: MonoBehaviour
                             version = srd.version,
                             organ = srd.organ,
                             scale = srd.scale,
+                            yPos = srd.yPos,
                             name = srd.name,
                             request = srd
                         };
@@ -256,6 +258,7 @@ public abstract class DataLoader: MonoBehaviour
             version = srd.version,
             organ = srd.organ,
             scale = srd.scale,
+            yPos = srd.yPos,
             name = srd.name,
             request = srd
         };
