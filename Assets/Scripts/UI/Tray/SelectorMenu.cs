@@ -67,7 +67,7 @@ public class SelectorMenu : MonoBehaviour
         labButton.onClick.AddListener(ToggleToLabs);
         atlasButton.onClick.AddListener(ToggleToAtlas);
 
-        ToggleToAtlas();
+        ToggleToLabs();
     }
 
     void Update()
