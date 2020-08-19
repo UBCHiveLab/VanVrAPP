@@ -41,10 +41,10 @@ public class AddAnnotationEditor : Editor
             Rect windowSize = new Rect(0, 100, 300, 200);
             Rect Window = GUI.Window(0, windowSize, TitleInquiryWindow, "Enter Label Name");
         }
-        if (mytarget.specimenName.Length == 0 || showFileNameInquiryWindow)
+        if (mytarget.specimenName == null || mytarget.specimenName.Length == 0 || showFileNameInquiryWindow)
         {
             Rect windowSize = new Rect(0, 100, 300, 150);
-            Rect Window = GUI.Window(0, windowSize, SpecimenNameInquiryWindow, "Enter Specimen Name");
+            Rect Window = GUI.Window(1, windowSize, SpecimenNameInquiryWindow, "Enter Specimen Name");
         }
         if (startTrackingMouse)
         {
