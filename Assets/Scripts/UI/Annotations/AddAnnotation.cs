@@ -11,17 +11,20 @@ public class AnnotationDatas
 [System.Serializable]
 public class AddAnnotation : MonoBehaviour
 {
-    //[SerializeField]
-    //public List<AnnotationData> annotationDatas = new List<AnnotationData>();
+    
     [SerializeField]
     private AnnotationDatas datas;
     [SerializeField]
     private Transform referenceT;
     string path = "/Resources/";
-    public string specimenName;
+    public string specimenName="";
 
     public GameObject annotationPlaceHolder;
 
+    private void Reset()
+    {
+        referenceT = this.transform;
+    }
     public void AddAnnotations(string id, string title,string contents, Vector3 position)
     {
         GameObject placeholder = Instantiate(annotationPlaceHolder, position, Quaternion.identity, this.transform);
@@ -38,6 +41,7 @@ public class AddAnnotation : MonoBehaviour
         AnnotationData _data = new AnnotationData(id, title, contents, annotationPosition);
         datas.annotationDatas.Add(_data);
     }
+    
     public void SaveToJSON()
     { 
         string specimenAnnotationData = JsonUtility.ToJson(datas);
