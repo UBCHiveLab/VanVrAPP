@@ -33,6 +33,7 @@ public class SelectorMenu : MonoBehaviour
     public TextMeshProUGUI backBttnTitle;
     public Button backButton;
     public TextMeshProUGUI selectionTitle;
+    public TextMeshProUGUI noContentText;
     public GameObject labAtlasToggle;
     public Button atlasButton;
     public Button labButton;
@@ -46,6 +47,7 @@ public class SelectorMenu : MonoBehaviour
 
     private const string COURSES = "COURSES";
     private const string LABS = "LABS";
+    private const string LOADING_SPECIMENS = "LOADING SPECIMENS...";
     private const string SHELF = "SHELF";
     private const string SPECIMEN_LIST = "SPECIMEN LIST";
 
@@ -70,8 +72,8 @@ public class SelectorMenu : MonoBehaviour
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
-
-        selectionTitle.text = "LOADING SPECIMENS...";
+        selectionTitle.text = LOADING_SPECIMENS;
+        noContentText.gameObject.SetActive(false);
         labButton.onClick.AddListener(ToggleToLabs);
         atlasButton.onClick.AddListener(ToggleToAtlas);
 
@@ -94,12 +96,14 @@ public class SelectorMenu : MonoBehaviour
     {
         selectionTitle.text = "";
         ListMode mode = ListMode.LAB_COURSES;
+        bool showNoContentText = false;
 
         // Sets current list mode based on set fields.
         // Then prepares requested data:
         if (store.Loading())
         {
             // do nothing, as the data used to populate the UI hasn't loaded yet
+            selectionTitle.text = LOADING_SPECIMENS;
         } else if (byLab)
         {
             if (courseId.Length < 1)
@@ -107,6 +111,7 @@ public class SelectorMenu : MonoBehaviour
                 backBttnTitle.text = SHELF;
                 _loadedCourses = store.labCourses.Values.ToList();
                 _loadedCourses.Sort((c1, c2) => c1.courseId.CompareTo(c2.courseId)); // sort courses alphebetically
+                showNoContentText = _loadedCourses == null || _loadedCourses.Count < 1;
             }
             else if (labId > 0)
             {
@@ -115,6 +120,7 @@ public class SelectorMenu : MonoBehaviour
                 Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
                 selectionTitle.text = labData.Item1;
                 _loadedSpecimens = labData.Item2;
+                showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
             }
             else
             {
@@ -122,6 +128,7 @@ public class SelectorMenu : MonoBehaviour
                 backBttnTitle.text = COURSES;
                 selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
+                showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
             }
         }
         else if (region == null)
@@ -129,6 +136,7 @@ public class SelectorMenu : MonoBehaviour
             mode = ListMode.REGION;
             backBttnTitle.text = SHELF;
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
+            showNoContentText = _loadedRegions == null || _loadedRegions.Count < 1;
         }
         else if (string.IsNullOrEmpty(organ))
         {
@@ -144,9 +152,10 @@ public class SelectorMenu : MonoBehaviour
             selectionTitle.text = organ;
             _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
+            showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
         }
 
-        Layout(mode);
+        Layout(mode, showNoContentText);
     }
 
     public void SelectCompare()
@@ -177,10 +186,11 @@ public class SelectorMenu : MonoBehaviour
      * Lays out UI based on requested mode.
      * Called only through Populate() to ensure that correct data is available.
      */
-    private void Layout(ListMode mode)
+    private void Layout(ListMode mode, bool showNoContentText)
     {
         loadingIndicator.gameObject.SetActive(store.Loading());
         selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
+        noContentText.gameObject.SetActive(showNoContentText);
         labAtlasToggle.SetActive(
             !store.Loading() &&
             mode != ListMode.SPECIMEN &&
@@ -212,11 +222,10 @@ public class SelectorMenu : MonoBehaviour
 
         if (mode == ListMode.LAB)
         {
-            for (int i = 0; i < _loadedLabs.Count; i++)
-            {
-                LabOption lo = Instantiate(labPrefab, listTransform);
-                lo.Populate(_loadedLabs[i], this);
-            }
+            _loadedLabs.ForEach((lab) => {
+                LabOption labOption = Instantiate(labPrefab, listTransform);
+                labOption.Populate(lab, this);
+            });
 
             backButton.onClick.AddListener(ClearSelectionData);
             return;
