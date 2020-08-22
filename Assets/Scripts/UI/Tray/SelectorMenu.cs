@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.State;
 using TMPro;
@@ -13,7 +14,8 @@ public class SelectorMenu : MonoBehaviour
     private bool byLab;
     private RegionData region = null;
     private string organ = "";
-    private string labId = "";
+    private string courseId = "";
+    private int labId = 0;
 
     [Header("Services")] public SpecimenStore store;
     public TrayPage trayPage;
@@ -21,16 +23,16 @@ public class SelectorMenu : MonoBehaviour
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
+    public CourseOption coursePrefab;
     public LabOption labPrefab;
     public SelectorButton noSpecimensPrefab;
     public SelectorButton specimenSelectorPrefab;
     public Button seeAllButtonPrefab;
 
     [Header("Internal Structures")] public Transform listTransform;
-    public TextMeshProUGUI title;
+    public TextMeshProUGUI backBttnTitle;
     public Button backButton;
-    public TextMeshProUGUI subtitle;
-    public TextMeshProUGUI labtitle;
+    public TextMeshProUGUI selectionTitle;
     public GameObject labAtlasToggle;
     public Button atlasButton;
     public Button labButton;
@@ -42,28 +44,34 @@ public class SelectorMenu : MonoBehaviour
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
 
+    private const string COURSES = "COURSES";
+    private const string LABS = "LABS";
+    private const string SHELF = "SHELF";
+    private const string SPECIMEN_LIST = "SPECIMEN LIST";
+
     public enum ListMode
     {
         REGION,
         REGION_EXPANDED,
         SPECIMEN,
         LAB,
+        LAB_COURSES,
         LAB_SPECIMENS
     }
-
 
     private List<RegionData> _loadedRegions;
     private List<string> _loadedOrgans;
     private List<SpecimenData> _loadedSpecimens;
     private bool _loading = true;
     private List<LabData> _loadedLabs;
+    private List<CourseData> _loadedCourses;
 
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
 
-        subtitle.text = "LOADING SPECIMENS...";
+        selectionTitle.text = "LOADING SPECIMENS...";
         labButton.onClick.AddListener(ToggleToLabs);
         atlasButton.onClick.AddListener(ToggleToAtlas);
 
@@ -84,74 +92,62 @@ public class SelectorMenu : MonoBehaviour
      */
     public void Populate()
     {
-        subtitle.gameObject.SetActive(false);
-
-        if (store.Loading())
-        {
-            loadingIndicator.gameObject.SetActive(true);
-            return;
-        }
-
-        loadingIndicator.gameObject.SetActive(false);
-
-        ListMode mode;
+        selectionTitle.text = "";
+        ListMode mode = ListMode.LAB_COURSES;
 
         // Sets current list mode based on set fields.
         // Then prepares requested data:
-        if (byLab)
+        if (store.Loading())
         {
-            if (labId != "")
+            // do nothing, as the data used to populate the UI hasn't loaded yet
+        } else if (byLab)
+        {
+            if (courseId.Length < 1)
+            {
+                backBttnTitle.text = SHELF;
+                _loadedCourses = store.labCourses.Values.ToList();
+                _loadedCourses.Sort((c1, c2) => c1.courseId.CompareTo(c2.courseId)); // sort courses alphebetically
+            }
+            else if (labId > 0)
             {
                 mode = ListMode.LAB_SPECIMENS;
-                title.text = "SHELF";
-                _loadedSpecimens = store.GetSpecimenDataForLab(labId);
-                labAtlasToggle.SetActive(false);
-                labtitle.gameObject.SetActive(true);
-                labtitle.text = store.labs[labId].labName;
+                backBttnTitle.text = LABS;
+                Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
+                selectionTitle.text = labData.Item1;
+                _loadedSpecimens = labData.Item2;
             }
             else
             {
                 mode = ListMode.LAB;
-                _loadedLabs = store.labs.Values.ToList();
-                labAtlasToggle.SetActive(true);
-                labtitle.gameObject.SetActive(false);
+                backBttnTitle.text = COURSES;
+                selectionTitle.text = courseId;
+                _loadedLabs = store.GetLabDataForCourse(courseId);
             }
         }
         else if (region == null)
         {
-            title.text = $"SHELF";
-            _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             mode = ListMode.REGION;
-            labAtlasToggle.SetActive(true);
-            labtitle.gameObject.SetActive(false);
-            subtitle.gameObject.SetActive(false);
+            backBttnTitle.text = SHELF;
+            _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
         }
         else if (string.IsNullOrEmpty(organ))
         {
-            title.text = $"SHELF";
+            mode = ListMode.REGION_EXPANDED;
+            backBttnTitle.text = SHELF;
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             _loadedOrgans = store.GetOrgansByRegion(region.name);
-            mode = ListMode.REGION_EXPANDED;
-            labAtlasToggle.SetActive(true);
-            labtitle.gameObject.SetActive(false);
-            subtitle.gameObject.SetActive(false);
         }
         else
         {
-            title.text = $"SPECIMEN LIST";
-            subtitle.text = organ;
-            //_loadedRegions = store.GetSpecimensByRegionOrgan(region.name, organ).Select(x => x.id).ToList();
+            mode = ListMode.SPECIMEN;
+            backBttnTitle.text = SPECIMEN_LIST;
+            selectionTitle.text = organ;
             _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
-            mode = ListMode.SPECIMEN;
-            labAtlasToggle.SetActive(false);
-            labtitle.gameObject.SetActive(false);
-            subtitle.gameObject.SetActive(true);
         }
 
         Layout(mode);
     }
-
 
     public void SelectCompare()
     {
@@ -165,7 +161,13 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    public void LabSelected(string labId)
+    public void CourseSelected(string courseId)
+    {
+        this.courseId = courseId;
+        Populate();
+    }
+
+    public void LabSelected(int labId)
     {
         this.labId = labId;
         Populate();
@@ -177,21 +179,46 @@ public class SelectorMenu : MonoBehaviour
      */
     private void Layout(ListMode mode)
     {
+        loadingIndicator.gameObject.SetActive(store.Loading());
+        selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
+        labAtlasToggle.SetActive(
+            !store.Loading() &&
+            mode != ListMode.SPECIMEN &&
+            mode != ListMode.LAB_SPECIMENS
+        );
+
         // Clears data.
         Clear();
         idToButton = new Dictionary<string, SelectorButton>();
         currentMode = mode;
 
+        if (store.Loading())
+        {
+            // all we needed to do was show the loading indicator, so we are done laying out the UI
+            return;
+        }
+
+        if (mode == ListMode.LAB_COURSES)
+        {
+            _loadedCourses.ForEach((course) =>
+            {
+                CourseOption courseOption = Instantiate(coursePrefab, listTransform);
+                courseOption.Populate(course.courseId, this);
+            });
+
+            backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
+            return;
+        }
+
         if (mode == ListMode.LAB)
         {
-            subtitle.gameObject.SetActive(false);
             for (int i = 0; i < _loadedLabs.Count; i++)
             {
                 LabOption lo = Instantiate(labPrefab, listTransform);
                 lo.Populate(_loadedLabs[i], this);
             }
 
-            backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
+            backButton.onClick.AddListener(ClearSelectionData);
             return;
         }
 
@@ -210,17 +237,15 @@ public class SelectorMenu : MonoBehaviour
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
             {
                 Button btn = Instantiate(seeAllButtonPrefab, listTransform);
-                btn.onClick.AddListener(Back);
+                btn.onClick.AddListener(ClearOrganAndLabData);
             }
 
             // Activates the back button, which takes user back to Region/Organ list
-            backButton.onClick.AddListener(Back);
+            backButton.onClick.AddListener(ClearOrganAndLabData);
             UpdateSelected();
         }
         else
         {
-            subtitle.gameObject.SetActive(false);
-
             // Loops through loaded regions, producing a clickable button for each...
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
@@ -304,11 +329,18 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    private void Back()
+    private void ClearOrganAndLabData()
     {
         organ = "";
-        labId = "";
+        labId = 0;
         Populate();
+    }
+
+    private void ClearSelectionData()
+    {
+        courseId = "";
+        region = null;
+        ClearOrganAndLabData();
     }
 
     private void ToggleToAtlas()
@@ -318,10 +350,7 @@ public class SelectorMenu : MonoBehaviour
         atlasLabel.color = Color.white;
         labLabel.color = Color.black;
         byLab = false;
-        organ = "";
-        labId = "";
-        region = null;
-        Populate();
+        ClearSelectionData();
     }
 
     private void ToggleToLabs()
@@ -330,11 +359,8 @@ public class SelectorMenu : MonoBehaviour
         atlasButton.interactable = true;
         labLabel.color = Color.white;
         atlasLabel.color = Color.black;
-        organ = "";
-        labId = "";
-        region = null;
         byLab = true;
-        Populate();
+        ClearSelectionData();
     }
 
     private void SetSpecimenButtonToSelected(string specId)

@@ -6,9 +6,7 @@
 [Serializable]
 public class DataManifest
 {
-
     public SpecimenRequestData[] specimenData;
-    public LabData[] labs;
+    public CourseData[] labCourses;
     public RegionData[] regions;
-
 }

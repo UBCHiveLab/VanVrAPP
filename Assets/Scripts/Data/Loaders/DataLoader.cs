@@ -23,8 +23,7 @@ public abstract class DataLoader: MonoBehaviour
     public string status;
     public bool manifestVerified;
 
-
-    private List<LabData> _labs;
+    private List<CourseData> _courses;
     private List<SpecimenData> _specimens;
     private List<RegionData> _regions;
     private int _requestsResolved;
@@ -47,8 +46,9 @@ public abstract class DataLoader: MonoBehaviour
         return _specimens;
     }
 
-    public List<LabData> GetLabs() {
-        return _labs;
+    public List<CourseData> GetLabCourses()
+    {
+        return _courses;
     }
 
     public List<RegionData> GetRegions() {
@@ -86,9 +86,9 @@ public abstract class DataLoader: MonoBehaviour
             Debug.LogWarning("Some issues found with the given manifest.");
         }
 
-        // Regions and labs are stored directly in the manifests
+        // Regions and courses are stored directly in the manifests
         _regions = manifest.regions.ToList();
-        _labs = manifest.labs.ToList();
+        _courses = manifest.labCourses.ToList();
 
         _specimens = new List<SpecimenData>();
 
@@ -128,7 +128,7 @@ public abstract class DataLoader: MonoBehaviour
         // Listeners can now check IsLoading() and know that the loader has completed.
         _loaded = true;
 
-        Debug.Log($"Loaded {_specimens.Count} total specimens, {_labs.Count} labs, and {_regions.Count} regions.");
+        Debug.Log($"Loaded {_specimens.Count} total specimens, {_courses.Count} courses, and {_regions.Count} regions.");
         Debug.Log($"Load time: {watch.Elapsed.TotalSeconds} seconds");
     }
 
@@ -284,9 +284,9 @@ public abstract class DataLoader: MonoBehaviour
             verify = false;
         }
 
-        if (manifest.labs == null) {
-            SendWarning("No lab data in loaded manifest. Please add lab data if desired.");
-            verify = true; // Labs are optional
+        if (manifest.labCourses == null) {
+            SendWarning("No lab course data in loaded manifest. Please add course data if desired.");
+            verify = true; // Courses and their labs are optional
         }
 
         if (manifest.specimenData == null) {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,7 @@ public class SpecimenStore : MonoBehaviour
 
     [Header("Stored Data")] public List<RegionData> regions;
     public Dictionary<string, SpecimenData> specimens;
-    public Dictionary<string, LabData> labs;
+    public Dictionary<string, CourseData> labCourses;
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
     public Dictionary<string, RegionData> organToRegion;
 
@@ -38,12 +39,10 @@ public class SpecimenStore : MonoBehaviour
     private bool _loading = true;
     private DataLoader loader;
 
-
     public List<string> GetSpecimenIdsList()
     {
         return specimens.Keys.ToList();
     }
-
 
     public SpecimenData GetSpecimen(string id)
     {
@@ -100,17 +99,36 @@ public class SpecimenStore : MonoBehaviour
         return specimens.Values.Where(spd => !filteredOutIds.Contains(spd.id)).ToList();
     }
 
-    public List<SpecimenData> GetSpecimenDataForLab(string labId)
+    public List<LabData> GetLabDataForCourse(string courseId)
     {
-        List<SpecimenData> data = new List<SpecimenData>();
-
-        if (!labs.ContainsKey(labId))
+        List<LabData> data;
+        if (labCourses.ContainsKey(courseId))
         {
-            Debug.LogWarning($"No lab found with id {labId}");
-            return data;
+            data = labCourses[courseId].labs.ToList();
+        }
+        else
+        {
+            Debug.LogWarning($"No Course found with the id {courseId}");
+            data = new List<LabData>();
         }
 
-        foreach (string specimenId in labs[labId].specimenList)
+        return data;
+    }
+
+    public Tuple<string, List<SpecimenData>> GetLabData(string courseId, int labId)
+    {
+        // find the lab name and specimen data for the given lab for the specified course
+        List<SpecimenData> specimenData = new List<SpecimenData>();
+        List<LabData> labs = GetLabDataForCourse(courseId);
+        int labIndex = labs.FindIndex((lab) => lab.labId == labId);
+
+        if (labIndex < 0)
+        {
+            Debug.LogWarning($"No lab found with id {labId}");
+            return null;
+        }
+
+        foreach (string specimenId in labs[labIndex].specimenList)
         {
             if (!specimens.ContainsKey(specimenId))
             {
@@ -118,10 +136,10 @@ public class SpecimenStore : MonoBehaviour
                 continue;
             }
 
-            data.Add(specimens[specimenId]);
+            specimenData.Add(specimens[specimenId]);
         }
 
-        return data;
+        return new Tuple<string, List<SpecimenData>>(labs[labIndex].labName, specimenData);
     }
 
     public bool Loading()
@@ -226,7 +244,7 @@ public class SpecimenStore : MonoBehaviour
             }
         }
 
-        labs = loader.GetLabs().ToDictionary((lab => lab.labId), lab => lab);
+        labCourses = loader.GetLabCourses().ToDictionary((course => course.courseId), course => course);
         specimens = loader.GetSpecimens().ToDictionary((spec => spec.id), spec => spec);
         specimensByRegionByOrgan = new Dictionary<string, Dictionary<string, List<SpecimenData>>>();
 

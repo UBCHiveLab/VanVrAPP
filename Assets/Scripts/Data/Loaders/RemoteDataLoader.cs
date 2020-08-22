@@ -7,7 +7,6 @@ using UnityEngine.Networking;
  */
 public class RemoteDataLoader : DataLoader
 {
-
     protected override IEnumerator LoadManifest()
     {
         using (UnityWebRequest req =

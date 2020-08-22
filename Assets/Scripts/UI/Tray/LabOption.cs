@@ -15,15 +15,12 @@ public class LabOption : MonoBehaviour
     public TextMeshProUGUI idFrame;
     public TextMeshProUGUI nameFrame;
 
-    [Header("Data")]
-    public LabData data;
-
     private SelectorMenu _selectorMenu;
 
     public void Populate(LabData data, SelectorMenu menu)
     {
         StartCoroutine(DownloadImage(data.imgUrl));
-        idFrame.text = data.labId;
+        idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _selectorMenu = menu;
         button.onClick.AddListener(() => { _selectorMenu.LabSelected(data.labId); });
