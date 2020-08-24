@@ -30,7 +30,9 @@ public class GeneralSettings : MonoBehaviour
         Screen.fullScreen = false;
         if (supportedResolutions.Count == 0)
         {
+            #if !UNITY_WEBGL
             error.Populate("Your screen does not support any of our recommended resolutions. You may continue to use the application, but there may be issues with button sensitivity.");
+            #endif
         }
         else
         {
