@@ -88,7 +88,9 @@ public abstract class DataLoader: MonoBehaviour
 
         // Regions and courses are stored directly in the manifests
         _regions = manifest.regions.ToList();
-        _courses = manifest.labCourses.ToList();
+
+        // having lab courses is optional (see VerifyManifest method). So, if no labs were loaded, make an empty list
+        _courses = manifest.labCourses != null ? manifest.labCourses.ToList() : new List<CourseData>();
 
         _specimens = new List<SpecimenData>();
 
@@ -278,15 +280,16 @@ public abstract class DataLoader: MonoBehaviour
 
         bool verify = true;
 
+        if (manifest.labCourses == null)
+        {
+            SendWarning("No lab course data in loaded manifest. Please add course data if desired.");
+            verify = true; // Courses and their labs are optional
+        }
+
         if (manifest.regions == null)
         {
             SendWarning("No region data in loaded manifest. Please add region data.");
             verify = false;
-        }
-
-        if (manifest.labCourses == null) {
-            SendWarning("No lab course data in loaded manifest. Please add course data if desired.");
-            verify = true; // Courses and their labs are optional
         }
 
         if (manifest.specimenData == null) {
