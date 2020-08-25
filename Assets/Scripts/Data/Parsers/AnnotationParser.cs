@@ -53,6 +53,12 @@ public class AnnotationParser
                 string cite = MatchStringAttributeDefault(content, "cite", "");
                 blocks.Add(new ContentBlockData(BlockType.AUDIO, title, src, cite, Vector2Int.zero));
 
+            } else if (content.StartsWith("link")) {
+                string src = MatchStringAttribute(content, "src"); //source matches anything between two quotations marks
+                string title = MatchStringAttributeDefault(content, "title", src);
+                string cite = MatchStringAttributeDefault(content, "cite", "");
+                blocks.Add(new ContentBlockData(BlockType.LINK, title, src, cite, Vector2Int.zero));
+
             } else if (content.Trim() != "") {
                 string title = MatchStringAttributeDefault(content, "title", "");
                 string cite = MatchStringAttributeDefault(content, "cite", "");

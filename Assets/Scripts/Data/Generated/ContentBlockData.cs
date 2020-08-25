@@ -9,7 +9,8 @@ public enum BlockType
     TEXT,
     AUDIO,
     IMAGE,
-    VIDEO
+    VIDEO,
+    LINK
 }
 
 public class ContentBlockData

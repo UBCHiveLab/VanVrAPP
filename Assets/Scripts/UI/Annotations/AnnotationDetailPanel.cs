@@ -48,6 +48,7 @@ public class AnnotationDetailPanel : MonoBehaviour
     public ContentVideo videoPrefab;
     public ContentImage imagePrefab;
     public ContentAudio audioPrefab;
+    public ContentLink linkPrefab;
     public ContentSeparator seperatorPrefab;
 
     [Header("Internal State")]
@@ -85,6 +86,10 @@ public class AnnotationDetailPanel : MonoBehaviour
         {
             BlockType.IMAGE,
             p => Instantiate(p.imagePrefab, p.contentTransform)
+        },
+        {
+            BlockType.LINK,
+            p => Instantiate(p.linkPrefab, p.contentTransform)
         }
     };
 
