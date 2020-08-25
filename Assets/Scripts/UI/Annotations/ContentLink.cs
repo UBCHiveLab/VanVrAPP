@@ -2,9 +2,14 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Runtime.InteropServices;
 
 public class ContentLink : MonoBehaviour, IAnnotationContentBlock
 {
+#if UNITY_WEBGL
+    [DllImport("__Internal")]
+    private static extern void OpenNewTab(string url);
+#endif
     public BlockType type => BlockType.TEXT;
     public TextMeshProUGUI tmp;
     public Button button;
@@ -36,6 +41,12 @@ public class ContentLink : MonoBehaviour, IAnnotationContentBlock
     }
     private void OnLinkClick()
     {
+#if!UNITY_EDITOR && UNITY_WEBGL
+
+        OpenNewTab(url);
+#else
         Application.OpenURL(url);
+#endif
+
     }
 }
