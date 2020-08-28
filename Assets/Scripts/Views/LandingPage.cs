@@ -18,7 +18,6 @@ public class LandingPage : MonoBehaviour, IPage
     public AudioSource startAudio;
     public PostProcessVolume volume;
     public FocusDistanceFinder focusDistanceFinder;
-    public StartButton holdToStartButton;
     private DepthOfField depthOfField;
 
 
@@ -28,20 +27,15 @@ public class LandingPage : MonoBehaviour, IPage
 
         disclaimerPanel.gameObject.SetActive(false);
         disclaimerPanel.enterAction = StartSession;
-        disclaimerPanel.backAction = DismissDisclaimer;
 
         if (depthOfField == null) {
             volume.profile.TryGetSettings(out depthOfField);
         }
 
-        if (holdToStartButton == null)
-        {
-            Debug.LogWarning("Please bind a holdToStartButton in LandingPage");
-        }
-        else
-        {
-            holdToStartButton.bindAction(EntranceClicked);
-        }
+        focusDistanceFinder.enabled = false;
+        disclaimerPanel.gameObject.SetActive(true);
+        depthOfField.active = true;
+        depthOfField.focusDistance.value = 1f;
     }
 
     void StartSession()
@@ -51,28 +45,18 @@ public class LandingPage : MonoBehaviour, IPage
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
         stateController.mode = ViewMode.TRAY;
-        depthOfField.active = false;
-        disclaimerPanel.StartDismiss();
+        DismissDisclaimer();
     }
 
     public void DismissDisclaimer()
     {
-        disclaimerPanel.StartDismiss();
         depthOfField.active = false;
+        disclaimerPanel.gameObject.SetActive(false);
     }
 
     public void Activate()
     {
         uiObject.SetActive(true);
-
-    }
-
-    private void EntranceClicked()
-    {
-        focusDistanceFinder.enabled = false;
-        disclaimerPanel.gameObject.SetActive(true);
-        depthOfField.active = true;
-        depthOfField.focusDistance.value = 1f;
     }
 
     public void Deactivate()

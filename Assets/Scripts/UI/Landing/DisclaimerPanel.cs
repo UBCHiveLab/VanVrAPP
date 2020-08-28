@@ -17,27 +17,21 @@ public class DisclaimerPanel : MonoBehaviour
     public GameObject arrowFrame;
     public Button enterButton;
     public GameObject warning;
-    public Button backButton;
-    public Animator anim;
 
     [Header("Actions")]
     public Action enterAction;
-    public Action backAction;
 
     private bool understood;
 
     void Start()
     {
         enterButton.onClick.AddListener(TryEnter);
-        backButton.onClick.AddListener(Back);
     }
 
     void OnEnable()
     {
         warning.SetActive(false);
-        backButton.GetComponent<HoverButton>().OnPointerExit(null);
     }
-
 
     public void SetUnderstood(bool value)
     {
@@ -61,13 +55,6 @@ public class DisclaimerPanel : MonoBehaviour
         }
 
         arrowFrame.SetActive(understood);
-
-
-    }
-
-    public void StartDismiss()
-    {
-        anim.SetTrigger("Dismiss");
     }
 
     public void TryEnter()
@@ -81,11 +68,6 @@ public class DisclaimerPanel : MonoBehaviour
             enterAction();
         }
         enterButton.OnDeselect(null);
-    }
-
-    public void Back()
-    {
-        backAction();
     }
 
     public void OnCompleteFade()
