@@ -44,7 +44,6 @@ public class LandingPage : MonoBehaviour, IPage
         doorL.GetComponent<Animator>().SetTrigger("Start");
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
-        stateController.mode = ViewMode.TRAY;
         DismissDisclaimer();
     }
 
@@ -63,6 +62,4 @@ public class LandingPage : MonoBehaviour, IPage
     {
         uiObject.SetActive(false);
     }
-
-
 }

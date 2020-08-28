@@ -149,12 +149,8 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void HaveArrivedAtTray()
     {
+        stateController.mode = ViewMode.TRAY;
         selectorMenu.anim.SetBool("ShowTab", true);
-    }
-
-    public void HaveEnteredFromLandingPage()
-    {
-        selectorMenu.anim.SetBool("ShowTab", false);
     }
 
     public void SelectAnalysis()
