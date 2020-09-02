@@ -21,7 +21,7 @@ namespace Assets.Scripts.State
         
         public Dictionary<ViewMode, IPage> modeToPage;
 
-        Shader newunlit;
+        Shader newunlit,standard;
 
         /**
         * Set mode to initiate transition between two modes.
@@ -72,7 +72,7 @@ namespace Assets.Scripts.State
 
         private void Start() {
             newunlit = Shader.Find("Unlit/NewUnlit");
-
+            standard = Shader.Find("Standard");
             try {
                 trayPage.Deactivate();
             } catch (Exception e) {
@@ -189,7 +189,8 @@ namespace Assets.Scripts.State
             spObj.transform.localScale = Vector3.one * data.scale;
             spObj.gameObject.SetActive(true);
             spObj.layer = 9;
-            spObj.GetComponentInChildren<Renderer>().material.shader = newunlit;
+            // Keep the one uses standard shader
+            spObj.GetComponentInChildren<Renderer>().material.shader = standard ? standard : newunlit;
 
             if (primary) {
                 CurrentSpecimenObject = spObj;
