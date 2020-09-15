@@ -24676,6 +24676,91 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5879358649282537739}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2075627405831018312
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4069600469538654964, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: referenceT
+      value: 
+      objectReference: {fileID: 2075627405831018313}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236360945462419916, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146832084916163551, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_Name
+      value: Brachial plexus
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146832084916163551, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7135d40a24d5c6f43a9575d2df7b421d, type: 3}
+--- !u!4 &2075627405831018313 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 209676123927701066, guid: 7135d40a24d5c6f43a9575d2df7b421d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2075627405831018312}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3466964690377196471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25638,6 +25723,101 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 272534d418b8e6642b596fc955905942, type: 3}
+--- !u!1 &4971910780161420525 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4529460817207395844, guid: 272534d418b8e6642b596fc955905942,
+    type: 3}
+  m_PrefabInstance: {fileID: 4971910780161420524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4971910780161420526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4971910780161420525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02989ad90e95b9c4cbd612505f560782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  datas:
+    annotationDatas:
+    - annotationId: 1
+      title: Latissimus Dorsi
+      content: Innervated by the Thoracodorsal nerve.
+      position:
+        x: 22.07696
+        y: -24.365673
+        z: -31.42669
+        global: 0
+    - annotationId: 2
+      title: Teres Major
+      content: 'Innervated by the Lower subscapular nerve. '
+      position:
+        x: 20.894857
+        y: -10.760761
+        z: -30.56566
+        global: 0
+    - annotationId: 3
+      title: Teres Minor
+      content: 'Innervated by the Axillary nerve. '
+      position:
+        x: 29.373463
+        y: 6.3369904
+        z: -23.425642
+        global: 0
+    - annotationId: 4
+      title: Infraspinatus
+      content: 'Innervated by the Suprascapular nerve. '
+      position:
+        x: 10.151283
+        y: 2.082365
+        z: -29.634472
+        global: 0
+    - annotationId: 5
+      title: Trapezius
+      content: 'Innervated by the Accessory nerve (CN XI) '
+      position:
+        x: -6.303013
+        y: 3.4462986
+        z: -32.7596
+        global: 0
+    - annotationId: 6
+      title: Deltoid
+      content: 'Innervated by the Axillary nerve. '
+      position:
+        x: 46.238884
+        y: 11.193869
+        z: -12.305646
+        global: 0
+    - annotationId: 7
+      title: Triceps Brachii
+      content: 
+      position:
+        x: 58.022285
+        y: -25.10481
+        z: -22.69729
+        global: 0
+    - annotationId: 8
+      title: Long head of triceps brachii
+      content: 
+      position:
+        x: 40.2227
+        y: 0.62693214
+        z: -22.969501
+        global: 0
+    - annotationId: 9
+      title: Serratus anterior
+      content: 
+      position:
+        x: 21.152563
+        y: -43.205627
+        z: 2.269576
+        global: 0
+  referenceT: {fileID: 1196427165221000986}
+  specimenName: posterior_shoulder
+  annotationPlaceHolder: {fileID: 1503157216}
 --- !u!4 &5543526197001301032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5363125641160094641, guid: a8ce2003196057a46a54a1224372d73a,
@@ -25888,6 +26068,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fibula
+      objectReference: {fileID: 0}
+    - target: {fileID: 420228055144756014, guid: dadc87278f70247c78ef0ef9eae8b443,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3715376132625301821, guid: dadc87278f70247c78ef0ef9eae8b443,
         type: 3}

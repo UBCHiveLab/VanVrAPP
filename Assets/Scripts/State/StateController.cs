@@ -21,7 +21,7 @@ namespace Assets.Scripts.State
         
         public Dictionary<ViewMode, IPage> modeToPage;
 
-        Shader newunlit,standard;
+        Shader newunlit,standard,vertexColor;
 
         /**
         * Set mode to initiate transition between two modes.
@@ -73,6 +73,7 @@ namespace Assets.Scripts.State
         private void Start() {
             newunlit = Shader.Find("Unlit/NewUnlit");
             standard = Shader.Find("Standard");
+            //vertexColor = Shader.Find("Custom/VertexColor");
             try {
                 trayPage.Deactivate();
             } catch (Exception e) {
@@ -191,6 +192,7 @@ namespace Assets.Scripts.State
             spObj.layer = 9;
             // Keep the one uses standard shader
             spObj.GetComponentInChildren<Renderer>().material.shader = standard ? standard : newunlit;
+            //spObj.GetComponentInChildren<Renderer>().material.shader = standard ? standard : ( vertexColor ? vertexColor : newunlit);
 
             if (primary) {
                 CurrentSpecimenObject = spObj;
