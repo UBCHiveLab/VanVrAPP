@@ -3640,6 +3640,19 @@
           }
         }
       ]
+    },
+    {
+      "id": "radius01",
+      "name": "Radius",
+      "version": 1,
+      "organ": "Radius",
+      "assetUrl": "",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/radius",
+      "assetUrlOsx": "",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/radius.prefab",
+      "scale": 0.0035,
+      "yPos": 0.15,
+      "annotations": [{"annotationId":"1","title":"Head of radius","content":"Articulates with the capitulum of the humerus","position":{"x":8.387195587158204,"y":104.62109375,"z":-81.48507690429688,"global":false}},{"annotationId":"2","title":"Neck of radius","content":"","position":{"x":4.531947612762451,"y":97.05847930908203,"z":-73.60551452636719,"global":false}},{"annotationId":"3","title":"Radial tuberosity","content":"The site of insertion of the rendon of the biceps brachii.","position":{"x":10.796310424804688,"y":82.97407531738281,"z":-60.27967834472656,"global":false}},{"annotationId":"4","title":"Anterior oblique line","content":"","position":{"x":6.095905303955078,"y":59.128684997558597,"z":-47.308963775634769,"global":false}},{"annotationId":"5","title":"Nutrient foramen","content":"A tunnel through the cortex of the bone. Creates an entrance for a nutrient artery to supply the bone.","position":{"x":3.6020584106445314,"y":37.39509201049805,"z":-23.82101821899414,"global":false}},{"annotationId":"6","title":"Styloid process","content":"The insertion point of the brachioradialis tendon and the origin of the radical collateral ligament.","position":{"x":-8.021607398986817,"y":-106.10199737548828,"z":61.954795837402347,"global":false}},{"annotationId":"7","title":"Dorsal tubercle","content":"Also known as Lister's tubercle. Acts as a pulley for the tendon of Extensor Pollicis Longus.","position":{"x":-3.9625189304351808,"y":-87.85558319091797,"z":68.19165802001953,"global":false}},{"annotationId":"8","title":"Ulnar notch","content":"The site of articulation with the distal ulna.","position":{"x":15.459123611450196,"y":-86.3268814086914,"z":66.65421295166016,"global":false}}]
     }
   ],
   "labCourses": [
@@ -3733,7 +3746,16 @@
     },
     {
       "courseId": "BMEG 410",
-      "labs": []
+      "labs": [
+        {
+          "labId": 1,
+          "labName": "Musculoskeletal System",
+          "imgUrl": "",
+          "specimenList": [
+            "radius01"
+          ]
+        }
+      ]
     }
   ],
   "regions": [
@@ -3791,7 +3813,8 @@
         "Posterior Shoulder",
         "Humerus",
         "Scapula",
-        "Pectoral Girdle"
+        "Pectoral Girdle",
+        "Radius"
       ]
     },
     {
