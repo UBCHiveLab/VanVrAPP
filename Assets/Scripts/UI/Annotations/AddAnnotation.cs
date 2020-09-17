@@ -65,5 +65,26 @@ public class AddAnnotation : MonoBehaviour
             annotationPosition.z = labelLocalPosition.z;
             datas.annotationDatas.Add(new AnnotationData(placeHolderData.id, placeHolderData.title, placeHolderData.contents, annotationPosition));
         }
-    } 
+    }
+    public void LoadAnnotationData(string path)
+    {
+        specimenName = System.IO.Path.GetFileNameWithoutExtension(path);
+        string json = System.IO.File.ReadAllText(path);
+        datas = JsonUtility.FromJson<AnnotationDatas>(json);
+        foreach(AnnotationData data in datas.annotationDatas)
+        {
+           
+            if (data.positionVector3 != null)
+            {
+                Vector3 postion = data.positionVector3.Value;
+                GameObject annotation = Instantiate(annotationPlaceHolder, referenceT.transform.InverseTransformPoint(postion), Quaternion.identity, this.transform);
+                AnnotationPlaceHolderData annotationData = annotation.GetComponent<AnnotationPlaceHolderData>();
+                annotationData.id = data.annotationId;
+                annotationData.title = data.title;
+                annotationData.contents = data.content;
+            }
+            
+        }
+        
+    }
 }
