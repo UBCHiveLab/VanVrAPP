@@ -18,13 +18,25 @@ public class AddAnnotationEditor : Editor
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
+        
         if (GUILayout.Button("Save to Json", GUILayout.Height(30), GUILayout.Width(200)))
         {
             mytarget.SaveToJSON();
+            GUIUtility.ExitGUI();
         }
         if (GUILayout.Button("Update Data", GUILayout.Height(30), GUILayout.Width(200)))
         {
             mytarget.UpdateData();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Load Annotation Data", GUILayout.Height(30), GUILayout.Width(200)))
+        {
+            string path = EditorUtility.OpenFilePanel("Annotation Json File", Application.dataPath + "/Resources/", "json");
+            if (path.Length != 0)
+            {
+                mytarget.LoadAnnotationData(path);
+            }
+            GUIUtility.ExitGUI();
         }
     }
     public void OnSceneGUI()
