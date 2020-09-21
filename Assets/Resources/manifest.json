@@ -1253,13 +1253,13 @@
       "name": "Right Lung #1",
       "version": 1,
       "organ": "Lung",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/rightlung",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/rightlung",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/rightlung",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/RightLung.prefab",
-      "scale": 0.25,
-      "yPos": 0,
-      "annotations": []
+      "assetUrl": "",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/right_lung",
+      "assetUrlOsx": "",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/right_lung.prefab",
+      "scale": 0.015,
+      "yPos": 0.15,
+      "annotations": [{"annotationId":"1","title":"Right main bronchus","content":"  At this level, it divides into the superior lobar and intermediate bronchi.","position":{"x":1.816577434539795,"y":-8.298209190368653,"z":5.063423156738281,"global":false}},{"annotationId":"2","title":"Superior lobar bronchus","content":"","position":{"x":1.7863585948944092,"y":-8.213716506958008,"z":1.4708740711212159,"global":false}},{"annotationId":"3","title":"Intermediate bronchus","content":"","position":{"x":1.6502889394760132,"y":-7.873805999755859,"z":1.1404495239257813,"global":false}},{"annotationId":"4","title":"Pulmonary artery","content":"","position":{"x":-1.416542887687683,"y":-6.784708499908447,"z":5.645486354827881,"global":false}},{"annotationId":"5","title":"Pulmonary vein","content":"","position":{"x":-0.16450674831867219,"y":-1.6847115755081177,"z":4.110193729400635,"global":false}},{"annotationId":"6","title":"Pulmonary vein","content":"","position":{"x":3.3988687992095949,"y":-0.22082343697547913,"z":5.2596821784973148,"global":false}},{"annotationId":"7","title":"Oblique fissure","content":"","position":{"x":6.55849027633667,"y":-0.08472833782434464,"z":-10.413687705993653,"global":false}},{"annotationId":"8","title":"Horizontal fissure","content":"","position":{"x":-9.344045639038086,"y":2.4765710830688478,"z":-3.8515756130218508,"global":false}},{"annotationId":"9","title":"Oblique fissure","content":"","position":{"x":-4.934806823730469,"y":9.838144302368164,"z":-7.3381218910217289,"global":false}},{"annotationId":"10","title":"Apex","content":"","position":{"x":-1.2325750589370728,"y":-22.352998733520509,"z":-2.5969886779785158,"global":false}},{"annotationId":"11","title":"Superior lobe","content":"","position":{"x":0.16251656413078309,"y":-17.131237030029298,"z":-8.740091323852539,"global":false}},{"annotationId":"12","title":"Inferior lobe","content":"","position":{"x":6.584263801574707,"y":7.505927562713623,"z":-10.390510559082032,"global":false}},{"annotationId":"13","title":"Middle lobe","content":"","position":{"x":-10.279143333435059,"y":8.746246337890625,"z":-3.045032024383545,"global":false}},{"annotationId":"14","title":"Anterior border","content":"","position":{"x":-12.544849395751954,"y":-4.747228145599365,"z":8.324663162231446,"global":false}},{"annotationId":"15","title":"Diaphragmatic surface","content":"","position":{"x":3.9742352962493898,"y":6.351597309112549,"z":-1.5239251852035523,"global":false}}]
     },
     {
       "id": "lumbarvertbra01",
@@ -4266,7 +4266,7 @@
       "yPos": 0.15,
       "annotations": [{"annotationId":"1","title":"Head of radius","content":"Articulates with the capitulum of the humerus","position":{"x":8.387195587158204,"y":104.62109375,"z":-81.48507690429688,"global":false}},{"annotationId":"2","title":"Neck of radius","content":"","position":{"x":4.531947612762451,"y":97.05847930908203,"z":-73.60551452636719,"global":false}},{"annotationId":"3","title":"Radial tuberosity","content":"The site of insertion of the rendon of the biceps brachii.","position":{"x":10.796310424804688,"y":82.97407531738281,"z":-60.27967834472656,"global":false}},{"annotationId":"4","title":"Anterior oblique line","content":"","position":{"x":6.095905303955078,"y":59.128684997558597,"z":-47.308963775634769,"global":false}},{"annotationId":"5","title":"Nutrient foramen","content":"A tunnel through the cortex of the bone. Creates an entrance for a nutrient artery to supply the bone.","position":{"x":3.6020584106445314,"y":37.39509201049805,"z":-23.82101821899414,"global":false}},{"annotationId":"6","title":"Styloid process","content":"The insertion point of the brachioradialis tendon and the origin of the radical collateral ligament.","position":{"x":-8.021607398986817,"y":-106.10199737548828,"z":61.954795837402347,"global":false}},{"annotationId":"7","title":"Dorsal tubercle","content":"Also known as Lister's tubercle. Acts as a pulley for the tendon of Extensor Pollicis Longus.","position":{"x":-3.9625189304351808,"y":-87.85558319091797,"z":68.19165802001953,"global":false}},{"annotationId":"8","title":"Ulnar notch","content":"The site of articulation with the distal ulna.","position":{"x":15.459123611450196,"y":-86.3268814086914,"z":66.65421295166016,"global":false}}]
     },
-        {
+    {
       "id": "forearm01",
       "name": "Forearm",
       "version": 1,
@@ -4306,6 +4306,14 @@
             "rib01",
             "cervicalvertebra01",
             "posteriorthoracicwall01"
+          ]
+        },
+        {
+          "labId": 4,
+          "labName": "General Organization of Thoracic Walls, Pleural Cavities and Lungs",
+          "imgUrl": "",
+          "specimenList": [
+            "rightlung01"
           ]
         }
       ]
