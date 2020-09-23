@@ -216,12 +216,23 @@ public class AnalysisPage : MonoBehaviour, IPage
 
 
     /**
-     * Resets specimen rotation
+     * Resets specimen rotation and camera prosition
      */
     void ResetCameraPosition() {
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
         _xRot = 0;
         _yRot = 0;
+        orbitCam.yRotationAxis = 0;
+        orbitCam.xRotationAxis = 0;
+        orbitCam.xVelocity = 0;
+        orbitCam.yVelocity = 0;
+
+        //mainCamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
+        //mainCamera.transform.rotation = Quaternion.Euler(-4.211f, 0, 0);
+        //mainCamera.transform.position = orbitCam.camDefaultPosition;
+        //mainCamera.transform.rotation = orbitCam.camDefaultRotation;
+
+
     }
 
     /**
