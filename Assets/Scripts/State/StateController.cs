@@ -177,8 +177,12 @@ namespace Assets.Scripts.State
                     spObj.AddComponent<MeshRenderer>().material = data.material;
                     spObj.AddComponent<MeshCollider>();
                     spObj.layer = LayerMask.NameToLayer("Specimens");
-                    spObj.GetComponentInChildren<Renderer>().material.shader = newunlit;
-
+                    //spObj.GetComponentInChildren<Renderer>().material.shader = newunlit;
+                    Renderer[] rendererss = spObj.GetComponentsInChildren<Renderer>();
+                    foreach (Renderer renderer in rendererss)
+                    {
+                        renderer.material.shader = standard ? standard : newunlit;
+                    }
 
                 } catch (Exception e) {
                     Debug.LogWarning(e);
@@ -191,7 +195,12 @@ namespace Assets.Scripts.State
             spObj.gameObject.SetActive(true);
             spObj.layer = 9;
             // Keep the one uses standard shader
-            spObj.GetComponentInChildren<Renderer>().material.shader = standard ? standard : newunlit;
+            Renderer[] renderers = spObj.GetComponentsInChildren<Renderer>();
+            foreach(Renderer renderer in renderers)
+            {
+                renderer.material.shader = standard ? standard : newunlit;
+            }
+            //spObj.GetComponentInChildren<Renderer>().material.shader = standard ? standard : newunlit;
             //spObj.GetComponentInChildren<Renderer>().material.shader = standard ? standard : ( vertexColor ? vertexColor : newunlit);
 
             if (primary) {
