@@ -1695,313 +1695,245 @@
       ]
     },
     {
-      "id": "kidney01",
-      "name": "Kidney #1",
+      "id": "heart02",
+      "name": "Heart #2",
       "version": 1,
-      "organ": "Kidney",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/kidney",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/kidney",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/kidney",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/kidney.prefab",
-      "scale": 0.25,
+      "organ": "Heart (Cardiomegalic)",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/heartcardiomegalic",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/heartcardiomegalic",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/heartcardiomegalic",
+      "prefabPath": "Assets/Models/Specimens/AssetBundles/HeartCardiomegalic.prefab",
+      "scale": 0.002,
       "yPos": 0,
-      "annotations": [
-        {
-          "annotationId": "t1",
-          "title": "Test Annotation 1",
-          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-          "position": {
-            "x": 0.04,
-            "y": 0.02,
-            "z": 0.1
-          }
-        },
-        {
-          "annotationId": "t2",
-          "title": "Test Annotation 2",
-          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-          "position": {
-            "x": 0.04,
-            "y": 0.12,
-            "z": 0.1
-          }
-        },
-        {
-          "annotationId": "t3",
-          "title": "Test Annotation 3",
-          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-          "position": {
-            "x": 0.04,
-            "y": 0.02,
-            "z": 0.3
-          }
-        }
-      ]
-    },
-    {
-      "id": "liver01",
-      "name": "Liver #1",
-      "version": 1,
-      "organ": "Liver",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/liver",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/liver",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/liver",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/Liver.prefab",
-      "scale": 0.25,
-      "yPos": 0,
-      "annotations": [
-        {
-          "annotationId": "t1",
-          "title": "Test Annotation 1",
-          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-          "position": {
-            "x": 0.04,
-            "y": 0.32,
-            "z": 0.1
-          }
-        },
-        {
-          "annotationId": "t2",
-          "title": "Test Annotation 2",
-          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-          "position": {
-            "x": 0.14,
-            "y": 0.02,
-            "z": 0.1
-          }
-        },
-        {
-          "annotationId": "t3",
-          "title": "Test Annotation 3",
-          "content": "Lorem ipsum dolor sit amet sid adipiscing.",
-          "position": {
-            "x": 0.04,
-            "y": 0.02,
-            "z": 0.1
-          }
-        }
-      ]
-    },
-    {
-      "id": "skull01",
-      "name": "Skull #1",
-      "version": 1,
-      "organ": "Skull",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/skull",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/skull",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/skull",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/Skull.prefab",
-      "scale": 0.4,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "brainstem01",
-      "name": "Brainstem #1",
-      "version": 0,
-      "organ": "Brainstem",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brainstem",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brainstem",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brainstem",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/Brainstem.prefab",
-      "scale": 0.45,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "esophagus01",
-      "name": "Esophagus #1",
-      "version": 1,
-      "organ": "Esophagus",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/esophagus",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/esophagus",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/esophagus",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/Esophagus.prefab",
-      "scale": 0.35,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "femalepelvis01",
-      "name": "Female Pelvis #1",
-      "version": 1,
-      "organ": "Female Pelvis",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/femalepelvis",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/femalepelvis",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/femalepelvis",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/FemalePelvisHemi.prefab",
-      "scale": 1,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "flexedknee01",
-      "name": "Flexed Knee #1",
-      "version": 0,
-      "organ": "Flexed Knee",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/flexedknee",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/flexedknee",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/flexedknee",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/FlexedKnee.prefab",
-      "scale": 2,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "suspendedkidney01",
-      "name": "Kidney (Suspended) #1",
-      "version": 1,
-      "organ": "Kidney",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/kidneysuspended",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/kidneysuspended",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/kidneysuspended",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/Kidney(suspended).prefab",
-      "scale": 0.25,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "midsagitalhead01",
-      "name": "Midsagital Head #1",
-      "version": 0,
-      "organ": "Head",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/midsagitalhead",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/midsagitalhead",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/midsagitalhead",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/MidsagitalHead.prefab",
-      "scale": 0.25,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "rightlung01",
-      "name": "Right Lung #1",
-      "version": 1,
-      "organ": "Lung",
-      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/rightlung",
-      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/rightlung",
-      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/rightlung",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/RightLung.prefab",
-      "scale": 0.25,
-      "yPos": 0,
-      "annotations": []
-    },
-    {
-      "id": "lumbarvertbra01",
-      "name": "L3 Vertbra",
-      "version": 1,
-      "organ": "Lumbar Vertbra",
-      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/lumbar_vertbra",
-      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/lumbar_vertbra",
-      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/lumbar_vertbra",
-      "prefabPath": "Assets/Models/Specimens/AssetBundles/LumbarVertbra.prefab",
-      "scale": 0.01,
-      "yPos": 0.2,
       "annotations": [
         {
           "annotationId": "0",
           "title": "Information",
-          "content": "[img src='https://hivemodelstorage.blob.core.windows.net/vanvrapp-richmedia/medd411/lumbar_vertebra_lateral.png' title='Lumbar Vertebra Labels 1'] [img src='https://hivemodelstorage.blob.core.windows.net/vanvrapp-richmedia/medd411/lumbar_vertebra_inferior.png' title='Lumbar Vertebra Labels 2'] [link src='https://www.clinicalanatomy.ca/back/Back/story_html5.html' title='Anatomy of the back']",
+          "content": "",
           "position": {
+            "x": 19.57034683227539,
+            "y": 85.19000244140625,
+            "z": -147.02000427246095,
             "global": true
           }
         },
         {
           "annotationId": "1",
-          "title": "Body",
+          "title": "Apex",
           "content": "",
           "position": {
-            "x": 1.2663357257843018,
-            "y": 19.750324249267579,
-            "z": -9.739675521850586,
+            "x": 85.4000015258789,
+            "y": -43.5,
+            "z": -39.099998474121097,
             "global": false
           }
         },
         {
           "annotationId": "2",
-          "title": "Pedicle ",
+          "title": "Coronary Sulcus",
           "content": "",
           "position": {
-            "x": -9.851451873779297,
-            "y": -4.058406829833984,
-            "z": -6.333895683288574,
+            "x": 22.5,
+            "y": 25.200000762939454,
+            "z": 26.799999237060548,
             "global": false
           }
         },
         {
           "annotationId": "3",
-          "title": "Superior articular process ",
+          "title": "Right Atrium",
           "content": "",
           "position": {
-            "x": -14.061357498168946,
-            "y": -17.833965301513673,
-            "z": -10.511529922485352,
+            "x": 7.900000095367432,
+            "y": 61.400001525878909,
+            "z": 16.100000381469728,
             "global": false
           }
         },
         {
           "annotationId": "4",
-          "title": "Transverse process ",
+          "title": "Right Atrial Appendage (Auricle)",
           "content": "",
           "position": {
-            "x": -28.040950775146486,
-            "y": -15.57860279083252,
-            "z": 2.0958995819091799,
+            "x": 7.633090972900391,
+            "y": 24.196256637573243,
+            "z": 38.900001525878909,
             "global": false
           }
         },
         {
           "annotationId": "5",
-          "title": "Superior articular facet ",
+          "title": "Left Ventricle",
           "content": "",
           "position": {
-            "x": -7.140236854553223,
-            "y": -17.499113082885743,
-            "z": -8.50500202178955,
+            "x": 25.100000381469728,
+            "y": -77.4000015258789,
+            "z": -23.5,
             "global": false
           }
         },
         {
           "annotationId": "6",
-          "title": "Inferior articular process ",
+          "title": "Right Ventricle",
           "content": "",
           "position": {
-            "x": -2.4843149185180666,
-            "y": -19.40558433532715,
-            "z": 24.282291412353517,
+            "x": 58.400001525878909,
+            "y": 5.03873348236084,
+            "z": 7.025906562805176,
             "global": false
           }
         },
         {
           "annotationId": "7",
-          "title": "Spinous process ",
+          "title": "Left Atrium",
           "content": "",
           "position": {
-            "x": 9.500635147094727,
-            "y": -36.02168655395508,
-            "z": 10.277275085449219,
+            "x": -52.400001525878909,
+            "y": -6.598278045654297,
+            "z": -14.794618606567383,
             "global": false
           }
         },
         {
           "annotationId": "8",
-          "title": "Inferior articular facet ",
+          "title": "Left Coronary Artery",
           "content": "",
           "position": {
-            "x": -5.514911651611328,
-            "y": -13.630690574645996,
-            "z": 22.634418487548829,
+            "x": -11.746552467346192,
+            "y": -9.078362464904786,
+            "z": 30.299999237060548,
             "global": false
           }
         },
         {
           "annotationId": "9",
-          "title": "Lamina ",
+          "title": "Anterior Interventricular Branch (Left Anterior Descending)",
           "content": "",
           "position": {
-            "x": 11.254493713378907,
-            "y": -11.311187744140625,
-            "z": 3.2390642166137697,
+            "x": 23.064422607421876,
+            "y": -41.29390335083008,
+            "z": 29.899999618530275,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "10",
+          "title": "Circumflex Branch of Left Coronary Artery",
+          "content": "",
+          "position": {
+            "x": -17.47028350830078,
+            "y": -25.399999618530275,
+            "z": 27.399999618530275,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "11",
+          "title": "Great Cardiac Vein",
+          "content": "",
+          "position": {
+            "x": -22.19724464416504,
+            "y": -37.5,
+            "z": 20.5,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "12",
+          "title": "Coronary Sinus",
+          "content": "",
+          "position": {
+            "x": -31.96294403076172,
+            "y": -32.900001525878909,
+            "z": -23.100000381469728,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "13",
+          "title": "Right Coronary Artery",
+          "content": "",
+          "position": {
+            "x": 30.399999618530275,
+            "y": 32.5,
+            "z": -34.29999923706055,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "14",
+          "title": "Trabeculae Carnae",
+          "content": "",
+          "position": {
+            "x": 43.400001525878909,
+            "y": -24.899999618530275,
+            "z": -32.74416732788086,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "15",
+          "title": "Papillary Muscles",
+          "content": "",
+          "position": {
+            "x": 9.147985458374024,
+            "y": -30.600000381469728,
+            "z": -33.900001525878909,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "16",
+          "title": "Chordae Tendinae",
+          "content": "",
+          "position": {
+            "x": 6.239999771118164,
+            "y": -21.951801300048829,
+            "z": -27.309999465942384,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "17",
+          "title": "Mitral Valve",
+          "content": "",
+          "position": {
+            "x": -0.9100000262260437,
+            "y": -19.705806732177736,
+            "z": -15.579999923706055,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "18",
+          "title": "Tricuspid Valve",
+          "content": "",
+          "position": {
+            "x": 25.600000381469728,
+            "y": 14.800000190734864,
+            "z": -6.599999904632568,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "19",
+          "title": "Pulmonary Valve",
+          "content": "",
+          "position": {
+            "x": 6.900000095367432,
+            "y": -10.600000381469727,
+            "z": 27.700000762939454,
+            "global": false
+          }
+        },
+        {
+          "annotationId": "20",
+          "title": "Aortic Valve",
+          "content": "",
+          "position": {
+            "x": 7.260000228881836,
+            "y": 1.7100000381469727,
+            "z": 5.800000190734863,
             "global": false
           }
         }
@@ -5321,6 +5253,19 @@
       "labs": []
     },
     {
+      "courseId": "MIDW106",
+      "labs": [
+        {
+          "labId": 1,
+          "labName": "Osteology of the Limbs and Conceptual Overview of the Joints",
+          "imgUrl": "",
+          "specimenList": [
+            "heart02"
+          ]
+        }
+      ]
+    },
+    {
       "courseId": "BMEG 410",
       "labs": [
         {
@@ -5365,7 +5310,8 @@
       "order": 2,
       "organs": [
         "Heart",
-        "Lung"
+        "Lung",
+        "Heart (Cardiomegalic)"
       ]
     },
     {
