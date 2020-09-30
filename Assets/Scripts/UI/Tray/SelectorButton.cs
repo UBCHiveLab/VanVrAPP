@@ -15,6 +15,7 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public int indexValue;
     public Image icon;
     public GameObject loadingSpinner;
+    public GameObject loadingSpinnerLarge;
     public Transform children;
     public Image background;
 
@@ -40,6 +41,11 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (loadingSpinner != null)
         {
             loadingSpinner.gameObject.SetActive(loading);
+        }
+
+        if (loadingSpinnerLarge != null)
+        {
+            loadingSpinnerLarge.gameObject.SetActive(loading);
         }
     }
 
