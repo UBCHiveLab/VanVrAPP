@@ -9,6 +9,9 @@ public class MainCameraEvents : MonoBehaviour
     public GameObject canvas;
     public TrayPage tray;
     public StateController stateController;
+    public Animator cameraAnimation;
+    public Camera maincamera;
+    public GameObject uiSkipButton;
 
     public void OnEnterFromLandingPage()
     {
@@ -22,5 +25,13 @@ public class MainCameraEvents : MonoBehaviour
         // allow the user to interact with the UI canvas again, as the "walking to tray" animation is done
         canvas.SetActive(true);
         tray.HaveArrivedAtTray();
+    }
+
+    public void SkipEnterAnimation()
+    {
+        cameraAnimation.GetComponent<Animator>().enabled = false;
+        maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
+        uiSkipButton.SetActive(false);
+        OnArrivedAtTray();
     }
 }
