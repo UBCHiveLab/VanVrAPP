@@ -329,7 +329,4 @@ public class TrayPage : MonoBehaviour, IPage
         startHover.Enable();
     }
 
-
-
-
 }
