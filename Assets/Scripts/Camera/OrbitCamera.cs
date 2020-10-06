@@ -64,6 +64,7 @@ public class OrbitCamera : MonoBehaviour
     public float camDefaultFov;
 
 
+
     private void Awake()
     {
         camera = GetComponent<Camera>();
@@ -96,6 +97,7 @@ public class OrbitCamera : MonoBehaviour
                 target = hit.transform;
             }
         }
+
     }
 
     private void LateUpdate()
