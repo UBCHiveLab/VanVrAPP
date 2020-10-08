@@ -229,6 +229,14 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     }
 
+    public void ResetRotation()
+    {
+        currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
+        _xRot = 0;
+        _yRot = 0;
+
+    }
+
     /**
      * Toggles visibility of annotations, annotation bar and detail view
      */

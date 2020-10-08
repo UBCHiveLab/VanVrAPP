@@ -17,18 +17,36 @@ public class ControlAssist : MonoBehaviour
     public Button controlButtonXCounterClockWise;
     public Button controlButtonYClockWise;
     public Button controlButtonYCounterClockWise;
+    public Button controlButtonMore;
+    public Button controlButtonBack;
+    public Button controlButtonResetCam;
+    public Button controlButtonResetRotation;
+
+    [Header("Control Assist Panel")]
+
+    public GameObject controlAssistFolded;
+    public GameObject controlAssistExtended;
 
     private OrbitCamera orbitCam;
+    private AnalysisPage analysisPage;
     private GameObject specimenHolder;
 
     void Start()
     {
-        //controlButtonUp.onClick.AddListener(MoveUp);
-        //controlButtonDown.onClick.AddListener(MoveDown);
-        //controlButtonLeft.onClick.AddListener(MoveLeft);
-        //controlButtonRight.onClick.AddListener(MoveRight);
+        controlButtonXClockWise.onClick.AddListener(ModelRoatateXClockWise);
+        controlButtonXCounterClockWise.onClick.AddListener(ModelRoatateXCounterClockWise);
+        controlButtonYClockWise.onClick.AddListener(ModelRoatateYClockWise);
+        controlButtonYCounterClockWise.onClick.AddListener(ModelRoatateXCounterClockWise);
+        controlButtonUp.onClick.AddListener(MoveUp);
+        controlButtonDown.onClick.AddListener(MoveDown);
+        controlButtonLeft.onClick.AddListener(MoveLeft);
+        controlButtonRight.onClick.AddListener(MoveRight);
         controlButtonZoomIn.onClick.AddListener(ZoomIn);
         controlButtonZoomOut.onClick.AddListener(ZoomOut);
+        controlButtonMore.onClick.AddListener(ControlAssistMore);
+        controlButtonBack.onClick.AddListener(ControlAssistBack);
+        controlButtonResetCam.onClick.AddListener(ResetCamera);
+        controlButtonResetRotation.onClick.AddListener(ResetRotation);
 
     }
 
@@ -42,6 +60,7 @@ public class ControlAssist : MonoBehaviour
     {
         orbitCam = Camera.main.GetComponent<OrbitCamera>();
         orbitCam.controlAssistActive = true;
+        analysisPage = GameObject.Find("UIManager").GetComponent<AnalysisPage>();
     }
 
     void OnDisable()
@@ -86,19 +105,19 @@ public class ControlAssist : MonoBehaviour
     }
 
     void ModelRoatateXClockWise() {
-        specimenHolder.transform.Rotate(5f, 0, 0);       
+        specimenHolder.transform.Rotate(0, 5f, 0);       
     }
 
     void ModelRoatateXCounterClockWise() {
-        specimenHolder.transform.Rotate(-5f, 0, 0);
+        specimenHolder.transform.Rotate(0, -5f, 0);
     }
 
     void ModelRoatateYClockWise() {
-        specimenHolder.transform.Rotate(0, 5f, 0);
+        specimenHolder.transform.Rotate(5f, 0, 0);
     }
 
     void ModelRoatateYCounterClockWise() {       
-        specimenHolder.transform.Rotate(0, -5f, 0);
+        specimenHolder.transform.Rotate(-5f, 0, 0);
     }
 
     void KeyBoardControl()
@@ -137,23 +156,50 @@ public class ControlAssist : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftShift))
         {
-            ModelRoatateXClockWise();
+            ModelRoatateYClockWise();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) && !Input.GetKey(KeyCode.LeftShift))
         {
-            ModelRoatateXCounterClockWise();
+            ModelRoatateYCounterClockWise();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.LeftShift))
         {
-            ModelRoatateYClockWise();
+            ModelRoatateXClockWise();
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftShift))
         {
-            ModelRoatateYCounterClockWise();
+            ModelRoatateXCounterClockWise();
         }
+    }
+
+    void ControlAssistMore()
+    {
+        controlAssistExtended.SetActive(true);
+        controlAssistFolded.SetActive(false);
+
+    }
+
+    void ControlAssistBack()
+    {
+        controlAssistExtended.SetActive(false);
+        controlAssistFolded.SetActive(true);
+
+    }
+
+    void ResetCamera()
+    {
+        orbitCam.yRotationAxis = 0;
+        orbitCam.xRotationAxis = 0;
+        orbitCam.xVelocity = 0;
+        orbitCam.yVelocity = 0;
+    }
+
+    void ResetRotation()
+    {
+        analysisPage.ResetRotation();
     }
 
 }
