@@ -23,10 +23,10 @@ public class ControlAssist : MonoBehaviour
 
     void Start()
     {
-        controlButtonUp.onClick.AddListener(MoveUp);
-        controlButtonDown.onClick.AddListener(MoveDown);
-        controlButtonLeft.onClick.AddListener(MoveLeft);
-        controlButtonRight.onClick.AddListener(MoveRight);
+        //controlButtonUp.onClick.AddListener(MoveUp);
+        //controlButtonDown.onClick.AddListener(MoveDown);
+        //controlButtonLeft.onClick.AddListener(MoveLeft);
+        //controlButtonRight.onClick.AddListener(MoveRight);
         controlButtonZoomIn.onClick.AddListener(ZoomIn);
         controlButtonZoomOut.onClick.AddListener(ZoomOut);
 
