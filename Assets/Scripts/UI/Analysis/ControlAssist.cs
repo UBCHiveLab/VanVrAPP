@@ -30,6 +30,7 @@ public class ControlAssist : MonoBehaviour
     private OrbitCamera orbitCam;
     private AnalysisPage analysisPage;
     private GameObject specimenHolder;
+    
 
     void Start()
     {
@@ -105,24 +106,29 @@ public class ControlAssist : MonoBehaviour
     }
 
     void ModelRoatateXClockWise() {
-        specimenHolder.transform.Rotate(0, 5f, 0);       
+        
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.down) * specimenHolder.transform.rotation;
     }
 
     void ModelRoatateXCounterClockWise() {
-        specimenHolder.transform.Rotate(0, -5f, 0);
+        
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.up) * specimenHolder.transform.rotation;
     }
 
     void ModelRoatateYClockWise() {
-        specimenHolder.transform.Rotate(5f, 0, 0);
+        
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.left) * specimenHolder.transform.rotation;
     }
 
-    void ModelRoatateYCounterClockWise() {       
-        specimenHolder.transform.Rotate(-5f, 0, 0);
+    void ModelRoatateYCounterClockWise() {
+        
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.right) * specimenHolder.transform.rotation;
     }
 
     void KeyBoardControl()
     {
-        specimenHolder = GameObject.Find("SpecimenHolder");
+        specimenHolder = GameObject.Find("SpecimenHolder").transform.GetChild(0).gameObject;
+        
 
         if (Input.GetKeyDown(KeyCode.Minus))
         {
