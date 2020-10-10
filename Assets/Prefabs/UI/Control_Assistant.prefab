@@ -843,7 +843,7 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
@@ -873,6 +873,8 @@ MonoBehaviour:
   controlButtonYCounterClockWise: {fileID: 0}
   controlButtonMore: {fileID: 0}
   controlButtonBack: {fileID: 0}
+  controlButtonResetCam: {fileID: 0}
+  controlButtonResetRotation: {fileID: 0}
   controlAssistFolded: {fileID: 0}
   controlAssistExtended: {fileID: 0}
 --- !u!222 &6321959568344663537
@@ -1086,7 +1088,7 @@ RectTransform:
   m_GameObject: {fileID: 4360604054052743821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 300, y: 1, z: 1}
+  m_LocalScale: {x: -0.25, y: 1, z: 1}
   m_Children:
   - {fileID: 3166524050291430656}
   - {fileID: 5471796825692339807}
