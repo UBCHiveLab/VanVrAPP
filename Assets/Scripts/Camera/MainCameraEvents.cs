@@ -25,6 +25,7 @@ public class MainCameraEvents : MonoBehaviour
         // allow the user to interact with the UI canvas again, as the "walking to tray" animation is done
         canvas.SetActive(true);
         tray.HaveArrivedAtTray();
+        uiSkipButton.SetActive(false);
     }
 
     public void SkipEnterAnimation()
