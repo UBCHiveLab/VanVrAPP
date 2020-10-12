@@ -6,12 +6,18 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
+using System.Runtime.InteropServices;
 
 /**
  * Spawned by SpecimenStore and responsible for all processes related to fetching manifest.json and online asset bundles.
  */
 public abstract class DataLoader: MonoBehaviour
 {
+
+#if UNITY_WEBGL
+    [DllImport("__Internal")]
+    private static extern void OpenNewTab(string url);
+#endif
 
     [Header("Services")]
     public SpecimenStore store;
@@ -167,10 +173,15 @@ public abstract class DataLoader: MonoBehaviour
         {
             yield return req.SendWebRequest();
 
-            if (req.isNetworkError || req.isHttpError)
+            if (req.isNetworkError || req.isHttpError || srd.prefabPath == "")
             {
-                SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
-                yield break;
+                if (srd.altAssetUrl != "") {
+                    // if couldn't load the asset bundle and there's an alternative url for the asset's content, open a new tab with the alt content
+                    OpenAlternativeContent(srd.altAssetUrl);
+                } else {
+                    SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
+                    yield break;
+                }
             } else
             {
                 // Get downloaded asset bundle
@@ -249,6 +260,14 @@ public abstract class DataLoader: MonoBehaviour
             _requestsResolved++;
         }
 
+    }
+
+    private void OpenAlternativeContent(string altContentLink) {
+        #if!UNITY_EDITOR && UNITY_WEBGL
+        OpenNewTab(altContentLink);
+        #else
+        Application.OpenURL(altContentLink);
+        #endif
     }
 
     private void LoadSpecimenDataNoMeshTex(SpecimenRequestData srd)

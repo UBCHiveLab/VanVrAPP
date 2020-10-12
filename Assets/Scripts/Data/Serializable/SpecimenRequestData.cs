@@ -12,6 +12,7 @@ public class SpecimenRequestData
     public string assetUrl;
     public string assetUrlWebGl;
     public string assetUrlOsx;
+    public string altAssetUrl; // link to asset on alternative source (e.g. SketchFab)
     public string meshPath;
     public string matPath;
     public string prefabPath;
