@@ -5895,7 +5895,7 @@
       "assetUrl": "",
       "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/articulated knee",
       "assetUrlOsx": "",
-      "altAssetUrl": "https://skfb.ly/6VrtO",
+      "altAssetUrl": "",
       "prefabPath": "Assets/Models/Specimens/AssetBundles/Articulated Knee.prefab",
       "scale": 0.15,
       "yPos": 0.15,
@@ -7081,6 +7081,34 @@
           }
         }
       ]
+    },
+    {
+      "id": "superficiallowerlimb01",
+      "name": "Superficial Lower Limb",
+      "version": 1,
+      "organ": "Superficial Lower Limb",
+      "assetUrl": "",
+      "assetUrlWebGl": "",
+      "assetUrlOsx": "",
+      "altAssetUrl": "https://skfb.ly/6VrrP",
+      "prefabPath": "",
+      "scale": 0.15,
+      "yPos": 0.15,
+      "annotations": []
+    },
+    {
+      "id": "deeplowerlimb01",
+      "name": "Deep Lower Limb",
+      "version": 1,
+      "organ": "Deep Lower Limb",
+      "assetUrl": "",
+      "assetUrlWebGl": "",
+      "assetUrlOsx": "",
+      "altAssetUrl": "https://skfb.ly/6VEE8",
+      "prefabPath": "",
+      "scale": 0.15,
+      "yPos": 0.15,
+      "annotations": []
     }
   ],
   "labCourses": [
@@ -7213,7 +7241,9 @@
             "hipjoint02",
             "kneejoint01",
             "kneejoint02",
-            "articulatedknee01"
+            "articulatedknee01",
+            "superficiallowerlimb01",
+            "deeplowerlimb01"
           ]
         }
       ]
@@ -7362,12 +7392,14 @@
         "Ankle and Foot",
         "Fibula",
         "Tibia",
-        "Femur"
+        "Femur",
+        "Superficial Lower Limb",
+        "Deep Lower Limb"
       ]
     },
     {
       "name": "Embryology",
-      "order": 7,
+      "order": 8,
       "organs": []
     }
   ]
