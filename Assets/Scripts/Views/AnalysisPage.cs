@@ -196,8 +196,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
         if (_rotatingSpecimen != null) {
-            _xRot += -Input.GetAxis("Mouse X") * 5f;
-            _yRot += Input.GetAxis("Mouse Y") * 5f;
+            _xRot += -Input.GetAxis("Mouse X") * 5f *orbitCam.mouseControlSpeed;
+            _yRot += Input.GetAxis("Mouse Y") * 5f * orbitCam.mouseControlSpeed;
             _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
         }

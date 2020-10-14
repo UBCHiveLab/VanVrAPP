@@ -59,7 +59,8 @@ public class ControlAssist : MonoBehaviour
     void Update()
     {
         KeyBoardControl();
-        
+
+
     }
 
     void OnEnable()
@@ -221,6 +222,7 @@ public class ControlAssist : MonoBehaviour
     public void ChangeMouseSpeed(float newSpeed)
     {
         this.mouseSpeed = newSpeed;
+        orbitCam.mouseControlSpeed = newSpeed;
     }
 
 }

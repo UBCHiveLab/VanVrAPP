@@ -62,6 +62,7 @@ public class OrbitCamera : MonoBehaviour
     public Vector3 camDefaultPosition;
     public Vector3 camDefaultRotation;
     public float camDefaultFov;
+    public float mouseControlSpeed = 1.0f;
 
 
 
@@ -72,6 +73,7 @@ public class OrbitCamera : MonoBehaviour
 #if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
         rotationSensitivity = rotationSensitivity * 0.25f;             // Fix for out of control sensitivity on webgl
 #endif
+        
     }
 
     private void Start()
@@ -186,7 +188,7 @@ public class OrbitCamera : MonoBehaviour
                 cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
             }
 #endif
-        DoZoom(Input.GetAxis("Mouse ScrollWheel"), Time.deltaTime);
+        DoZoom(Input.GetAxis("Mouse ScrollWheel") * mouseControlSpeed, Time.deltaTime);
     }
 
     public void DoZoom(float amt, float time)
