@@ -102,13 +102,13 @@ public class ControlAssist : MonoBehaviour
     }
 
     void ZoomIn() {
-        orbitCam.DoZoom(1f * mouseSpeed, Time.deltaTime);
+        orbitCam.DoZoom(1f, Time.deltaTime);
 
 
     }
 
     void ZoomOut() {
-        orbitCam.DoZoom(-1f * mouseSpeed, Time.deltaTime);
+        orbitCam.DoZoom(-1f, Time.deltaTime);
 
     }
 

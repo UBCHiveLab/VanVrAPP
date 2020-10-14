@@ -188,7 +188,7 @@ public class OrbitCamera : MonoBehaviour
                 cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
             }
 #endif
-        DoZoom(Input.GetAxis("Mouse ScrollWheel") * mouseControlSpeed, Time.deltaTime);
+        DoZoom(Input.GetAxis("Mouse ScrollWheel"), Time.deltaTime);
     }
 
     public void DoZoom(float amt, float time)
@@ -198,7 +198,7 @@ public class OrbitCamera : MonoBehaviour
             switch (zoomMode) {
                 case ZoomMode.CameraFieldOfView:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     if (cameraFieldOfView <= cameraZoomRangeFOV.x) {
@@ -209,7 +209,7 @@ public class OrbitCamera : MonoBehaviour
                 case ZoomMode.ZAxisDistance:
 
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the z axis distance from going below the minimum value
                     if (zAxisDistance <= cameraZoomRangeZAxis.x) {
@@ -219,9 +219,9 @@ public class OrbitCamera : MonoBehaviour
                     break;
                 case ZoomMode.Blended:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
@@ -234,7 +234,7 @@ public class OrbitCamera : MonoBehaviour
             switch (zoomMode) {
                 case ZoomMode.CameraFieldOfView:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     if (cameraFieldOfView <= cameraZoomRangeFOV.x) {
@@ -245,7 +245,7 @@ public class OrbitCamera : MonoBehaviour
                 case ZoomMode.ZAxisDistance:
 
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.y, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the z axis distance from going below the minimum value
                     if (zAxisDistance <= cameraZoomRangeZAxis.x) {
@@ -255,9 +255,9 @@ public class OrbitCamera : MonoBehaviour
                     break;
                 case ZoomMode.Blended:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.y, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
