@@ -27,6 +27,10 @@ public class ControlAssist : MonoBehaviour
     public GameObject controlAssistFolded;
     public GameObject controlAssistExtended;
 
+    [Header("Slider")]
+
+    public float mouseSpeed;
+
     private OrbitCamera orbitCam;
     private AnalysisPage analysisPage;
     private GameObject specimenHolder;
@@ -37,7 +41,7 @@ public class ControlAssist : MonoBehaviour
         controlButtonXClockWise.onClick.AddListener(ModelRoatateXClockWise);
         controlButtonXCounterClockWise.onClick.AddListener(ModelRoatateXCounterClockWise);
         controlButtonYClockWise.onClick.AddListener(ModelRoatateYClockWise);
-        controlButtonYCounterClockWise.onClick.AddListener(ModelRoatateXCounterClockWise);
+        controlButtonYCounterClockWise.onClick.AddListener(ModelRoatateYCounterClockWise);
         controlButtonUp.onClick.AddListener(MoveUp);
         controlButtonDown.onClick.AddListener(MoveDown);
         controlButtonLeft.onClick.AddListener(MoveLeft);
@@ -48,6 +52,7 @@ public class ControlAssist : MonoBehaviour
         controlButtonBack.onClick.AddListener(ControlAssistBack);
         controlButtonResetCam.onClick.AddListener(ResetCamera);
         controlButtonResetRotation.onClick.AddListener(ResetRotation);
+        mouseSpeed = 1.0f;
 
     }
 
@@ -71,58 +76,63 @@ public class ControlAssist : MonoBehaviour
 
 
     void MoveUp() {
-        orbitCam.yVelocity += 1f * orbitCam.rotationSensitivity;
+        orbitCam.yVelocity += 1f * orbitCam.rotationSensitivity * mouseSpeed;
         orbitCam.yRotationAxis += orbitCam.yVelocity;
         orbitCam.yRotationAxis = orbitCam.ClampAngleBetweenMinAndMax(orbitCam.yRotationAxis, orbitCam.rotationLimit.x, orbitCam.rotationLimit.y);
     }
 
     void MoveDown() {
-        orbitCam.yVelocity -= 1f * orbitCam.rotationSensitivity;
+        orbitCam.yVelocity -= 1f * orbitCam.rotationSensitivity * mouseSpeed;
         orbitCam.yRotationAxis += orbitCam.yVelocity;
         orbitCam.yRotationAxis = orbitCam.ClampAngleBetweenMinAndMax(orbitCam.yRotationAxis, orbitCam.rotationLimit.x, orbitCam.rotationLimit.y);
 
     }
 
     void MoveLeft() {
-        orbitCam.xVelocity += 6f * orbitCam.rotationSensitivity;
+        orbitCam.xVelocity += 6f * orbitCam.rotationSensitivity * mouseSpeed;
         orbitCam.yRotationAxis += orbitCam.yVelocity;
 
     }
 
     void MoveRight() {
-        orbitCam.xVelocity -= 6f * orbitCam.rotationSensitivity;
+        orbitCam.xVelocity -= 6f * orbitCam.rotationSensitivity * mouseSpeed;
         orbitCam.yRotationAxis += orbitCam.yVelocity;
 
     }
 
     void ZoomIn() {
-        orbitCam.DoZoom(1f, Time.deltaTime);
+        orbitCam.DoZoom(1f * mouseSpeed, Time.deltaTime);
+
 
     }
 
     void ZoomOut() {
-        orbitCam.DoZoom(-1f, Time.deltaTime);
+        orbitCam.DoZoom(-1f * mouseSpeed, Time.deltaTime);
 
     }
 
     void ModelRoatateXClockWise() {
         
-        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.down) * specimenHolder.transform.rotation;
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.down) * specimenHolder.transform.rotation;
+        Debug.Log(mouseSpeed);
     }
 
     void ModelRoatateXCounterClockWise() {
         
-        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.up) * specimenHolder.transform.rotation;
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.up) * specimenHolder.transform.rotation;
+        Debug.Log(mouseSpeed);
     }
 
     void ModelRoatateYClockWise() {
         
-        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.left) * specimenHolder.transform.rotation;
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.left) * specimenHolder.transform.rotation;
+        Debug.Log(mouseSpeed);
     }
 
     void ModelRoatateYCounterClockWise() {
         
-        specimenHolder.transform.rotation = Quaternion.AngleAxis(3, Vector3.right) * specimenHolder.transform.rotation;
+        specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.right) * specimenHolder.transform.rotation;
+        Debug.Log(mouseSpeed);
     }
 
     void KeyBoardControl()
@@ -206,6 +216,11 @@ public class ControlAssist : MonoBehaviour
     void ResetRotation()
     {
         analysisPage.ResetRotation();
+    }
+
+    public void ChangeMouseSpeed(float newSpeed)
+    {
+        this.mouseSpeed = newSpeed;
     }
 
 }
