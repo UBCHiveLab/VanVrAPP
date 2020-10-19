@@ -457,7 +457,6 @@ GameObject:
   - component: {fileID: 1254657551412403666}
   - component: {fileID: 9066501567415112342}
   - component: {fileID: 7270103836970029554}
-  - component: {fileID: 4437866793619063114}
   - component: {fileID: 8152335834772952689}
   m_Layer: 5
   m_Name: AnnotationDisplayController
@@ -524,28 +523,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 4
---- !u!114 &4437866793619063114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8370659263821053818}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7693ebdaaae1a7e4cbd380188144009e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 1699198527477578803}
-  left: {fileID: 0}
-  right: {fileID: 6206363266628777907}
-  dropup: {fileID: 0}
-  dropupContent: {fileID: 0}
-  self: {fileID: 8152335834772952689}
-  dropUpEntryPrefab: {fileID: 7446507975565761753, guid: 941db1c52fe420b479e49c25f1e5f264,
-    type: 3}
-  currentDropUpEntries: []
-  display: {fileID: 0}
 --- !u!114 &8152335834772952689
 MonoBehaviour:
   m_ObjectHideFlags: 0
