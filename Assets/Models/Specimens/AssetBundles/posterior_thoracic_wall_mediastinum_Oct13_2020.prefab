@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4426994680198331457
+--- !u!1 &998051777047751536
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,77 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 807413084763524690}
+  - component: {fileID: 279230273848913862}
+  - component: {fileID: 693773143361747733}
+  - component: {fileID: 8107152465877866469}
+  - component: {fileID: 5787262103068355640}
   m_Layer: 9
-  m_Name: posterior_thoracic_wall_mediastinum_Oct13_2020
+  m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &807413084763524690
+--- !u!4 &279230273848913862
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4426994680198331457}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 7159138060646964586}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7882304969124813276
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7159138060646964586}
-  - component: {fileID: 7573540173360892345}
-  - component: {fileID: 1168750486804686153}
-  - component: {fileID: 5642505807057006808}
-  m_Layer: 9
-  m_Name: posterior_thoracic_wall_mediastinum_Oct13_2020
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7159138060646964586
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882304969124813276}
-  m_LocalRotation: {x: 0.58778524, y: -0, z: -0, w: -0.809017}
-  m_LocalPosition: {x: -0, y: -35.2, z: 0}
+  m_GameObject: {fileID: 998051777047751536}
+  m_LocalRotation: {x: 0.022036294, y: -0.75044155, z: -0.65306115, w: -0.09931268}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 807413084763524690}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 288, y: 0, z: 0}
---- !u!33 &7573540173360892345
+  m_LocalEulerAnglesHint: {x: 280.086, y: 136.625, z: 33.492}
+--- !u!33 &693773143361747733
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882304969124813276}
-  m_Mesh: {fileID: -2432090755550338912, guid: 0dfcee7d45f8342c8a6d4e618819f222, type: 3}
---- !u!23 &1168750486804686153
+  m_GameObject: {fileID: 998051777047751536}
+  m_Mesh: {fileID: -2432090755550338912, guid: 9fad108aa9cc5224ab70c33e8a380db4, type: 3}
+--- !u!23 &8107152465877866469
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882304969124813276}
+  m_GameObject: {fileID: 998051777047751536}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -111,17 +80,48 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &5642505807057006808
+--- !u!64 &5787262103068355640
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7882304969124813276}
+  m_GameObject: {fileID: 998051777047751536}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -2432090755550338912, guid: 0dfcee7d45f8342c8a6d4e618819f222, type: 3}
+  m_Mesh: {fileID: -2432090755550338912, guid: 9fad108aa9cc5224ab70c33e8a380db4, type: 3}
+--- !u!1 &4426994680198331457
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807413084763524690}
+  m_Layer: 9
+  m_Name: posterior_thoracic_wall_mediastinum_Oct13_2020
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &807413084763524690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4426994680198331457}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 279230273848913862}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
