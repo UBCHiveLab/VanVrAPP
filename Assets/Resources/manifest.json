@@ -8290,9 +8290,10 @@
       "version": 1,
       "organ": "Kidney",
       "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/kidney_prosection",
-      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/kidney_prosection",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
       "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/kidney_prosection",
       "prefabPath": "Assets/Models/Specimens/AssetBundles/kidney_prosection.prefab",
+      "altAssetUrl": "https://sketchfab.com/3d-models/human-kidney-prosection-be8bd52a887a400094aba3b2a35aa811",
       "scale": 0.001,
       "yPos": 0.16,
       "annotations": [
@@ -10303,6 +10304,34 @@
           }
         }
       ]
+    },
+    {
+      "id": "liveranddiaphragm01",
+      "name": "Liver and Diaphragm",
+      "version": 1,
+      "organ": "Liver",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://sketchfab.com/3d-models/liverdiaphragm-465f6e29276c4b44b4158621abacab1c",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
+      "id": "abdominalcavity02",
+      "name": "Abdominal Cavity 2",
+      "version": 1,
+      "organ": "Abdominal Cavity",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://sketchfab.com/3d-models/abdominal-cavity-2-6e42102821d44da4958842f76d206173",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
     }
   ],
   "labCourses": [
@@ -10498,7 +10527,7 @@
       "labs": [
         {
           "labId": 1,
-          "labName": "",
+          "labName": "Thorax",
           "imgUrl": "",
           "specimenList": [
             "heart01",
@@ -10517,7 +10546,9 @@
             "liverandgallbladder01",
             "abdominalcavity01",
             "kidneyProsection1",
-            "wholeHumanKidney1"
+            "wholeHumanKidney1",
+            "liveranddiaphragm01",
+            "abdominalcavity02"
           ]
         }
       ]
@@ -10553,7 +10584,8 @@
       "organs": [
         "Kidney",
         "Liver and Gallbladder",
-        "Abdominal Cavity"
+        "Abdominal Cavity",
+        "Liver"
       ]
     },
     {
