@@ -10,8 +10,6 @@ public class AnnotationDisplayController : MonoBehaviour
     public GameObject displayOff;
     public GameObject annotationDisplayControllerUI;
 
-    private AnnotationIndicator annotationIndicator;
-
     public bool isAnnotationDisplayOn;
     public bool isButtonOn;
 
