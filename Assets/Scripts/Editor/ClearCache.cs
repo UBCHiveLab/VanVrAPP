@@ -6,7 +6,7 @@ public static class ClearCache
     [MenuItem("Custom Utilities/Clear Asset Cache")]
     static void PerformClear()
     {
-        Caching.ClearCache();
+        Debug.Log("Successfully Clear Cache: "+Caching.ClearCache());
     }
 
 }

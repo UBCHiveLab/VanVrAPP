@@ -62,6 +62,8 @@ public class OrbitCamera : MonoBehaviour
     public Vector3 camDefaultPosition;
     public Vector3 camDefaultRotation;
     public float camDefaultFov;
+    public float mouseControlSpeed = 1.0f;
+
 
 
     private void Awake()
@@ -71,6 +73,7 @@ public class OrbitCamera : MonoBehaviour
 #if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
         rotationSensitivity = rotationSensitivity * 0.25f;             // Fix for out of control sensitivity on webgl
 #endif
+        
     }
 
     private void Start()
@@ -96,6 +99,7 @@ public class OrbitCamera : MonoBehaviour
                 target = hit.transform;
             }
         }
+
     }
 
     private void LateUpdate()
@@ -194,7 +198,7 @@ public class OrbitCamera : MonoBehaviour
             switch (zoomMode) {
                 case ZoomMode.CameraFieldOfView:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     if (cameraFieldOfView <= cameraZoomRangeFOV.x) {
@@ -205,7 +209,7 @@ public class OrbitCamera : MonoBehaviour
                 case ZoomMode.ZAxisDistance:
 
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the z axis distance from going below the minimum value
                     if (zAxisDistance <= cameraZoomRangeZAxis.x) {
@@ -215,9 +219,9 @@ public class OrbitCamera : MonoBehaviour
                     break;
                 case ZoomMode.Blended:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.x, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.x, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);
@@ -230,7 +234,7 @@ public class OrbitCamera : MonoBehaviour
             switch (zoomMode) {
                 case ZoomMode.CameraFieldOfView:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     if (cameraFieldOfView <= cameraZoomRangeFOV.x) {
@@ -241,7 +245,7 @@ public class OrbitCamera : MonoBehaviour
                 case ZoomMode.ZAxisDistance:
 
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.y, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the z axis distance from going below the minimum value
                     if (zAxisDistance <= cameraZoomRangeZAxis.x) {
@@ -251,9 +255,9 @@ public class OrbitCamera : MonoBehaviour
                     break;
                 case ZoomMode.Blended:
                     cameraFieldOfView = Mathf.SmoothDamp(cameraFieldOfView, cameraZoomRangeFOV.y, ref zoomVelocity,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
                     zAxisDistance = Mathf.SmoothDamp(zAxisDistance, cameraZoomRangeZAxis.y, ref zoomVelocityZAxis,
-                        time * zoomSoothness);
+                        time * zoomSoothness * (1 / mouseControlSpeed));
 
                     //prevents the field of view from going below the minimum value
                     cameraFieldOfView = Mathf.Clamp(cameraFieldOfView, cameraZoomRangeFOV.x, cameraZoomRangeFOV.y);

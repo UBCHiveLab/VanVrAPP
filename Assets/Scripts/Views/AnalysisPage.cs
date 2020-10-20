@@ -196,8 +196,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
 
         if (_rotatingSpecimen != null) {
-            _xRot += -Input.GetAxis("Mouse X") * 5f;
-            _yRot += Input.GetAxis("Mouse Y") * 5f;
+            _xRot += -Input.GetAxis("Mouse X") * 5f *orbitCam.mouseControlSpeed;
+            _yRot += Input.GetAxis("Mouse Y") * 5f * orbitCam.mouseControlSpeed;
             _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
         }
@@ -227,11 +227,13 @@ public class AnalysisPage : MonoBehaviour, IPage
         orbitCam.xVelocity = 0;
         orbitCam.yVelocity = 0;
 
-        //mainCamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
-        //mainCamera.transform.rotation = Quaternion.Euler(-4.211f, 0, 0);
-        //mainCamera.transform.position = orbitCam.camDefaultPosition;
-        //mainCamera.transform.rotation = orbitCam.camDefaultRotation;
+    }
 
+    public void ResetRotation()
+    {
+        currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
+        _xRot = 0;
+        _yRot = 0;
 
     }
 
