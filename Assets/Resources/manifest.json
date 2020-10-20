@@ -10332,6 +10332,76 @@
       "scale": 0.35,
       "yPos": 0,
       "annotations": []
+    },
+    {
+      "id": "humanSkullWithoutcalvarium_lowres",
+      "name": "Human Skull (calvarium removed)",
+      "version": 1,
+      "organ": "Skull",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://sketchfab.com/3d-models/human-skull-calvarium-removed-61af63f0638a4d228873758e29e13d13",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
+      "id": "expandedSkull",
+      "name": "Expanded skull",
+      "version": 1,
+      "organ": "Skull",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://sketchfab.com/3d-models/expanded-skull-4b649056b2814efbb0cb1a73dac7f8a0",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
+      "id": "humanSkullWithoutcalvarium_highres",
+      "name": "High Resolution Human Skull (calvarium removed)",
+      "version": 1,
+      "organ": "Skull",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://sketchfab.com/3d-models/human-skull-calvarium-removed-d62d7c68e9684e30ae493d8c2b7f7bac",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
+      "id": "calvarium",
+      "name": "Calvarium",
+      "version": 1,
+      "organ": "Calvarium",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://skfb.ly/6UTnD",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
+      "id": "mandible",
+      "name": "Mandible",
+      "version": 1,
+      "organ": "Mandible",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://skfb.ly/6UApx",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
     }
   ],
   "labCourses": [
@@ -10414,7 +10484,7 @@
           ]
         },
         {
-          "labId": 3,
+          "labId": 4,
           "labName": "Thoracic Walls, Pleural Cavities and Lungs",
           "imgUrl": "",
           "specimenList": [
@@ -10423,6 +10493,18 @@
             "rightlung01",
             "leftlung01",
             "l4lungswithtrachea"
+          ]
+        },
+        {
+          "labId": 6,
+          "labName": "Thoracic Walls, Pleural Cavities and Lungs",
+          "imgUrl": "",
+          "specimenList": [
+            "humanSkullWithoutcalvarium_lowres",
+            "humanSkullWithoutcalvarium_highres",
+            "expandedSkull",
+            "calvarium",
+            "mandible"
           ]
         }
       ]
@@ -10565,7 +10647,9 @@
         "Esophagus",
         "Brainstem",
         "Head",
-        "Infratemporal Fossa"
+        "Infratemporal Fossa",
+        "Calvarium",
+        "Mandible"
       ]
     },
     {
