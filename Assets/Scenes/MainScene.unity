@@ -6061,6 +6061,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9052620107410056692, guid: d6be3af9ed76e874692ddf3fce94bfa0,
+        type: 3}
+      propertyPath: on
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6be3af9ed76e874692ddf3fce94bfa0, type: 3}
 --- !u!1 &135700140 stripped
@@ -104653,6 +104658,14 @@ PrefabInstance:
       propertyPath: mouseSpeedController
       value: 
       objectReference: {fileID: 1374847822}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: controlButtonControlAssist
+      value: 
+      objectReference: {fileID: 2108224148}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: isControlAssistOn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 336513511137227346, guid: 8ae06e37627ceb74a804790285c14855,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -108960,6 +108973,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105551989}
   m_Mesh: {fileID: -7054743668530944560, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
+--- !u!114 &2108224148 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5365877745731915969, guid: d6be3af9ed76e874692ddf3fce94bfa0,
+    type: 3}
+  m_PrefabInstance: {fileID: 135700139}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2108628922
 GameObject:
   m_ObjectHideFlags: 0
@@ -114562,8 +114587,10 @@ MonoBehaviour:
   controlButtonBack: {fileID: 4586375663195345914}
   controlButtonResetCam: {fileID: 0}
   controlButtonResetRotation: {fileID: 0}
+  controlButtonControlAssist: {fileID: 0}
   controlAssistFolded: {fileID: 0}
   controlAssistExtended: {fileID: 4586375662795420215}
+  isControlAssistOn: 0
   mouseSpeed: 0
 --- !u!1 &4587925169271447592
 GameObject:
@@ -116274,6 +116301,16 @@ PrefabInstance:
       propertyPath: controlButtonResetRotation
       value: 
       objectReference: {fileID: 1995613131}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: controlButtonControlAssist
+      value: 
+      objectReference: {fileID: 2108224148}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: isControlAssistOn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5595585850882679440, guid: 68a178f72ba156c4eb825e8d4f090ea7,
         type: 3}
       propertyPath: m_Name
@@ -119011,8 +119048,10 @@ MonoBehaviour:
   controlButtonBack: {fileID: 0}
   controlButtonResetCam: {fileID: 0}
   controlButtonResetRotation: {fileID: 0}
+  controlButtonControlAssist: {fileID: 0}
   controlAssistFolded: {fileID: 0}
   controlAssistExtended: {fileID: 0}
+  isControlAssistOn: 0
   mouseSpeed: 0
 --- !u!1 &8758356718967814006
 GameObject:
