@@ -21,11 +21,13 @@ public class ControlAssist : MonoBehaviour
     public Button controlButtonBack;
     public Button controlButtonResetCam;
     public Button controlButtonResetRotation;
+    public Button controlButtonControlAssist;
 
     [Header("Control Assist Panel")]
 
     public GameObject controlAssistFolded;
     public GameObject controlAssistExtended;
+    public bool isControlAssistOn = true;
 
     [Header("Slider")]
 
@@ -52,6 +54,7 @@ public class ControlAssist : MonoBehaviour
         controlButtonBack.onClick.AddListener(ControlAssistBack);
         controlButtonResetCam.onClick.AddListener(ResetCamera);
         controlButtonResetRotation.onClick.AddListener(ResetRotation);
+        controlButtonControlAssist.onClick.AddListener(ControlAssistState);
         mouseSpeed = 1.0f;
 
     }
@@ -59,7 +62,6 @@ public class ControlAssist : MonoBehaviour
     void Update()
     {
         KeyBoardControl();
-
 
     }
 
@@ -225,4 +227,23 @@ public class ControlAssist : MonoBehaviour
         orbitCam.mouseControlSpeed = newSpeed;
     }
 
+
+    //add listener for controlling the control assist panel
+    void ControlAssistState()
+    {
+        //Debug.Log("clicked");
+        if(isControlAssistOn == false)
+        {
+            controlAssistFolded.SetActive(!isControlAssistOn);
+            controlAssistExtended.SetActive(isControlAssistOn);
+        }
+        else
+        {
+            controlAssistFolded.SetActive(!isControlAssistOn);
+            controlAssistExtended.SetActive(!isControlAssistOn);
+        }
+
+        isControlAssistOn = !isControlAssistOn;
+
+    }
 }
