@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 /**
  * Provides a clickable interface for the orbit camera.
  */
@@ -32,6 +33,7 @@ public class ControlAssist : MonoBehaviour
     [Header("Slider")]
 
     public float mouseSpeed;
+    public TextMeshProUGUI sliderNum;
 
     private OrbitCamera orbitCam;
     private AnalysisPage analysisPage;
@@ -62,6 +64,7 @@ public class ControlAssist : MonoBehaviour
     void Update()
     {
         KeyBoardControl();
+        
 
     }
 
@@ -221,10 +224,12 @@ public class ControlAssist : MonoBehaviour
         analysisPage.ResetRotation();
     }
 
+    //mouse speed control
     public void ChangeMouseSpeed(float newSpeed)
     {
         this.mouseSpeed = newSpeed;
         orbitCam.mouseControlSpeed = newSpeed;
+        sliderNum.text = Mathf.Round(mouseSpeed * 44).ToString();
     }
 
 
