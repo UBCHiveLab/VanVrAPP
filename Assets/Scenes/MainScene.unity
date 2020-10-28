@@ -42850,6 +42850,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d060bc393e239524ebc5c14cc19737c1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc1885f4c8ef7e0428549e73e43f8f74, type: 3}
+--- !u!1 &1048860455 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 575678407212386676, guid: 893a8c1602537944a90e5f9142a81a28,
+    type: 3}
+  m_PrefabInstance: {fileID: 3773098380762904432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1050077237
 GameObject:
   m_ObjectHideFlags: 0
@@ -64787,6 +64793,7 @@ GameObject:
   - component: {fileID: 1358552587}
   - component: {fileID: 1358552588}
   - component: {fileID: 1358552591}
+  - component: {fileID: 1358552592}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -64830,6 +64837,7 @@ MonoBehaviour:
   specimenLabel: {fileID: 2097661510}
   trayObj: {fileID: 1198560506}
   trayPageScript: {fileID: 1358552588}
+  comparisonMode: {fileID: 0}
 --- !u!114 &1358552588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64912,6 +64920,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadingLargeSpinner: {fileID: 580093713}
   actionButtons: {fileID: 1097963133}
+--- !u!114 &1358552592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358552586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb9af7c41d7f88b4c8febca7dcfafc2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comparisonCanvas: {fileID: 1048860455}
+  analysisLeftContainer: {fileID: 135700140}
+  isCompared: 0
+  comparisonCloseButton: {fileID: 1635866130}
+  analysisPage: {fileID: 0}
 --- !u!1 &1362939641
 GameObject:
   m_ObjectHideFlags: 0

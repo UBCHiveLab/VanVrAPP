@@ -57,6 +57,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public GameObject specimenLabel;
     public GameObject trayObj;
     public TrayPage trayPageScript;
+    public ComparisonMode comparisonMode;
 
 
     public void Activate()
@@ -135,6 +136,9 @@ public class AnalysisPage : MonoBehaviour, IPage
         // Focus mode (with icon indicator)
         focusModeButton.onClick.AddListener(() => ToggleFocus());
         _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
+
+        //Compare mode
+        comparisonMode = GameObject.Find("UIManager").GetComponent<ComparisonMode>();
 
     }
 
@@ -259,10 +263,12 @@ public class AnalysisPage : MonoBehaviour, IPage
     /**
      * Returns the controller to tray mode and activates compare
      */
-    void ToggleCompare()
+    public void ToggleCompare()
     {
-        stateController.mode = ViewMode.TRAY;
-        trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
+        //stateController.mode = ViewMode.TRAY;
+        //trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
+        comparisonMode.isCompared = !comparisonMode.isCompared;
+        //Debug.Log(comparisonMode.isCompared);
     }
 
     /**
