@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ComparisonMode : MonoBehaviour
+public class ComparisonMode : MonoBehaviour, IPage
 {
     [Header("State")]
     public GameObject comparisonCanvas;
@@ -15,6 +15,10 @@ public class ComparisonMode : MonoBehaviour
 
     public AnalysisPage analysisPage;
 
+
+    public void Activate() { }
+
+    public void Deactivate() { }
 
     // Start is called before the first frame update
     void Start()
