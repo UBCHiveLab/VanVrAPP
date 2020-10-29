@@ -37,6 +37,7 @@ public class ControlAssist : MonoBehaviour
 
     private OrbitCamera orbitCam;
     private AnalysisPage analysisPage;
+    private ComparisonMode comparisonMode;
     private GameObject specimenHolder;
     
 
@@ -59,12 +60,20 @@ public class ControlAssist : MonoBehaviour
         controlButtonControlAssist.onClick.AddListener(ControlAssistState);
         mouseSpeed = 1.0f;
 
+        comparisonMode = GameObject.Find("UIManager").GetComponent<ComparisonMode>();
+
     }
 
     void Update()
     {
         KeyBoardControl();
         
+        //When the comparison mode is on, force close the extended control assist
+        if(comparisonMode.isCompared == true)
+        {
+            controlAssistFolded.SetActive(isControlAssistOn);
+            controlAssistExtended.SetActive(!isControlAssistOn);
+        }
 
     }
 
@@ -199,9 +208,12 @@ public class ControlAssist : MonoBehaviour
 
     void ControlAssistMore()
     {
-        controlAssistExtended.SetActive(true);
-        controlAssistFolded.SetActive(false);
-
+        if(comparisonMode.isCompared == false)
+        {
+            controlAssistExtended.SetActive(true);
+            controlAssistFolded.SetActive(false);
+        }
+   
     }
 
     void ControlAssistBack()
