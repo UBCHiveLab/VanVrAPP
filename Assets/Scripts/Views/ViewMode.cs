@@ -5,6 +5,6 @@ public enum ViewMode
 {
     LANDING,
     TRAY,
-    ANALYSIS,
-    COMPARE
+    ANALYSIS
+    //COMPARE
 }

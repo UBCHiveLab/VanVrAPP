@@ -6,6 +6,8 @@ public class SpecimenCart : MonoBehaviour
     public Vector3 singleTrayLocalOffset = new Vector3(-0.25f, 2.25f, 0.5f);
     public Vector3 compareTray1LocalOffset = new Vector3(-0.75f, 2.25f, 0.5f);
     public Vector3 compareTray2LocalOffset = new Vector3(0.5f, 2.25f, 0.5f);
+    //public Vector3 newcomparisonmodeTray1Offset = new Vector3(-0.25f, 2.25f, 0.5f);
+    //public Vector3 newcomparisonmodeTray2Offset = new Vector3(-1.50f, 2.25f, 0.5f);
     public GameObject tray1;
     public GameObject tray2;
     public Vector3 specimenTrayOffset = new Vector3(0, 0, 0.005f);
@@ -80,6 +82,20 @@ public class SpecimenCart : MonoBehaviour
         Destroy(tray2);
         tray2 = null;
         tray1.transform.localPosition = singleTrayLocalOffset;
+    }
+
+    //the specimen positions in new comparison mode
+    public void ComprisonModePosition()
+    {
+        if (tray2 == null) {
+            Debug.Log("no trAy2");
+            return;
+
+        }
+        tray1.transform.localPosition = new Vector3(-0.25f, 2.25f, 0.5f);
+        //Debug.Log("tray1");
+        tray2.transform.localPosition = new Vector3(-1.50f, 2.25f, 0.5f);
+        //Debug.Log("tray2");
     }
 
     // Resets a specimen location in terms of its tray offset.
