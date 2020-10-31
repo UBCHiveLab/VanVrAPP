@@ -93,9 +93,20 @@ public class SpecimenCart : MonoBehaviour
 
         }
         tray1.transform.localPosition = new Vector3(-0.25f, 2.25f, 0.5f);
-        //Debug.Log("tray1");
         tray2.transform.localPosition = new Vector3(-1.50f, 2.25f, 0.5f);
-        //Debug.Log("tray2");
+
+    }
+
+    public void SpecimenPositionTrayView()
+    {
+        if (tray2 == null)
+        {
+            Debug.Log("no trAy2");
+            return;
+
+        }
+        tray1.transform.localPosition = compareTray1LocalOffset;
+        tray2.transform.localPosition = compareTray2LocalOffset;
     }
 
     // Resets a specimen location in terms of its tray offset.

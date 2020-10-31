@@ -267,8 +267,9 @@ public class AnalysisPage : MonoBehaviour, IPage
     {
         //stateController.mode = ViewMode.TRAY;
         //trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
-        comparisonMode.isCompared = !comparisonMode.isCompared;
-        //Debug.Log(comparisonMode.isCompared);
+
+        comparisonMode.ComparisonState();
+
     }
 
     /**

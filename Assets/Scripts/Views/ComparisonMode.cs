@@ -37,24 +37,30 @@ public class ComparisonMode : MonoBehaviour
         //
         analysisPage = GameObject.Find("UIManager").GetComponent<AnalysisPage>();
         orbitCam = mainCamera.GetComponent<OrbitCamera>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        ComparisonState();
+        
     }
 
-    void ComparisonState()
+    public void ComparisonState()
     {
+        isCompared = !isCompared;
         comparisonCanvas.SetActive(isCompared);
         comparisonBackground.SetActive(isCompared);
         analysisLeftContainer.SetActive(!isCompared);
         if(isCompared == true)
-        {
-            
+        {   
             mainCamera.GetComponent<OrbitCamera>().enabled = !isCompared;
             cart.ComprisonModePosition();
+        }
+        else
+        {
+            mainCamera.GetComponent<OrbitCamera>().enabled = !isCompared;
+            cart.SpecimenPositionTrayView();
         }
 
     }
