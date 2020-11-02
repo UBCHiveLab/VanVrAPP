@@ -59,7 +59,9 @@ public class ComparisonMode : MonoBehaviour
         {   
             mainCamera.GetComponent<OrbitCamera>().enabled = !isCompared;
             cart.ComprisonModePosition();
-            mainCamera.transform.position = new Vector3(-0.1700341f, 1.948645f, 20.33669f);
+
+            // set camera to tray view perspective; set const for these later
+            mainCamera.transform.position = new Vector3(-0.17f, 2f, 20.34f);
             mainCamera.transform.rotation = new Quaternion(0,0,0,0);
         }
         else
