@@ -48,6 +48,8 @@ public class ComparisonMode : MonoBehaviour
 
     public void ComparisonState()
     {
+        if (cart.tray1 == null || cart.tray2 == null) return;
+
         isCompared = !isCompared;
 
         comparisonCanvas.SetActive(isCompared);
