@@ -49,13 +49,18 @@ public class ComparisonMode : MonoBehaviour
     public void ComparisonState()
     {
         isCompared = !isCompared;
+
         comparisonCanvas.SetActive(isCompared);
         comparisonBackground.SetActive(isCompared);
         analysisLeftContainer.SetActive(!isCompared);
+       
+
         if(isCompared == true)
         {   
             mainCamera.GetComponent<OrbitCamera>().enabled = !isCompared;
             cart.ComprisonModePosition();
+            mainCamera.transform.position = new Vector3(-0.1700341f, 1.948645f, 20.33669f);
+            mainCamera.transform.rotation = new Quaternion(0,0,0,0);
         }
         else
         {

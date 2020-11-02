@@ -267,7 +267,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     {
         //stateController.mode = ViewMode.TRAY;
         //trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
-
+        ResetCameraPosition();
         comparisonMode.ComparisonState();
 
     }
