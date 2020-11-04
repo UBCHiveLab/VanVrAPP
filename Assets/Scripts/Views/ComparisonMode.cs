@@ -79,6 +79,32 @@ public class ComparisonMode : MonoBehaviour
 
     }
 
+    //Zoom in/out in comparison mode
+    public void ZoomInComparison(float num)
+    {
+        //sin(20)
+        if (cart.tray1.transform.localPosition.x <= -0.52)
+        {
+            cart.tray1.transform.localPosition = new Vector3(-0.5236001f, 2.25f, -0.2520001f);
+        }
+        //Debug.Log(cart.tray1.transform.localPosition);
+        cart.tray1.transform.localPosition -= new Vector3(num * 0.342f, 0, num * 0.94f);
+        //Debug.Log(cart.tray1.transform.localPosition);
+    }
+
+    public void ZoomOutComparison(float num)
+    {
+        //cos(20)
+        if(cart.tray1.transform.localPosition.x >= -0.23)
+        {
+            cart.tray1.transform.localPosition = new Vector3(0.02359999f, 2.25f, 1.252f);
+        }
+
+        Debug.Log(cart.tray1.transform.localPosition);
+        cart.tray1.transform.localPosition += new Vector3(num * 0.342f, 0, num * 0.94f);
+        Debug.Log(cart.tray1.transform.localPosition);
+    }
+
     void ToggleClose()
     {
         analysisPage.ToggleCompare();

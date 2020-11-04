@@ -116,13 +116,30 @@ public class ControlAssist : MonoBehaviour
     }
 
     void ZoomIn() {
-        orbitCam.DoZoom(1f, Time.deltaTime);
-
+        //check whether it's comparison mode
+        if (comparisonMode.isCompared == true)
+        {
+            //Debug.Log(comparisonMode.isCompared);
+            comparisonMode.ZoomInComparison(0.1f);
+        }
+        else
+        {
+            orbitCam.DoZoom(1f, Time.deltaTime);
+        }
+        
 
     }
 
     void ZoomOut() {
-        orbitCam.DoZoom(-1f, Time.deltaTime);
+        //check whether it's comparison mode
+        if (comparisonMode.isCompared == true)
+        {
+            comparisonMode.ZoomOutComparison(0.1f);
+        }
+        else
+        {
+            orbitCam.DoZoom(-1f, Time.deltaTime);
+        }      
 
     }
 
