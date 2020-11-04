@@ -80,9 +80,9 @@ public class ComparisonMode : MonoBehaviour
     }
 
     //Zoom in/out in comparison mode
-    public void ZoomInComparison(float num)
+    public void Tray1ZoomInComparison(float num)
     {
-        //sin(20)
+        //sin(20) cos(20)
         if (cart.tray1.transform.localPosition.x <= -0.52)
         {
             cart.tray1.transform.localPosition = new Vector3(-0.5236001f, 2.25f, -0.2520001f);
@@ -92,9 +92,8 @@ public class ComparisonMode : MonoBehaviour
         //Debug.Log(cart.tray1.transform.localPosition);
     }
 
-    public void ZoomOutComparison(float num)
+    public void Tray1ZoomOutComparison(float num)
     {
-        //cos(20)
         if(cart.tray1.transform.localPosition.x >= -0.23)
         {
             cart.tray1.transform.localPosition = new Vector3(0.02359999f, 2.25f, 1.252f);
@@ -103,6 +102,26 @@ public class ComparisonMode : MonoBehaviour
         Debug.Log(cart.tray1.transform.localPosition);
         cart.tray1.transform.localPosition += new Vector3(num * 0.342f, 0, num * 0.94f);
         Debug.Log(cart.tray1.transform.localPosition);
+    }
+
+    public void Tray2ZoomInComparison(float num) {
+        //sin(30) cos(30)
+        if (cart.tray2.transform.localPosition.x >= -1.35)
+        {
+            cart.tray2.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
+        }
+
+        cart.tray2.transform.localPosition += new Vector3(num * 0.5f, 0, -num * 0.866f);
+    }
+
+    public void Tray2ZoomOutComparison(float num) {
+        if (cart.tray2.transform.localPosition.x <= -2.349999)
+        {
+            cart.tray2.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
+        }
+
+        cart.tray2.transform.localPosition -= new Vector3(num * 0.5f, 0, -num * 0.866f);
+
     }
 
     void ToggleClose()
