@@ -11,6 +11,8 @@ public class ComparisonMode : MonoBehaviour
     public GameObject analysisLeftContainer;
     public GameObject comparisonBackground;
     public GameObject controlAssistLeft;
+    public GameObject analysisTopLeftContainer;
+    public bool isControlAssistLeftShow;
     public bool isCompared = false;
 
     [Header("button")]
@@ -58,8 +60,8 @@ public class ComparisonMode : MonoBehaviour
         comparisonCanvas.SetActive(isCompared);
         comparisonBackground.SetActive(isCompared);
         analysisLeftContainer.SetActive(!isCompared);
+        analysisTopLeftContainer.SetActive(!isCompared);
         ControlAssistLeftState();
-
 
 
         if (isCompared == true)
@@ -79,7 +81,7 @@ public class ComparisonMode : MonoBehaviour
 
     }
 
-    //Zoom in/out in comparison mode
+    //Zoom in/out in comparison mode controlled by ui button; might improve by looking at camera 
     public void Tray1ZoomInComparison(float num)
     {
         //sin(20) cos(20)
@@ -131,6 +133,6 @@ public class ComparisonMode : MonoBehaviour
 
     void ControlAssistLeftState()
     {
-        controlAssistLeft.SetActive(controlAssist.isControlAssistOn);
+        controlAssistLeft.SetActive(isControlAssistLeftShow);
     }
 }

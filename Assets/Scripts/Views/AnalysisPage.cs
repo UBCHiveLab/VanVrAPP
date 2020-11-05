@@ -302,7 +302,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     /**
      * Toggles visibility of annotations, annotation bar and detail view
      */
-    void ToggleAnnotations(bool on) {
+    public void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
         if (on)
         {
@@ -325,7 +325,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     {
         //stateController.mode = ViewMode.TRAY;
         //trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
-        ResetCameraPosition();
+        ResetCameraPosition();  
         comparisonMode.ComparisonState();
 
     }

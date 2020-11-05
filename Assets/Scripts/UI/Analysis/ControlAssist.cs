@@ -38,7 +38,7 @@ public class ControlAssist : MonoBehaviour
 
     public GameObject controlAssistFolded;
     public GameObject controlAssistExtended;
-    public bool isControlAssistOn = true;
+    public bool isControlAssistOn =false;
 
     [Header("Slider")]
 
@@ -92,8 +92,8 @@ public class ControlAssist : MonoBehaviour
         //When the comparison mode is on, force close the extended control assist
         if(comparisonMode.isCompared == true)
         {
-            controlAssistFolded.SetActive(isControlAssistOn);
-            controlAssistExtended.SetActive(!isControlAssistOn);
+            controlAssistFolded.SetActive(true);
+            controlAssistExtended.SetActive(false);
         }
 
         
@@ -322,19 +322,21 @@ public class ControlAssist : MonoBehaviour
     //add listener for controlling the control assist panel
     void ControlAssistState()
     {
-        //Debug.Log("clicked");
-        if(isControlAssistOn == false)
+        //Debug.Log("clicked");   
+        isControlAssistOn = !isControlAssistOn;
+        
+        if (isControlAssistOn == false)
         {
-            controlAssistFolded.SetActive(!isControlAssistOn);
-            controlAssistExtended.SetActive(isControlAssistOn);
+            controlAssistFolded.SetActive(false);
+            controlAssistExtended.SetActive(false);
+            comparisonMode.isControlAssistLeftShow = false;
         }
         else
         {
-            controlAssistFolded.SetActive(!isControlAssistOn);
-            controlAssistExtended.SetActive(!isControlAssistOn);
+            controlAssistFolded.SetActive(true);
+            controlAssistExtended.SetActive(false);
+            comparisonMode.isControlAssistLeftShow = true;
         }
-
-        isControlAssistOn = !isControlAssistOn;
-
+         
     }
 }
