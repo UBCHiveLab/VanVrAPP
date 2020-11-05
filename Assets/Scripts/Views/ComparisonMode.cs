@@ -92,7 +92,7 @@ public class ComparisonMode : MonoBehaviour
             cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
         }
         //Debug.Log(cart.tray1.transform.localPosition);
-        cart.tray1.transform.localPosition -= new Vector3(num * 0.342f, 0, num * 0.94f);
+        cart.tray1.transform.localPosition -= new Vector3(num * 0.342f * controlAssist.mouseSpeed, 0, num * 0.94f * controlAssist.mouseSpeed);
         //Debug.Log(cart.tray1.transform.localPosition);
     }
 
@@ -104,7 +104,7 @@ public class ComparisonMode : MonoBehaviour
         }
 
         Debug.Log(cart.tray1.transform.localPosition);
-        cart.tray1.transform.localPosition += new Vector3(num * 0.342f, 0, num * 0.94f);
+        cart.tray1.transform.localPosition += new Vector3(num * 0.342f * controlAssist.mouseSpeed, 0, num * 0.94f * controlAssist.mouseSpeed);
         Debug.Log(cart.tray1.transform.localPosition);
     }
 
@@ -115,7 +115,7 @@ public class ComparisonMode : MonoBehaviour
             cart.tray2.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
         }
 
-        cart.tray2.transform.localPosition += new Vector3(num * 0.5f, 0, -num * 0.866f);
+        cart.tray2.transform.localPosition += new Vector3(num * 0.5f * controlAssist.mouseSpeed, 0, -num * 0.866f * controlAssist.mouseSpeed);
     }
 
     public void Tray2ZoomOutComparison(float num) {
@@ -124,7 +124,7 @@ public class ComparisonMode : MonoBehaviour
             cart.tray2.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
         }
 
-        cart.tray2.transform.localPosition -= new Vector3(num * 0.5f, 0, -num * 0.866f);
+        cart.tray2.transform.localPosition -= new Vector3(num * 0.5f * controlAssist.mouseSpeed, 0, -num * 0.866f * controlAssist.mouseSpeed);
 
     }
 

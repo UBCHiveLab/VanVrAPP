@@ -59,6 +59,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public GameObject trayObj;
     public TrayPage trayPageScript;
     public ComparisonMode comparisonMode;
+    public ControlAssist controlAssist;
 
 
     public void Activate()
@@ -222,7 +223,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                     if(_tray.transform.localPosition.x < -0.75)
                     {
                         //tray2 zoomin
-                        _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f, 0, 0.1f * 0.886f);
+                        _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f * controlAssist.mouseSpeed, 0, 0.1f * 0.886f * controlAssist.mouseSpeed);
                         if (_tray.transform.localPosition.x >= -1.35)
                         {
                             _tray.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
@@ -231,7 +232,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                     else
                     {
                         //tray1 zoomin
-                        _tray.transform.localPosition -= new Vector3(0.1f * 0.342f, 0, 0.1f * 0.94f);
+                        _tray.transform.localPosition -= new Vector3(0.1f * 0.342f * controlAssist.mouseSpeed, 0, 0.1f * 0.94f * controlAssist.mouseSpeed);
                         if (cart.tray1.transform.localPosition.x <= -0.42)
                         {
                             cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
@@ -244,7 +245,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                     if (_tray.transform.localPosition.x < -0.75)
                     {
                         //tray2 zoomout
-                        _tray.transform.localPosition += new Vector3(-0.1f * 0.5f, 0, 0.1f * 0.886f);
+                        _tray.transform.localPosition += new Vector3(-0.1f * 0.5f * controlAssist.mouseSpeed, 0, 0.1f * 0.886f * controlAssist.mouseSpeed);
                         if (_tray.transform.localPosition.x <= -2.349999)
                         {
                             _tray.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
@@ -253,7 +254,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                     else
                     {
                         //tray1 zoomout
-                        _tray.transform.localPosition += new Vector3(0.1f * 0.342f, 0, 0.1f * 0.94f);
+                        _tray.transform.localPosition += new Vector3(0.1f * 0.342f * controlAssist.mouseSpeed, 0, 0.1f * 0.94f * controlAssist.mouseSpeed);
                         if (_tray.transform.localPosition.x >= -0.02359999)
                         {
                             _tray.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
