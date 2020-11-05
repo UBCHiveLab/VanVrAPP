@@ -31,6 +31,7 @@ public class AnnotationDisplayController : MonoBehaviour
         isAnnotationDisplayOn = !isAnnotationDisplayOn;
     }
 
+    //control annotation display button ui
     public void AnnotationDisplayControllerButton()
     {
         isButtonOn = !isButtonOn;

@@ -13,6 +13,7 @@ public class ComparisonMode : MonoBehaviour
     public GameObject controlAssistLeft;
     public GameObject analysisTopLeftContainer;
     public GameObject analysisTopRightFocusMode;
+    public GameObject annotationDisplayController;
     public bool isControlAssistLeftShow;
     public bool isCompared = false;
 
@@ -63,6 +64,10 @@ public class ComparisonMode : MonoBehaviour
         analysisLeftContainer.SetActive(!isCompared);
         analysisTopLeftContainer.SetActive(!isCompared);
         analysisTopRightFocusMode.SetActive(!isCompared);
+
+        //Note: Improve later. When annotaion is on, force to close after clicking comparison mode
+        analysisPage.ToggleAnnotations(false);
+        annotationDisplayController.SetActive(false);
         ControlAssistLeftState();
 
 
