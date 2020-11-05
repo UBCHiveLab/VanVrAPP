@@ -83,9 +83,9 @@ public class ComparisonMode : MonoBehaviour
     public void Tray1ZoomInComparison(float num)
     {
         //sin(20) cos(20)
-        if (cart.tray1.transform.localPosition.x <= -0.52)
+        if (cart.tray1.transform.localPosition.x <= -0.42)
         {
-            cart.tray1.transform.localPosition = new Vector3(-0.5236001f, 2.25f, -0.2520001f);
+            cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
         }
         //Debug.Log(cart.tray1.transform.localPosition);
         cart.tray1.transform.localPosition -= new Vector3(num * 0.342f, 0, num * 0.94f);

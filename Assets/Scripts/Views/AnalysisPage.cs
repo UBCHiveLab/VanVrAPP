@@ -221,7 +221,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                 {
                     if(_tray.transform.localPosition.x < -0.75)
                     {
-                        //tray1 zoomin
+                        //tray2 zoomin
                         _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f, 0, 0.1f * 0.886f);
                         if (_tray.transform.localPosition.x >= -1.35)
                         {
@@ -230,11 +230,11 @@ public class AnalysisPage : MonoBehaviour, IPage
                     }
                     else
                     {
-                        //tray2 zoomin
+                        //tray1 zoomin
                         _tray.transform.localPosition -= new Vector3(0.1f * 0.342f, 0, 0.1f * 0.94f);
-                        if (_tray.transform.localPosition.x <= -0.52)
+                        if (cart.tray1.transform.localPosition.x <= -0.42)
                         {
-                            _tray.transform.localPosition = new Vector3(-0.5236001f, 2.25f, -0.2520001f);
+                            cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
                         }
                     }
                 }
