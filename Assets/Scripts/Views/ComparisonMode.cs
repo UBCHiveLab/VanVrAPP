@@ -94,9 +94,9 @@ public class ComparisonMode : MonoBehaviour
 
     public void Tray1ZoomOutComparison(float num)
     {
-        if(cart.tray1.transform.localPosition.x >= -0.23)
+        if(cart.tray1.transform.localPosition.x >= -0.2359999)
         {
-            cart.tray1.transform.localPosition = new Vector3(0.02359999f, 2.25f, 1.252f);
+            cart.tray1.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
         }
 
         Debug.Log(cart.tray1.transform.localPosition);

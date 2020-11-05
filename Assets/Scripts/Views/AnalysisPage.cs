@@ -39,6 +39,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     [Header("Specimen Rotation")]
     private GameObject _rotatingSpecimen;
+    private GameObject _tray;
     private Vector3 specimenRotation;
     private float _xRot;
     private float _yRot;
@@ -204,6 +205,63 @@ public class AnalysisPage : MonoBehaviour, IPage
             _yRot += Input.GetAxis("Mouse Y") * 5f * orbitCam.mouseControlSpeed;
             _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
+        }
+
+        //scrolling control for zoom in/ out during the comparison mode
+        if(comparisonMode.isCompared == true)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens")))
+            {
+                _tray = hit.transform.parent.parent.parent.gameObject;
+                
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+                {
+                    if(_tray.transform.localPosition.x < -0.75)
+                    {
+                        //tray1 zoomin
+                        _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f, 0, 0.1f * 0.886f);
+                        if (_tray.transform.localPosition.x >= -1.35)
+                        {
+                            _tray.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
+                        }
+                    }
+                    else
+                    {
+                        //tray2 zoomin
+                        _tray.transform.localPosition -= new Vector3(0.1f * 0.342f, 0, 0.1f * 0.94f);
+                        if (_tray.transform.localPosition.x <= -0.52)
+                        {
+                            _tray.transform.localPosition = new Vector3(-0.5236001f, 2.25f, -0.2520001f);
+                        }
+                    }
+                }
+                else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+                {
+                    
+                    if (_tray.transform.localPosition.x < -0.75)
+                    {
+                        //tray2 zoomout
+                        _tray.transform.localPosition += new Vector3(-0.1f * 0.5f, 0, 0.1f * 0.886f);
+                        if (_tray.transform.localPosition.x <= -2.349999)
+                        {
+                            _tray.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
+                        }
+                    }
+                    else
+                    {
+                        //tray1 zoomout
+                        _tray.transform.localPosition += new Vector3(0.1f * 0.342f, 0, 0.1f * 0.94f);
+                        if (_tray.transform.localPosition.x >= -0.2359999)
+                        {
+                            _tray.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
+                        }
+                    }
+                }
+            }
+
         }
        
     }

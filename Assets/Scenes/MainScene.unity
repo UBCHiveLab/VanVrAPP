@@ -27356,7 +27356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &647163818
 RectTransform:
   m_ObjectHideFlags: 0
@@ -100210,9 +100210,9 @@ RectTransform:
   m_Father: {fileID: 416437891}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 48, y: -48}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 72, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1966455996
@@ -104902,6 +104902,38 @@ PrefabInstance:
       propertyPath: sliderNum
       value: 
       objectReference: {fileID: 1079896528}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedResetRotation
+      value: 
+      objectReference: {fileID: 960447985}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedControlButtonXClockWise
+      value: 
+      objectReference: {fileID: 8190688727523282918}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedControlButtonXCounterClockWise
+      value: 
+      objectReference: {fileID: 6266627040577326145}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedControlButtonYClockWise
+      value: 
+      objectReference: {fileID: 3083976226892211755}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedControlButtonYCounterClockWise
+      value: 
+      objectReference: {fileID: 3036963060922650212}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedControlButtonZoomIn
+      value: 
+      objectReference: {fileID: 7281448279885176400}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: comparedControlButtonZoomOut
+      value: 
+      objectReference: {fileID: 6107229385420645718}
+    - target: {fileID: 1632519352, guid: 8ae06e37627ceb74a804790285c14855, type: 3}
+      propertyPath: cart
+      value: 
+      objectReference: {fileID: 1198560505}
     - target: {fileID: 336513511137227346, guid: 8ae06e37627ceb74a804790285c14855,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -114332,6 +114364,46 @@ PrefabInstance:
       propertyPath: sliderNum
       value: 
       objectReference: {fileID: 1313145622}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedControlButtonXClockWise
+      value: 
+      objectReference: {fileID: 8190688727523282918}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedControlButtonXCounterClockWise
+      value: 
+      objectReference: {fileID: 6266627040577326145}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedControlButtonYClockWise
+      value: 
+      objectReference: {fileID: 3083976226892211755}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedControlButtonYCounterClockWise
+      value: 
+      objectReference: {fileID: 3036963060922650212}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedResetRotation
+      value: 
+      objectReference: {fileID: 960447985}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedControlButtonZoomIn
+      value: 
+      objectReference: {fileID: 7281448279885176400}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: comparedControlButtonZoomOut
+      value: 
+      objectReference: {fileID: 6107229385420645718}
+    - target: {fileID: 5595585850418869928, guid: 68a178f72ba156c4eb825e8d4f090ea7,
+        type: 3}
+      propertyPath: cart
+      value: 
+      objectReference: {fileID: 1198560505}
     - target: {fileID: 5595585850882679440, guid: 68a178f72ba156c4eb825e8d4f090ea7,
         type: 3}
       propertyPath: m_Name
