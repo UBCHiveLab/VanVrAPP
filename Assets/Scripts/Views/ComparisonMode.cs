@@ -12,6 +12,7 @@ public class ComparisonMode : MonoBehaviour
     public GameObject comparisonBackground;
     public GameObject controlAssistLeft;
     public GameObject analysisTopLeftContainer;
+    public GameObject analysisTopRightFocusMode;
     public bool isControlAssistLeftShow;
     public bool isCompared = false;
 
@@ -61,6 +62,7 @@ public class ComparisonMode : MonoBehaviour
         comparisonBackground.SetActive(isCompared);
         analysisLeftContainer.SetActive(!isCompared);
         analysisTopLeftContainer.SetActive(!isCompared);
+        analysisTopRightFocusMode.SetActive(!isCompared);
         ControlAssistLeftState();
 
 

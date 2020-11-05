@@ -254,7 +254,7 @@ public class AnalysisPage : MonoBehaviour, IPage
                     {
                         //tray1 zoomout
                         _tray.transform.localPosition += new Vector3(0.1f * 0.342f, 0, 0.1f * 0.94f);
-                        if (_tray.transform.localPosition.x >= -0.2359999)
+                        if (_tray.transform.localPosition.x >= -0.02359999)
                         {
                             _tray.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
                         }
