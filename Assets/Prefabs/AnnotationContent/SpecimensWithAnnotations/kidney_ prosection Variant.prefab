@@ -27,12 +27,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 188802878}
-  m_LocalRotation: {x: 0.04103613, y: -0.8657776, z: -0.09641418, w: 0.4893359}
-  m_LocalPosition: {x: 141.4, y: 61.6, z: 24.2}
+  m_LocalRotation: {x: -0.24417505, y: 0.0921185, z: 0.08329372, w: 0.9617458}
+  m_LocalPosition: {x: -104.1, y: 57.2, z: -135}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 9151386342471812017}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &188802883
 MeshFilter:
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ce271d90781474b8b57317e856f5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 6
-  title: Renal Pyramid
+  id: 2
+  title: Renal Vein
   contents: 
 --- !u!1 &267745273
 GameObject:
@@ -654,115 +654,6 @@ MonoBehaviour:
   id: 9
   title: Major Calyx
   contents: 
---- !u!1 &961375797
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 961375798}
-  - component: {fileID: 961375802}
-  - component: {fileID: 961375801}
-  - component: {fileID: 961375800}
-  - component: {fileID: 961375799}
-  m_Layer: 0
-  m_Name: Annotation Placeholder(Clone)(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &961375798
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961375797}
-  m_LocalRotation: {x: -0.24417505, y: 0.0921185, z: 0.08329372, w: 0.9617458}
-  m_LocalPosition: {x: -104.1, y: 57.2, z: -135}
-  m_LocalScale: {x: 10, y: 10, z: 10}
-  m_Children: []
-  m_Father: {fileID: 9151386342471812017}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &961375802
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961375797}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &961375801
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961375797}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!135 &961375800
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961375797}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &961375799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 961375797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43ce271d90781474b8b57317e856f5d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 2
-  title: Renal Vein
-  contents: 
 --- !u!1 &1441725076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,6 +1090,115 @@ MonoBehaviour:
   id: 4
   title: Suprarenal Vein
   contents: 
+--- !u!1 &3691018302143041028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 716829941086592462}
+  - component: {fileID: 7501628752712057651}
+  - component: {fileID: 7936704300794256485}
+  - component: {fileID: 7610787642583908050}
+  - component: {fileID: 4718991424864833228}
+  m_Layer: 0
+  m_Name: Annotation Placeholder(Clone)(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &716829941086592462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691018302143041028}
+  m_LocalRotation: {x: 0.04103613, y: -0.8657776, z: -0.09641418, w: 0.4893359}
+  m_LocalPosition: {x: 141.4, y: 61.6, z: 24.2}
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_Children: []
+  m_Father: {fileID: 9151386342471812017}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7501628752712057651
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691018302143041028}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &7936704300794256485
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691018302143041028}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!135 &7610787642583908050
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691018302143041028}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4718991424864833228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691018302143041028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ce271d90781474b8b57317e856f5d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 6
+  title: Renal Pyramid
+  contents: 
 --- !u!114 &7753464325871845832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1217,89 +1217,89 @@ MonoBehaviour:
       title: Ureter
       content: 
       position:
-        x: 45.519634
-        y: 52.41658
-        z: -32.651176
+        x: 50.6
+        y: -124.3
+        z: 20.8
         global: 0
     - annotationId: 2
       title: Renal Vein
       content: 
       position:
-        x: -137.66553
-        y: -153.46071
-        z: 39.49965
+        x: -104.1
+        y: 57.2
+        z: -135
         global: 0
     - annotationId: 3
       title: Renal Artery
       content: 
       position:
-        x: -55.04311
-        y: -155.52689
-        z: 27.018555
+        x: -50.5
+        y: 70.7
+        z: -72.3
         global: 0
     - annotationId: 4
       title: Suprarenal Vein
       content: 
       position:
-        x: -104.61696
-        y: -179.24597
-        z: 51.043747
+        x: -80.2
+        y: 90.5
+        z: -120.5
         global: 0
     - annotationId: 5
       title: Renal cortex
       content: 
       position:
-        x: 159.93478
-        y: 52.392662
-        z: 8.668266
+        x: 160.6
+        y: -93.6
+        z: 62.7
         global: 0
     - annotationId: 6
       title: Renal Pyramid
       content: 
       position:
-        x: 148.45372
-        y: -97.849945
-        z: 65.53021
+        x: 141.4
+        y: 61.6
+        z: 24.2
         global: 0
     - annotationId: 7
       title: Renal Column
       content: 
       position:
-        x: -42.26
-        y: -181.42511
-        z: -89.004944
+        x: -117.8
+        y: 68.5
+        z: 26.5
         global: 0
     - annotationId: 8
       title: Renal Pelvis
       content: 
       position:
-        x: 49.390427
-        y: -43.69635
-        z: -47.585255
+        x: 16.1
+        y: -35.9
+        z: 42.5
         global: 0
     - annotationId: 9
       title: Major Calyx
       content: 
       position:
-        x: 59.296738
-        y: -64.51894
-        z: -30.341255
+        x: 27.6
+        y: -10
+        z: 37.4
         global: 0
     - annotationId: 10
       title: Minor Calyx
       content: 
       position:
-        x: 78.59831
-        y: -19.392654
-        z: -44.226738
+        x: 47.1
+        y: -53
+        z: 56.7
         global: 0
     - annotationId: 11
       title: Inferior Pole
       content: 
       position:
-        x: 11.79081
-        y: 34.165833
-        z: -155.31699
+        x: -53.1
+        y: -143.7
+        z: 94.2
         global: 0
   referenceT: {fileID: 1688461367115681929}
   specimenName: kidney_prosection
@@ -1314,47 +1314,47 @@ PrefabInstance:
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.93011713
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.479898
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.12737201
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.08933228
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -79.16943
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.7603
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -40.072998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.33268332
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 175.329
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
@@ -1364,42 +1364,42 @@ PrefabInstance:
     - target: {fileID: 3043325460561400698, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -17.299988
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.999187
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -65.46884
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -41.3359
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.29872066
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5684991
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.76316184
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.071825646
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
@@ -1409,22 +1409,22 @@ PrefabInstance:
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 55.568
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -71.955
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4779110506296787010, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 127.384
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8361379623883158097, guid: fbe5dc419c27f4eda8f54517a28713b8,
         type: 3}
       propertyPath: m_Name
-      value: kidney_ prosection
+      value: kidney_ prosection Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbe5dc419c27f4eda8f54517a28713b8, type: 3}
