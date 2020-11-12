@@ -31,7 +31,7 @@ public class ControlAssist : MonoBehaviour
     public Button comparedControlButtonXCounterClockWise;
     public Button comparedControlButtonYClockWise;
     public Button comparedControlButtonYCounterClockWise;
-    public Button comparedResetRotation;
+    //public Button comparedResetRotation;
 
 
     [Header("Control Assist Panel")]
@@ -77,7 +77,7 @@ public class ControlAssist : MonoBehaviour
         comparedControlButtonYClockWise.onClick.AddListener(ComparedModelRoatateYClockWise);
         comparedControlButtonYCounterClockWise.onClick.AddListener(ComparedModelRoatateYCounterClockWise);
 
-        comparedResetRotation.onClick.AddListener(ComparedResetRotation);
+        //comparedResetRotation.onClick.AddListener(ComparedResetRotation);
 
         mouseSpeed = 1.0f;
 
@@ -305,10 +305,10 @@ public class ControlAssist : MonoBehaviour
         comparedSpecimen.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.right) * comparedSpecimen.transform.rotation;
     }
 
-    void ComparedResetRotation() {
-        var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
-        comparedSpecimen.transform.rotation = new Quaternion(0, 0, 0, 0);
-    }
+    //void ComparedResetRotation() {
+        //var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        //comparedSpecimen.transform.rotation = new Quaternion(0, 0, 0, 0);
+    //}
 
     //mouse speed control
     public void ChangeMouseSpeed(float newSpeed)

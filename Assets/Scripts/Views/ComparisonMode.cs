@@ -19,6 +19,7 @@ public class ComparisonMode : MonoBehaviour
 
     [Header("button")]
     public Button comparisonCloseButton;
+    public Button comparedResetRotation;
 
     [Header("External")]
     public SpecimenCart cart;
@@ -39,6 +40,7 @@ public class ComparisonMode : MonoBehaviour
     {
         //addlistener
         comparisonCloseButton.onClick.AddListener(ToggleClose);
+        comparedResetRotation.onClick.AddListener(ComparedResetRotation);
 
         //
         analysisPage = GameObject.Find("UIManager").GetComponent<AnalysisPage>();
@@ -53,8 +55,10 @@ public class ComparisonMode : MonoBehaviour
         
     }
 
+    //Comparison State; activated by button in analysis mode
     public void ComparisonState()
     {
+        // Check compared tray exsit or not
         if (cart.tray1 == null || cart.tray2 == null) return;
 
         isCompared = !isCompared;
@@ -70,7 +74,7 @@ public class ComparisonMode : MonoBehaviour
         annotationDisplayController.SetActive(false);
         ControlAssistLeftState();
 
-
+        //Set main camera positon in comparison mode
         if (isCompared == true)
         {   
             mainCamera.GetComponent<OrbitCamera>().enabled = !isCompared;
@@ -133,6 +137,7 @@ public class ComparisonMode : MonoBehaviour
 
     }
 
+    //Close the comparison mode
     void ToggleClose()
     {
         analysisPage.ToggleCompare();
@@ -141,5 +146,11 @@ public class ComparisonMode : MonoBehaviour
     void ControlAssistLeftState()
     {
         controlAssistLeft.SetActive(isControlAssistLeftShow);
+    }
+
+    void ComparedResetRotation()
+    {
+        var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        comparedSpecimen.transform.rotation = new Quaternion(0, 0, 0, 0);
     }
 }

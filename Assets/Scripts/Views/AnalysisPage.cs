@@ -148,7 +148,12 @@ public class AnalysisPage : MonoBehaviour, IPage
     {
         if (stateController.mode != ViewMode.ANALYSIS) return;
         HandleSpecimenRotation();
-        HandleCamSelect();
+
+        if(comparisonMode.isCompared == false)
+        {
+            HandleCamSelect();
+        }
+        
     }
 
     /**
