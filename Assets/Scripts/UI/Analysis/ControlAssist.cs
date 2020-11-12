@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 /**
  * Provides a clickable interface for the orbit camera.
  */
@@ -21,19 +22,35 @@ public class ControlAssist : MonoBehaviour
     public Button controlButtonBack;
     public Button controlButtonResetCam;
     public Button controlButtonResetRotation;
+    public Button controlButtonControlAssist;
+
+    [Header("Comparison Mode Buttons")]
+    public Button comparedControlButtonZoomIn;
+    public Button comparedControlButtonZoomOut;
+    public Button comparedControlButtonXClockWise;
+    public Button comparedControlButtonXCounterClockWise;
+    public Button comparedControlButtonYClockWise;
+    public Button comparedControlButtonYCounterClockWise;
+    //public Button comparedResetRotation;
+
 
     [Header("Control Assist Panel")]
 
     public GameObject controlAssistFolded;
     public GameObject controlAssistExtended;
+    public bool isControlAssistOn =false;
 
     [Header("Slider")]
 
     public float mouseSpeed;
+    public TextMeshProUGUI sliderNum;
 
+    [Header("External")]
     private OrbitCamera orbitCam;
     private AnalysisPage analysisPage;
+    private ComparisonMode comparisonMode;
     private GameObject specimenHolder;
+    public SpecimenCart cart;
     
 
     void Start()
@@ -52,15 +69,34 @@ public class ControlAssist : MonoBehaviour
         controlButtonBack.onClick.AddListener(ControlAssistBack);
         controlButtonResetCam.onClick.AddListener(ResetCamera);
         controlButtonResetRotation.onClick.AddListener(ResetRotation);
+        controlButtonControlAssist.onClick.AddListener(ControlAssistState);
+        comparedControlButtonZoomIn.onClick.AddListener(ComparedZoomIn);
+        comparedControlButtonZoomOut.onClick.AddListener(ComparedZoomOut);
+        comparedControlButtonXClockWise.onClick.AddListener(ComparedModelRoatateXClockWise);
+        comparedControlButtonXCounterClockWise.onClick.AddListener(ComparedModelRoatateXCounterClockWise);
+        comparedControlButtonYClockWise.onClick.AddListener(ComparedModelRoatateYClockWise);
+        comparedControlButtonYCounterClockWise.onClick.AddListener(ComparedModelRoatateYCounterClockWise);
+
+        //comparedResetRotation.onClick.AddListener(ComparedResetRotation);
+
         mouseSpeed = 1.0f;
+
+        comparisonMode = GameObject.Find("UIManager").GetComponent<ComparisonMode>();
 
     }
 
     void Update()
     {
         KeyBoardControl();
+        
+        //When the comparison mode is on, force close the extended control assist
+        if(comparisonMode.isCompared == true)
+        {
+            controlAssistFolded.SetActive(true);
+            controlAssistExtended.SetActive(false);
+        }
 
-
+        
     }
 
     void OnEnable()
@@ -102,44 +138,61 @@ public class ControlAssist : MonoBehaviour
     }
 
     void ZoomIn() {
-        orbitCam.DoZoom(1f, Time.deltaTime);
-
+        //check whether it's comparison mode
+        if (comparisonMode.isCompared == true)
+        {
+            //Debug.Log(comparisonMode.isCompared);
+            comparisonMode.Tray1ZoomInComparison(0.1f);
+        }
+        else
+        {
+            orbitCam.DoZoom(1f, Time.deltaTime);
+        }
+        
 
     }
 
     void ZoomOut() {
-        orbitCam.DoZoom(-1f, Time.deltaTime);
+        //check whether it's comparison mode
+        if (comparisonMode.isCompared == true)
+        {
+            comparisonMode.Tray1ZoomOutComparison(0.1f);
+        }
+        else
+        {
+            orbitCam.DoZoom(-1f, Time.deltaTime);
+        }      
 
     }
 
     void ModelRoatateXClockWise() {
         
         specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.down) * specimenHolder.transform.rotation;
-        Debug.Log(mouseSpeed);
+        //Debug.Log(mouseSpeed);
     }
 
     void ModelRoatateXCounterClockWise() {
         
         specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.up) * specimenHolder.transform.rotation;
-        Debug.Log(mouseSpeed);
+        //Debug.Log(mouseSpeed);
     }
 
     void ModelRoatateYClockWise() {
         
         specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.left) * specimenHolder.transform.rotation;
-        Debug.Log(mouseSpeed);
+        //Debug.Log(mouseSpeed);
     }
 
     void ModelRoatateYCounterClockWise() {
         
         specimenHolder.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.right) * specimenHolder.transform.rotation;
-        Debug.Log(mouseSpeed);
+        //Debug.Log(mouseSpeed);
     }
 
     void KeyBoardControl()
     {
         specimenHolder = GameObject.Find("SpecimenHolder").transform.GetChild(0).gameObject;
-        
+
 
         if (Input.GetKeyDown(KeyCode.Minus))
         {
@@ -194,9 +247,12 @@ public class ControlAssist : MonoBehaviour
 
     void ControlAssistMore()
     {
-        controlAssistExtended.SetActive(true);
-        controlAssistFolded.SetActive(false);
-
+        if(comparisonMode.isCompared == false)
+        {
+            controlAssistExtended.SetActive(true);
+            controlAssistFolded.SetActive(false);
+        }
+   
     }
 
     void ControlAssistBack()
@@ -219,10 +275,70 @@ public class ControlAssist : MonoBehaviour
         analysisPage.ResetRotation();
     }
 
+    //Buttons in Comparison Mode
+
+    void ComparedZoomIn() {
+        comparisonMode.Tray2ZoomInComparison(0.1f);
+    }
+
+    void ComparedZoomOut() {
+        comparisonMode.Tray2ZoomOutComparison(0.1f);
+    }
+
+    void ComparedModelRoatateXClockWise() {
+        var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        comparedSpecimen.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.down) * comparedSpecimen.transform.rotation;
+    }
+
+    void ComparedModelRoatateXCounterClockWise() {
+        var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        comparedSpecimen.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.up) * comparedSpecimen.transform.rotation;
+    }
+
+    void ComparedModelRoatateYClockWise() {
+        var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        comparedSpecimen.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.left) * comparedSpecimen.transform.rotation;
+    }
+
+    void ComparedModelRoatateYCounterClockWise() {
+        var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        comparedSpecimen.transform.rotation = Quaternion.AngleAxis(3 * mouseSpeed, Vector3.right) * comparedSpecimen.transform.rotation;
+    }
+
+    //void ComparedResetRotation() {
+        //var comparedSpecimen = cart.tray2.transform.GetChild(0).GetChild(0).gameObject;
+        //comparedSpecimen.transform.rotation = new Quaternion(0, 0, 0, 0);
+    //}
+
+    //mouse speed control
     public void ChangeMouseSpeed(float newSpeed)
     {
         this.mouseSpeed = newSpeed;
+        analysisPage.mouseSpeed = newSpeed;
         orbitCam.mouseControlSpeed = newSpeed;
+        sliderNum.text = Mathf.Round(mouseSpeed * 44).ToString();
+        
     }
 
+
+    //add listener for controlling the control assist panel
+    void ControlAssistState()
+    {
+        //Debug.Log("clicked");   
+        isControlAssistOn = !isControlAssistOn;
+        
+        if (isControlAssistOn == false)
+        {
+            controlAssistFolded.SetActive(false);
+            controlAssistExtended.SetActive(false);
+            comparisonMode.isControlAssistLeftShow = false;
+        }
+        else
+        {
+            controlAssistFolded.SetActive(true);
+            controlAssistExtended.SetActive(false);
+            comparisonMode.isControlAssistLeftShow = true;
+        }
+         
+    }
 }

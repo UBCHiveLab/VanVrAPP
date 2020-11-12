@@ -14,8 +14,6 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Button button;
     public int indexValue;
     public Image icon;
-    //public GameObject loadingSpinner;
-    //public GameObject loadingSpinnerLarge;
     public Transform children;
     public Image background;
     public LoadingController loadingController;
@@ -40,18 +38,9 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void SetLoading(bool loading)
     {
-        //if (loadingSpinner != null)
-        //{
-        //loadingSpinner.gameObject.SetActive(loading);
-        //}
         loadingController = GameObject.Find("UIManager").GetComponent<LoadingController>();
         loadingController.OnLoadingProcess(!loading);
 
-        //if (loadingSpinnerLarge != null)
-        //{
-            //loadingSpinnerLarge.gameObject.SetActive(loading);
-            //loadingController.OnLoadingProcess(!loading);
-        //}
     }
 
     public void SetLoadingUntil(Func<bool> condition)

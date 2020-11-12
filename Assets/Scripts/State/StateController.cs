@@ -14,6 +14,7 @@ namespace Assets.Scripts.State
         public LandingPage landingPage;
         public TrayPage trayPage;
         public AnalysisPage analysisPage;
+        //public ComparisonMode comparisonMode;
         public SpecimenStore store;
 
         public bool loadingPrimarySpecimen;
@@ -67,6 +68,7 @@ namespace Assets.Scripts.State
                 {ViewMode.LANDING, landingPage},
                 {ViewMode.TRAY, trayPage },
                 {ViewMode.ANALYSIS, analysisPage }
+                //{ViewMode.COMPARE, comparisonMode }
             };
         }
 

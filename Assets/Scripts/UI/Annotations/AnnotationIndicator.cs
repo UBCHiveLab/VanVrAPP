@@ -22,18 +22,21 @@ public class AnnotationIndicator : MonoBehaviour
     private Camera mainCam;
     private Image indicatorImage;
     private bool isTransparencyChanged=false;
+    private AnnotationDisplayController annotationDisplayController;
 
     private void Start()
     {
         button.onClick.AddListener(Clicked);
         mainCam = Camera.main;
         indicatorImage = GetComponent<Image>();
+        
     }
 
     private void Update()
     {
         if (_specObject == null) return;
         UpdatePosition();
+        ControlTransparency();
     }
     private void FixedUpdate()
     {
@@ -115,7 +118,9 @@ public class AnnotationIndicator : MonoBehaviour
             {
                 case true:
                     indicatorImage.color = new Color(1, 1, 1, 0.3f);
+
                     break;
+                    
                 case false:
                     indicatorImage.color = Color.white;
                     break;
@@ -123,5 +128,29 @@ public class AnnotationIndicator : MonoBehaviour
             isTransparencyChanged = isChanged;
         }
         
+    }
+
+    void ControlTransparency()
+    {
+        indicatorImage = GetComponent<Image>();
+        annotationDisplayController = GameObject.Find("Annotations_Button").GetComponent<AnnotationDisplayController>();
+        if(isTransparencyChanged != true)
+        {
+            indicatorImage.color = Color.white;
+            number.color = new Color(1, 1, 1, 1f);
+        }
+        else
+        {
+            if(annotationDisplayController.isButtonOn == true)
+            {
+                indicatorImage.color = new Color(1, 1, 1, 0.3f);
+                number.color = new Color(1, 1, 1, 1f);
+            }
+            else
+            {
+                indicatorImage.color = new Color(1, 1, 1, 0f);
+                number.color = new Color(1, 1, 1, 0f);
+            }
+        }
     }
 }

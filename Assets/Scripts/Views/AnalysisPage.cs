@@ -39,6 +39,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     [Header("Specimen Rotation")]
     private GameObject _rotatingSpecimen;
+    private GameObject _tray;
     private Vector3 specimenRotation;
     private float _xRot;
     private float _yRot;
@@ -57,6 +58,9 @@ public class AnalysisPage : MonoBehaviour, IPage
     public GameObject specimenLabel;
     public GameObject trayObj;
     public TrayPage trayPageScript;
+    public ComparisonMode comparisonMode;
+    public ControlAssist controlAssist;
+    public float mouseSpeed = 1f;
 
 
     public void Activate()
@@ -136,13 +140,21 @@ public class AnalysisPage : MonoBehaviour, IPage
         focusModeButton.onClick.AddListener(() => ToggleFocus());
         _focusIndicator = focusModeButton.GetComponent<UITwoStateIndicator>();
 
+        //Compare mode
+        comparisonMode = GameObject.Find("UIManager").GetComponent<ComparisonMode>();
+
     }
 
     public void Update()
     {
         if (stateController.mode != ViewMode.ANALYSIS) return;
         HandleSpecimenRotation();
-        HandleCamSelect();
+
+        if(comparisonMode.isCompared == false)
+        {
+            HandleCamSelect();
+        }
+        
     }
 
     /**
@@ -201,6 +213,63 @@ public class AnalysisPage : MonoBehaviour, IPage
             _rotatingSpecimen.transform.rotation =
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
         }
+
+        //scrolling control for zoom in/ out during the comparison mode
+        if(comparisonMode.isCompared == true)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens")))
+            {
+                _tray = hit.transform.parent.parent.parent.gameObject;
+                
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+                {
+                    if(_tray.transform.localPosition.x < -0.75)
+                    {
+                        //tray2 zoomin
+                        _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f * mouseSpeed, 0, 0.1f * 0.886f * mouseSpeed);
+                        if (_tray.transform.localPosition.x >= -1.35)
+                        {
+                            _tray.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
+                        }
+                    }
+                    else
+                    {
+                        //tray1 zoomin
+                        _tray.transform.localPosition -= new Vector3(0.1f * 0.342f * mouseSpeed, 0, 0.1f * 0.94f * mouseSpeed);
+                        if (cart.tray1.transform.localPosition.x <= -0.42)
+                        {
+                            cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
+                        }
+                    }
+                }
+                else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+                {
+                    
+                    if (_tray.transform.localPosition.x < -0.75)
+                    {
+                        //tray2 zoomout
+                        _tray.transform.localPosition += new Vector3(-0.1f * 0.5f * mouseSpeed, 0, 0.1f * 0.886f * mouseSpeed);
+                        if (_tray.transform.localPosition.x <= -2.349999)
+                        {
+                            _tray.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
+                        }
+                    }
+                    else
+                    {
+                        //tray1 zoomout
+                        _tray.transform.localPosition += new Vector3(0.1f * 0.342f * mouseSpeed, 0, 0.1f * 0.94f * mouseSpeed);
+                        if (_tray.transform.localPosition.x >= -0.02359999)
+                        {
+                            _tray.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
+                        }
+                    }
+                }
+            }
+
+        }
        
     }
 
@@ -240,7 +309,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     /**
      * Toggles visibility of annotations, annotation bar and detail view
      */
-    void ToggleAnnotations(bool on) {
+    public void ToggleAnnotations(bool on) {
         annotationDisplay.gameObject.SetActive(on);
         if (on)
         {
@@ -259,10 +328,13 @@ public class AnalysisPage : MonoBehaviour, IPage
     /**
      * Returns the controller to tray mode and activates compare
      */
-    void ToggleCompare()
+    public void ToggleCompare()
     {
-        stateController.mode = ViewMode.TRAY;
-        trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
+        //stateController.mode = ViewMode.TRAY;
+        //trayPageScript.SelectCompare(stateController.CurrentSpecimenData.organ);
+        ResetCameraPosition();  
+        comparisonMode.ComparisonState();
+
     }
 
     /**
