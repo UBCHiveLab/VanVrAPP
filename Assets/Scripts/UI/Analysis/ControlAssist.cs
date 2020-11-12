@@ -314,8 +314,10 @@ public class ControlAssist : MonoBehaviour
     public void ChangeMouseSpeed(float newSpeed)
     {
         this.mouseSpeed = newSpeed;
+        analysisPage.mouseSpeed = newSpeed;
         orbitCam.mouseControlSpeed = newSpeed;
         sliderNum.text = Mathf.Round(mouseSpeed * 44).ToString();
+        
     }
 
 
