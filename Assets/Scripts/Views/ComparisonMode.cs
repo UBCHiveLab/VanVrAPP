@@ -145,7 +145,7 @@ public class ComparisonMode : MonoBehaviour
 
     void ControlAssistLeftState()
     {
-        controlAssistLeft.SetActive(isControlAssistLeftShow);
+        controlAssistLeft.SetActive(analysisPage.controlAssistToggle.on);
     }
 
     void ComparedResetRotation()
