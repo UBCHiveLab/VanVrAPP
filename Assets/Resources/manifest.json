@@ -12174,6 +12174,48 @@
           }
         }
       ]
+    },
+    {
+      "id": "malePelvis01",
+      "name": "Male Pelvis Sagittal",
+      "version": 1,
+      "organ": "Male Pelvis",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://skfb.ly/6WywM",
+      "prefabPath": "",
+      "scale": 0.05,
+      "yPos": 0.36,
+      "annotations": []
+    },
+    {
+      "id": "femalePelvis01",
+      "name": "Female Pelvis Sagittal",
+      "version": 1,
+      "organ": "Female Pelvis",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://skfb.ly/6QSVp",
+      "prefabPath": "",
+      "scale": 0.05,
+      "yPos": 0.36,
+      "annotations": []
+    },
+    {
+      "id": "femalePelvis02",
+      "name": "Female Pelvis & Perineum",
+      "version": 1,
+      "organ": "Female Pelvis",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://skfb.ly/6WywQ",
+      "prefabPath": "",
+      "scale": 0.05,
+      "yPos": 0.36,
+      "annotations": []
     }
   ],
   "labCourses": [
@@ -12244,6 +12286,18 @@
           "specimenList": [
             "abdominalcavity01",
             "abdominalcavity02"
+          ]
+        },
+        {
+          "labId": 10,
+          "labName": "The Pelvis Walls and Viscera",
+          "imgUrl": "",
+          "specimenList": [
+            "androidpelvis01",
+            "hipjoint01",
+            "malePelvis01",
+            "femalePelvis01",
+            "femalePelvis02"
           ]
         }
       ]
@@ -12544,7 +12598,8 @@
       "order": 5,
       "organs": [
         "Female Pelvis",
-        "Android Pelvis"
+        "Android Pelvis",
+        "Male Pelvis"
       ]
     },
     {
