@@ -38,6 +38,7 @@ public class ControlAssist : MonoBehaviour
 
     public GameObject controlAssistFolded;
     public GameObject controlAssistExtended;
+    public GameObject controlButtonMoreGameObject;
     public bool isControlAssistOn =false;
 
     [Header("Slider")]
@@ -94,6 +95,11 @@ public class ControlAssist : MonoBehaviour
         {
             controlAssistFolded.SetActive(true);
             controlAssistExtended.SetActive(false);
+            controlButtonMoreGameObject.SetActive(false);
+        }
+        else
+        {
+            controlButtonMoreGameObject.SetActive(true);
         }
 
         
