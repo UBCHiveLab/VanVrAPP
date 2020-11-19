@@ -3393,6 +3393,34 @@
       "annotations": []
     },
     {
+      "id": "midsagitalhead02",
+      "name": "Midsagital Head",
+      "version": 0,
+      "organ": "Head",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/not-avaiable",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/not-avaiable",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/not-avaiable",
+      "altAssetUrl": "https://skfb.ly/6RGNJ",
+      "prefabPath": "",
+      "scale": 0.25,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
+      "id": "larynx",
+      "name": "Human Larynx",
+      "version": 0,
+      "organ": "Larynx",
+      "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/not-avaiable",
+      "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/not-avaiable",
+      "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/not-avaiable",
+      "altAssetUrl": "https://skfb.ly/6TCo8",
+      "prefabPath": "",
+      "scale": 0.25,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
       "id": "rightlung01",
       "name": "Right Lung #1",
       "version": 1,
@@ -10791,6 +10819,20 @@
       "annotations": []
     },
     {
+      "id": "humanSkullWithMandible",
+      "name": "Human skull with mandible(calvarium cut)",
+      "version": 1,
+      "organ": "Skull",
+      "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+      "altAssetUrl": "https://skfb.ly/6UUyJ",
+      "prefabPath": "",
+      "scale": 0.35,
+      "yPos": 0,
+      "annotations": []
+    },
+    {
       "id": "humanSkullWithoutcalvarium_highres",
       "name": "High Resolution Human Skull (calvarium removed)",
       "version": 1,
@@ -12504,6 +12546,18 @@
             "foregutorgans",
             "posterior_abdominal_wall"
           ]
+        },
+        {
+          "labId": 4,
+          "labName": "Head and Neck",
+          "imgUrl": "",
+          "specimenList": [
+            "humanSkullWithMandible",
+            "expandedSkull",
+            "mandible",
+            "larynx",
+            "midsagitalhead02"
+          ]
         }
       ]
     },
@@ -12552,7 +12606,8 @@
         "Head",
         "Infratemporal Fossa",
         "Calvarium",
-        "Mandible"
+        "Mandible",
+        "Larynx"
       ]
     },
     {
