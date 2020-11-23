@@ -12,6 +12,8 @@ public class RemoteDataLoader : DataLoader
         using (UnityWebRequest req =
             UnityWebRequest.Get(manifestPath))
         {
+            req.SetRequestHeader("Cache-Control", "max-age=0, no-cache, no-store");
+            req.SetRequestHeader("Pragma", "no-cache");
             yield return req.SendWebRequest();
             if (req.isNetworkError || req.isHttpError)
             {
