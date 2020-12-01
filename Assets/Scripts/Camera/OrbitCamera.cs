@@ -97,6 +97,8 @@ public class OrbitCamera : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100.0f, layer_mask))
             {
                 target = hit.transform;
+                if (target.parent.gameObject.layer == LayerMask.NameToLayer("Specimens"))
+                    target = target.parent;
             }
         }
 
