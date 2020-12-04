@@ -18,6 +18,7 @@ public class MainCameraEvents : MonoBehaviour
         // disable the canvas while traveling from the landing page to the tray. This stops Unity from trying
         // to update the canvas while the "walking to the tray" animation is occuring, which saves CPU time
         canvas.SetActive(false);
+        uiSkipButton.SetActive(true);
     }
 
     public void OnArrivedAtTray()

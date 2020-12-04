@@ -13,7 +13,6 @@ public class LandingPage : MonoBehaviour, IPage
     public GameObject uiObject;
     public GameObject doorL;
     public GameObject doorR;
-    public GameObject uiSkipButton;
     public DisclaimerPanel disclaimerPanel;
     public Animator mainCameraAnimator;
     public AudioSource startAudio;
@@ -45,7 +44,6 @@ public class LandingPage : MonoBehaviour, IPage
         doorL.GetComponent<Animator>().SetTrigger("Start");
         doorR.GetComponent<Animator>().SetTrigger("Start");
         mainCameraAnimator.SetTrigger("Start");
-        uiSkipButton.SetActive(true);
         DismissDisclaimer();
     }
 
