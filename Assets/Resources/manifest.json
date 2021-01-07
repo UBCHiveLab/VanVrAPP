@@ -3309,16 +3309,16 @@
             "annotations": []
         },
         {
-            "id": "brainstem01",
-            "name": "Brainstem #1",
+            "id": "brainstem_and_cranial_nerves",
+            "name": "Brainstem and Cranial Nerves",
             "version": 0,
             "organ": "Brainstem",
             "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/brainstem",
-            "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/brainstem",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/brainstem",
             "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/brainstem",
             "altAssetUrl": "",
-            "prefabPath": "Assets/Models/Specimens/AssetBundles/Brainstem.prefab",
-            "scale": 0.45,
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/brainstem.prefab",
+            "scale": 0.004,
             "yPos": 0,
             "annotations": []
         },
@@ -14016,7 +14016,7 @@
             "version": 1,
             "organ": "Circle of Willis",
             "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
-            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/head circle of willis",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/head_circle_of_willis",
             "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
             "altAssetUrl": "",
             "prefabPath": "Assets/Models/Specimens/AssetBundles/Head_circle_of_willis.prefab",
@@ -14101,6 +14101,76 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "half_brain_with_brainstem",
+            "name": "Half brain With Brainstem",
+            "version": 1,
+            "organ": "Half brain With Brainstem",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/half_brain_with_brainstem",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/half_brain_with_brainstem.prefab",
+            "scale": 0.006,
+            "yPos": 0.05,
+            "annotations": []
+        },
+        {
+            "id": "brainstem_and_cerebellum",
+            "name": "Brainstem and Cerebellum",
+            "version": 1,
+            "organ": "Brainstem and Cerebellum",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/brainstem_and_cerebellum",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/brainstem_and_cerebellum.prefab",
+            "scale": 0.004,
+            "yPos": 0.05,
+            "annotations": []
+        },
+        {
+            "id": "brainstem",
+            "name": "Brainstem",
+            "version": 1,
+            "organ": "Brainstem",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/brainstem_without_cerebellum",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/brainstem_without_cerebellum.prefab",
+            "scale": 0.005,
+            "yPos": 0.06,
+            "annotations": []
+        },
+        {
+            "id": "cerebellum",
+            "name": "Cerebellum",
+            "version": 1,
+            "organ": "Cerebellum",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/cerebellum",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/cerebellum.prefab",
+            "scale": 0.005,
+            "yPos": 0.05,
+            "annotations": []
+        },
+        {
+            "id": "head_cranial_nerves",
+            "name": "Cranial Nerves in Skull",
+            "version": 1,
+            "organ": "Skull",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/head_cranial_nerves",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/head_cranial_nerves.prefab",
+            "scale": 0.002,
+            "yPos": 0.06,
+            "annotations": []
         }
     ],
   "labCourses": [
@@ -14361,7 +14431,12 @@
           "labName": "Overview of CNS",
           "imgUrl": "",
           "specimenList": [
-            "brain02"
+            "brain02",
+            "half_brain_with_brainstem",
+            "brainstem_and_cerebellum",
+            "brainstem",
+            "brainstem_and_cranial_nerves",
+            "cerebellum"
           ]
         }
       ]
@@ -14377,6 +14452,7 @@
             "humanSkullWithoutcalvarium_lowres",
             "humanSkullWithoutcalvarium_highres",
             "mandible",
+            "head_cranial_nerves",
             "circle_of_Willis_in_situ"
           ]
         }
@@ -14391,7 +14467,12 @@
           "labName": "Bootcamp 1",
           "imgUrl": "",
           "specimenList": [
-            "brain02"
+            "brain02",
+            "half_brain_with_brainstem",
+            "brainstem_and_cerebellum",
+            "brainstem",
+            "brainstem_and_cranial_nerves",
+            "cerebellum"
           ]
         }
       ]
@@ -14543,7 +14624,10 @@
         "Calvarium",
         "Mandible",
         "Larynx",
-        "Circle of Willis"
+        "Circle of Willis",
+        "Half brain With Brainstem",
+        "Brainstem and Cerebellum",
+        "Cerebellum"
       ]
     },
     {
