@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,6 +9,14 @@ using UnityEngine.Networking;
  */
 public class RemoteDataLoader : DataLoader
 {
+
+    //MongoDB
+    MongoClient client = new MongoClient("mongodb://hive:8afDe1K6XwY1W5cy@van-vr-shard-00-00.zr7vf.mongodb.net:27017,van-vr-shard-00-01.zr7vf.mongodb.net:27017,van-vr-shard-00-02.zr7vf.mongodb.net:27017/test?authSource=admin&replicaSet=atlas-afl4g3-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
+    IMongoDatabase database;
+    IMongoCollection<BsonDocument> courseCollection;
+    IMongoCollection<BsonDocument> labCollection;
+    IMongoCollection<BsonDocument> regionCollection;
+    IMongoCollection<BsonDocument> specimenCollection;
     protected override IEnumerator LoadManifest()
     {
         using (UnityWebRequest req =
@@ -24,5 +34,11 @@ public class RemoteDataLoader : DataLoader
                 manifestLoaded = true;
             }
         }
+
+        //Using MongoDB
+
     }
+
+
+
 }

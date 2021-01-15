@@ -92,8 +92,13 @@ public abstract class DataLoader: MonoBehaviour
             Debug.LogWarning("Some issues found with the given manifest.");
         }
 
+        //test
+
         // Regions and courses are stored directly in the manifests
         _regions = manifest.regions.ToList();
+
+        //mongo test
+        //_regions = manifest.regions.ToList();
 
         // having lab courses is optional (see VerifyManifest method). So, if no labs were loaded, make an empty list
         _courses = manifest.labCourses != null ? manifest.labCourses.ToList() : new List<CourseData>();
