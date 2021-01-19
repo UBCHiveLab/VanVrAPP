@@ -2285,7 +2285,7 @@
             "id": "pectoralGirdle1",
             "name": "Rotator Cuff",
             "version": 1,
-            "organ": "Pectoral Girdle",
+            "organ": "Rotator Cuff",
             "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/pectoralgridle",
             "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/pectoralgridle",
             "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/pectoralgridle",
@@ -2612,6 +2612,19 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "pectoralGirdle2",
+            "name": "Pectoral Girdle",
+            "version": 1,
+            "organ": "Pectoral Girdle",
+            "assetUrl": "https://projects.thecdm.ca/anatomic/specimens/windows/not-avaiable",
+            "assetUrlWebGl": "https://projects.thecdm.ca/anatomic/specimens/webgl/not-avaiable",
+            "assetUrlOsx": "https://projects.thecdm.ca/anatomic/specimens/osx/not-avaiable",
+            "altAssetUrl": "https://skfb.ly/6UU9K",
+            "prefabPath": "",
+            "scale": 1,
+            "annotations": []
         },
         {
             "id": "brain01",
@@ -14624,6 +14637,18 @@
             "head_cranial_nerves",
             "circle_of_Willis_in_situ"
           ]
+        },
+        {
+            "labId": 2,
+            "labName": "Brachial Plexus",
+            "imgUrl": "",
+            "specimenList": [
+                "scapula1",
+                "humerus1",
+                "branchplex2",
+                "pectoralGirdle1",
+                "pectoralGirdle2"
+            ]
         }
       ]
     },
@@ -14657,7 +14682,7 @@
       ]
     },
     {
-      "courseId": "Medd 422",
+      "courseId": "MEDD 422",
       "labs": [
         {
           "labId": 1,
@@ -14677,6 +14702,16 @@
               "abdominalcavity01",
               "abdominalcavity02"
             ]
+          },
+          {
+              "labId": 3,
+              "labName": "Anatomy of Forearm",
+              "imgUrl": "",
+              "specimenList": [
+                  "radius01",
+                  "forearm01",
+                  "ulna01"
+              ]
           }
       ]
     },
@@ -14873,6 +14908,7 @@
         "Humerus",
         "Scapula",
         "Pectoral Girdle",
+        "Rotator Cuff",
         "Radius",
         "Forearm",
         "Brachial Plexus",
