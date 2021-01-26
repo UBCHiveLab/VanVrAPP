@@ -14783,7 +14783,7 @@
                     }
                 },
                 {
-                    "annotationId": "1",
+                    "annotationId": 1,
                     "title": "Uncinate fasciculus",
                     "content": "",
                     "position": {
@@ -14794,7 +14794,7 @@
                     }
                 },
                 {
-                    "annotationId": "2",
+                    "annotationId": 2,
                     "title": "Optic radiations",
                     "content": "",
                     "position": {
@@ -14831,7 +14831,7 @@
                     }
                 },
                 {
-                    "annotationId": "1",
+                    "annotationId": 1,
                     "title": "Loading 3D Model Loading 3D model  Corona radiata",
                     "content": "",
                     "position": {
@@ -14871,6 +14871,128 @@
                         "x": 1.5100011825561524,
                         "y": 1.7500009536743165,
                         "z": -5.840001106262207,
+                        "global": false
+                    }
+                }
+            ]
+        },
+        {
+            "id": "brain_commissural_fibres",
+            "name": "Brain Commissural Fibres",
+            "version": 1,
+            "organ": "Brain Commissural Fibres",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/brain_commissural_fibres",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/brain_commissural_fibres",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/brain_commissural_fibres",
+            "altAssetUrl": "https://skfb.ly/6Yr9Z",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/BrainCommissuralFibres.prefab",
+            "scale": 0.005,
+            "yPos": -0.06,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Information",
+                    "content": "",
+                    "position": {
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "1",
+                    "title": "Corpus Callosum",
+                    "content": "For another view of the corpus callosum, visit: http://neuroanatomy.ca/interactive/CortexMedial.html",
+                    "position": {
+                        "x": 0.4459685683250427,
+                        "y": 10.052490234375,
+                        "z": -22.126056671142579,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "2",
+                    "title": "Anterior Cerebral Artery",
+                    "content": "For more on the blood supply of the brain, visit: http://neuroanatomy.ca/regions/bloodsupply.html",
+                    "position": {
+                        "x": -3.1357345581054689,
+                        "y": 7.704013824462891,
+                        "z": -35.58949279785156,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "3",
+                    "title": "Posterior Cerebral Artery",
+                    "content": "For more on the blood supply of the brain, visit: http://neuroanatomy.ca/regions/bloodsupply.html",
+                    "position": {
+                        "x": -6.946203231811523,
+                        "y": -18.3942813873291,
+                        "z": 3.1514320373535158,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "4",
+                    "title": "Carotid Artery",
+                    "content": "For more on the blood supply of the brain, visit: http://neuroanatomy.ca/regions/bloodsupply.html",
+                    "position": {
+                        "x": 3.8744773864746095,
+                        "y": -24.87438201904297,
+                        "z": -8.22797966003418,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "5",
+                    "title": "Posterior Communicating Artery",
+                    "content": "For more on the blood supply of the brain, visit: http://neuroanatomy.ca/regions/bloodsupply.html",
+                    "position": {
+                        "x": -3.8491458892822267,
+                        "y": -22.109333038330079,
+                        "z": -9.511004447937012,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "6",
+                    "title": "Substantia Nigra",
+                    "content": "For more information, visit: http://neuroanatomy.ca/modules/BasalGanglia/story_html5.html",
+                    "position": {
+                        "x": -5.210718154907227,
+                        "y": -13.093324661254883,
+                        "z": 3.8818721771240236,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "7",
+                    "title": "Midbrain",
+                    "content": "For more on the brainstem, visit: http://neuroanatomy.ca/modules/BrainstemOverview/story_html5.html",
+                    "position": {
+                        "x": 4.469893455505371,
+                        "y": -9.987513542175293,
+                        "z": 8.665542602539063,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "8",
+                    "title": "Olfactory Bulb",
+                    "content": "For more on the cranial nerves, visit: http://neuroanatomy.ca/regions/cranialnerves.html",
+                    "position": {
+                        "x": 6.3562774658203129,
+                        "y": -30.154067993164064,
+                        "z": -30.882963180541993,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "9",
+                    "title": "Optic Nerve",
+                    "content": "For more on the visual system, visit http://neuroanatomy.ca/regions/visualsystem.html",
+                    "position": {
+                        "x": 5.478006362915039,
+                        "y": -28.72244644165039,
+                        "z": -18.37099838256836,
                         "global": false
                     }
                 }
@@ -15217,9 +15339,12 @@
         },
         {
             "labId": 4,
-            "labName": "Cortex",
+            "labName": "Neuro Cortex",
             "imgUrl": "",
             "specimenList": [
+                "half_brain_with_brainstem",
+                "brain02",
+                "brain_commissural_fibres",
                 "superior_longitudinal_fasciculus",
                 "brain_optic_tracts",
                 "visual_system_tracts"
@@ -15401,7 +15526,8 @@
         "Brain Subcortical Fibres",
         "Visual System Tracts",
         "Brain showing optic radiations",
-        "Brain Before Sections"
+        "Brain Before Sections",
+        "Brain Commissural Fibres"
       ]
     },
     {
