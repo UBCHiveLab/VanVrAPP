@@ -14674,7 +14674,7 @@
                     "content": "",
                     "position": {
                         "x": -3.083019256591797,
-                        "y":-11.823639869689942,
+                        "y": -11.823639869689942,
                         "z": 13.48128604888916,
                         "global": false
                     }
@@ -14757,6 +14757,138 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "superior_longitudinal_fasciculus",
+            "name": "Superior Longitudinal Fasciculus",
+            "version": 1,
+            "organ": "Superior Longitudinal Fasciculus",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/superior_longitudinal_fasciculus",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/superior_longitudinal_fasciculus.prefab",
+            "scale": 0.004,
+            "yPos": 0.06,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Information",
+                    "content": "A right side prosection showing the superior longitudinal fasciculus",
+                    "position": {
+                        "x": -35.20000076293945,
+                        "y": 102.89999389648438,
+                        "z": 256.70001220703127,
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "1",
+                    "title": "Uncinate fasciculus",
+                    "content": "",
+                    "position": {
+                        "x": 26.675983428955079,
+                        "y": -34.601966857910159,
+                        "z": -4.651119232177734,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "2",
+                    "title": "Optic radiations",
+                    "content": "",
+                    "position": {
+                        "x": -16.339256286621095,
+                        "y": -20.401485443115236,
+                        "z": -14.907615661621094,
+                        "global": false
+                    }
+                }
+            ]
+        },
+        {
+            "id": "brain_optic_tracts",
+            "name": "Brain Subcortical Fibres",
+            "version": 1,
+            "organ": "Brain Subcortical Fibres",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/brain_optic_tracts",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/brain_optic_tracts.prefab",
+            "scale": 0.018,
+            "yPos": 0.06,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Information",
+                    "content": "A human brain prosection demonstrating the subcortical fibres.",
+                    "position": {
+                        "x": -35.20000076293945,
+                        "y": 102.89999389648438,
+                        "z": 256.70001220703127,
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "1",
+                    "title": "Loading 3D Model Loading 3D model  Corona radiata",
+                    "content": "",
+                    "position": {
+                        "x": -1.4372140169143677,
+                        "y": 10.088895797729493,
+                        "z": -4.05000114440918,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "2",
+                    "title": "Internal capsule",
+                    "content": "",
+                    "position": {
+                        "x": 5.380002498626709,
+                        "y": 4.110002517700195,
+                        "z": -2.8600003719329836,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "3",
+                    "title": "Uncinate fasciculus",
+                    "content": "",
+                    "position": {
+                        "x": 6.57000207901001,
+                        "y": 2.420001983642578,
+                        "z": -5.860001087188721,
+                        "global": false
+                    }
+                },
+                {
+                    "annotationId": "4",
+                    "title": "Inferior occipitofrontal fasciculus",
+                    "content": "",
+                    "position": {
+                        "x": 1.5100011825561524,
+                        "y": 1.7500009536743165,
+                        "z": -5.840001106262207,
+                        "global": false
+                    }
+                }
+            ]
+        },
+        {
+            "id": "visual_system_tracts",
+            "name": "Visual System Tracts (sketchfab)",
+            "version": 1,
+            "organ": "Visual System Tracts",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "https://skfb.ly/6R8oq",
+            "prefabPath": "",
+            "scale": 0.018,
+            "yPos": 0.06,
+            "annotations": []
         }
     ],
   "labCourses": [
@@ -15082,6 +15214,16 @@
                 "brainstem",
                 "brainsteamAndCranialNerves"
             ]
+        },
+        {
+            "labId": 4,
+            "labName": "Cortex",
+            "imgUrl": "",
+            "specimenList": [
+                "superior_longitudinal_fasciculus",
+                "brain_optic_tracts",
+                "visual_system_tracts"
+            ]
         }
       ]
     },
@@ -15255,6 +15397,9 @@
         "Brainstem and Cerebellum",
         "Cerebellum",
         "Brainstem and Cranial Nerves",
+        "Superior Longitudinal Fasciculus",
+        "Brain Subcortical Fibres",
+        "Visual System Tracts",
         "Brain showing optic radiations",
         "Brain Before Sections"
       ]
