@@ -15319,6 +15319,40 @@
             "scale": 0.018,
             "yPos": 0.06,
             "annotations": []
+        },
+        {
+            "id": "orbit_dissection",
+            "name": "Orbit Dissection",
+            "version": 1,
+            "organ": "Orbit Dissection",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/head_orbit",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/not_available",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/head_orbit.prefab",
+            "scale": 0.0125,
+            "yPos": 0.06,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Information",
+                    "content": "",
+                    "position": {
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "1",
+                    "title": "Optic Nerve",
+                    "content": "",
+                    "position": {
+                        "x": -6.846658706665039,
+                        "y": 7.967353343963623,
+                        "z": -21.056089401245118,
+                        "global": false
+                    }
+                }
+            ]
         }
     ],
   "labCourses": [
@@ -15615,6 +15649,16 @@
                 "pectoralGirdle1",
                 "pectoralGirdle2"
             ]
+        },
+        {
+            "labId": 3,
+            "labName": "Anatomy of the Orbit",
+            "imgUrl": "",
+            "specimenList": [
+                "expandedSkull",
+                "humanSkullWithoutcalvarium_highres",
+                "orbit_dissection"
+            ]
         }
       ]
     },
@@ -15864,7 +15908,8 @@
         "Brainstem with Circle of Willis",
         "Brainstem with Trochlear Nerve",
         "Circle of Willis",
-        "Brain Commissural Fibres"
+        "Brain Commissural Fibres",
+        "Orbit Dissection"
       ]
     },
     {
