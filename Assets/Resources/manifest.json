@@ -1189,7 +1189,7 @@
             ]
         },
         {
-            "id": "HandBones",
+            "id": "hand_bones",
             "name": "Hand Bones",
             "version": 1,
             "organ": "Hand Bones",
@@ -1402,7 +1402,33 @@
             ]
         },
         {
-            "id": "PlastinatedHand",
+            "id": "hand_and_forearm",
+            "name": "Hand and Forearm",
+            "version": 1,
+            "organ": "Hand Bones",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/handbones",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/hand_and_forearm_on_table",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/handbones",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/hand_and_forearm_on_table.prefab",
+            "scale": 0.1,
+            "yPos": 0.20,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Information",
+                    "content": "",
+                    "position": {
+                        "x": -5.352999210357666,
+                        "y": 195.0,
+                        "z": 4.165251731872559,
+                        "global": true
+                    }
+                }
+            ]
+        },
+        {
+            "id": "plastinated_hand",
             "name": "Plastinated Hand",
             "version": 1,
             "organ": "Plastinated Hand",
@@ -16518,19 +16544,30 @@
                   "foregutorgans"
               ]
           },
-          {
-              "labId": 5,
-              "labName": "Female Pelvis & Perineum",
-              "imgUrl": "",
-              "specimenList": [
-                  "androidpelvis01",
-                  "hipjoint01",
-                  "femalePelvis01",
-                  "femalePelvisBroadLigament01",
-                  "femalePelvisViscera01",
-                  "femalePelvis02"
-              ]
-          }
+        {
+            "labId": 5,
+            "labName": "Female Pelvis & Perineum",
+            "imgUrl": "",
+            "specimenList": [
+                "androidpelvis01",
+                "hipjoint01",
+                "femalePelvis01",
+                "femalePelvisBroadLigament01",
+                "femalePelvisViscera01",
+                "femalePelvis02"
+            ]
+        },
+        {
+            "labId": 6,
+            "labName": "Anatomy of Hand",
+            "imgUrl": "",
+            "specimenList": [
+                "Hand",
+                "plastinated_hand",
+                "hand_bones",
+                "hand_and_forearm"
+            ]
+        }
       ]
     },
     {
