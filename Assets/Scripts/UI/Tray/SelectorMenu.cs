@@ -30,7 +30,7 @@ public class SelectorMenu : MonoBehaviour
     public Button seeAllButtonPrefab;
 
     [Header("Internal Structures")] public Transform listTransform;
-    public TextMeshProUGUI backBttnTitle;
+    //public TextMeshProUGUI backBttnTitle;
     public Button backButton;
     public TextMeshProUGUI selectionTitle;
     public TextMeshProUGUI noContentText;
@@ -39,8 +39,11 @@ public class SelectorMenu : MonoBehaviour
     public Button labButton;
     public TextMeshProUGUI atlasLabel;
     public TextMeshProUGUI labLabel;
+    public TextMeshProUGUI titleOnShelf;
     public GameObject loadingIndicator;
     public Animator anim;
+    public GameObject labInfoContent;
+    public GameObject labInfoShowBtn;
 
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
@@ -50,6 +53,10 @@ public class SelectorMenu : MonoBehaviour
     private const string LOADING_SPECIMENS = "LOADING SPECIMENS...";
     private const string SHELF = "SHELF";
     private const string SPECIMEN_LIST = "SPECIMEN LIST";
+
+    [Header("LabContentRender")]
+    public TextMeshProUGUI shelfTitle;
+    public TextMeshProUGUI labDescription;
 
     public enum ListMode
     {
@@ -108,7 +115,7 @@ public class SelectorMenu : MonoBehaviour
         {
             if (courseId.Length < 1)
             {
-                backBttnTitle.text = SHELF;
+                //backBttnTitle.text = SHELF;
                 _loadedCourses = store.labCourses.Values.ToList();
                 _loadedCourses.Sort((c1, c2) => c1.courseId.CompareTo(c2.courseId)); // sort courses alphebetically
                 showNoContentText = _loadedCourses == null || _loadedCourses.Count < 1;
@@ -116,7 +123,7 @@ public class SelectorMenu : MonoBehaviour
             else if (labId > 0)
             {
                 mode = ListMode.LAB_SPECIMENS;
-                backBttnTitle.text = LABS;
+                //backBttnTitle.text = LABS;
                 Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
                 selectionTitle.text = labData.Item1;
                 _loadedSpecimens = labData.Item2;
@@ -125,7 +132,7 @@ public class SelectorMenu : MonoBehaviour
             else
             {
                 mode = ListMode.LAB;
-                backBttnTitle.text = COURSES;
+                //backBttnTitle.text = COURSES;
                 selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
                 showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
@@ -134,21 +141,21 @@ public class SelectorMenu : MonoBehaviour
         else if (region == null)
         {
             mode = ListMode.REGION;
-            backBttnTitle.text = SHELF;
+            //backBttnTitle.text = SHELF;
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             showNoContentText = _loadedRegions == null || _loadedRegions.Count < 1;
         }
         else if (string.IsNullOrEmpty(organ))
         {
             mode = ListMode.REGION_EXPANDED;
-            backBttnTitle.text = SHELF;
+            //backBttnTitle.text = SHELF;
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             _loadedOrgans = store.GetOrgansByRegion(region.name);
         }
         else
         {
             mode = ListMode.SPECIMEN;
-            backBttnTitle.text = SPECIMEN_LIST;
+            //backBttnTitle.text = SPECIMEN_LIST;
             selectionTitle.text = organ;
             _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
@@ -176,10 +183,12 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    public void LabSelected(int labId)
+    public void LabSelected(int labId, String labName)
     {
         this.labId = labId;
         Populate();
+        var newLabName = "This Lab is about" + labName;
+        RenderLabInfo(labName, newLabName);
     }
 
     /**
@@ -228,13 +237,35 @@ public class SelectorMenu : MonoBehaviour
             });
 
             backButton.onClick.AddListener(ClearSelectionData);
+            labInfoShowBtn.SetActive(false);
             return;
         }
 
-        if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
+        if (mode == ListMode.SPECIMEN)
         {
             // Forgive me for the spaghetti below
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
+            for (int i = 0; i < _loadedSpecimens.Count; i++)
+            {
+                string id = _loadedSpecimens[i].id;
+                SelectorButton btn = Instantiate(specimenSelectorPrefab, listTransform);
+                btn.Populate(_loadedSpecimens[i].name, i, null);
+                idToButton.Add(id, btn);
+            }
+
+            if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
+            {
+                Button btn = Instantiate(seeAllButtonPrefab, listTransform);
+                btn.onClick.AddListener(ClearOrganAndLabData);
+            }
+
+            // Activates the back button, which takes user back to Region/Organ list
+            backButton.onClick.AddListener(ClearOrganAndLabData);
+            UpdateSelected();
+        }
+        else if(mode == ListMode.LAB_SPECIMENS)
+        {
+            // Same as specimen mode, also provide additional content info rendering
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
@@ -356,8 +387,11 @@ public class SelectorMenu : MonoBehaviour
     {
         labButton.interactable = true;
         atlasButton.interactable = false;
-        atlasLabel.color = Color.white;
-        labLabel.color = Color.black;
+        atlasLabel.color = Color.blue;
+        labLabel.color = Color.white;
+        titleOnShelf.gameObject.SetActive(false);
+        titleOnShelf.text = "ANATOMICAL CATEGORIES";
+        titleOnShelf.gameObject.SetActive(true);
         byLab = false;
         ClearSelectionData();
     }
@@ -366,14 +400,18 @@ public class SelectorMenu : MonoBehaviour
     {
         labButton.interactable = false;
         atlasButton.interactable = true;
-        labLabel.color = Color.white;
-        atlasLabel.color = Color.black;
+        labLabel.color = Color.blue;
+        atlasLabel.color = Color.white;
+        titleOnShelf.gameObject.SetActive(false);
+        titleOnShelf.text = "LAB COURSES";
+        titleOnShelf.gameObject.SetActive(true);
         byLab = true;
         ClearSelectionData();
     }
 
     private void SetSpecimenButtonToSelected(string specId)
     {
+        
         if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
         SelectorButton btn = idToButton[specId];
         btn.ShowBackground(true);
@@ -388,6 +426,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void SetSpecimenButtonToDeselected(string specId)
     {
+       
         if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
         SelectorButton btn = idToButton[specId];
         btn.ShowBackground(false);
@@ -395,6 +434,7 @@ public class SelectorMenu : MonoBehaviour
         btn.button.onClick.RemoveAllListeners();
         btn.button.onClick.AddListener(() => {
             SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
+            OnCloseLabInfo();
             btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
             UpdateSelected();
         });
@@ -443,5 +483,32 @@ public class SelectorMenu : MonoBehaviour
     public void UnhoverShelfToggle()
     {
         anim.SetBool("PeekMenu", false);
+    }
+
+    public void LoadSpecimenFromInfo()
+    {
+        Debug.Log("Loaded Specimen");
+        UpdateSelected();
+    }
+
+    public void RenderLabInfo(String title, String labDes)
+    {
+        labInfoContent.SetActive(false);
+        labInfoShowBtn.SetActive(false);
+        shelfTitle.text = title;
+        labDescription.text = labDes;
+        labInfoContent.SetActive(true);
+    }
+
+    public void OnCloseLabInfo()
+    {
+        labInfoContent.SetActive(false);
+        labInfoShowBtn.SetActive(true);
+    }
+
+    public void OnShowLabInfo()
+    {
+        labInfoContent.SetActive(true);
+        labInfoShowBtn.SetActive(false);
     }
 }
