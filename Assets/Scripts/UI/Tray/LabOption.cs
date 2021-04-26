@@ -25,7 +25,7 @@ public class LabOption : MonoBehaviour
         _selectorMenu = menu;
       
         button.onClick.AddListener(() => { 
-            _selectorMenu.LabSelected(data.labId, data.labName);
+            _selectorMenu.LabSelected(data.labId, data.labName, data.imgUrl);
             
         });
     }
@@ -33,15 +33,19 @@ public class LabOption : MonoBehaviour
 
     private IEnumerator DownloadImage(string url) {
         url = url.Trim();
+        
         if (url.Length > 0)
         {
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
                 Debug.Log(request.error);
+         
             else
                 imageFrame.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
+
+
     }
 
 }

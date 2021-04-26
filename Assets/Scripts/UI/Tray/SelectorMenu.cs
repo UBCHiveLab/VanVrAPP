@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using Assets.Scripts.State;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 /**
  * Populates and manages the “Shelf” menu in Tray mode.
@@ -57,6 +59,7 @@ public class SelectorMenu : MonoBehaviour
     [Header("LabContentRender")]
     public TextMeshProUGUI shelfTitle;
     public TextMeshProUGUI labDescription;
+    public RawImage labRenderedImg;
 
     public enum ListMode
     {
@@ -183,12 +186,12 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    public void LabSelected(int labId, String labName)
+    public void LabSelected(int labId, String labName,String labImg)
     {
         this.labId = labId;
         Populate();
-        var newLabName = "This Lab is about" + labName;
-        RenderLabInfo(labName, newLabName);
+        var newLabName = "This Lab is about " + labName;
+        RenderLabInfo(labName, newLabName,labImg);
     }
 
     /**
@@ -491,13 +494,42 @@ public class SelectorMenu : MonoBehaviour
         UpdateSelected();
     }
 
-    public void RenderLabInfo(String title, String labDes)
+    public void RenderLabInfo(String title, String labDes, String urlImg)
     {
         labInfoContent.SetActive(false);
         labInfoShowBtn.SetActive(false);
         shelfTitle.text = title;
         labDescription.text = labDes;
+        StartCoroutine(LoadLabImg(urlImg));
         labInfoContent.SetActive(true);
+    }
+
+    private IEnumerator LoadLabImg(String url)
+    {
+        url = url.Trim();
+
+        if (url.Length > 0)
+        {
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+                Debug.Log(request.error);
+
+            else
+                labRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
+        else
+        {
+            url = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png";
+            url = url.Trim();
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+                Debug.Log(request.error);
+
+            else
+                labRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
     }
 
     public void OnCloseLabInfo()
