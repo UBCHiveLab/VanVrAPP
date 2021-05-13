@@ -494,6 +494,7 @@ public class SelectorMenu : MonoBehaviour
         UpdateSelected();
     }
 
+    //TODO: created img prefab and render prefab list for multi imgs
     public void RenderLabInfo(String title, String labDes, String urlImg)
     {
         labInfoContent.SetActive(false);
