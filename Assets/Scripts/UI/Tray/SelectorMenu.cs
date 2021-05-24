@@ -205,8 +205,10 @@ public class SelectorMenu : MonoBehaviour
         noContentText.gameObject.SetActive(showNoContentText);
         labAtlasToggle.SetActive(
             !store.Loading() &&
-            mode != ListMode.SPECIMEN &&
-            mode != ListMode.LAB_SPECIMENS
+            mode != ListMode.SPECIMEN
+            //fixing the bug: labCourses/labAtlasToggle disappearing when lab info shown
+            //&&
+            //mode != ListMode.LAB_SPECIMENS
         );
 
         // Clears data.
@@ -285,6 +287,11 @@ public class SelectorMenu : MonoBehaviour
 
             // Activates the back button, which takes user back to Region/Organ list
             backButton.onClick.AddListener(ClearOrganAndLabData);
+            backButton.onClick.AddListener(() => {
+              labInfoContent.SetActive(false);
+              labInfoShowBtn.SetActive(true);
+            });
+
             UpdateSelected();
         }
         else
@@ -396,6 +403,8 @@ public class SelectorMenu : MonoBehaviour
         titleOnShelf.text = "ANATOMICAL CATEGORIES";
         titleOnShelf.gameObject.SetActive(true);
         byLab = false;
+        labInfoContent.SetActive(false);
+        labInfoShowBtn.SetActive(false);
         ClearSelectionData();
     }
 
@@ -414,7 +423,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void SetSpecimenButtonToSelected(string specId)
     {
-        
+
         if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
         SelectorButton btn = idToButton[specId];
         btn.ShowBackground(true);
@@ -429,7 +438,7 @@ public class SelectorMenu : MonoBehaviour
 
     private void SetSpecimenButtonToDeselected(string specId)
     {
-       
+
         if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
         SelectorButton btn = idToButton[specId];
         btn.ShowBackground(false);
