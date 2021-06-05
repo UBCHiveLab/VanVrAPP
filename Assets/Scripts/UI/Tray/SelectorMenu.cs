@@ -34,8 +34,6 @@ public class SelectorMenu : MonoBehaviour
     [Header("Internal Structures")] public Transform listTransform;
     //public TextMeshProUGUI backBttnTitle;
     public Button backButton;
-    public GameObject imageBack;
-    public GameObject imageClose;
     public TextMeshProUGUI selectionTitle;
     public TextMeshProUGUI noContentText;
     public GameObject labAtlasToggle;
@@ -206,10 +204,9 @@ public class SelectorMenu : MonoBehaviour
         selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
         noContentText.gameObject.SetActive(showNoContentText);
         labAtlasToggle.SetActive(
-            !store.Loading()
+            !store.Loading() &&
+            mode != ListMode.SPECIMEN
             //fixing the bug: labCourses/labAtlasToggle disappearing when lab info shown
-            //&&
-            //mode != ListMode.SPECIMEN
             //&&
             //mode != ListMode.LAB_SPECIMENS
         );
@@ -234,9 +231,6 @@ public class SelectorMenu : MonoBehaviour
             });
 
             backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
-            //set backbutton to image "back" instead of "close"
-            imageBack.SetActive(false);
-            imageClose.SetActive(true);
             return;
         }
 
@@ -249,9 +243,6 @@ public class SelectorMenu : MonoBehaviour
 
             backButton.onClick.AddListener(ClearSelectionData);
             labInfoShowBtn.SetActive(false);
-            //set backbutton to image "back" instead of "close"
-            imageBack.SetActive(true);
-            imageClose.SetActive(false);
             return;
         }
 
@@ -275,9 +266,6 @@ public class SelectorMenu : MonoBehaviour
 
             // Activates the back button, which takes user back to Region/Organ list
             backButton.onClick.AddListener(ClearOrganAndLabData);
-            //set backbutton to image "back" instead of "close"
-            imageBack.SetActive(true);
-            imageClose.SetActive(false);
             UpdateSelected();
         }
         else if(mode == ListMode.LAB_SPECIMENS)
@@ -299,11 +287,11 @@ public class SelectorMenu : MonoBehaviour
 
             // Activates the back button, which takes user back to Region/Organ list
             backButton.onClick.AddListener(ClearOrganAndLabData);
-            // hide the content render panel
             backButton.onClick.AddListener(() => {
               labInfoContent.SetActive(false);
               labInfoShowBtn.SetActive(true);
             });
+
             UpdateSelected();
         }
         else
@@ -353,9 +341,6 @@ public class SelectorMenu : MonoBehaviour
 
             // Bind a click listener that toggles the shelf menu
             backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
-            //set backbutton to image "close" instead of "back"
-            imageBack.SetActive(false);
-            imageClose.SetActive(true);
         }
     }
 
@@ -420,8 +405,6 @@ public class SelectorMenu : MonoBehaviour
         byLab = false;
         labInfoContent.SetActive(false);
         labInfoShowBtn.SetActive(false);
-        imageBack.SetActive(false);//***
-        imageClose.SetActive(true);
         ClearSelectionData();
     }
 
@@ -435,8 +418,6 @@ public class SelectorMenu : MonoBehaviour
         titleOnShelf.text = "LAB COURSES";
         titleOnShelf.gameObject.SetActive(true);
         byLab = true;
-        imageBack.SetActive(false);
-        imageClose.SetActive(true);
         ClearSelectionData();
     }
 

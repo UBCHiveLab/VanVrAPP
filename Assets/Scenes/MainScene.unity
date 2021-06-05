@@ -39030,6 +39030,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 913974102}
   m_Mesh: {fileID: 6385418887001116271, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
+--- !u!1 &915459360 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 137051395797369283, guid: c36800d6cf4936c43999431c9845c217,
+    type: 3}
+  m_PrefabInstance: {fileID: 137051395177893313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &915623832
 GameObject:
   m_ObjectHideFlags: 0
@@ -113096,6 +113102,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140361623}
   m_Mesh: {fileID: -3123748993394886219, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
+--- !u!1 &2141096438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1668899405415296343, guid: c36800d6cf4936c43999431c9845c217,
+    type: 3}
+  m_PrefabInstance: {fileID: 137051395177893313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2141219566
 GameObject:
   m_ObjectHideFlags: 0
@@ -113756,6 +113768,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 137051395797369283, guid: c36800d6cf4936c43999431c9845c217,
+        type: 3}
+      propertyPath: m_Name
+      value: ImageClose
+      objectReference: {fileID: 0}
+    - target: {fileID: 137051395797369283, guid: c36800d6cf4936c43999431c9845c217,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 137051396217287788, guid: c36800d6cf4936c43999431c9845c217,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -113885,6 +113907,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668899405415296343, guid: c36800d6cf4936c43999431c9845c217,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119409463071673750, guid: c36800d6cf4936c43999431c9845c217,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c36800d6cf4936c43999431c9845c217, type: 3}
@@ -116458,6 +116490,8 @@ MonoBehaviour:
     type: 3}
   listTransform: {fileID: 249220007096965197}
   backButton: {fileID: 892240573}
+  imageBack: {fileID: 2141096438}
+  imageClose: {fileID: 915459360}
   selectionTitle: {fileID: 2731209708133865207}
   noContentText: {fileID: 7755808416761189525}
   labAtlasToggle: {fileID: 1013435371}
