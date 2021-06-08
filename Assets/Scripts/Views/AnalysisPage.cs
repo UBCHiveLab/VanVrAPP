@@ -62,6 +62,10 @@ public class AnalysisPage : MonoBehaviour, IPage
     public ControlAssist controlAssist;
     public float mouseSpeed = 1f;
 
+    [Header("Remote Control")]
+    public GameObject referenceRotation;
+    public bool isConnect= false;
+
 
     public void Activate()
     {
@@ -154,6 +158,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         {
             HandleCamSelect();
         }
+
         
     }
 
@@ -214,8 +219,19 @@ public class AnalysisPage : MonoBehaviour, IPage
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
         }
 
-        //scrolling control for zoom in/ out during the comparison mode
-        if(comparisonMode.isCompared == true)
+        //remote control rotation
+        if(isConnect == true)
+        {
+            MatchReferenceRotation();
+            _rotatingSpecimen = GameObject.Find("SpecimenHolder").transform.GetChild(0).gameObject;
+            _rotatingSpecimen.transform.rotation =
+            Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
+            
+        }
+        
+
+            //scrolling control for zoom in/ out during the comparison mode
+            if (comparisonMode.isCompared == true)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -347,5 +363,18 @@ public class AnalysisPage : MonoBehaviour, IPage
         leftPanel.gameObject.SetActive(!_focusOn);
         specimenLabel.gameObject.SetActive(!_focusOn);
         _focusIndicator.UpdateState(_focusOn);
+    }
+
+
+    //match specimen's rotation with the reference rotation
+    public void MatchReferenceRotation()
+    {
+        currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
+        _xRot = referenceRotation.gameObject.transform.localEulerAngles.x;
+        _yRot = referenceRotation.gameObject.transform.localEulerAngles.y;
+        Debug.Log(_xRot);
+        Debug.Log(_yRot);
+
+
     }
 }

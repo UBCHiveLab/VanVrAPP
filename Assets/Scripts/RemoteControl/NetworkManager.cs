@@ -13,6 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] public Button startButton;
     [SerializeField] public TextMeshProUGUI log;
     public GameObject canvas;
+    public AnalysisPage analysisPage;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
- 
+        
+            
+        
     }
 
     public override void OnConnectedToMaster()
@@ -67,6 +70,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             Debug.Log("ready to start");
             log.text = playerCount + " devices in this room";
             canvas.gameObject.SetActive(false);
+            //analysisPage.MatchReferenceRotation();
         }
     }
 
