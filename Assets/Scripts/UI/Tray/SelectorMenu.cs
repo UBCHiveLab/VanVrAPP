@@ -34,6 +34,8 @@ public class SelectorMenu : MonoBehaviour
     [Header("Internal Structures")] public Transform listTransform;
     //public TextMeshProUGUI backBttnTitle;
     public Button backButton;
+    public Sprite shelfBack;
+    public Sprite shelfClose;
     public TextMeshProUGUI selectionTitle;
     public TextMeshProUGUI noContentText;
     public GameObject labAtlasToggle;
@@ -224,6 +226,9 @@ public class SelectorMenu : MonoBehaviour
 
         if (mode == ListMode.LAB_COURSES)
         {
+
+            backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfClose;
+
             _loadedCourses.ForEach((course) =>
             {
                 CourseOption courseOption = Instantiate(coursePrefab, listTransform);
@@ -231,11 +236,14 @@ public class SelectorMenu : MonoBehaviour
             });
 
             backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
+            labInfoShowBtn.SetActive(false);
             return;
         }
 
         if (mode == ListMode.LAB)
         {
+            backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
+
             _loadedLabs.ForEach((lab) => {
                 LabOption labOption = Instantiate(labPrefab, listTransform);
                 labOption.Populate(lab, this);
@@ -250,6 +258,9 @@ public class SelectorMenu : MonoBehaviour
         {
             // Forgive me for the spaghetti below
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
+
+            backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
+
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
@@ -271,6 +282,8 @@ public class SelectorMenu : MonoBehaviour
         else if(mode == ListMode.LAB_SPECIMENS)
         {
             // Same as specimen mode, also provide additional content info rendering
+            backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
+
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
@@ -289,13 +302,14 @@ public class SelectorMenu : MonoBehaviour
             backButton.onClick.AddListener(ClearOrganAndLabData);
             backButton.onClick.AddListener(() => {
               labInfoContent.SetActive(false);
-              labInfoShowBtn.SetActive(true);
+              labInfoShowBtn.SetActive(false);
             });
 
             UpdateSelected();
         }
         else
         {
+            backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfClose;
             // Loops through loaded regions, producing a clickable button for each...
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
