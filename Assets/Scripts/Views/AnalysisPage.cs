@@ -21,6 +21,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button focusModeButton;
     public Button compareButton;
     public Button resetButton;
+    public Button remoteControlButton;
 
     [Header("Proportion Indicator")]
     public ProportionIndicator proportionScript;
@@ -64,6 +65,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     [Header("Remote Control")]
     public GameObject referenceRotation;
+    public GameObject remoteControlPanel;
     public bool isConnect= false;
 
 
@@ -146,6 +148,14 @@ public class AnalysisPage : MonoBehaviour, IPage
 
         //Compare mode
         comparisonMode = GameObject.Find("UIManager").GetComponent<ComparisonMode>();
+
+        //Remote Control Button
+        remoteControlButton.onClick.AddListener(() =>
+        {
+            isConnect = !isConnect;
+            remoteControlPanel.SetActive(isConnect);
+        }) ;
+
 
     }
 
