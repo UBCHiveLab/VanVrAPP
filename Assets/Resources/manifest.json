@@ -9965,6 +9965,45 @@
             ]
         },
         {
+            "id": "heart02(OSKE)",
+            "name": "Heart with Aorta(OSKE)",
+            "version": 1,
+            "organ": "Heart with Aorta(OSKE)",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/heart_with_aorta",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/heart_with_aorta",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/heart_with_aorta",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/HeartWithAorta.prefab",
+            "scale": 0.012,
+            "yPos": -0.076,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Situation",
+                    "content": "During CPR you are pressing the heart against the anterior part of the thoracic vertebra thereby stimulating pumping of the heart and filling the coronary vessels.",
+                    "position": {
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "1",
+                    "title": "Question",
+                    "content": "Normally in diastole, the heart fills with blood. Where do the two coronary vessels start?",
+                    "position": {
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "2",
+                    "title": "Question",
+                    "content": "Can you describe, denomination and show the main branching of the 2 coronary vessels?",
+                    "position": {
+                        "global": true
+                    }
+                }
+            ]
+        },
+        {
             "id": "liverandgallbladder01",
             "name": "Liver and Gallbladder",
             "version": 1,
@@ -10603,6 +10642,43 @@
                         "y": 0.7381324768066406,
                         "z": -0.5313076376914978,
                         "global": false
+                    }
+                }
+            ]
+        },
+        {
+            "id": "mediastinum and posterior thoracic wall(OSKE)",
+            "name": "Mediastinum and Posterior Thoracic Wall(OSKE)",
+            "version": 4,
+            "organ": "Mediastinum and Posterior Thoracic Wall(OSKE)",
+            "assetUrl": "https://hivemodelstorage.blob.core.windows.net/win/posterior_thoracic_wall_mediastinum_oct13_2020",
+            "assetUrlWebGl": "https://hivemodelstorage.blob.core.windows.net/webgl/posterior_thoracic_wall_mediastinum_oct13_2020",
+            "assetUrlOsx": "https://hivemodelstorage.blob.core.windows.net/osx/posterior_thoracic_wall_mediastinum_oct13_2020",
+            "altAssetUrl": "",
+            "prefabPath": "Assets/Models/Specimens/AssetBundles/posterior_thoracic_wall_mediastinum_Oct13_2020.prefab",
+            "scale": 0.03,
+            "ypos": 0.2,
+            "annotations": [
+                {
+                    "annotationId": "0",
+                    "title": "Situation",
+                    "content": "The patient regains heart function after CPR in the ambulance, there are shown disturbances in the electrocardiogram (ECG). The patient arrives at the hospital and an angiography shows an occluded left coronary artery. The thorax surgeon plans a heart operation the next day as he is stable. During this operation the surgeon opens the pericardial sack, and has its hand behind the heart before he occludes the arteries. There are two relevant anatomical sinuses when the hand and fingers are placed around the heart and between vessels.",
+                    "position": {
+                        "x": 0.12947416305541993,
+                        "y": 3.737652063369751,
+                        "z": 1.6550099849700928,
+                        "global": true
+                    }
+                },
+                {
+                    "annotationId": "1",
+                    "title": "Question",
+                    "content": "Can you show where the sinus transversus pericardii and sinus obliquus pericardii are located. What is sinus transversus pericardii and why is it relevant?",
+                    "position": {
+                        "x": 0.12947416305541993,
+                        "y": 3.737652063369751,
+                        "z": 1.6550099849700928,
+                        "global": true
                     }
                 }
             ]
@@ -16915,667 +16991,689 @@
             "annotations": []
         }
     ],
-  "labCourses": [
-    {
-      "courseId": "MEDD 411",
-      "labs": [
+    "labCourses": [
         {
-          "labId": 1,
-          "labName": "Superficial Back",
-          "imgUrl": "",
-          "specimenList": [
-            "scapula1",
-            "humerus1",
-            "branchplex1",
-            "pectoralGirdle1"
-          ]
+            "courseId": "MEDD 411",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Superficial Back",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "scapula1",
+                        "humerus1",
+                        "branchplex1",
+                        "pectoralGirdle1"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Spinal Cord and Spinal Nerves",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "lumbarvertbra01",
+                        "vertebraeribs01",
+                        "thoracicvertebra01",
+                        "rib01",
+                        "cervicalvertebra01",
+                        "posteriorthoracicwall01"
+                    ]
+                },
+                {
+                    "labId": 4,
+                    "labName": "General Organization of Thoracic Walls, Pleural Cavities and Lungs",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "rightlung01",
+                        "anteriorthoracicwall01",
+                        "posteriorthoracicwall01",
+                        "l4lungswithtrachea",
+                        "leftlung01"
+                    ]
+                },
+                {
+                    "labId": 5,
+                    "labName": "Middle Mediastinum and Heart",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "heart02",
+                        "heart03",
+                        "heart01"
+                    ]
+                },
+                {
+                    "labId": 8,
+                    "labName": "The Foregut Organs and Vessels",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "abdominalcavity01",
+                        "liver_diaphragm",
+                        "liverandgallbladder01",
+                        "foregutorgans"
+                    ]
+                },
+                {
+                    "labId": 9,
+                    "labName": "The Midgut / Hindgut Organs and Vessels",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "abdominalcavity01",
+                        "abdominalcavity02"
+                    ]
+                },
+                {
+                    "labId": 10,
+                    "labName": "The Pelvis Walls and Viscera",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "androidpelvis01",
+                        "hipjoint01",
+                        "malePelvis01",
+                        "femalePelvis01",
+                        "femalePelvis02",
+                        "femalePelvisViscera01"
+                    ]
+                },
+                {
+                    "labId": 11,
+                    "labName": "The Perineum",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "androidpelvis01",
+                        "malePelvis01",
+                        "femalePelvis01",
+                        "femalePelvis02",
+                        "femalePelvisViscera01",
+                        "femalePelvisBroadLigament01"
+                    ]
+                }
+            ]
         },
         {
-          "labId": 2,
-          "labName": "Spinal Cord and Spinal Nerves",
-          "imgUrl": "",
-          "specimenList": [
-            "lumbarvertbra01",
-            "vertebraeribs01",
-            "thoracicvertebra01",
-            "rib01",
-            "cervicalvertebra01",
-            "posteriorthoracicwall01"
-          ]
+            "courseId": "DENT 410",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Superficial Back",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "scapula1",
+                        "humerus1",
+                        "branchplex1",
+                        "pectoralGirdle1"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Spinal Cord and Spinal Nerves",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "lumbarvertbra01",
+                        "vertebraeribs01",
+                        "thoracicvertebra01",
+                        "rib01",
+                        "cervicalvertebra01",
+                        "posteriorthoracicwall01"
+                    ]
+                },
+                {
+                    "labId": 4,
+                    "labName": "Thoracic Walls, Pleural Cavities and Lungs",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "anteriorthoracicwall01",
+                        "posteriorthoracicwall01",
+                        "rightlung01",
+                        "leftlung01",
+                        "l4lungswithtrachea"
+                    ]
+                },
+                {
+                    "labId": 6,
+                    "labName": "Head and Neck 1: Overview of the Skull",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "humanSkullWithoutcalvarium_lowres",
+                        "humanSkullWithoutcalvarium_highres",
+                        "expandedSkull",
+                        "calvarium",
+                        "mandible"
+                    ]
+                },
+                {
+                    "labId": 8,
+                    "labName": "Head and Neck 3: Infratemporal Fossa",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "Infratemporal_Fossa",
+                        "Infratemporalfossa2",
+                        "Infratemporalfossa3",
+                        "Infratemporalfossa4"
+                    ]
+                },
+                {
+                    "labId": 12,
+                    "labName": "Abdomen 2: Foregut Organs and Vessels",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "abdominalcavity01",
+                        "abdominalcavity02",
+                        "liverandgallbladder01",
+                        "liver_diaphragm"
+                    ]
+                },
+                {
+                    "labId": 13,
+                    "labName": "Abdomen 3: Midgut and Hindgut Organs and Vessels, Posterior",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "posterior_abdominal_wall"
+                    ]
+                }
+            ]
         },
         {
-          "labId": 4,
-          "labName": "General Organization of Thoracic Walls, Pleural Cavities and Lungs",
-          "imgUrl": "",
-          "specimenList": [
-            "rightlung01",
-            "anteriorthoracicwall01",
-            "posteriorthoracicwall01",
-            "l4lungswithtrachea",
-            "leftlung01"
-          ]
+            "courseId": "MEDD 421",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Osteology of the Limbs and Conceptual Overview of the Joints",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "androidpelvis01",
+                        "femur01",
+                        "tibia01",
+                        "fibula01",
+                        "footbones01",
+                        "hipjoint01",
+                        "hipjoint02",
+                        "kneejoint01",
+                        "kneejoint02",
+                        "articulatedknee01"
+                    ]
+                },
+                {
+                    "labId": 3,
+                    "labName": "Anterior and Medial Thigh, Anterior Leg, Dorsum of Foot",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "foot01",
+                        "intermediateLowerLimb01",
+                        "deeplowerlimb",
+                        "superficial_lowerlimb"
+                    ]
+                },
+                {
+                    "labId": 5,
+                    "labName": "Posterior and Lateral Leg, Sole of Foot, and Foot Joints",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "foot01",
+                        "intermediateLowerLimb01",
+                        "deeplowerlimb",
+                        "superficial_lowerlimb"
+                    ]
+                },
+                {
+                    "labId": 7,
+                    "labName": "Posterior Abdominal Wall",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "posterior_abdominal_wall",
+                        "androidpelvis01",
+                        "lumbarvertbra01"
+                    ]
+                },
+                {
+                    "labId": 8,
+                    "labName": "Anatomy of the Urogenital System",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "posterior_abdominal_wall",
+                        "wholeHumanKidney1",
+                        "kidneyProsection1"
+                    ]
+                }
+            ]
         },
         {
-          "labId": 5,
-          "labName": "Middle Mediastinum and Heart",
-          "imgUrl": "",
-          "specimenList": [
-            "heart02",
-            "heart03",
-            "heart01"
-          ]
+            "courseId": "ANAT 392",
+            "labs": []
         },
         {
-          "labId": 8,
-          "labName": "The Foregut Organs and Vessels",
-          "imgUrl": "",
-          "specimenList": [
-            "abdominalcavity01",
-            "liver_diaphragm",
-            "liverandgallbladder01",
-            "foregutorgans"
-          ]
+            "courseId": "RHSC 420",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Overview of CNS",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brain02",
+                        "half_brain_with_brainstem",
+                        "brainstem_and_cerebellum",
+                        "brainstem",
+                        "brainstem_and_cranial_nerves",
+                        "cerebellum"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Visual System; CN I, III, IV, VI",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brainsteamAndCranialNerves",
+                        "brainstem_and_cerebellum",
+                        "brainstem",
+                        "brainstem_with_trochlear_nerve",
+                        "Brain Optic",
+                        "visual_system_tracts"
+                    ]
+                },
+                {
+                    "labId": 3,
+                    "labName": "Cortex",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "half_brain_with_brainstem",
+                        "brain02",
+                        "superior_longitudinal_fasciculus",
+                        "Brain Optic",
+                        "brain_optic_tracts",
+                        "brain_commissural_fibres",
+                        "Brain Before Sections",
+                        "circle_of_willis",
+                        "visual_system_tracts",
+                        "circle_of_Willis_in_situ"
+                    ]
+                }
+            ]
         },
         {
-          "labId": 9,
-          "labName": "The Midgut / Hindgut Organs and Vessels",
-          "imgUrl": "",
-          "specimenList": [
-            "abdominalcavity01",
-            "abdominalcavity02"
-          ]
+            "courseId": "MEDD 412 Anatomy",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Bootcamp 1",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "humanSkullWithoutcalvarium_lowres",
+                        "humanSkullWithoutcalvarium_highres",
+                        "mandible",
+                        "head_cranial_nerves",
+                        "circle_of_Willis_in_situ"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Brachial Plexus",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "scapula1",
+                        "humerus1",
+                        "branchplex2",
+                        "pectoralGirdle1",
+                        "pectoralGirdle2"
+                    ]
+                },
+                {
+                    "labId": 3,
+                    "labName": "Anatomy of the Orbit",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "expandedSkull",
+                        "humanSkullWithoutcalvarium_highres",
+                        "orbit_dissection"
+                    ]
+                },
+                {
+                    "labId": 4,
+                    "labName": "Anterior Cervical Triangle & Thyroid",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "larynx"
+                    ]
+                },
+                {
+                    "labId": 5,
+                    "labName": "Cavernous Sinus",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "humanSkullWithMandible",
+                        "humanSkullWithoutcalvarium_highres",
+                        "Cavernous Sinus"
+                    ]
+                },
+                {
+                    "labId": 6,
+                    "labName": "Infratemporal Fossa",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "mandible",
+                        "Infratemporal_Fossa",
+                        "Infratemporalfossa2",
+                        "Infratemporalfossa4",
+                        "humanSkullWithMandible"
+                    ]
+                },
+                {
+                    "labId": 7,
+                    "labName": "Anatomy of Upper Airways",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "larynx",
+                        "midsagitalhead02",
+                        "deep_neck_and_pharynx",
+                        "bisected_head_and_larynx"
+                    ]
+                }
+            ]
         },
         {
-          "labId": 10,
-          "labName": "The Pelvis Walls and Viscera",
-          "imgUrl": "",
-          "specimenList": [
-            "androidpelvis01",
-            "hipjoint01",
-            "malePelvis01",
-            "femalePelvis01",
-            "femalePelvis02",
-            "femalePelvisViscera01"
-          ]
+            "courseId": "MEDD 412 Neuro",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Bootcamp 1",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brain02",
+                        "half_brain_with_brainstem",
+                        "brainstem_and_cerebellum",
+                        "brainstem",
+                        "brainstem_and_cranial_nerves",
+                        "cerebellum"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Bootcamp 2",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brain02",
+                        "half_brain_with_brainstem",
+                        "brainstem",
+                        "brainsteamAndCranialNerves"
+                    ]
+                },
+                {
+                    "labId": 4,
+                    "labName": "Cortex",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "half_brain_with_brainstem",
+                        "brain02",
+                        "superior_longitudinal_fasciculus",
+                        "Brain Optic",
+                        "brain_optic_tracts",
+                        "brain_commissural_fibres",
+                        "Brain Before Sections",
+                        "circle_of_willis",
+                        "visual_system_tracts"
+                    ]
+                },
+                {
+                    "labId": 5,
+                    "labName": "Brainstem",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brainsteamAndCranialNerves",
+                        "brainstem_and_cerebellum",
+                        "brainstem",
+                        "brainstem_with_trochlear_nerve",
+                        "brainstem_with_circle_of_willis"
+                    ]
+                },
+                {
+                    "labId": 6,
+                    "labName": "Limbic System",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "half_brain_with_brainstem",
+                        "holobrain_limbic_system",
+                        "limbic_system"
+                    ]
+                },
+                {
+                    "labId": 7,
+                    "labName": "Brainstem Reflexes",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brainsteamAndCranialNerves",
+                        "brainstem_and_cerebellum",
+                        "brainstem_with_trochlear_nerve",
+                        "brainstem"
+                    ]
+                }
+            ]
         },
         {
-          "labId": 11,
-          "labName": "The Perineum",
-          "imgUrl": "",
-          "specimenList": [
-            "androidpelvis01",
-            "malePelvis01",
-            "femalePelvis01",
-            "femalePelvis02",
-            "femalePelvisViscera01",
-            "femalePelvisBroadLigament01"
-          ]
+            "courseId": "MEDD 422",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Coronary Arteries",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "heart02",
+                        "heart03",
+                        "heart01"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Midgut/Hindgut Organs & Blood Supply",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "abdominalcavity01",
+                        "abdominalcavity02"
+                    ]
+                },
+                {
+                    "labId": 3,
+                    "labName": "Anatomy of Forearm",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "radius01",
+                        "forearm01",
+                        "ulna01"
+                    ]
+                },
+                {
+                    "labId": 4,
+                    "labName": "Foregut Organs & Blood Supply",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "abdominalcavity02",
+                        "liver_diaphragm",
+                        "liverandgallbladder01",
+                        "foregutorgans"
+                    ]
+                },
+                {
+                    "labId": 5,
+                    "labName": "Female Pelvis & Perineum",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "androidpelvis01",
+                        "hipjoint01",
+                        "femalePelvis01",
+                        "femalePelvisBroadLigament01",
+                        "femalePelvisViscera01",
+                        "femalePelvis02"
+                    ]
+                },
+                {
+                    "labId": 6,
+                    "labName": "Anatomy of Hand",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "Hand",
+                        "plastinated_hand",
+                        "hand_bones",
+                        "hand_and_forearm"
+                    ]
+                },
+                {
+                    "labId": 7,
+                    "labName": "Lower Urinary Tract",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "androidpelvis01",
+                        "malePelvis01"
+                    ]
+                },
+                {
+                    "labId": 8,
+                    "labName": "Neuroanatomy of Dementia",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brain02",
+                        "limbic_system",
+                        "half_brain_with_brainstem",
+                        "holobrain_limbic_system"
+                    ]
+                }
+            ]
+        },
+        {
+            "courseId": "ANAT 516",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Introduction to Structures of the Central Nervous System",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "brain02"
+                    ]
+                }
+            ]
+        },
+        {
+            "courseId": "BMEG 410",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Musculoskeletal System",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "radius01",
+                        "forearm01",
+                        "lumbarvertbra01",
+                        "thoracicvertebra01",
+                        "cervicalvertebra01",
+                        "kneejoint01",
+                        "kneejoint02",
+                        "hipjoint01",
+                        "hipjoint02",
+                        "branchplex2",
+                        "pectoralGirdle1",
+                        "humerus1",
+                        "Elbow",
+                        "Hand",
+                        "Sacrum"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Thorax",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "anteriorthoracicwall01",
+                        "posteriorthoracicwall01",
+                        "rightlung01",
+                        "leftlung01",
+                        "l4lungswithtrachea",
+                        "thoracicvertebra01",
+                        "rib01",
+                        "heart02",
+                        "heart03",
+                        "heart01",
+                        "posterior_thoracic_wall_mediastinum_Oct13_2020"
+                    ]
+                },
+                {
+                    "labId": 3,
+                    "labName": "Abdomen, Pelvis",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "wholeHumanKidney1",
+                        "kidneyProsection1",
+                        "abdominalcavity01",
+                        "liverandgallbladder01",
+                        "liver_diaphragm",
+                        "abdominalcavity02",
+                        "foregutorgans",
+                        "posterior_abdominal_wall"
+                    ]
+                },
+                {
+                    "labId": 4,
+                    "labName": "Head and Neck",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "humanSkullWithMandible",
+                        "expandedSkull",
+                        "mandible",
+                        "larynx",
+                        "midsagitalhead02"
+                    ]
+                }
+            ]
+        },
+        {
+            "courseId": "MIDW 106",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "Thorax",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "heart01",
+                        "heart02",
+                        "heart03",
+                        "leftlung01",
+                        "rightlung01",
+                        "l4lungswithtrachea"
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "Abdomen",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "liverandgallbladder01",
+                        "abdominalcavity01",
+                        "kidneyProsection1",
+                        "wholeHumanKidney1",
+                        "liver_diaphragm",
+                        "abdominalcavity02"
+                    ]
+                }
+            ]
+        },
+        {
+            "courseId": "OSKE v0.1",
+            "labs": [
+                {
+                    "labId": 1,
+                    "labName": "1st Round",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "heart02(OSKE)"
+
+                    ]
+                },
+                {
+                    "labId": 2,
+                    "labName": "2nd Round",
+                    "imgUrl": "",
+                    "specimenList": [
+                        "mediastinum and posterior thoracic wall(OSKE)"
+                    ]
+                }
+            ]
         }
-      ]
-    },
-    {
-      "courseId": "DENT 410",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Superficial Back",
-          "imgUrl": "",
-          "specimenList": [
-            "scapula1",
-            "humerus1",
-            "branchplex1",
-            "pectoralGirdle1"
-          ]
-        },
-        {
-          "labId": 2,
-          "labName": "Spinal Cord and Spinal Nerves",
-          "imgUrl": "",
-          "specimenList": [
-            "lumbarvertbra01",
-            "vertebraeribs01",
-            "thoracicvertebra01",
-            "rib01",
-            "cervicalvertebra01",
-            "posteriorthoracicwall01"
-          ]
-        },
-        {
-          "labId": 4,
-          "labName": "Thoracic Walls, Pleural Cavities and Lungs",
-          "imgUrl": "",
-          "specimenList": [
-            "anteriorthoracicwall01",
-            "posteriorthoracicwall01",
-            "rightlung01",
-            "leftlung01",
-            "l4lungswithtrachea"
-          ]
-        },
-        {
-          "labId": 6,
-          "labName": "Head and Neck 1: Overview of the Skull",
-          "imgUrl": "",
-          "specimenList": [
-            "humanSkullWithoutcalvarium_lowres",
-            "humanSkullWithoutcalvarium_highres",
-            "expandedSkull",
-            "calvarium",
-            "mandible"
-          ]
-        },
-        {
-          "labId": 8,
-          "labName": "Head and Neck 3: Infratemporal Fossa",
-          "imgUrl": "",
-          "specimenList": [
-            "Infratemporal_Fossa",
-            "Infratemporalfossa2",
-            "Infratemporalfossa3",
-            "Infratemporalfossa4"
-          ]
-        },
-        {
-          "labId": 12,
-          "labName": "Abdomen 2: Foregut Organs and Vessels",
-          "imgUrl": "",
-          "specimenList": [
-            "abdominalcavity01",
-            "abdominalcavity02",
-            "liverandgallbladder01",
-            "liver_diaphragm"
-          ]
-        },
-        {
-          "labId": 13,
-          "labName": "Abdomen 3: Midgut and Hindgut Organs and Vessels, Posterior",
-          "imgUrl": "",
-          "specimenList": [
-            "posterior_abdominal_wall"
-          ]
-        }
-      ]
-    },
-    {
-      "courseId": "MEDD 421",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Osteology of the Limbs and Conceptual Overview of the Joints",
-          "imgUrl": "",
-          "specimenList": [
-            "androidpelvis01",
-            "femur01",
-            "tibia01",
-            "fibula01",
-            "footbones01",
-            "hipjoint01",
-            "hipjoint02",
-            "kneejoint01",
-            "kneejoint02",
-            "articulatedknee01"
-          ]
-        },
-        {
-          "labId": 3,
-          "labName": "Anterior and Medial Thigh, Anterior Leg, Dorsum of Foot",
-          "imgUrl": "",
-          "specimenList": [
-            "foot01",
-            "intermediateLowerLimb01",
-            "deeplowerlimb",
-            "superficial_lowerlimb"
-          ]
-        },
-        {
-          "labId": 5,
-          "labName": "Posterior and Lateral Leg, Sole of Foot, and Foot Joints",
-          "imgUrl": "",
-          "specimenList": [
-            "foot01",
-            "intermediateLowerLimb01",
-            "deeplowerlimb",
-            "superficial_lowerlimb"
-          ]
-        },
-        {
-          "labId": 7,
-          "labName": "Posterior Abdominal Wall",
-          "imgUrl": "",
-          "specimenList": [
-            "posterior_abdominal_wall",
-            "androidpelvis01",
-            "lumbarvertbra01"
-          ]
-        },
-        {
-          "labId": 8,
-          "labName": "Anatomy of the Urogenital System",
-          "imgUrl": "",
-          "specimenList": [
-            "posterior_abdominal_wall",
-            "wholeHumanKidney1",
-            "kidneyProsection1"
-          ]
-        }
-      ]
-    },
-    {
-      "courseId": "ANAT 392",
-      "labs": []
-    },
-    {
-      "courseId": "RHSC 420",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Overview of CNS",
-          "imgUrl": "",
-          "specimenList": [
-            "brain02",
-            "half_brain_with_brainstem",
-            "brainstem_and_cerebellum",
-            "brainstem",
-            "brainstem_and_cranial_nerves",
-            "cerebellum"
-          ]
-        },
-        {
-            "labId": 2,
-            "labName": "Visual System; CN I, III, IV, VI",
-            "imgUrl": "",
-            "specimenList": [
-                "brainsteamAndCranialNerves",
-                "brainstem_and_cerebellum",
-                "brainstem",
-                "brainstem_with_trochlear_nerve",
-                "Brain Optic",
-                "visual_system_tracts"
-            ]
-        },
-        {
-            "labId": 3,
-            "labName": "Cortex",
-            "imgUrl": "",
-            "specimenList": [
-                "half_brain_with_brainstem",
-                "brain02",
-                "superior_longitudinal_fasciculus",
-                "Brain Optic",
-                "brain_optic_tracts",
-                "brain_commissural_fibres",
-                "Brain Before Sections",
-                "circle_of_willis",
-                "visual_system_tracts",
-                "circle_of_Willis_in_situ"
-            ]
-        }
-      ]
-    },
-    {
-      "courseId": "MEDD 412 Anatomy",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Bootcamp 1",
-          "imgUrl": "",
-          "specimenList": [
-            "humanSkullWithoutcalvarium_lowres",
-            "humanSkullWithoutcalvarium_highres",
-            "mandible",
-            "head_cranial_nerves",
-            "circle_of_Willis_in_situ"
-          ]
-        },
-        {
-            "labId": 2,
-            "labName": "Brachial Plexus",
-            "imgUrl": "",
-            "specimenList": [
-                "scapula1",
-                "humerus1",
-                "branchplex2",
-                "pectoralGirdle1",
-                "pectoralGirdle2"
-            ]
-        },
-        {
-            "labId": 3,
-            "labName": "Anatomy of the Orbit",
-            "imgUrl": "",
-            "specimenList": [
-                "expandedSkull",
-                "humanSkullWithoutcalvarium_highres",
-                "orbit_dissection"
-            ]
-        },
-        {
-            "labId": 4,
-            "labName": "Anterior Cervical Triangle & Thyroid",
-            "imgUrl": "",
-            "specimenList": [
-                "larynx"
-            ]
-        },
-        {
-            "labId": 5,
-            "labName": "Cavernous Sinus",
-            "imgUrl": "",
-            "specimenList": [
-                "humanSkullWithMandible",
-                "humanSkullWithoutcalvarium_highres",
-                "Cavernous Sinus"
-            ]
-        },
-        {
-            "labId": 6,
-            "labName": "Infratemporal Fossa",
-            "imgUrl": "",
-            "specimenList": [
-                "mandible",
-                "Infratemporal_Fossa",
-                "Infratemporalfossa2",
-                "Infratemporalfossa4",
-                "humanSkullWithMandible"
-            ]
-        },
-        {
-            "labId": 7,
-            "labName": "Anatomy of Upper Airways",
-            "imgUrl": "",
-            "specimenList": [
-                "larynx",
-                "midsagitalhead02",
-                "deep_neck_and_pharynx",
-                "bisected_head_and_larynx"
-            ]
-        }
-      ]
-    },
-    {
-      "courseId": "MEDD 412 Neuro",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Bootcamp 1",
-          "imgUrl": "",
-          "specimenList": [
-            "brain02",
-            "half_brain_with_brainstem",
-            "brainstem_and_cerebellum",
-            "brainstem",
-            "brainstem_and_cranial_nerves",
-            "cerebellum"
-          ]
-        },
-        {
-            "labId": 2,
-            "labName": "Bootcamp 2",
-            "imgUrl": "",
-            "specimenList": [
-                "brain02",
-                "half_brain_with_brainstem",
-                "brainstem",
-                "brainsteamAndCranialNerves"
-            ]
-        },
-        {
-            "labId": 4,
-            "labName": "Cortex",
-            "imgUrl": "",
-            "specimenList": [
-                "half_brain_with_brainstem",
-                "brain02",
-                "superior_longitudinal_fasciculus",
-                "Brain Optic",
-                "brain_optic_tracts",
-                "brain_commissural_fibres",
-                "Brain Before Sections",
-                "circle_of_willis",
-                "visual_system_tracts"
-            ]
-        },
-        {
-            "labId": 5,
-            "labName": "Brainstem",
-            "imgUrl": "",
-            "specimenList": [
-                "brainsteamAndCranialNerves",
-                "brainstem_and_cerebellum",
-                "brainstem",
-                "brainstem_with_trochlear_nerve",
-                "brainstem_with_circle_of_willis"
-            ]
-        },
-        {
-            "labId": 6,
-            "labName": "Limbic System",
-            "imgUrl": "",
-            "specimenList": [
-                "half_brain_with_brainstem",
-                "holobrain_limbic_system",
-                "limbic_system"
-            ]
-        },
-        {
-            "labId": 7,
-            "labName": "Brainstem Reflexes",
-            "imgUrl": "",
-            "specimenList": [
-                "brainsteamAndCranialNerves",
-                "brainstem_and_cerebellum",
-                "brainstem_with_trochlear_nerve",
-                "brainstem"
-            ]
-        }
-      ]
-    },
-    {
-      "courseId": "MEDD 422",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Coronary Arteries",
-          "imgUrl": "",
-          "specimenList": [
-            "heart02",
-            "heart03",
-            "heart01"
-          ]
-        },
-        {
-            "labId": 2,
-            "labName": "Midgut/Hindgut Organs & Blood Supply",
-            "imgUrl": "",
-            "specimenList": [
-              "abdominalcavity01",
-              "abdominalcavity02"
-            ]
-          },
-          {
-              "labId": 3,
-              "labName": "Anatomy of Forearm",
-              "imgUrl": "",
-              "specimenList": [
-                  "radius01",
-                  "forearm01",
-                  "ulna01"
-              ]
-          },
-          {
-              "labId": 4,
-              "labName": "Foregut Organs & Blood Supply",
-              "imgUrl": "",
-              "specimenList": [
-                  "abdominalcavity02",
-                  "liver_diaphragm",
-                  "liverandgallbladder01",
-                  "foregutorgans"
-              ]
-          },
-        {
-            "labId": 5,
-            "labName": "Female Pelvis & Perineum",
-            "imgUrl": "",
-            "specimenList": [
-                "androidpelvis01",
-                "hipjoint01",
-                "femalePelvis01",
-                "femalePelvisBroadLigament01",
-                "femalePelvisViscera01",
-                "femalePelvis02"
-            ]
-        },
-        {
-            "labId": 6,
-            "labName": "Anatomy of Hand",
-            "imgUrl": "",
-            "specimenList": [
-                "Hand",
-                "plastinated_hand",
-                "hand_bones",
-                "hand_and_forearm"
-            ]
-        },
-        {
-            "labId": 7,
-            "labName": "Lower Urinary Tract",
-            "imgUrl": "",
-            "specimenList": [
-                "androidpelvis01",
-                "malePelvis01"
-            ]
-        },
-        {
-            "labId": 8,
-            "labName": "Neuroanatomy of Dementia",
-            "imgUrl": "",
-            "specimenList": [
-                "brain02",
-                "limbic_system",
-                "half_brain_with_brainstem",
-                "holobrain_limbic_system"
-            ]
-        }
-      ]
-    },
-    {
-      "courseId": "ANAT 516",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Introduction to Structures of the Central Nervous System",
-          "imgUrl": "",
-          "specimenList": [
-            "brain02"
-          ]
-        }
-      ]
-    },
-    {
-      "courseId": "BMEG 410",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Musculoskeletal System",
-          "imgUrl": "",
-          "specimenList": [
-            "radius01",
-            "forearm01",
-            "lumbarvertbra01",
-            "thoracicvertebra01",
-            "cervicalvertebra01",
-            "kneejoint01",
-            "kneejoint02",
-            "hipjoint01",
-            "hipjoint02",
-            "branchplex2",
-            "pectoralGirdle1",
-            "humerus1",
-            "Elbow",
-            "Hand",
-            "Sacrum"
-          ]
-        },
-        {
-          "labId": 2,
-          "labName": "Thorax",
-          "imgUrl": "",
-          "specimenList": [
-            "anteriorthoracicwall01",
-            "posteriorthoracicwall01",
-            "rightlung01",
-            "leftlung01",
-            "l4lungswithtrachea",
-            "thoracicvertebra01",
-            "rib01",
-            "heart02",
-            "heart03",
-            "heart01",
-            "posterior_thoracic_wall_mediastinum_Oct13_2020"
-          ]
-        },
-        {
-          "labId": 3,
-          "labName": "Abdomen, Pelvis",
-          "imgUrl": "",
-          "specimenList": [
-            "wholeHumanKidney1",
-            "kidneyProsection1",
-            "abdominalcavity01",
-            "liverandgallbladder01",
-            "liver_diaphragm",
-            "abdominalcavity02",
-            "foregutorgans",
-            "posterior_abdominal_wall"
-          ]
-        },
-        {
-          "labId": 4,
-          "labName": "Head and Neck",
-          "imgUrl": "",
-          "specimenList": [
-            "humanSkullWithMandible",
-            "expandedSkull",
-            "mandible",
-            "larynx",
-            "midsagitalhead02"
-          ]
-        }
-      ]
-    },
-    {
-      "courseId": "MIDW 106",
-      "labs": [
-        {
-          "labId": 1,
-          "labName": "Thorax",
-          "imgUrl": "",
-          "specimenList": [
-            "heart01",
-            "heart02",
-            "heart03",
-            "leftlung01",
-            "rightlung01",
-            "l4lungswithtrachea"
-          ]
-        },
-        {
-          "labId": 2,
-          "labName": "Abdomen",
-          "imgUrl": "",
-          "specimenList": [
-            "liverandgallbladder01",
-            "abdominalcavity01",
-            "kidneyProsection1",
-            "wholeHumanKidney1",
-            "liver_diaphragm",
-            "abdominalcavity02"
-          ]
-        }
-      ]
-    }
-  ],
+    ],
   "regions": [
     {
       "name": "Head & Neck",
@@ -17615,12 +17713,13 @@
     {
       "name": "Thorax",
       "order": 2,
-      "organs": [
-        "Heart",
-        "Heart with Aorta",
-        "Lung",
-        "Heart with Cardiomegaly"
-      ]
+        "organs": [
+            "Heart",
+            "Heart with Aorta",
+            "Heart with Aorta(OSKE)",
+            "Lung",
+            "Heart with Cardiomegaly"
+        ]
     },
     {
       "name": "Abdomen",
@@ -17638,17 +17737,18 @@
     {
       "name": "Back & Core",
       "order": 4,
-      "organs": [
-        "Lumbar Vertbra",
-        "Thoracic Spinal Column",
-        "Thoracic Vertebra",
-        "Rib",
-        "Cervical Vertebra",
-        "Posterior Thoracic Wall",
-        "Anterior Thoracic Wall",
-        "Sacrum",
-        "Mediastinum and Posterior Thoracic Wall"
-      ]
+        "organs": [
+            "Lumbar Vertbra",
+            "Thoracic Spinal Column",
+            "Thoracic Vertebra",
+            "Rib",
+            "Cervical Vertebra",
+            "Posterior Thoracic Wall",
+            "Anterior Thoracic Wall",
+            "Sacrum",
+            "Mediastinum and Posterior Thoracic Wall",
+            "Mediastinum and Posterior Thoracic Wall(OSKE)"
+        ]
     },
     {
       "name": "Pelvic",
