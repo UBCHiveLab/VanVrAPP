@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
@@ -77,5 +78,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene("GyroScopeMobile");
     }
 }

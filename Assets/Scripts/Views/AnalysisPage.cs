@@ -235,8 +235,9 @@ public class AnalysisPage : MonoBehaviour, IPage
             MatchReferenceRotation();
             _rotatingSpecimen = GameObject.Find("SpecimenHolder").transform.GetChild(0).gameObject;
             _rotatingSpecimen.transform.rotation =
-            Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
-            
+            Quaternion.AngleAxis(_xRot, Vector3.up) * Quaternion.AngleAxis(_yRot, Vector3.right);
+            // Quaternion.Euler(_xRot, _yRot, 0f);
+           
         }
         
 
@@ -380,10 +381,14 @@ public class AnalysisPage : MonoBehaviour, IPage
     public void MatchReferenceRotation()
     {
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
-        _xRot = referenceRotation.gameObject.transform.localEulerAngles.x;
-        _yRot = referenceRotation.gameObject.transform.localEulerAngles.y;
+        _xRot = UnityEditor.TransformUtils.GetInspectorRotation(referenceRotation.gameObject.transform).x;
+        _yRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.y;
+
+      
+
+
         Debug.Log(_xRot);
-        Debug.Log(_yRot);
+        
 
 
     }
