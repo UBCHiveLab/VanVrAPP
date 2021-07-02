@@ -24,13 +24,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     // Update is called once per frame
     void Update()
-    {
-        
-            if(Input.GetKeyUp(KeyCode.Return)){
+    { 
+        if(Input.GetKeyUp(KeyCode.Return)){
             Debug.Log("Return pressed");
             JoinRoom();
         }
-        
     }
 
     public override void OnConnectedToMaster()
@@ -55,7 +53,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (codeInputField.text != null )
         {
-            Debug.Log("btn clicked");
             PhotonNetwork.JoinRoom(codeInputField.text);
             Debug.Log("Joined a room");
         }
