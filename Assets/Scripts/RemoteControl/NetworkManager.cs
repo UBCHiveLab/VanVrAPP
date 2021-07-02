@@ -26,15 +26,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Update()
     {
         
-            
+            if(Input.GetKeyUp(KeyCode.Return)){
+            Debug.Log("Return pressed");
+            JoinRoom();
+        }
         
     }
 
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        Debug.Log("Network is connected");
-        
+        Debug.Log("Network is connected");     
     }
 
     public void CreateRoomCode()
@@ -46,10 +48,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+
+
     public void JoinRoom()
     {
-        if (codeInputField.text != null)
+        if (codeInputField.text != null )
         {
+            Debug.Log("btn clicked");
             PhotonNetwork.JoinRoom(codeInputField.text);
             Debug.Log("Joined a room");
         }
