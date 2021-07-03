@@ -381,7 +381,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public void MatchReferenceRotation()
     {
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
-        _xRot = UnityEditor.TransformUtils.GetInspectorRotation(referenceRotation.gameObject.transform).x;
+        _xRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.x;
         _yRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.y;
 
       
