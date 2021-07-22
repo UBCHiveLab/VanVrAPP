@@ -44,6 +44,8 @@ public class AnalysisPage : MonoBehaviour, IPage
     private Vector3 specimenRotation;
     private float _xRot;
     private float _yRot;
+    private float _zRot;
+
     private bool resetSpecimen;
 
     [Header("External")]
@@ -66,6 +68,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     [Header("Remote Control")]
     public GameObject referenceRotation;
     public GameObject remoteControlPanel;
+    public GameObject remoteControlContainer;
     public bool isConnect= false;
 
 
@@ -154,6 +157,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         {
             isConnect = !isConnect;
             remoteControlPanel.SetActive(isConnect);
+            remoteControlContainer.SetActive(isConnect);
         }) ;
 
 
@@ -235,8 +239,8 @@ public class AnalysisPage : MonoBehaviour, IPage
             MatchReferenceRotation();
             _rotatingSpecimen = GameObject.Find("SpecimenHolder").transform.GetChild(0).gameObject;
             _rotatingSpecimen.transform.rotation =
-            Quaternion.AngleAxis(_xRot, Vector3.up) * Quaternion.AngleAxis(_yRot, Vector3.right);
-            // Quaternion.Euler(_xRot, _yRot, 0f);
+            //Quaternion.AngleAxis(_xRot, Vector3.up) * Quaternion.AngleAxis(_yRot, Vector3.right);
+            Quaternion.Euler(_xRot, _yRot, _zRot);
            
         }
         
@@ -383,12 +387,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
         _xRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.x;
         _yRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.y;
-
-      
-
-
-        Debug.Log(_xRot);
-        
+        _zRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.z;
 
 
     }
