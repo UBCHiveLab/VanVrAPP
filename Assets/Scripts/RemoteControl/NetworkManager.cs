@@ -13,6 +13,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] public Button connectButton;
     [SerializeField] public Button startButton;
     [SerializeField] public TextMeshProUGUI log;
+    [SerializeField] public TextMeshProUGUI connectionStatus;
+    //[SerializeField] public sprite connectionIcon;
+    
     public GameObject canvas;
     public AnalysisPage analysisPage;
 
@@ -75,6 +78,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             log.text = playerCount + " devices in this room";
             canvas.gameObject.SetActive(false);
             //analysisPage.MatchReferenceRotation();
+            //connectionStatus.GetComponent<Image>().color = new Color (0, 255, 0, 255);
         }
     }
 
