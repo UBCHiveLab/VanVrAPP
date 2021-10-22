@@ -17,7 +17,7 @@ public class CoursesPage : MonoBehaviour
         collection = database.GetCollection<BsonDocument>("courses");
         var courses = collection.Find(new BsonDocument()).FirstOrDefault();
 
-        Debug.Log(courses.ToString());
+        Debug.Log(collection.ToString());
     }
 
     // Update is called once per frame
