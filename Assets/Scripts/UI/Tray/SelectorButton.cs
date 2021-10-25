@@ -17,13 +17,15 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public Transform children;
     public Image background;
     public LoadingController loadingController;
-    
+    private string label, truncatedLabel;
 
     public void Populate(string label, int index, Sprite sprite)
     {
         ShowBackground(false);
         SetLoading(false);
-        text.text = label;
+        this.label = label;
+        truncatedLabel = Truncate(label, 15);
+        text.text = truncatedLabel;
         indexValue = index;
 
         if (sprite != null)
@@ -58,11 +60,13 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     public void OnPointerEnter(PointerEventData eventData)
     {
         button.OnSelect(null);
+        text.text = label;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         button.OnDeselect(null);
+        text.text = truncatedLabel;
     }
 
     public void ShowBackground(bool show)
@@ -71,5 +75,11 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         {
             background.enabled = show;
         }
+    }
+
+    private string Truncate(string value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value)) return value;
+        return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
     }
 }
