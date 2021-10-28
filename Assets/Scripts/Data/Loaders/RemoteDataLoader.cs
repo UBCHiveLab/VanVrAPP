@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 /**
  * Extends DataLoader. For fetching a manifest located at manifestPath as an http resource.
