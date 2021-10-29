@@ -260,6 +260,19 @@ public class CoursesPage : MonoBehaviour
             return;
         }
 
+        foreach (var course in _loadedCourses.Take(3)) //EDIT: Take 3 is for home page currently, whnn needing to iterate over the whole list - remove it 
+        {
+            CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
+            courseOption.Populate(course.courseId, this);
+            Debug.Log("courseId");
+        };
+
+        _loadedLabs.ForEach((lab) => {
+            LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
+            labOption.Populate(lab, this);
+            Debug.Log("labID");
+        });
+        /*
         if (mode == ListMode.LAB_COURSES)
         {
             
@@ -270,22 +283,31 @@ public class CoursesPage : MonoBehaviour
                 Debug.Log("courseId");
             };
 
-         //   courseButton.onClick.AddListener(trayPage.ToggleShelfMenu);
-            return;
-        }
-
-        if (mode == ListMode.LAB)
-        {
             _loadedLabs.ForEach((lab) => {
                 LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
                 labOption.Populate(lab, this);
                 Debug.Log("labID");
             });
 
-         //   backButton.onClick.AddListener(ClearSelectionData);
+            //   courseButton.onClick.AddListener(trayPage.ToggleShelfMenu);
             return;
         }
         
+
+        if (mode == ListMode.LAB)
+        {
+        _loadedLabs.ForEach((lab) => {
+                LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
+                labOption.Populate(lab, this);
+                Debug.Log("labID");
+            });
+            
+
+         //   backButton.onClick.AddListener(ClearSelectionData);
+            return;
+        }
+        */
+
 
         if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
         {
