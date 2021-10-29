@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,6 +45,14 @@ public class CoursesPage : MonoBehaviour
     public Text RecentLab;
     public Text RecentSpecimen;
     public GameObject loadingIndicator;
+    public GameObject courseInfoContent;
+    public GameObject labInfoContent;
+    public GameObject labInfoShowBtn;
+
+    [Header("CourseContentRender")]
+    public TextMeshProUGUI courseTitle;
+    public TextMeshProUGUI courseDescription;
+  //  public RawImage labRenderedImg;
 
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
@@ -124,7 +133,7 @@ public class CoursesPage : MonoBehaviour
                 _loadedLabs = store.GetLabDataForCourse(courseId);
                 Debug.Log("lab data is here");
                 showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
-                
+
             }
         }
         else if (region == null)
@@ -134,7 +143,7 @@ public class CoursesPage : MonoBehaviour
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             Debug.Log("region is here");
             showNoContentText = _loadedRegions == null || _loadedRegions.Count < 1;
-            
+
         }
         else if (string.IsNullOrEmpty(organ))
         {
@@ -168,10 +177,22 @@ public class CoursesPage : MonoBehaviour
         }
     }
 
-    public void CourseSelected(string courseId)
+    public void CourseSelected(string courseId, string courseName)
     {
         this.courseId = courseId;
         Populate();
+        var newCourseName = "This Lab is about " + courseName;
+        RenderCourseInfo(courseName, newCourseName);
+        Debug.Log("course was selected");
+    }
+
+    private void RenderCourseInfo(string title, string courseDes)
+    {
+        courseTitle.text = title;
+        courseDescription.text = courseDes;
+       // StartCoroutine(LoadLabImg(urlImg));
+        courseInfoContent.SetActive(true);
+
     }
 
     public void LabSelected(int labId)
@@ -218,8 +239,8 @@ public class CoursesPage : MonoBehaviour
     private void Layout(ListMode mode, bool showNoContentText)
     {
         loadingIndicator.gameObject.SetActive(store.Loading());
-        selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
-        noContentText.gameObject.SetActive(showNoContentText);
+      //  selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
+      //  noContentText.gameObject.SetActive(showNoContentText);
         /*
         labAtlasToggle.SetActive(
             !store.Loading() &&

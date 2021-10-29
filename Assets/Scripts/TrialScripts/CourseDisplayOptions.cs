@@ -10,6 +10,7 @@ public class CourseDisplayOptions : MonoBehaviour
     [Header("Internal Structure")]
     public Button button;
     public Text courseNameFrame2;
+    
 
     private CoursesPage _coursesPage;
 
@@ -17,6 +18,7 @@ public class CourseDisplayOptions : MonoBehaviour
     {
         courseNameFrame2.text = courseId;
         _coursesPage = coursesPage;
-      //  button.onClick.AddListener(() => _coursesPage.CourseSelected(courseId));
+        button.onClick.AddListener(() => _coursesPage.CourseSelected(courseId,"Description"));
+        Debug.Log("button can be clicked");
     }
 }
