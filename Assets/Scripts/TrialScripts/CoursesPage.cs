@@ -29,6 +29,7 @@ public class CoursesPage : MonoBehaviour
     public SelectorButton noSpecimensPrefab;
     public SelectorButton specimenSelectorPrefab;
     public Button seeAllButtonPrefab;
+    public GameObject coursePanel;
 
     [Header("Internal Structures")] public Transform listTransformCourses;
     public Transform listTransformLabs;
@@ -86,6 +87,11 @@ public class CoursesPage : MonoBehaviour
 
        // selectionTitle.text = LOADING_SPECIMENS;
         noContentText.gameObject.SetActive(false);
+
+        courseButton.onClick.AddListener(() => {
+              coursePanel.SetActive(true);
+              //RecentCourse.SetActive(false);
+            });
 
     }
 
