@@ -135,7 +135,7 @@ public class CoursesPage : MonoBehaviour
             {
                 mode = ListMode.LAB;
                 //  backBttnTitle.text = COURSES;
-                selectionTitle.text = courseId;
+            //    selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
                 Debug.Log("lab data is here");
                 showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
