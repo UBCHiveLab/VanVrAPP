@@ -12,19 +12,20 @@ public class LabDisplayOptions : MonoBehaviour
     [Header("Internal Structure")]
     public Button button;
     public RawImage imageFrame;
-    public Text idFrame;
-    public Text nameFrame;
+    public TextMeshProUGUI idFrame;
+    public TextMeshProUGUI nameFrame;
 
     private CoursesPage _coursesPage;
 
     public void Populate(LabData data, CoursesPage courses)
     {
-        StartCoroutine(DownloadImage(data.imgUrl));
+      //  StartCoroutine(DownloadImage(data.imgUrl));
         idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _coursesPage = courses;
         Debug.Log("At Labs Populate function");
-    //    button.onClick.AddListener(() => { _coursesPage.LabSelected(data.labId); });
+        button.onClick.AddListener(() => { _coursesPage.LabSelected(data.labId, data.labName, data.imgUrl); });
+        Debug.Log("labs review button pressed");
     }
 
 

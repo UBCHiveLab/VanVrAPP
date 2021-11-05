@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,16 +10,18 @@ public class CourseDisplayOptions : MonoBehaviour
 {
     [Header("Internal Structure")]
     public Button button;
-    public Text courseNameFrame2;
-    
-
+    public TextMeshProUGUI idFrame;
+  //  public TextMeshProUGUI nameFrame;
     private CoursesPage _coursesPage;
 
-    public void Populate(string courseId, CoursesPage coursesPage)
+    public void Populate(CourseData data, CoursesPage coursesPage)
     {
-        courseNameFrame2.text = courseId;
+        idFrame.text = $"{data.courseId}";
+       // nameFrame.text = data.courseCode;
         _coursesPage = coursesPage;
-        button.onClick.AddListener(() => _coursesPage.CourseSelected(courseId,"Description"));
-        Debug.Log("button can be clicked");
+        button.onClick.AddListener(() => _coursesPage.CourseSelected(data.courseId));
+        Debug.Log("course button is working");
     }
+
+    
 }
