@@ -139,8 +139,10 @@ public class CoursesPage : MonoBehaviour
                 _loadedCourses.Sort((c1, c2) => c1.courseId.CompareTo(c2.courseId)); // sort courses alphebetically
                 showNoContentText = _loadedCourses == null || _loadedCourses.Count < 1;
             }
+            /*
             else if (labId > 0)
             {
+                
                 mode = ListMode.LAB_SPECIMENS;
                 //  backBttnTitle.text = LABS;
                 Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
@@ -148,10 +150,13 @@ public class CoursesPage : MonoBehaviour
               //  _loadedSpecimens = labData.Item2;
                 showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
                 Debug.Log("labId is here");
+                
             }
+        */
             else  
             {
                 labInfoShowBtn.onClick.AddListener(ShowLabDetails);
+                specimenInfoShowBtn.onClick.AddListener(ShowSpecimenDetails);
                 /*
                 mode = ListMode.LAB;
                 //  backBttnTitle.text = COURSES;
@@ -206,6 +211,10 @@ public class CoursesPage : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        foreach(Transform child in listTransformSpec)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public void CourseSelected(string courseId)
@@ -229,9 +238,13 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowSpecimenDetails()
     {
-        showSpec = true;
-        showLab = false;
-        Layout(ListMode.LAB_SPECIMENS, showSpec);
+        mode = ListMode.LAB_SPECIMENS;
+        //  backBttnTitle.text = LABS;
+        Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
+        //  selectionTitle.text = labData.Item1;
+        //  _loadedSpecimens = labData.Item2;
+        showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
+        Debug.Log(" is here");
     }
 
     private void ShowLabDetails()
@@ -358,7 +371,6 @@ public class CoursesPage : MonoBehaviour
             {
                 CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
                 courseOption.Populate(course, this);
-                Debug.Log("courseId");
             };
 
             //   courseButton.onClick.AddListener(trayPage.ToggleShelfMenu);
@@ -370,14 +382,13 @@ public class CoursesPage : MonoBehaviour
         _loadedLabs.ForEach((lab) => {
                 LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
                 labOption.Populate(lab, this);
-                Debug.Log("labID");
             });
             
 
          //   backButton.onClick.AddListener(ClearSelectionData);
             return;
         }
-        /*
+        
 
 
         if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
