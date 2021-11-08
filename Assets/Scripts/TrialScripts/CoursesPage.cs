@@ -389,8 +389,6 @@ public class CoursesPage : MonoBehaviour
             return;
         }
         
-
-
         if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
         {
             // Forgive me for the spaghetti below
@@ -487,8 +485,6 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.blue;
-        showLab = false;
-        showSpec = false; 
         TopText.gameObject.SetActive(true);
     }
 
@@ -508,8 +504,6 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.black; 
-        showLab = false;
-        showSpec = false; 
         TopText.gameObject.SetActive(false);
     }
 
@@ -525,8 +519,6 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.blue;
         courseLabel.color = Color.black;
-        showLab = false;
-        showSpec = false; 
         TopText.gameObject.SetActive(true);
     }
 
