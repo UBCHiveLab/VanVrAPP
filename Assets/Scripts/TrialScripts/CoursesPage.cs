@@ -43,25 +43,19 @@ public class CoursesPage : MonoBehaviour
     public Button homeButton;
     public Button atlasBtn;
     public Button helpButton;
-    public TextMeshProUGUI selectionTitle;
+    public TextMeshPro selectionTitle;
     public TextMeshPro noContentText;
     public GameObject labAtlasToggle;
+    public Button atlasButton;
     public Button labButton;
-    public TextMeshProUGUI courseLabel;
-    public TextMeshProUGUI homeLabel;
     public TextMeshProUGUI atlasLabel;
-    public TextMeshProUGUI helpLabel; 
+    public TextMeshProUGUI labLabel;
     public GameObject RecentCourse;
     public TextMeshProUGUI TopText;
     public GameObject loadingIndicator;
     public GameObject courseInfoContent;
     public GameObject labInfoContent;
     public Button labInfoShowBtn;
-    public Button infoShowBtn;
-    public Button specInfoShowBtn; 
-    public TextMeshProUGUI infoShowLabel; 
-    public TextMeshProUGUI labInfoShowLabel;
-    public TextMeshProUGUI specInfoShowLabel; 
     public Button specimenInfoShowBtn;
     public GameObject homeInfo;
 
@@ -90,8 +84,7 @@ public class CoursesPage : MonoBehaviour
         LAB_COURSES,
         LAB_SPECIMENS
     }
-    private ListMode mode;
-    private bool showNoContentText;
+
     private List<RegionData> _loadedRegions;
     private List<string> _loadedOrgans;
     private List<SpecimenData> _loadedSpecimens;
@@ -106,7 +99,7 @@ public class CoursesPage : MonoBehaviour
 
         // selectionTitle.text = LOADING_SPECIMENS;
         // noContentText.gameObject.SetActive(false);
-        homeLabel.color = Color.blue; 
+
         courseButton.onClick.AddListener(ShowAllCourses);
         homeButton.onClick.AddListener(ShowHomeInfo);
         helpButton.onClick.AddListener(ShowHelpInfo);
@@ -127,9 +120,8 @@ public class CoursesPage : MonoBehaviour
     public void Populate()
     {
         //  selectionTitle.text = "";
-        //ListMode 
-        mode = ListMode.LAB_COURSES;
-        showNoContentText = false;
+        ListMode mode = ListMode.LAB_COURSES;
+        bool showNoContentText = false;
 
         if (byLab)
         {
@@ -139,10 +131,8 @@ public class CoursesPage : MonoBehaviour
                 _loadedCourses.Sort((c1, c2) => c1.courseId.CompareTo(c2.courseId)); // sort courses alphebetically
                 showNoContentText = _loadedCourses == null || _loadedCourses.Count < 1;
             }
-            /*
             else if (labId > 0)
             {
-                
                 mode = ListMode.LAB_SPECIMENS;
                 //  backBttnTitle.text = LABS;
                 Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
@@ -150,21 +140,15 @@ public class CoursesPage : MonoBehaviour
               //  _loadedSpecimens = labData.Item2;
                 showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
                 Debug.Log("labId is here");
-                
             }
-        */
-            else  
+            else
             {
-                labInfoShowBtn.onClick.AddListener(ShowLabDetails);
-                specimenInfoShowBtn.onClick.AddListener(ShowSpecimenDetails);
-                /*
                 mode = ListMode.LAB;
                 //  backBttnTitle.text = COURSES;
             //    selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
                 Debug.Log("lab data is here");
                 showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
-                */
             }
             
         }
@@ -211,10 +195,6 @@ public class CoursesPage : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        foreach(Transform child in listTransformSpec)
-        {
-            Destroy(child.gameObject);
-        }
     }
 
     public void CourseSelected(string courseId)
@@ -223,45 +203,44 @@ public class CoursesPage : MonoBehaviour
         Populate();
         var newCourseName = "This Lab is about " + courseId;
         RenderCourseInfo(courseId, newCourseName);
+        Debug.Log("course was selected");
     }
 
     private void RenderCourseInfo(string title, string courseDes)
     {
+        Debug.Log("home is set to false");
         courseInfoContent.SetActive(true);
         homeInfo.SetActive(false);
         labInfoContent.SetActive(false);
+        Debug.Log("course should show it's information");
         courseTitle.text = title;
         courseDescription.text = courseDes;
         labInfoShowBtn.onClick.AddListener(ShowLabDetails);
         specimenInfoShowBtn.onClick.AddListener(ShowSpecimenDetails);
+
+        // StartCoroutine(LoadLabImg(urlImg));
+
+        
     }
 
     private void ShowSpecimenDetails()
     {
-        mode = ListMode.LAB_SPECIMENS;
-        //  backBttnTitle.text = LABS;
-        Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
-        //  selectionTitle.text = labData.Item1;
-        //  _loadedSpecimens = labData.Item2;
-        showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
-        Debug.Log(" is here");
+        showSpec = true;
+        showLab = false;
+        Layout(ListMode.LAB_SPECIMENS, showSpec);
     }
 
     private void ShowLabDetails()
     {
-        mode = ListMode.LAB;
-        //  backBttnTitle.text = COURSES;
-        //    selectionTitle.text = courseId;
-        _loadedLabs = store.GetLabDataForCourse(courseId);
-        Debug.Log("lab data is here");
-        showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
-        Layout(mode, showNoContentText);
+        showLab = true;
+        showSpec = false;
+        Layout(ListMode.LAB, showLab);
     }
 
     public void LabSelected(int labId, String labName, String labImg)
     {
         this.labId = labId;
-        Populate();
+        Populate();;
         var newLabName = "This Lab is about " + labName;
         RenderLabInfo(labName, newLabName, labImg);
         Debug.Log("lab selected");
@@ -271,7 +250,6 @@ public class CoursesPage : MonoBehaviour
     {
         
         homeInfo.SetActive(false);
-        courseInfoContent.SetActive(false);
         labTitle.text = title;
         labDescription.text = labDes;
         labInfoContent.SetActive(true);
@@ -373,17 +351,19 @@ public class CoursesPage : MonoBehaviour
             {
                 CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
                 courseOption.Populate(course, this);
+                Debug.Log("courseId");
             };
 
             //   courseButton.onClick.AddListener(trayPage.ToggleShelfMenu);
             return;
         }
         
-        if ((mode == ListMode.LAB))
+        if ((mode == ListMode.LAB) && (showLab == true))
         {
         _loadedLabs.ForEach((lab) => {
                 LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
                 labOption.Populate(lab, this);
+                Debug.Log("labID");
             });
             
 
@@ -401,7 +381,6 @@ public class CoursesPage : MonoBehaviour
                 SelectorButton btn = Instantiate(specimenSelectorPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
-                Debug.Log("specimen mode");
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
@@ -415,7 +394,6 @@ public class CoursesPage : MonoBehaviour
             //  backButton.onClick.AddListener(ClearOrganAndLabData);
            // UpdateSelected();
         }
-        /*
         else
         {
             // Loops through loaded regions, producing a clickable button for each...
@@ -465,7 +443,6 @@ public class CoursesPage : MonoBehaviour
          //   backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
         }
         */
-        
     }
     
 
