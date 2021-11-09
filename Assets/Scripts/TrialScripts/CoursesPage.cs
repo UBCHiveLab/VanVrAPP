@@ -250,9 +250,9 @@ public class CoursesPage : MonoBehaviour
     {
         
         homeInfo.SetActive(false);
-        courseTitle.text = title;
-        courseDescription.text = labDes;
-        Debug.Log("home should be set to false");
+        labTitle.text = title;
+        labDescription.text = labDes;
+        labInfoContent.SetActive(true);
       //  StartCoroutine(LoadLabImg(urlImg));
         Debug.Log("render the lab");
     }
@@ -370,8 +370,7 @@ public class CoursesPage : MonoBehaviour
          //   backButton.onClick.AddListener(ClearSelectionData);
             return;
         }
-
-/*
+        
         if (mode == ListMode.SPECIMEN || mode == ListMode.LAB_SPECIMENS)
         {
             // Forgive me for the spaghetti below
@@ -460,9 +459,12 @@ public class CoursesPage : MonoBehaviour
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
+        labInfoContent.SetActive(false);
         TopText.text = "All Courses";
-        showLab = false;
-        showSpec = false; 
+        homeLabel.color = Color.black;
+        atlasLabel.color = Color.black;
+        helpLabel.color = Color.black;
+        courseLabel.color = Color.blue;
         TopText.gameObject.SetActive(true);
     }
 
@@ -478,8 +480,11 @@ public class CoursesPage : MonoBehaviour
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(true);
         welcomePanel.SetActive(true);
-        showLab = false;
-        showSpec = false; 
+        labInfoContent.SetActive(false);
+        homeLabel.color = Color.blue;
+        atlasLabel.color = Color.black;
+        helpLabel.color = Color.black;
+        courseLabel.color = Color.black; 
         TopText.gameObject.SetActive(false);
     }
 
@@ -490,9 +495,12 @@ public class CoursesPage : MonoBehaviour
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
+        labInfoContent.SetActive(false);
         TopText.text = "Help";
-        showLab = false;
-        showSpec = false; 
+        homeLabel.color = Color.black;
+        atlasLabel.color = Color.black;
+        helpLabel.color = Color.blue;
+        courseLabel.color = Color.black;
         TopText.gameObject.SetActive(true);
     }
 
