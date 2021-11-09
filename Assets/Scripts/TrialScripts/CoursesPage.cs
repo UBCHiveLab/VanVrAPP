@@ -271,8 +271,10 @@ public class CoursesPage : MonoBehaviour
     {
         
         homeInfo.SetActive(false);
-        courseTitle.text = title;
-        courseDescription.text = labDes;
+        courseInfoContent.SetActive(false);
+        labTitle.text = title;
+        labDescription.text = labDes;
+        labInfoContent.SetActive(true);
       //  StartCoroutine(LoadLabImg(urlImg));
         Debug.Log("render the lab");
     }
@@ -482,6 +484,7 @@ public class CoursesPage : MonoBehaviour
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
+        labInfoContent.SetActive(false);
         TopText.text = "All Courses";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
@@ -504,6 +507,7 @@ public class CoursesPage : MonoBehaviour
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(true);
         welcomePanel.SetActive(true);
+        labInfoContent.SetActive(false);
         homeLabel.color = Color.blue;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
@@ -520,6 +524,7 @@ public class CoursesPage : MonoBehaviour
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
+        labInfoContent.SetActive(false);
         TopText.text = "Help";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
