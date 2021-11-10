@@ -20,7 +20,6 @@ public class CourseDisplayOptions : MonoBehaviour
        // nameFrame.text = data.courseCode;
         _coursesPage = coursesPage;
         button.onClick.AddListener(() => _coursesPage.CourseSelected(data.courseId));
-        Debug.Log("course button is working");
     }
 
     
