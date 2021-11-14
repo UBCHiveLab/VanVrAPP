@@ -82,6 +82,15 @@ public class CoursesPage : MonoBehaviour
     public Button labPanelCourseBtn;
     public RawImage labRenderedImg;
 
+    [Header("LabContentRender")]
+    public GameObject sidePanel;
+    public Button expandPanelBtn;
+    public Sprite expand;
+    public Sprite collapse;
+    
+
+
+
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
 
@@ -120,6 +129,7 @@ public class CoursesPage : MonoBehaviour
         courseButton.onClick.AddListener(ShowAllCourses);
         homeButton.onClick.AddListener(ShowHomeInfo);
         helpButton.onClick.AddListener(ShowHelpInfo);
+        expandPanelBtn.onClick.AddListener(closeSidePanel);
     }
 
     void Update()
@@ -255,6 +265,19 @@ public class CoursesPage : MonoBehaviour
         labShowBtn.onClick.AddListener(ShowLabDetails);
         specimenInfoShowBtn.onClick.AddListener(ShowSpecimenDetails);
 
+    }
+
+    private void closeSidePanel()
+    {
+        if(sidePanel.active){
+            sidePanel.SetActive(false);
+            expandPanelBtn.transform.GetComponent<Image>().sprite = collapse;
+        }else{
+            sidePanel.SetActive(true);
+            expandPanelBtn.transform.GetComponent<Image>().sprite = expand;
+        }
+        
+        
     }
 
     private void ShowSpecimenDetails()
