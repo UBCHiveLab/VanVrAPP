@@ -1165,7 +1165,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 12
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 1754845236821416442}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 2444380869547826251}
@@ -1194,7 +1194,7 @@ MonoBehaviour:
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
-  m_FlexibleHeight: 1
+  m_FlexibleHeight: 0
   m_LayoutPriority: 1
 --- !u!1 &1754845238955282178
 GameObject:
@@ -1234,7 +1234,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -411.0098, y: 0}
+  m_SizeDelta: {x: 48.67108, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1754845238955282181
 MonoBehaviour:
@@ -3048,6 +3048,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1656755559657616528}
     m_Modifications:
+    - target: {fileID: 40392273149440009, guid: 9ec268862a5b1f5498377e5658890204,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -347.544
+      objectReference: {fileID: 0}
     - target: {fileID: 1293873382199371541, guid: 9ec268862a5b1f5498377e5658890204,
         type: 3}
       propertyPath: m_Name
@@ -3329,7 +3334,7 @@ PrefabInstance:
     - target: {fileID: 4621485218663878638, guid: fe14b12b5f142d041a353ac7725ad16b,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 8.241699
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4621485218663878638, guid: fe14b12b5f142d041a353ac7725ad16b,
         type: 3}
