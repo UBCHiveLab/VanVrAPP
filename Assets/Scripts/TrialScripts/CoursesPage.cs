@@ -586,7 +586,7 @@ public class CoursesPage : MonoBehaviour
         helpLabel.color = Color.black;
         courseLabel.color = Color.black; 
         TopText.gameObject.SetActive(false);
-        //listTransformCourses.GetComponent<Grid>()
+        listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = num;
     }
 
     private void ShowHelpInfo()
