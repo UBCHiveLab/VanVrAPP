@@ -35,8 +35,6 @@ public class CoursesPage : MonoBehaviour
     public SelectorButton noSpecimensPrefab;
     public SelectorButton specimenSelectorPrefab;
     public Button seeAllButtonPrefab;
-    public GameObject welcomePanel;
-    public GameObject HomeContentRender;
 
     [Header("Internal Structures")] public Transform listTransformCourses;
     public Transform listTransformSideCourses;
@@ -73,6 +71,11 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI specLabShowLabel;
     public TextMeshProUGUI labInfoShowLabel; 
     public GameObject homeInfo;
+
+    [Header("HomeContentRender")]
+    public GameObject welcomePanel;
+    public GameObject expandedPanel;
+    public GameObject defaultPanel;
 
     [Header("CourseContentRender")]
     public TextMeshProUGUI courseTitle;
@@ -285,12 +288,18 @@ public class CoursesPage : MonoBehaviour
         if(sidePanel.active){
             sidePanel.SetActive(false);
             expandPanelBtn.transform.GetComponent<Image>().sprite = collapse;
+            expandedPanel.SetActive(true);
+            defaultPanel.SetActive(false);
+            ShowHomeInfo(5);
 
-            //HomeContentRender.GetComponent<RectTransform>().localPosition = new Vector(884.8763, 922.6483, 0);
+            //homeInfo.GetComponent<RectTransform>().sizeDelta = new Vector(884.8763, 922.6483);
             
         }else{
             sidePanel.SetActive(true);
             expandPanelBtn.transform.GetComponent<Image>().sprite = expand;
+            expandedPanel.SetActive(false);
+            defaultPanel.SetActive(true);
+            ShowHomeInfo(3);
         }
         
         
@@ -556,8 +565,13 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowHomeInfo()
     {
+        ShowHomeInfo(3);
+    }
+
+    private void ShowHomeInfo(int num)
+    {
         Clear();
-        foreach (var course in _loadedCourses.Take(3))
+        foreach (var course in _loadedCourses.Take(num))
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
             courseOption.Populate(course, this);
@@ -572,6 +586,7 @@ public class CoursesPage : MonoBehaviour
         helpLabel.color = Color.black;
         courseLabel.color = Color.black; 
         TopText.gameObject.SetActive(false);
+        //listTransformCourses.GetComponent<Grid>()
     }
 
     private void ShowHelpInfo()
