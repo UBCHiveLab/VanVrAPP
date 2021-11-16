@@ -220,9 +220,10 @@ public class CoursesPage : MonoBehaviour
 
     private void Clear()
     {
-      //  courseButton.onClick.RemoveAllListeners();
+        //  courseButton.onClick.RemoveAllListeners();
 
         // Clears all menu options
+        
         foreach (Transform child in listTransformCourses)
         {
             Destroy(child.gameObject);
@@ -238,6 +239,13 @@ public class CoursesPage : MonoBehaviour
         }
     }
 
+    private void ClearLabText()
+    {
+        foreach (Transform child in listTransformLabText)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     public void CourseSelected(string courseId)
     {
         this.courseId = courseId;
@@ -255,11 +263,15 @@ public class CoursesPage : MonoBehaviour
 
         courseTitle.text = title;
         courseName = title;
-        
+       
       //  courseDescription.text = courseDes;
 
         ShowAllCoursesSidePanel();
-     //   ShowAllLabs(labTextPrefab, listTransformLabText);
+        _loadedLabs = store.GetLabDataForCourse(courseId);
+        if (_loadedLabs != null)
+        {
+            ShowAllLabsText();
+        }
        
 
         // StartCoroutine(LoadLabImg(urlImg));
@@ -321,7 +333,7 @@ public class CoursesPage : MonoBehaviour
         courseLabTitle.text = courseName;
       //  labDescription.text = labDes;
         labInfoContent.SetActive(true);
-        ShowAllLabs(labPrefab, listTransformLabs);
+        ShowAllLabs();
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
      //   labInfoShowLabel.color = Color.blue;
        // specLabShowLabel.color = Color.white;
@@ -578,11 +590,11 @@ public class CoursesPage : MonoBehaviour
         TopText.gameObject.SetActive(true);
     }
 
-    private void ShowAllLabs(LabDisplayOptions prefab, Transform listTransform)
+    private void ShowAllLabs()
     {
         Clear();
         _loadedLabs.ForEach((lab) => {
-            LabDisplayOptions labOption = Instantiate(prefab, listTransform);
+            LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
             labOption.Populate(lab, this);
         });
     }
@@ -595,6 +607,16 @@ public class CoursesPage : MonoBehaviour
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformSideCourses);
             courseOption.Populate(course, this);
         };
+    }
+
+    private void ShowAllLabsText()
+    {
+        ClearLabText();
+        _loadedLabs.ForEach((lab) =>
+        {
+            LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
+            labOption.Populate(lab, this);
+        });
     }
 
 }
