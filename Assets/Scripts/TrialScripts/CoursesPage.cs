@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-
+using Random = UnityEngine.Random;
 
 public class CoursesPage : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class CoursesPage : MonoBehaviour
     public Button homeButton;
     public Button atlasBtn;
     public Button helpButton;
-    public TextMeshPro selectionTitle;
+    public TextMeshProUGUI selectionTitle;
     public TextMeshPro noContentText;
     public GameObject labAtlasToggle;
     public Button atlasButton;
@@ -56,20 +56,19 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI homeLabel;
     public TextMeshProUGUI helpLabel; 
     public GameObject RecentCourse;
-    public TextMeshProUGUI TopText;
     public GameObject loadingIndicator;
     public GameObject courseInfoContent;
     public GameObject labInfoContent;
     public Button labShowBtn;
     public Button infoShowBtn;
     public Button specimenInfoShowBtn;
-    public TextMeshProUGUI labShowLabel;
-    public TextMeshProUGUI infoShowLabel;
-    public TextMeshProUGUI specimenShowLabel; 
+    public TextMeshProUGUI coursePageLabLabel;
+    public TextMeshProUGUI coursePageInfoLabel;
+    public TextMeshProUGUI coursePageSpecLabel; 
     public Button labInfoShowBtn;
     public Button specLabShowBtn; 
-    public TextMeshProUGUI specLabShowLabel;
-    public TextMeshProUGUI labInfoShowLabel; 
+    public TextMeshProUGUI labPageSpecLabel;
+    public TextMeshProUGUI labPageInfoLabel; 
     public GameObject homeInfo;
 
     [Header("HomeContentRender")]
@@ -137,13 +136,14 @@ public class CoursesPage : MonoBehaviour
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
 
-        // selectionTitle.text = LOADING_SPECIMENS;
+         selectionTitle.text = "Home";
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
         courseButton.onClick.AddListener(ShowAllCourses);
         homeButton.onClick.AddListener(ShowHomeInfo);
         helpButton.onClick.AddListener(ShowHelpInfo);
         expandPanelBtn.onClick.AddListener(closeSidePanel);
+       
     }
 
     void Update()
@@ -265,6 +265,7 @@ public class CoursesPage : MonoBehaviour
         Populate();
        // var newCourseName = "This Lab is about " + courseId;
         RenderCourseInfo(courseId);
+        infoShowBtn.onClick.AddListener(() => RenderCourseInfo(courseId));
     }
 
     private void RenderCourseInfo(string title)
@@ -281,9 +282,10 @@ public class CoursesPage : MonoBehaviour
 
         courseTitle.text = title;
         courseName = title;
-       
+        coursePageInfoLabel.color = Color.cyan;
+        coursePageLabLabel.color = Color.white;
+        coursePageSpecLabel.color = Color.white; 
       //  courseDescription.text = courseDes;
-
         ShowAllCoursesSidePanel();
         _loadedLabs = store.GetLabDataForCourse(courseId);
         if (_loadedLabs != null)
@@ -337,8 +339,6 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowSpecimenDetails()
     {
-        showSpec = true;
-        showLab = false;
         Layout(ListMode.LAB_SPECIMENS, showSpec);
     }
 
@@ -357,6 +357,9 @@ public class CoursesPage : MonoBehaviour
         Debug.Log("lab data is here");
         showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
         Layout(mode, showNoContentText);
+        coursePageInfoLabel.color = Color.white;
+        coursePageLabLabel.color = Color.blue;
+        coursePageSpecLabel.color = Color.white;
     }
 
     public void LabSelected(int labId, String labName, String labImg)
@@ -380,8 +383,8 @@ public class CoursesPage : MonoBehaviour
         labInfoContent.SetActive(true);
         ShowAllLabs();
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
-     //   labInfoShowLabel.color = Color.blue;
-       // specLabShowLabel.color = Color.white;
+        labPageInfoLabel.color = Color.blue;
+        labPageSpecLabel.color = Color.white;
       //  StartCoroutine(LoadLabImg(urlImg));
     }
 
@@ -479,6 +482,7 @@ public class CoursesPage : MonoBehaviour
             {
                 CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
                 courseOption.Populate(course, this);
+               
             };
 
             //   courseButton.onClick.AddListener(trayPage.ToggleShelfMenu);
@@ -584,22 +588,20 @@ public class CoursesPage : MonoBehaviour
         foreach (var course in _loadedCourses) 
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
-            courseOption.Populate(course, this);   
+            courseOption.Populate(course, this);
+           
         };
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
         labInfoContent.SetActive(false);
-
-        TopText.text = "All Courses";
+        selectionTitle.text = "Home > Courses";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.blue;
-        TopText.gameObject.SetActive(true);
-
-        page = CurrPage.COURSE;
+        
     }
 
     private void ShowHomeInfo()
@@ -614,6 +616,7 @@ public class CoursesPage : MonoBehaviour
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
             courseOption.Populate(course, this);
+           
         };
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
@@ -623,8 +626,8 @@ public class CoursesPage : MonoBehaviour
         homeLabel.color = Color.blue;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
-        courseLabel.color = Color.black; 
-        TopText.gameObject.SetActive(false);
+        courseLabel.color = Color.black;
+        selectionTitle.text = "Home";
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = num;
 
         page = CurrPage.HOME;
@@ -638,12 +641,12 @@ public class CoursesPage : MonoBehaviour
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
         labInfoContent.SetActive(false);
-        TopText.text = "Help";
+        selectionTitle.text = "Help";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.blue;
         courseLabel.color = Color.black;
-        TopText.gameObject.SetActive(true);
+       
     }
 
     private void ShowAllLabs()
@@ -662,6 +665,7 @@ public class CoursesPage : MonoBehaviour
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformSideCourses);
             courseOption.Populate(course, this);
+          
         };
     }
 
