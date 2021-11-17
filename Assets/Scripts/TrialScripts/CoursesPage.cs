@@ -122,6 +122,16 @@ public class CoursesPage : MonoBehaviour
     private List<CourseData> _loadedCourses;
     private CourseData _loadedCourse;
 
+    public enum CurrPage
+    {
+        HOME,
+        COURSE,
+        LAB,
+        HELP
+    }
+
+    private CurrPage page;
+
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
@@ -287,21 +297,36 @@ public class CoursesPage : MonoBehaviour
 
     private void closeSidePanel()
     {
+        //expand panel
         if(sidePanel.active){
             sidePanel.SetActive(false);
             expandPanelBtn.transform.GetComponent<Image>().sprite = collapse;
             expandedPanel.SetActive(true);
             defaultPanel.SetActive(false);
-            ShowHomeInfo(5);
+
+            if(page == CurrPage.HOME){
+                ShowHomeInfo(5);
+            }else if(page == CurrPage.COURSE){
+                ShowAllCourses();
+                listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 5;
+            }
+            
+            
 
             //homeInfo.GetComponent<RectTransform>().sizeDelta = new Vector(884.8763, 922.6483);
-            
+        //collapse panel
         }else{
             sidePanel.SetActive(true);
             expandPanelBtn.transform.GetComponent<Image>().sprite = expand;
             expandedPanel.SetActive(false);
             defaultPanel.SetActive(true);
-            ShowHomeInfo(3);
+
+            if(page == CurrPage.HOME){
+                ShowHomeInfo(3);
+            }else if(page == CurrPage.COURSE){
+                ShowAllCourses();
+                listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
+            }
         }
         
         
@@ -317,6 +342,7 @@ public class CoursesPage : MonoBehaviour
         mode = ListMode.LAB;
         //  backBttnTitle.text = COURSES;
         //    selectionTitle.text = courseId;
+        sidePanel.SetActive(true);
         _loadedLabs = store.GetLabDataForCourse(courseId);
         Debug.Log("lab data is here");
         showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
@@ -593,6 +619,8 @@ public class CoursesPage : MonoBehaviour
         courseLabel.color = Color.black;
         selectionTitle.text = "Home";
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = num;
+
+        page = CurrPage.HOME;
     }
 
     private void ShowHelpInfo()
