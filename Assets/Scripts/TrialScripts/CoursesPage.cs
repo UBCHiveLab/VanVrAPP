@@ -273,6 +273,11 @@ public class CoursesPage : MonoBehaviour
         labInfoContent.SetActive(false);
         homeInfo.SetActive(false);
         labInfoContent.SetActive(false);
+        
+        sidePanel.SetActive(true);
+        defaultPanel.SetActive(true);
+        expandedPanel.SetActive(false);
+        listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
 
         courseTitle.text = title;
         courseName = title;
@@ -342,7 +347,12 @@ public class CoursesPage : MonoBehaviour
         mode = ListMode.LAB;
         //  backBttnTitle.text = COURSES;
         //    selectionTitle.text = courseId;
+
         sidePanel.SetActive(true);
+        defaultPanel.SetActive(true);
+        expandedPanel.SetActive(false);
+        listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
+
         _loadedLabs = store.GetLabDataForCourse(courseId);
         Debug.Log("lab data is here");
         showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
