@@ -139,7 +139,7 @@ public class CoursesPage : MonoBehaviour
          selectionTitle.text = "Home";
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
-        courseButton.onClick.AddListener(ShowAllCourses);
+        courseButton.onClick.AddListener(ShowCoursesPage);
         homeButton.onClick.AddListener(ShowHomeInfo);
         helpButton.onClick.AddListener(ShowHelpInfo);
         expandPanelBtn.onClick.AddListener(closeSidePanel);
@@ -286,7 +286,7 @@ public class CoursesPage : MonoBehaviour
         coursePageLabLabel.color = Color.white;
         coursePageSpecLabel.color = Color.white; 
       //  courseDescription.text = courseDes;
-        ShowAllCoursesSidePanel();
+        ShowAllCourses(listTransformSideCourses);
         _loadedLabs = store.GetLabDataForCourse(courseId);
         if (_loadedLabs != null)
         {
@@ -312,7 +312,7 @@ public class CoursesPage : MonoBehaviour
             if(page == CurrPage.HOME){
                 ShowHomeInfo(5);
             }else if(page == CurrPage.COURSE){
-                ShowAllCourses();
+                ShowAllCourses(listTransformCourses);
                 listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 5;
             }
             
@@ -329,7 +329,7 @@ public class CoursesPage : MonoBehaviour
             if(page == CurrPage.HOME){
                 ShowHomeInfo(3);
             }else if(page == CurrPage.COURSE){
-                ShowAllCourses();
+                ShowAllCourses(listTransformCourses);
                 listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
             }
         }
@@ -582,15 +582,10 @@ public class CoursesPage : MonoBehaviour
     
     
 
-    private void ShowAllCourses()
+    private void ShowCoursesPage()
     {
         Clear();
-        foreach (var course in _loadedCourses) 
-        {
-            CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
-            courseOption.Populate(course, this);
-           
-        };
+        ShowAllCourses(listTransformCourses);
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
@@ -658,12 +653,12 @@ public class CoursesPage : MonoBehaviour
         });
     }
 
-    private void ShowAllCoursesSidePanel()
+    private void ShowAllCourses(Transform listTransform)
     {
         Clear();
         foreach (var course in _loadedCourses)
         {
-            CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformSideCourses);
+            CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransform);
             courseOption.Populate(course, this);
           
         };
