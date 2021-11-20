@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 403473183183163394}
   - component: {fileID: 5590382080091788574}
   - component: {fileID: 6085048203892100288}
+  - component: {fileID: 8205045464789754876}
   m_Layer: 5
   m_Name: SpecimenPanel
   m_TagString: Untagged
@@ -140,6 +141,25 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8205045464789754876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44225578108719511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d993c8bceec5d7e499ed32a98f1a23c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 3607098084785782003}
+  button: {fileID: 6085048203892100288}
+  indexValue: 0
+  icon: {fileID: 0}
+  children: {fileID: 0}
+  background: {fileID: 3713257797930313130}
+  loadingController: {fileID: 0}
 --- !u!1 &152628366718162010
 GameObject:
   m_ObjectHideFlags: 0
