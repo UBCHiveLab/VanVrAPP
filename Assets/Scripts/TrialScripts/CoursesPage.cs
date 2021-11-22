@@ -591,7 +591,7 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.blue;
-        
+        page = CurrPage.COURSE;
     }
 
     private void ShowHomeInfo()
