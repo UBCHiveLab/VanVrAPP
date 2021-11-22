@@ -23,7 +23,7 @@ public class LandingPage : MonoBehaviour, IPage
 
     void Start()
     {
-        mainCameraAnimator = Camera.main.GetComponent<Animator>();
+     //   mainCameraAnimator = Camera.main.GetComponent<Animator>();
 
         disclaimerPanel.gameObject.SetActive(false);
         disclaimerPanel.enterAction = StartSession;
@@ -33,7 +33,7 @@ public class LandingPage : MonoBehaviour, IPage
         }
 
         focusDistanceFinder.enabled = false;
-        disclaimerPanel.gameObject.SetActive(true);
+     //   disclaimerPanel.gameObject.SetActive(true);
         depthOfField.active = true;
         depthOfField.focusDistance.value = 1f;
     }
@@ -43,7 +43,7 @@ public class LandingPage : MonoBehaviour, IPage
         startAudio.GetComponent<AudioSource>().Play(0);
         doorL.GetComponent<Animator>().SetTrigger("Start");
         doorR.GetComponent<Animator>().SetTrigger("Start");
-        mainCameraAnimator.SetTrigger("Start");
+    //    mainCameraAnimator.SetTrigger("Start");
         DismissDisclaimer();
     }
 
@@ -62,4 +62,5 @@ public class LandingPage : MonoBehaviour, IPage
     {
         uiObject.SetActive(false);
     }
+    
 }

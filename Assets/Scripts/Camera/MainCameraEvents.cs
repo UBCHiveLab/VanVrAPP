@@ -7,17 +7,25 @@ using UnityEngine;
 public class MainCameraEvents : MonoBehaviour
 {
     public GameObject canvas;
+    public GameObject displayCanvas;
     public TrayPage tray;
     public StateController stateController;
     public Animator cameraAnimation;
     public Camera maincamera;
+    public Camera displayCamera;
     public GameObject uiSkipButton;
 
+    public void Start()
+    {
+        maincamera.enabled = false; 
+        displayCamera.enabled = true;
+    }
     public void OnEnterFromLandingPage()
     {
         // disable the canvas while traveling from the landing page to the tray. This stops Unity from trying
         // to update the canvas while the "walking to the tray" animation is occuring, which saves CPU time
         canvas.SetActive(false);
+        displayCanvas.SetActive(true);
         uiSkipButton.SetActive(true);
     }
 
