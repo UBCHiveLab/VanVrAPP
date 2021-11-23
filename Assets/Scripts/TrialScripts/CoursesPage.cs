@@ -175,28 +175,25 @@ public class CoursesPage : MonoBehaviour
             }
             else if (labId > 0)
             {   
-                /*
+                
                 mode = ListMode.LAB_SPECIMENS;
                 //  backBttnTitle.text = LABS;
                 Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
-               // selectionTitle.text = labData.Item1;
+                selectionTitle.text = labData.Item1;
                 _loadedSpecimens = labData.Item2;
                 showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
-                Debug.Log("labId is here");
-                */
+                Debug.Log("specs are loaded here");
+                
             }
             
             else
             { 
-            /*   
-                
                 mode = ListMode.LAB;
                 //  backBttnTitle.text = COURSES;
             //    selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
                 Debug.Log("lab data is here");
-                showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
-            */    
+                showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;   
             }
             
         }
@@ -340,16 +337,13 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowSpecimenDetails()
     {
-        if (labId > 0)
-        {
-            mode = ListMode.LAB_SPECIMENS;
-            Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
-            selectionTitle.text = labData.Item1;
-            _loadedSpecimens = labData.Item2;
-            showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
-            Debug.Log("specimens are being called");
-            Layout(mode, showNoContentText);
-        }
+        
+    }
+    private void ShowLabSpecDetails()
+    {
+        mode = ListMode.LAB_SPECIMENS;
+        showSpec = true;
+        Layout(mode, showSpec);
     }
 
     private void ShowLabDetails()
@@ -418,7 +412,7 @@ public class CoursesPage : MonoBehaviour
         btn.button.onClick.AddListener(() =>
         {
             trayPage.RemoveEitherActiveSpecimen(specId);
-            UpdateSelected();
+        //    UpdateSelected();
         });
     }
 
@@ -434,7 +428,7 @@ public class CoursesPage : MonoBehaviour
             SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
           //  OnCloseLabInfo();
             btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
-            UpdateSelected();
+       //     UpdateSelected();
         });
     }
 
@@ -452,6 +446,7 @@ public class CoursesPage : MonoBehaviour
         ShowAllLabs();
         selectionTitle.text = $"Home > Courses > {courseName} > {labName}";
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
+        specLabShowBtn.onClick.AddListener(ShowLabSpecDetails);
         labPageInfoLabel.color = Color.blue;
         labPageSpecLabel.color = Color.white;
       //  StartCoroutine(LoadLabImg(urlImg));
@@ -582,23 +577,23 @@ public class CoursesPage : MonoBehaviour
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
-                SelectorButton btn = Instantiate(specimenPrefab, listTransformCourses);
+                SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
             {
-                Button btn = Instantiate(seeAllButtonPrefab, listTransformCourses);
+                Button btn = Instantiate(seeAllButtonPrefab, listTransformSpec);
                 btn.onClick.AddListener(ClearOrganAndLabData);
             }
 
             // Activates the back button, which takes user back to Region/Organ list
         //    backButton.onClick.AddListener(ClearOrganAndLabData);
-            UpdateSelected();
+        //    UpdateSelected();
         }
 
-        else if (mode == ListMode.LAB_SPECIMENS)
+        else if ((mode == ListMode.LAB_SPECIMENS) && (showSpec == true))
         {
             // Same as specimen mode, also provide additional content info rendering
          //   backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
@@ -606,14 +601,15 @@ public class CoursesPage : MonoBehaviour
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
-                SelectorButton btn = Instantiate(specimenPrefab, listTransformCourses);
+                SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
+                Debug.Log("btn used");
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
             {
-                Button btn = Instantiate(seeAllButtonPrefab, listTransformCourses);
+                Button btn = Instantiate(seeAllButtonPrefab, listTransformSpec);
                 btn.onClick.AddListener(ClearOrganAndLabData);
             }
 
@@ -624,7 +620,7 @@ public class CoursesPage : MonoBehaviour
             //  labInfoShowBtn.SetActive(false);
          //   });
 
-            UpdateSelected();
+        //    UpdateSelected();
         }
     
         /*
@@ -737,7 +733,7 @@ public class CoursesPage : MonoBehaviour
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
         labInfoContent.SetActive(false);
-        selectionTitle.text = "Help";
+        selectionTitle.text = "Home > Help";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.blue;
