@@ -16,6 +16,7 @@ public class CoursesPage : MonoBehaviour
 {
     private bool byLab = true;
     private bool showLab = false;
+    private bool showLabSpec = false;
     private bool showSpec = false;
     private RegionData region = null;
     private string organ = "";
@@ -48,6 +49,17 @@ public class CoursesPage : MonoBehaviour
     public Button atlasBtn;
     public Button helpButton;
     public TextMeshProUGUI selectionTitle;
+    public Button first;
+    public TextMeshProUGUI firstLabel;
+    public Button second;
+    public TextMeshProUGUI secondLabel;
+    public Button third;
+    public TextMeshProUGUI thirdLabel;
+    public Button fourth;
+    public TextMeshProUGUI fourthLabel;
+    public Button fifth;
+    public TextMeshProUGUI fifthLabel;
+     
     public TextMeshPro noContentText;
     public GameObject labAtlasToggle;
     public Button atlasButton;
@@ -85,6 +97,7 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI courseLabTitle;
     public Button labPanelCourseBtn;
     public RawImage labRenderedImg;
+    public GameObject labInfoContentText;
 
     [Header("LabContentRender")]
     public GameObject sidePanel;
@@ -136,8 +149,12 @@ public class CoursesPage : MonoBehaviour
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
-
-         selectionTitle.text = "Home";
+        firstLabel.text = "Home";
+        secondLabel.text = "";
+        thirdLabel.text = "";
+        fourthLabel.text = "";
+        fifthLabel.text = "";
+        BreadCrumbButton();
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
         courseButton.onClick.AddListener(ShowCoursesPage);
@@ -146,6 +163,8 @@ public class CoursesPage : MonoBehaviour
         expandPanelBtn.onClick.AddListener(closeSidePanel);
        
     }
+
+    
 
     void Update()
     {
@@ -175,15 +194,15 @@ public class CoursesPage : MonoBehaviour
             }
             else if (labId > 0)
             {   
-                
+                /*
                 mode = ListMode.LAB_SPECIMENS;
                 //  backBttnTitle.text = LABS;
                 Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
-                selectionTitle.text = labData.Item1;
+              //  selectionTitle.text = labData.Item1;
                 _loadedSpecimens = labData.Item2;
                 showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
                 Debug.Log("specs are loaded here");
-                
+                */
             }
             
             else
@@ -218,7 +237,7 @@ public class CoursesPage : MonoBehaviour
         {
             mode = ListMode.SPECIMEN;
             //   backBttnTitle.text = SPECIMEN_LIST;
-            selectionTitle.text = organ;
+          //  selectionTitle.text = organ;
             _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
             Debug.Log("specimen is here");
@@ -255,6 +274,28 @@ public class CoursesPage : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+
+    private void ClearLabSpec()
+    {
+        foreach (Transform child in listTransformSpec)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void BreadCrumbButton()
+    {
+        if (secondLabel.text == "> Help")
+        {
+            second.onClick.AddListener(ShowHelpInfo);
+        }
+        else if (secondLabel.text == "> Courses")
+        {
+            second.onClick.AddListener(ShowCoursesPage);
+        }
+        
+    }
+
     public void CourseSelected(string courseId)
     {
         this.courseId = courseId;
@@ -262,6 +303,7 @@ public class CoursesPage : MonoBehaviour
        // var newCourseName = "This Lab is about " + courseId;
         RenderCourseInfo(courseId);
         infoShowBtn.onClick.AddListener(() => RenderCourseInfo(courseId));
+        third.onClick.AddListener(() => RenderCourseInfo(courseId));
     }
 
     private void RenderCourseInfo(string title)
@@ -280,10 +322,13 @@ public class CoursesPage : MonoBehaviour
         courseName = title;
         coursePageInfoLabel.color = Color.cyan;
         coursePageLabLabel.color = Color.white;
-        coursePageSpecLabel.color = Color.white; 
-
-        selectionTitle.text = $"Home > Courses > {courseName}";
-      //  courseDescription.text = courseDes;
+        coursePageSpecLabel.color = Color.white;
+        secondLabel.text = "> Courses";
+        thirdLabel.text = $"> {courseName}";
+        fourthLabel.text = "";
+        fifthLabel.text = "";
+        // selectionTitle.text = $"Home > Courses > {courseName}";
+        //  courseDescription.text = courseDes;
         ShowAllCourses(listTransformSideCourses);
         _loadedLabs = store.GetLabDataForCourse(courseId);
         if (_loadedLabs != null)
@@ -332,18 +377,29 @@ public class CoursesPage : MonoBehaviour
             }
         }
         
-        
     }
 
     private void ShowSpecimenDetails()
     {
-        
+        mode = ListMode.SPECIMEN;
+        showSpec = true;
+        Layout(mode, showNoContentText);
     }
     private void ShowLabSpecDetails()
     {
+        ClearLabSpec();
         mode = ListMode.LAB_SPECIMENS;
-        showSpec = true;
-        Layout(mode, showSpec);
+        showLabSpec = true;
+        labInfoContentText.SetActive(false);
+        Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
+        //  selectionTitle.text = labData.Item1;
+        _loadedSpecimens = labData.Item2;
+        showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
+        Debug.Log("specs2 are loaded here");
+        labPageSpecLabel.color = Color.blue;
+        labPageInfoLabel.color = Color.white;
+        Layout(mode, showLabSpec);
+     //   labInfoShowBtn.onClick.AddListener(() => RenderLabInfo());
     }
 
     private void ShowLabDetails()
@@ -351,7 +407,7 @@ public class CoursesPage : MonoBehaviour
         mode = ListMode.LAB;
         //  backBttnTitle.text = COURSES;
         //    selectionTitle.text = courseId;
-
+        
         sidePanel.SetActive(true);
         defaultPanel.SetActive(true);
         expandedPanel.SetActive(false);
@@ -372,6 +428,7 @@ public class CoursesPage : MonoBehaviour
         Populate();
        // var newLabName = "This Lab is about " + labName;
         RenderLabInfo(labName, labId, labImg);
+        fourth.onClick.AddListener(() => RenderLabInfo(labName, labId, labImg));
    
     }
     // Scans all active selector buttons and sets them to active if they are a selected specimen
@@ -441,12 +498,17 @@ public class CoursesPage : MonoBehaviour
         labPanel.text = $"Lab {labId}";
         labName = $"Lab {labId}";
         courseLabTitle.text = courseName;
-      //  labDescription.text = labDes;
+        labInfoContentText.SetActive(true);
+        ClearLabSpec();
+        //  labDescription.text = labDes;
         labInfoContent.SetActive(true);
         ShowAllLabs();
-        selectionTitle.text = $"Home > Courses > {courseName} > {labName}";
+        fourthLabel.text = $"> {labName}";
+        fifthLabel.text = "";
+        //  selectionTitle.text = $"Home > Courses > {courseName} > {labName}";
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
         specLabShowBtn.onClick.AddListener(ShowLabSpecDetails);
+        labInfoShowBtn.onClick.AddListener(() => RenderLabInfo(title, labId, urlImg));
         labPageInfoLabel.color = Color.blue;
         labPageSpecLabel.color = Color.white;
       //  StartCoroutine(LoadLabImg(urlImg));
@@ -567,7 +629,7 @@ public class CoursesPage : MonoBehaviour
         }
         
         
-        if (mode == ListMode.SPECIMEN)
+        if ((mode == ListMode.SPECIMEN) && (showSpec == true))
         {
             // Forgive me for the spaghetti below
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
@@ -593,7 +655,7 @@ public class CoursesPage : MonoBehaviour
         //    UpdateSelected();
         }
 
-        else if ((mode == ListMode.LAB_SPECIMENS) && (showSpec == true))
+        else if (mode == ListMode.LAB_SPECIMENS)
         {
             // Same as specimen mode, also provide additional content info rendering
          //   backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
@@ -688,20 +750,26 @@ public class CoursesPage : MonoBehaviour
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
         labInfoContent.SetActive(false);
-        selectionTitle.text = "Home > Courses";
+        secondLabel.text = "> Courses";
+        thirdLabel.text = "";
+        fourthLabel.text = "";
+        fifthLabel.text = "";
+        //  selectionTitle.text = "Home > Courses";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.blue;
         page = CurrPage.COURSE;
+        showSpec = false;
+        showLabSpec = false;
     }
 
-    private void ShowHomeInfo()
+    public void ShowHomeInfo()
     {
         ShowHomeInfo(3);
     }
 
-    private void ShowHomeInfo(int num)
+    public void ShowHomeInfo(int num)
     {
         Clear();
         foreach (var course in _loadedCourses.Take(num))
@@ -719,13 +787,15 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.black;
-        selectionTitle.text = "Home";
+      //  selectionTitle.text = "Home";
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = num;
 
         page = CurrPage.HOME;
+        showSpec = false;
+        showLabSpec = false;
     }
 
-    private void ShowHelpInfo()
+    public void ShowHelpInfo()
     {
         Clear();
         homeInfo.SetActive(true);
@@ -733,12 +803,18 @@ public class CoursesPage : MonoBehaviour
         RecentCourse.SetActive(false);
         welcomePanel.SetActive(false);
         labInfoContent.SetActive(false);
-        selectionTitle.text = "Home > Help";
+        secondLabel.text = "> Help";
+        thirdLabel.text = "";
+        fourthLabel.text = "";
+        fifthLabel.text = "";
+     //   selectionTitle.text = "Home > Help";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.blue;
         courseLabel.color = Color.black;
-       
+        showSpec = false;
+        showLabSpec = false;
+
     }
 
     private void ShowAllLabs()

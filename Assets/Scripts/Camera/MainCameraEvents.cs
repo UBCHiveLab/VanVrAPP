@@ -17,7 +17,7 @@ public class MainCameraEvents : MonoBehaviour
 
     public void Start()
     {
-        maincamera.enabled = false; 
+        maincamera.enabled = false;
         displayCamera.enabled = true;
     }
     public void OnEnterFromLandingPage()

@@ -23,9 +23,8 @@ public class LabDisplayOptions : MonoBehaviour
         idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _coursesPage = courses;
-        Debug.Log("At Labs Populate function");
         button.onClick.AddListener(() => { _coursesPage.LabSelected(data.labId, data.labName, data.imgUrl); });
-        Debug.Log("labs review button pressed");
+       
     }
 
 
