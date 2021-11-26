@@ -764,7 +764,11 @@ public class CoursesPage : MonoBehaviour
 
     public void ShowHomeInfo()
     {
-        ShowHomeInfo(3);
+        if(sidePanel.active){
+            ShowHomeInfo(3);
+        } else{
+            ShowHomeInfo(5);
+        }
     }
 
     public void ShowHomeInfo(int num)
