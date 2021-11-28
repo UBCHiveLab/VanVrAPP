@@ -375,29 +375,27 @@ public class CoursesPage : MonoBehaviour
             expandPanelBtn.transform.GetComponent<Image>().sprite = collapse;
             expandedPanel.SetActive(true);
             defaultPanel.SetActive(false);
+            listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 5;
 
             if(page == CurrPage.HOME){
                 ShowHomeInfo(5);
             }else if(page == CurrPage.COURSE){
                 ShowAllCourses(listTransformCourses);
-                listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 5;
+            }else if(page == CurrPage.HELP){
             }
             
-            
-
-            //homeInfo.GetComponent<RectTransform>().sizeDelta = new Vector(884.8763, 922.6483);
         //collapse panel
         }else{
             sidePanel.SetActive(true);
             expandPanelBtn.transform.GetComponent<Image>().sprite = expand;
             expandedPanel.SetActive(false);
             defaultPanel.SetActive(true);
+            listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
 
             if(page == CurrPage.HOME){
                 ShowHomeInfo(3);
             }else if(page == CurrPage.COURSE){
                 ShowAllCourses(listTransformCourses);
-                listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
             }
         }
         
@@ -792,7 +790,11 @@ public class CoursesPage : MonoBehaviour
 
     public void ShowHomeInfo()
     {
-        ShowHomeInfo(3);
+        if(sidePanel.active){
+            ShowHomeInfo(3);
+        } else{
+            ShowHomeInfo(5);
+        }
     }
 
     public void ShowHomeInfo(int num)
@@ -843,6 +845,8 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.blue;
         courseLabel.color = Color.black;
+
+        page = CurrPage.HELP;
         showSpec = false;
         showLabSpec = false;
 
