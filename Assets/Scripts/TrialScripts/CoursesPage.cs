@@ -59,6 +59,7 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI fourthLabel;
     public Button fifth;
     public TextMeshProUGUI fifthLabel;
+    public Animator anim; 
      
     public TextMeshPro noContentText;
     public GameObject labAtlasToggle;
@@ -155,11 +156,13 @@ public class CoursesPage : MonoBehaviour
         fourthLabel.text = "";
         fifthLabel.text = "";
         BreadCrumbButton();
+       
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
         courseButton.onClick.AddListener(ShowCoursesPage);
         homeButton.onClick.AddListener(ShowHomeInfo);
         helpButton.onClick.AddListener(ShowHelpInfo);
+        atlasBtn.onClick.AddListener(ShowAtlasInfo);
         expandPanelBtn.onClick.AddListener(closeSidePanel);
        
     }
@@ -245,6 +248,29 @@ public class CoursesPage : MonoBehaviour
         }
         Layout(mode, showNoContentText);
     }
+/*Figure out a way to access the script read string input from the other class - look into this
+    public void CheckStringInput(string message)
+    {
+        foreach(var course in _loadedCourses)
+        {
+             if (ReadStringInput(message) == courseName)
+             {
+                CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
+                courseOption.Populate(course, this);
+             }
+        }
+       foreach (var lab in _loadedLabs)
+       {
+           if (ReadStringInput(message) == labTitle)
+           {
+               LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
+               labOption.Populate(lab, this);
+           }
+
+       } 
+       
+    }
+    */
 
     private void Clear()
     {
@@ -335,8 +361,6 @@ public class CoursesPage : MonoBehaviour
         {
             ShowAllLabsText();
         }
-       
-
         // StartCoroutine(LoadLabImg(urlImg));
         labShowBtn.onClick.AddListener(ShowLabDetails);
         specimenInfoShowBtn.onClick.AddListener(ShowSpecimenDetails);
@@ -389,7 +413,6 @@ public class CoursesPage : MonoBehaviour
     {
         ClearLabSpec();
         mode = ListMode.LAB_SPECIMENS;
-        showLabSpec = true;
         labInfoContentText.SetActive(false);
         Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
         //  selectionTitle.text = labData.Item1;
@@ -407,7 +430,6 @@ public class CoursesPage : MonoBehaviour
         mode = ListMode.LAB;
         //  backBttnTitle.text = COURSES;
         //    selectionTitle.text = courseId;
-        
         sidePanel.SetActive(true);
         defaultPanel.SetActive(true);
         expandedPanel.SetActive(false);
@@ -572,6 +594,13 @@ public class CoursesPage : MonoBehaviour
         Populate();
     }
 
+    private void ClearSelectionData()
+    {
+        courseId = "";
+        region = null;
+        ClearOrganAndLabData();
+    }
+
 
     /**
      * Lays out UI based on requested mode.
@@ -629,13 +658,13 @@ public class CoursesPage : MonoBehaviour
         }
         
         
-        if ((mode == ListMode.SPECIMEN) && (showSpec == true))
+        if (mode == ListMode.SPECIMEN) 
         {
             // Forgive me for the spaghetti below
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
 
          //   backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
-
+         
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
@@ -685,10 +714,10 @@ public class CoursesPage : MonoBehaviour
         //    UpdateSelected();
         }
     
-        /*
+        
         else
         {
-            backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfClose;
+           // backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfClose;
             // Loops through loaded regions, producing a clickable button for each...
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
@@ -735,15 +764,12 @@ public class CoursesPage : MonoBehaviour
             // Bind a click listener that toggles the shelf menu
           //  backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
         }
-        */
+        
     }
-
-    
-    
-
     private void ShowCoursesPage()
     {
         Clear();
+        byLab = true;
         ShowAllCourses(listTransformCourses);
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
@@ -771,6 +797,7 @@ public class CoursesPage : MonoBehaviour
 
     public void ShowHomeInfo(int num)
     {
+        byLab = true;
         Clear();
         foreach (var course in _loadedCourses.Take(num))
         {
@@ -778,6 +805,7 @@ public class CoursesPage : MonoBehaviour
             courseOption.Populate(course, this);
            
         };
+        
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(true);
@@ -789,7 +817,10 @@ public class CoursesPage : MonoBehaviour
         courseLabel.color = Color.black;
       //  selectionTitle.text = "Home";
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = num;
-
+        secondLabel.text = "";
+        thirdLabel.text = "";
+        fourthLabel.text = "";
+        fifthLabel.text = "";
         page = CurrPage.HOME;
         showSpec = false;
         showLabSpec = false;
@@ -815,6 +846,26 @@ public class CoursesPage : MonoBehaviour
         showSpec = false;
         showLabSpec = false;
 
+    }
+
+    public void ShowAtlasInfo()
+    {
+        Clear();
+        byLab = false; 
+        ClearSelectionData();
+        homeInfo.SetActive(true);
+        courseInfoContent.SetActive(false);
+        RecentCourse.SetActive(false);
+        welcomePanel.SetActive(false);
+        labInfoContent.SetActive(false);
+        secondLabel.text = "> 3D Atlas";
+        thirdLabel.text = "";
+        fourthLabel.text = "";
+        fifthLabel.text = "";
+        homeLabel.color = Color.black;
+        atlasLabel.color = Color.blue;
+        helpLabel.color = Color.black;
+        courseLabel.color = Color.black;
     }
 
     private void ShowAllLabs()
@@ -845,6 +896,12 @@ public class CoursesPage : MonoBehaviour
             LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
             labOption.Populate(lab, this);
         });
+    }
+
+    // Called by EventTrigger on object
+    public void HoverShelfToggle()
+    {
+        anim.SetBool("PeekMenu", true);
     }
 
 }

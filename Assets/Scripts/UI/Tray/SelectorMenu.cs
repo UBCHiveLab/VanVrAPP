@@ -129,7 +129,7 @@ public class SelectorMenu : MonoBehaviour
             {
                 mode = ListMode.LAB_SPECIMENS;
                 //backBttnTitle.text = LABS;
-                Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
+                Tuple<string,  List<SpecimenData>> labData = store.GetLabData(courseId, labId);
                 selectionTitle.text = labData.Item1;
                 _loadedSpecimens = labData.Item2;
                 showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
@@ -506,9 +506,10 @@ public class SelectorMenu : MonoBehaviour
         anim.SetBool("PeekMenu", true);
     }
 
+//EDIT : changing this to true to figure out binding scenes
     public void UnhoverShelfToggle()
     {
-        anim.SetBool("PeekMenu", false);
+        anim.SetBool("PeekMenu", true);
     }
 
     public void LoadSpecimenFromInfo()

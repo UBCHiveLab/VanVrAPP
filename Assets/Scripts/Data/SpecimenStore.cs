@@ -118,10 +118,11 @@ public class SpecimenStore : MonoBehaviour
 
     public Tuple<string, List<SpecimenData>> GetLabData(string courseId, int labId)
     {
-        // find the lab name and specimen data for the given lab for the specified course
+        // find the course name and specimen data for the given lab for the specified course
         List<SpecimenData> specimenData = new List<SpecimenData>();
         List<LabData> labs = GetLabDataForCourse(courseId);
         int labIndex = labs.FindIndex((lab) => lab.labId == labId);
+
 
         if (labIndex < 0)
         {
@@ -129,11 +130,12 @@ public class SpecimenStore : MonoBehaviour
             return null;
         }
 
+       
         foreach (string specimenId in labs[labIndex].specimenList)
         {
             if (!specimens.ContainsKey(specimenId))
             {
-                Debug.LogWarning($"No specimen found with id {specimenId} for lab {labId}");
+                Debug.LogWarning($"No specimen found with id {specimenId} for course {courseId}");
                 continue;
             }
 
@@ -142,6 +144,37 @@ public class SpecimenStore : MonoBehaviour
 
         return new Tuple<string, List<SpecimenData>>(labs[labIndex].labName, specimenData);
     }
+    /*
+    public Tuple<string, List<SpecimenData>> GetCourseData(string courseId, int labId)
+    {
+        // find the lab name and specimen data for the given lab for the specified course
+        labCourses = loader.GetLabCourses().ToDictionary((course => course.courseId), course => course);
+        List<SpecimenData> specimenData = new List<SpecimenData>();
+        List<LabData> labs = GetLabDataForCourse(courseId);
+        int labIndex = labs.FindIndex((lab) => lab.labId == labId);
+        int courseIndex = labCourses.FindIndex((course) => course.courseId == courseId);
+
+        if (courseIndex < 0)
+        {
+            Debug.LogWarning($"No course found with id {courseId}");
+            return null;
+        }
+
+        foreach (int labIndex in labCourses[courseIndex].specimenList)
+        {
+            foreach (string specimenId in labs[labIndex].specimenList)
+            {
+                if (!specimens.ContainsKey(specimenId))
+                {
+                    Debug.LogWarning($"No specimen found with id {specimenId} for course {courseId}");
+                continue;
+                }
+                specimenData.Add(specimens[specimenId]);
+            }
+        }
+        return new Tuple<string, List<SpecimenData>>(labCourses[courseIndex].courseName, specimenData);
+    }
+    */
 
     public bool Loading()
     {

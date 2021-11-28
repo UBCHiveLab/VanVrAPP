@@ -77,7 +77,7 @@ namespace Assets.Scripts.State
             standard = Shader.Find("Standard");
             //vertexColor = Shader.Find("Custom/VertexColor");
             try {
-                trayPage.Deactivate();
+                trayPage.Activate();
             } catch (Exception e) {
                 Debug.LogWarning($"Error deactivating trayPage: {e}");
             }
@@ -89,7 +89,7 @@ namespace Assets.Scripts.State
             }
 
             try {
-                landingPage.Activate();
+                landingPage.Deactivate();
             } catch (Exception e) {
                 Debug.LogWarning($"Error activating landingPage: {e}");
             }

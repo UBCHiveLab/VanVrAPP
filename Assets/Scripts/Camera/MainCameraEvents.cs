@@ -19,6 +19,10 @@ public class MainCameraEvents : MonoBehaviour
     {
         maincamera.enabled = false;
         displayCamera.enabled = true;
+        cameraAnimation.GetComponent<Animator>().enabled = false;
+      //  maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
+        uiSkipButton.SetActive(false);
+        OnArrivedAtTray();
     }
     public void OnEnterFromLandingPage()
     {
@@ -39,9 +43,11 @@ public class MainCameraEvents : MonoBehaviour
 
     public void SkipEnterAnimation()
     {
+        /*
         cameraAnimation.GetComponent<Animator>().enabled = false;
         maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
         uiSkipButton.SetActive(false);
         OnArrivedAtTray();
+        */
     }
 }
