@@ -29980,6 +29980,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661245496}
   m_Mesh: {fileID: -6325021578902248181, guid: b73f54e4f4b0ab249a8481c45c0c7060, type: 3}
+--- !u!114 &662121567 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2367540292322731294, guid: 1253604cc53694c93846e5e20172c42c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1504574871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &662378503
 GameObject:
   m_ObjectHideFlags: 0
@@ -45914,6 +45926,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078966009}
   m_Mesh: {fileID: -5076798556035486163, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
+--- !u!114 &1079187282 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 411631300868456251, guid: 1253604cc53694c93846e5e20172c42c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1504574871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1079519174
 GameObject:
   m_ObjectHideFlags: 0
@@ -75712,6 +75736,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 411631300690399011, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: m_Spacing
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 411631300690399013, guid: 1253604cc53694c93846e5e20172c42c,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -77052,7 +77081,7 @@ PrefabInstance:
         type: 3}
       propertyPath: selectorPrefab
       value: 
-      objectReference: {fileID: 8205045464789754876, guid: 14092e8de4e34234599f3e1dea63484d,
+      objectReference: {fileID: 5871767981807896730, guid: fd381e2eb3a547e43bf500fe7f85a29d,
         type: 3}
     - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
         type: 3}
@@ -77060,6 +77089,51 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5871767981807896730, guid: fd381e2eb3a547e43bf500fe7f85a29d,
         type: 3}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: atlasButtonMain
+      value: 
+      objectReference: {fileID: 357712974}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: labButton
+      value: 
+      objectReference: {fileID: 1175222702}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: atlasLabelMain
+      value: 
+      objectReference: {fileID: 1087328867}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: labLabel
+      value: 
+      objectReference: {fileID: 1281281747}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: titleOnShelf
+      value: 
+      objectReference: {fileID: 4314778671168473733}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: labAtlasToggle
+      value: 
+      objectReference: {fileID: 1013435371}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: myScrollRect
+      value: 
+      objectReference: {fileID: 662121567}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: courseScrollRect
+      value: 
+      objectReference: {fileID: 662121567}
+    - target: {fileID: 4295191860950330548, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: labScrollRect
+      value: 
+      objectReference: {fileID: 1079187282}
     - target: {fileID: 4302224699225618042, guid: 1253604cc53694c93846e5e20172c42c,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -78238,6 +78312,11 @@ PrefabInstance:
     - target: {fileID: 8704836068154805605, guid: 1253604cc53694c93846e5e20172c42c,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704836068154805605, guid: 1253604cc53694c93846e5e20172c42c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8817624681886865545, guid: 1253604cc53694c93846e5e20172c42c,

@@ -422,7 +422,7 @@ public class SelectorMenu : MonoBehaviour
         ClearSelectionData();
     }
 
-    private void ToggleToLabs()
+    public void ToggleToLabs()
     {
         labButton.interactable = false;
         atlasButton.interactable = true;

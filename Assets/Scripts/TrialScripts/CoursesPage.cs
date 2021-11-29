@@ -63,8 +63,12 @@ public class CoursesPage : MonoBehaviour
      
     public TextMeshPro noContentText;
     public GameObject labAtlasToggle;
-    public Button atlasButton;
+    public Button atlasButtonMain;
     public Button labButton;
+     public TextMeshProUGUI atlasLabelMain;
+    public TextMeshProUGUI labLabel;
+    public TextMeshProUGUI titleOnShelf;
+
     public TextMeshProUGUI atlasLabel;
     public TextMeshProUGUI courseLabel;
     public TextMeshProUGUI homeLabel;
@@ -74,6 +78,8 @@ public class CoursesPage : MonoBehaviour
     public GameObject courseInfoContent;
     public GameObject labInfoContent;
     public Button labShowBtn;
+    public GameObject labInfoContentMain;
+    public GameObject labInfoShowBtnMain;
     public Button infoShowBtn;
     public Button specimenInfoShowBtn;
     public TextMeshProUGUI coursePageLabLabel;
@@ -99,6 +105,8 @@ public class CoursesPage : MonoBehaviour
     public Button labPanelCourseBtn;
     public RawImage labRenderedImg;
     public GameObject labInfoContentText;
+    public ScrollRect courseScrollRect;
+    public ScrollRect labScrollRect;
 
     [Header("LabContentRender")]
     public GameObject sidePanel;
@@ -111,7 +119,7 @@ public class CoursesPage : MonoBehaviour
 
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
-
+    private SelectorMenu selectorMenu;
     private const string COURSES = "COURSES";
     private const string LABS = "LABS";
     private const string LOADING_SPECIMENS = "LOADING SPECIMENS...";
@@ -125,7 +133,8 @@ public class CoursesPage : MonoBehaviour
         SPECIMEN,
         LAB,
         LAB_COURSES,
-        LAB_SPECIMENS
+        LAB_SPECIMENS,
+        COURSE_SPECIMENS
     }
     private ListMode mode;
     private bool showNoContentText; 
@@ -155,11 +164,13 @@ public class CoursesPage : MonoBehaviour
         thirdLabel.text = "";
         fourthLabel.text = "";
         fifthLabel.text = "";
-        BreadCrumbButton();
+        
+        
        
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
         courseButton.onClick.AddListener(ShowCoursesPage);
+       // courseButton.onClick.AddListener(ToggleToLabs);
         homeButton.onClick.AddListener(ShowHomeInfo);
         helpButton.onClick.AddListener(ShowHelpInfo);
         atlasBtn.onClick.AddListener(ShowAtlasInfo);
@@ -335,9 +346,11 @@ public class CoursesPage : MonoBehaviour
     private void RenderCourseInfo(string title)
     {
         courseInfoContent.SetActive(true);
+        
         labInfoContent.SetActive(false);
         homeInfo.SetActive(false);
         labInfoContent.SetActive(false);
+        courseScrollRect.verticalNormalizedPosition = 1.5f;
         
         sidePanel.SetActive(true);
         defaultPanel.SetActive(true);
@@ -403,8 +416,12 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowSpecimenDetails()
     {
-        mode = ListMode.SPECIMEN;
-        showSpec = true;
+        mode = ListMode.COURSE_SPECIMENS;
+        Tuple<string, List<SpecimenData>> courseSpecData = store.GetCourseData(courseId);
+        //  selectionTitle.text = labData.Item1;
+        _loadedSpecimens = courseSpecData.Item2;
+        showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
+        Debug.Log("specs are loaded here");
         Layout(mode, showNoContentText);
     }
     private void ShowLabSpecDetails()
@@ -519,6 +536,7 @@ public class CoursesPage : MonoBehaviour
         labName = $"Lab {labId}";
         courseLabTitle.text = courseName;
         labInfoContentText.SetActive(true);
+        labScrollRect.verticalNormalizedPosition = 1.5f;
         ClearLabSpec();
         //  labDescription.text = labDes;
         labInfoContent.SetActive(true);
@@ -680,6 +698,23 @@ public class CoursesPage : MonoBehaviour
             // Activates the back button, which takes user back to Region/Organ list
         //    backButton.onClick.AddListener(ClearOrganAndLabData);
         //    UpdateSelected();
+        }
+        else if (mode == ListMode.COURSE_SPECIMENS)
+        {
+           for (int i = 0; i < _loadedSpecimens.Count; i++)
+            {
+                string id = _loadedSpecimens[i].id;
+                SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
+                btn.Populate(_loadedSpecimens[i].name, i, null);
+                idToButton.Add(id, btn);
+            }
+
+            if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
+            {
+                Button btn = Instantiate(seeAllButtonPrefab, listTransformSpec);
+                btn.onClick.AddListener(ClearOrganAndLabData);
+            }
+ 
         }
 
         else if (mode == ListMode.LAB_SPECIMENS)
@@ -907,5 +942,36 @@ public class CoursesPage : MonoBehaviour
     {
         anim.SetBool("PeekMenu", true);
     }
+
+    private void ToggleToAtlas()
+    {
+        labButton.interactable = true;
+        atlasButtonMain.interactable = false;
+        atlasLabelMain.color = Color.blue;
+        labLabel.color = Color.white;
+        titleOnShelf.gameObject.SetActive(false);
+        titleOnShelf.text = "ANATOMICAL CATEGORIES";
+        titleOnShelf.gameObject.SetActive(true);
+        byLab = false;
+        labInfoContentMain.SetActive(false);
+        labInfoShowBtnMain.SetActive(false);
+        ClearSelectionData();
+    }
+
+    public void ToggleToLabs()
+    {
+        labButton.interactable = false;
+        atlasButtonMain.interactable = true;
+        labLabel.color = Color.blue;
+        atlasLabelMain.color = Color.white;
+        titleOnShelf.gameObject.SetActive(false);
+        titleOnShelf.text = "LAB COURSES";
+        titleOnShelf.gameObject.SetActive(true);
+        byLab = true;
+        ClearSelectionData();
+    }
+
+
+    
 
 }
