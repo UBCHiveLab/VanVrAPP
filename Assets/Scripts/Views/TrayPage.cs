@@ -107,7 +107,7 @@ public class TrayPage : MonoBehaviour, IPage
     public void Deactivate() {
         uiObject.SetActive(false);
         shelfToggle.gameObject.SetActive(true);
-        showMenu = false;
+        showMenu = false; 
     }
 
     public void SpecimenSelected(SpecimenData data)
@@ -244,6 +244,7 @@ public class TrayPage : MonoBehaviour, IPage
     {
         showMenu = !showMenu;
         selectorMenu.anim.SetBool("ShowMenu", showMenu);
+        Debug.Log("show menu");
     }
 
     private void CompareOff()

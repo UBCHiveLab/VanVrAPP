@@ -13,13 +13,16 @@ public class CourseDisplayOptions : MonoBehaviour
     public TextMeshProUGUI idFrame;
   //  public TextMeshProUGUI nameFrame;
     private CoursesPage _coursesPage;
+    private SelectorMenu _selectorMenu;
 
-    public void Populate(CourseData data, CoursesPage coursesPage)
+    public void Populate(CourseData data, CoursesPage coursesPage, SelectorMenu selectorMenu)
     {
         idFrame.text = $"{data.courseId}";
        // nameFrame.text = data.courseCode;
         _coursesPage = coursesPage;
+        _selectorMenu = selectorMenu;
         button.onClick.AddListener(() => _coursesPage.CourseSelected(data.courseId));
+        button.onClick.AddListener(() => _selectorMenu.CourseSelected(data.courseId));
     }
 
     

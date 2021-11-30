@@ -17,10 +17,11 @@ public class MainCameraEvents : MonoBehaviour
 
     public void Start()
     {
-        maincamera.enabled = false;
+        maincamera.enabled = true;
         displayCamera.enabled = true;
+        tray.ToggleShelfMenu();
         cameraAnimation.GetComponent<Animator>().enabled = false;
-      //  maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
+        maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
         uiSkipButton.SetActive(false);
         OnArrivedAtTray();
     }
@@ -29,7 +30,7 @@ public class MainCameraEvents : MonoBehaviour
         // disable the canvas while traveling from the landing page to the tray. This stops Unity from trying
         // to update the canvas while the "walking to the tray" animation is occuring, which saves CPU time
         canvas.SetActive(false);
-        displayCanvas.SetActive(true);
+        displayCanvas.SetActive(false);
         uiSkipButton.SetActive(true);
     }
 
@@ -37,6 +38,7 @@ public class MainCameraEvents : MonoBehaviour
     {
         // allow the user to interact with the UI canvas again, as the "walking to tray" animation is done
         canvas.SetActive(true);
+        displayCanvas.SetActive(true);
         tray.HaveArrivedAtTray();
         uiSkipButton.SetActive(false);
     }
