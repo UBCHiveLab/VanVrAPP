@@ -393,21 +393,21 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    public void ClearOrganAndLabData()
+    private void ClearOrganAndLabData()
     {
         organ = "";
         labId = 0;
         Populate();
     }
 
-    public void ClearSelectionData()
+    private void ClearSelectionData()
     {
         courseId = "";
         region = null;
         ClearOrganAndLabData();
     }
 
-    public void ToggleToAtlas()
+    private void ToggleToAtlas()
     {
         labButton.interactable = true;
         atlasButton.interactable = false;
