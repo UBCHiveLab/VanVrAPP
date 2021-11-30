@@ -17,17 +17,14 @@ public class LabDisplayOptions : MonoBehaviour
 
     private CoursesPage _coursesPage;
 
-    private SelectorMenu _selectorMenu;
-
-    public void Populate(LabData data, CoursesPage courses, SelectorMenu selectorMenu)
+    public void Populate(LabData data, CoursesPage courses)
     {
       //  StartCoroutine(DownloadImage(data.imgUrl));
         idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _coursesPage = courses;
-        _selectorMenu = selectorMenu;
         button.onClick.AddListener(() => { _coursesPage.LabSelected(data.labId, data.labName, data.imgUrl); });
-        button.onClick.AddListener(() => { _selectorMenu.LabSelected(data.labId, data.labName, data.imgUrl); });
+       
     }
 
 
