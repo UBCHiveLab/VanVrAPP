@@ -187,7 +187,12 @@ public class CoursesPage : MonoBehaviour
         
         first.onClick.AddListener(ShowHomeInfo);
         first.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
-        second.onClick.AddListener(ShowCoursesPage); //EDIT: this is a bug since it works only for courses
+        if (secondLabel.text == "> Courses")
+        {
+            second.onClick.AddListener(ShowCoursesPage);
+        }
+        Debug.Log(secondLabel.text == ">Courses");
+        //EDIT: this is a bug since it works only for courses
         second.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
     }
 

@@ -528,7 +528,7 @@ public class SelectorMenu : MonoBehaviour
         shelfTitle.text = title;
         labDescription.text = labDes;
         StartCoroutine(LoadLabImg(urlImg));
-        labInfoContent.SetActive(true);
+     //   labInfoContent.SetActive(true);
     }
 
     private IEnumerator LoadLabImg(String url)
@@ -562,12 +562,12 @@ public class SelectorMenu : MonoBehaviour
     public void OnCloseLabInfo()
     {
         labInfoContent.SetActive(false);
-        labInfoShowBtn.SetActive(true);
+       // labInfoShowBtn.SetActive(true);
     }
 
     public void OnShowLabInfo()
     {
-        labInfoContent.SetActive(true);
+      //  labInfoContent.SetActive(true);
         labInfoShowBtn.SetActive(false);
     }
 }
