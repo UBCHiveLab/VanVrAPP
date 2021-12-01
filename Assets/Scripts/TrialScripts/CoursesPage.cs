@@ -43,6 +43,7 @@ public class CoursesPage : MonoBehaviour
     public Transform listTransformSideCourses;
     public Transform listTransformLabs;
     public Transform listTransformLabText; 
+    public Transform listTransformCourseSpec;
     public Transform listTransformSpec; 
     public Text backBttnTitle;
     public Button courseButton;
@@ -79,8 +80,6 @@ public class CoursesPage : MonoBehaviour
     public GameObject courseInfoContent;
     public GameObject labInfoContent;
     public Button labShowBtn;
-    public GameObject labInfoContentMain;
-    public GameObject labInfoShowBtnMain;
     public Button infoShowBtn;
     public Button specimenInfoShowBtn;
     public TextMeshProUGUI coursePageLabLabel;
@@ -105,6 +104,7 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI courseLabTitle;
     public Button labPanelCourseBtn;
     public RawImage labRenderedImg;
+    public GameObject courseInfoContentText;
     public GameObject labInfoContentText;
     public ScrollRect courseScrollRect;
     public ScrollRect labScrollRect;
@@ -325,8 +325,12 @@ public class CoursesPage : MonoBehaviour
         }
     }
 
-    private void ClearLabSpec()
+    private void ClearSpec()
     {
+        foreach (Transform child in listTransformCourseSpec)
+        {
+            Destroy(child.gameObject);
+        }
         foreach (Transform child in listTransformSpec)
         {
             Destroy(child.gameObject);
@@ -349,7 +353,8 @@ public class CoursesPage : MonoBehaviour
     private void RenderCourseInfo(string title)
     {
         courseInfoContent.SetActive(true);
-        
+        courseInfoContentText.SetActive(true);
+
         labInfoContent.SetActive(false);
         homeInfo.SetActive(false);
         labInfoContent.SetActive(false);
@@ -360,6 +365,7 @@ public class CoursesPage : MonoBehaviour
         expandedPanel.SetActive(false);
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
 
+        ClearSpec();
         courseTitle.text = title;
         courseName = title;
         coursePageInfoLabel.color = Color.cyan;
@@ -419,17 +425,22 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowSpecimenDetails()
     {
+        ClearSpec();
         mode = ListMode.COURSE_SPECIMENS;
+        courseInfoContentText.SetActive(false);
         Tuple<string, List<SpecimenData>> courseSpecData = store.GetCourseData(courseId);
         //  selectionTitle.text = labData.Item1;
         _loadedSpecimens = courseSpecData.Item2;
         showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
         Debug.Log("specs are loaded here");
+        coursePageInfoLabel.color = Color.white;
+        coursePageLabLabel.color = Color.white;
+        coursePageSpecLabel.color = Color.cyan;
         Layout(mode, showNoContentText);
     }
     private void ShowLabSpecDetails()
     {
-        ClearLabSpec();
+        ClearSpec();
         mode = ListMode.LAB_SPECIMENS;
         labInfoContentText.SetActive(false);
         Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
@@ -541,7 +552,7 @@ public class CoursesPage : MonoBehaviour
         courseLabTitle.text = courseName;
         labInfoContentText.SetActive(true);
         labScrollRect.verticalNormalizedPosition = 1.5f;
-        ClearLabSpec();
+        ClearSpec();
         //  labDescription.text = labDes;
         labInfoContent.SetActive(true);
         ShowAllLabs();
@@ -694,6 +705,7 @@ public class CoursesPage : MonoBehaviour
                 string id = _loadedSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
+                btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
                 idToButton.Add(id, btn);
                 
             }
@@ -713,14 +725,15 @@ public class CoursesPage : MonoBehaviour
            for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
-                SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
+                SelectorButton btn = Instantiate(specimenPrefab, listTransformCourseSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
+                btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
                 idToButton.Add(id, btn);
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
             {
-                Button btn = Instantiate(seeAllButtonPrefab, listTransformSpec);
+                Button btn = Instantiate(seeAllButtonPrefab, listTransformCourseSpec);
                 btn.onClick.AddListener(ClearOrganAndLabData);
             }
  
@@ -738,7 +751,7 @@ public class CoursesPage : MonoBehaviour
                 
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
-                btn.button.onClick.AddListener(() => trayPage.SelectAnalysis());
+                btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
                 Debug.Log("btn is used");
             }
 

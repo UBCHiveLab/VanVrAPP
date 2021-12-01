@@ -18,7 +18,7 @@ public class MainCameraEvents : MonoBehaviour
 
     public void Start()
     {
-        maincamera.enabled = false;
+        maincamera.enabled = true;
         displayCamera.enabled = true;
         tray.ToggleShelfMenu();
         
@@ -53,5 +53,19 @@ public class MainCameraEvents : MonoBehaviour
         uiSkipButton.SetActive(false);
         OnArrivedAtTray();
         */
+    }
+
+    public void SwitchCamera()
+    {
+        if (displayCamera.enabled == true)
+        {
+            displayCamera.enabled = false; 
+        }
+        else if (displayCamera.enabled == false)
+        {
+            displayCamera.enabled = true;
+        }    
+        
+        Debug.Log("camera is switched");
     }
 }

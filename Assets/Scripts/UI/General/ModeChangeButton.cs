@@ -10,12 +10,17 @@ public class ModeChangeButton : MonoBehaviour
 {
     public ViewMode mode;
     private StateController controller;
+    public CoursesPage coursesPage;
+    public MainCameraEvents cameraEvents;
 
     // Start is called before the first frame update
     void Start()
     {
         if (controller == null) controller = FindObjectOfType<StateController>();
+        GetComponent<Button>().onClick.AddListener(() => {cameraEvents.SwitchCamera(); });
         GetComponent<Button>().onClick.AddListener(() => { controller.mode = mode; });
+        GetComponent<Button>().onClick.AddListener(() => {coursesPage.ShowHomeInfo(); });
+
     }
 
 }

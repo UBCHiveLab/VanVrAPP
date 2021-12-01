@@ -25,6 +25,7 @@ public class TrayPage : MonoBehaviour, IPage
     public Button shelfToggle;
     private bool showMenu;
     public SpecimenStore store;
+    public MainCameraEvents cameraEvents; 
 
     public FocusDistanceFinder focusDistanceFinder;
 
@@ -167,8 +168,7 @@ public class TrayPage : MonoBehaviour, IPage
         }
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
-
-        Debug.Log("analysis is on");
+        cameraEvents.SwitchCamera();
     }
 
     public void SelectCompare(string organ)

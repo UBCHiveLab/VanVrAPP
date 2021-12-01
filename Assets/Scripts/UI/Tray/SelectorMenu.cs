@@ -381,7 +381,7 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    private void SelectSpecimen(string specimenId)
+    public void SelectSpecimen(string specimenId)
     {
         SetSpecimenButtonToSelected(specimenId);
         trayPage.SpecimenSelected(store.specimens[specimenId]);
@@ -435,7 +435,7 @@ public class SelectorMenu : MonoBehaviour
         ClearSelectionData();
     }
 
-    private void SetSpecimenButtonToSelected(string specId)
+    public void SetSpecimenButtonToSelected(string specId)
     {
 
         if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
@@ -450,7 +450,7 @@ public class SelectorMenu : MonoBehaviour
         });
     }
 
-    private void SetSpecimenButtonToDeselected(string specId)
+    public void SetSpecimenButtonToDeselected(string specId)
     {
 
         if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
@@ -492,12 +492,14 @@ public class SelectorMenu : MonoBehaviour
             if (key == primaryId || key == compareId)
             {
                 SetSpecimenButtonToSelected(key);
+                Debug.Log("set specimen button to be selected");
             }
             else
             {
                 SetSpecimenButtonToDeselected(key);
             }
         }
+        Debug.Log("update is selected for the selector menu");
     }
 
     // Called by EventTrigger on object
