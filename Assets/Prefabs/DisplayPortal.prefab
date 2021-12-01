@@ -607,14 +607,13 @@ GameObject:
   - component: {fileID: 1049813793252408759}
   - component: {fileID: 3501252117929708486}
   - component: {fileID: 188375302993320881}
-  - component: {fileID: 4295191860950330548}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1049813793252408759
 RectTransform:
   m_ObjectHideFlags: 0
@@ -671,91 +670,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4295191860950330548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 479171336896492575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55bf23bfaf53fb444833ded4d05790db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  store: {fileID: 5516765375563682118}
-  trayPage: {fileID: 0}
-  stateController: {fileID: 0}
-  selectorPrefab: {fileID: 0}
-  lightSelectorPrefab: {fileID: 0}
-  coursePrefab: {fileID: 3217809839142437497, guid: 4cd229fa20e921049a6b0c7cfc8e3d54,
-    type: 3}
-  labPrefab: {fileID: 7525829651081192695, guid: a422ee2710597704e9ff31cf61a75478,
-    type: 3}
-  labTextPrefab: {fileID: 6129280002062815017, guid: 9ec268862a5b1f5498377e5658890204,
-    type: 3}
-  noSpecimensPrefab: {fileID: 0}
-  specimenPrefab: {fileID: 0}
-  seeAllButtonPrefab: {fileID: 0}
-  listTransformCourses: {fileID: 4959899491021901554}
-  listTransformSideCourses: {fileID: 2420973085794901074}
-  listTransformLabs: {fileID: 7754749281473726643}
-  listTransformLabText: {fileID: 0}
-  listTransformSpec: {fileID: 0}
-  backBttnTitle: {fileID: 0}
-  courseButton: {fileID: 7495984078811677576}
-  homeButton: {fileID: 2898493845108544707}
-  atlasBtn: {fileID: 5156735673782375370}
-  helpButton: {fileID: 8361568825021380558}
-  selectionTitle: {fileID: 4707554800518870813}
-  first: {fileID: 0}
-  firstLabel: {fileID: 0}
-  second: {fileID: 0}
-  secondLabel: {fileID: 0}
-  third: {fileID: 0}
-  thirdLabel: {fileID: 0}
-  fourth: {fileID: 0}
-  fourthLabel: {fileID: 0}
-  fifth: {fileID: 0}
-  fifthLabel: {fileID: 0}
-  noContentText: {fileID: 0}
-  labAtlasToggle: {fileID: 0}
-  atlasButton: {fileID: 0}
-  labButton: {fileID: 0}
-  atlasLabel: {fileID: 2906712351364953218}
-  courseLabel: {fileID: 7861578869427111010}
-  homeLabel: {fileID: 8475717964754292695}
-  helpLabel: {fileID: 8552544387176818287}
-  RecentCourse: {fileID: 5419450314245843870}
-  loadingIndicator: {fileID: 7500751111436103243, guid: 6470786e9dede384eabbc92141fab406,
-    type: 3}
-  courseInfoContent: {fileID: 0}
-  labInfoContent: {fileID: 0}
-  labShowBtn: {fileID: 0}
-  infoShowBtn: {fileID: 0}
-  specimenInfoShowBtn: {fileID: 0}
-  coursePageLabLabel: {fileID: 0}
-  coursePageInfoLabel: {fileID: 0}
-  coursePageSpecLabel: {fileID: 0}
-  labInfoShowBtn: {fileID: 0}
-  specLabShowBtn: {fileID: 0}
-  labPageSpecLabel: {fileID: 0}
-  labPageInfoLabel: {fileID: 0}
-  homeInfo: {fileID: 8904568768084743592}
-  welcomePanel: {fileID: 2216367240797207305}
-  expandedPanel: {fileID: 3155731977876564073}
-  defaultPanel: {fileID: 320036719914803096}
-  courseTitle: {fileID: 0}
-  labTitle: {fileID: 0}
-  labPanel: {fileID: 0}
-  courseLabTitle: {fileID: 0}
-  labPanelCourseBtn: {fileID: 0}
-  labRenderedImg: {fileID: 0}
-  labInfoContentText: {fileID: 0}
-  sidePanel: {fileID: 8100336301874042300}
-  expandPanelBtn: {fileID: 3841722384261607919}
-  expand: {fileID: 21300000, guid: 83239a6cf3263b440b3c4c7b5b3e46a0, type: 3}
-  collapse: {fileID: 21300000, guid: 5a67e7197fdef4244af040242e14bbab, type: 3}
 --- !u!1 &591324323645774536
 GameObject:
   m_ObjectHideFlags: 0
@@ -3662,6 +3576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6698935896314370729}
+  - component: {fileID: 8741877204671342669}
   m_Layer: 5
   m_Name: DisplayPortal
   m_TagString: Untagged
@@ -3686,7 +3601,6 @@ RectTransform:
   - {fileID: 1899553095703216749}
   - {fileID: 7353920003433337136}
   - {fileID: 4224427599674434905}
-  - {fileID: 7594940189941188846}
   - {fileID: 7605811232949121968}
   - {fileID: 411631301155326131}
   - {fileID: 2367540293108732566}
@@ -3702,6 +3616,100 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.000091552734}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8741877204671342669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2995942364174227574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55bf23bfaf53fb444833ded4d05790db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  store: {fileID: 5516765375563682118}
+  trayPage: {fileID: 0}
+  stateController: {fileID: 0}
+  selectorMenu: {fileID: 0}
+  selectorPrefab: {fileID: 0}
+  lightSelectorPrefab: {fileID: 0}
+  coursePrefab: {fileID: 3217809839142437497, guid: 4cd229fa20e921049a6b0c7cfc8e3d54,
+    type: 3}
+  labPrefab: {fileID: 7525829651081192695, guid: a422ee2710597704e9ff31cf61a75478,
+    type: 3}
+  labTextPrefab: {fileID: 6129280002062815017, guid: 9ec268862a5b1f5498377e5658890204,
+    type: 3}
+  noSpecimensPrefab: {fileID: 0}
+  specimenPrefab: {fileID: 0}
+  seeAllButtonPrefab: {fileID: 0}
+  listTransformCourses: {fileID: 4959899491021901554}
+  listTransformSideCourses: {fileID: 2420973085794901074}
+  listTransformLabs: {fileID: 7754749281473726643}
+  listTransformLabText: {fileID: 0}
+  listTransformSpec: {fileID: 0}
+  backBttnTitle: {fileID: 0}
+  courseButton: {fileID: 7495984078811677576}
+  homeButton: {fileID: 2898493845108544707}
+  atlasBtn: {fileID: 5156735673782375370}
+  helpButton: {fileID: 8361568825021380558}
+  selectionTitle: {fileID: 0}
+  first: {fileID: 0}
+  firstLabel: {fileID: 0}
+  second: {fileID: 0}
+  secondLabel: {fileID: 0}
+  third: {fileID: 0}
+  thirdLabel: {fileID: 0}
+  fourth: {fileID: 0}
+  fourthLabel: {fileID: 0}
+  fifth: {fileID: 0}
+  fifthLabel: {fileID: 0}
+  anim: {fileID: 0}
+  noContentText: {fileID: 0}
+  labAtlasToggle: {fileID: 0}
+  atlasButtonMain: {fileID: 0}
+  labButton: {fileID: 0}
+  atlasLabelMain: {fileID: 0}
+  labLabel: {fileID: 0}
+  titleOnShelf: {fileID: 0}
+  atlasLabel: {fileID: 2906712351364953218}
+  courseLabel: {fileID: 7861578869427111010}
+  homeLabel: {fileID: 8475717964754292695}
+  helpLabel: {fileID: 8552544387176818287}
+  RecentCourse: {fileID: 5419450314245843870}
+  loadingIndicator: {fileID: 7500751111436103243, guid: 6470786e9dede384eabbc92141fab406,
+    type: 3}
+  courseInfoContent: {fileID: 0}
+  labInfoContent: {fileID: 0}
+  labShowBtn: {fileID: 0}
+  labInfoContentMain: {fileID: 0}
+  labInfoShowBtnMain: {fileID: 0}
+  infoShowBtn: {fileID: 0}
+  specimenInfoShowBtn: {fileID: 0}
+  coursePageLabLabel: {fileID: 0}
+  coursePageInfoLabel: {fileID: 0}
+  coursePageSpecLabel: {fileID: 0}
+  labInfoShowBtn: {fileID: 0}
+  specLabShowBtn: {fileID: 0}
+  labPageSpecLabel: {fileID: 0}
+  labPageInfoLabel: {fileID: 0}
+  homeInfo: {fileID: 8904568768084743592}
+  welcomePanel: {fileID: 2216367240797207305}
+  expandedPanel: {fileID: 3155731977876564073}
+  defaultPanel: {fileID: 320036719914803096}
+  courseTitle: {fileID: 0}
+  labTitle: {fileID: 0}
+  labPanel: {fileID: 0}
+  courseLabTitle: {fileID: 0}
+  labPanelCourseBtn: {fileID: 0}
+  labRenderedImg: {fileID: 0}
+  labInfoContentText: {fileID: 0}
+  courseScrollRect: {fileID: 0}
+  labScrollRect: {fileID: 0}
+  sidePanel: {fileID: 8100336301874042300}
+  expandPanelBtn: {fileID: 3841722384261607919}
+  expand: {fileID: 21300000, guid: 83239a6cf3263b440b3c4c7b5b3e46a0, type: 3}
+  collapse: {fileID: 21300000, guid: 5a67e7197fdef4244af040242e14bbab, type: 3}
 --- !u!1 &3079980036154398321
 GameObject:
   m_ObjectHideFlags: 0
@@ -5846,7 +5854,7 @@ RectTransform:
   m_Children:
   - {fileID: 1208988231300052041}
   m_Father: {fileID: 6698935896314370729}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8282,162 +8290,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &7771651608690729935
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7594940189941188846}
-  - component: {fileID: 6985691563796425402}
-  - component: {fileID: 4707554800518870813}
-  m_Layer: 5
-  m_Name: TopTitle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &7594940189941188846
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771651608690729935}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 6698935896314370729}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -170.51576, y: 275.90018}
-  m_SizeDelta: {x: 901.31476, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &6985691563796425402
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771651608690729935}
-  m_CullTransparentMesh: 0
---- !u!114 &4707554800518870813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7771651608690729935}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: 
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4278321666
-  m_fontColor: {r: 0.009433985, g: 0.009300485, b: 0.009300485, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_outlineColor:
-    serializedVersion: 2
-    rgba: 4278190080
-  m_fontSize: 18
-  m_fontSizeBase: 18
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_textAlignment: 257
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
-  m_linkedTextComponent: {fileID: 0}
-  m_isLinkedTextComponent: 0
-  m_isTextTruncated: 0
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
-  m_ignoreCulling: 1
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_VertexBufferAutoSizeReduction: 1
-  m_firstVisibleCharacter: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_textInfo:
-    textComponent: {fileID: 4707554800518870813}
-    characterCount: 0
-    spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
-    linkCount: 0
-    lineCount: 0
-    pageCount: 0
-    materialCount: 1
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_spriteAnimator: {fileID: 0}
-  m_hasFontAssetChanged: 0
-  m_subTextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7819803341670598077
 GameObject:
   m_ObjectHideFlags: 0
@@ -8588,7 +8440,7 @@ RectTransform:
   - {fileID: 2420973085794901074}
   - {fileID: 7754749281473726643}
   m_Father: {fileID: 6698935896314370729}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8977,7 +8829,7 @@ Transform:
   m_LocalScale: {x: 1.4701378, y: 1.4701378, z: 1.4701378}
   m_Children: []
   m_Father: {fileID: 6698935896314370729}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8443059864626276230
 SpriteRenderer:
@@ -9379,7 +9231,7 @@ RectTransform:
   - {fileID: 4959899491021901554}
   - {fileID: 6363526137031560875}
   m_Father: {fileID: 6698935896314370729}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -9851,7 +9703,7 @@ PrefabInstance:
     - target: {fileID: 1754845236886620309, guid: c41aef9f03510c3478eea5649c1da280,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1754845236886620309, guid: c41aef9f03510c3478eea5649c1da280,
         type: 3}
@@ -10521,7 +10373,7 @@ PrefabInstance:
     - target: {fileID: 1754845236886620309, guid: 329669700b8c2e04ea72445758da0674,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1754845236886620309, guid: 329669700b8c2e04ea72445758da0674,
         type: 3}
@@ -10961,7 +10813,7 @@ PrefabInstance:
     - target: {fileID: 4153650191425948683, guid: efcc59ceadefdf94a9592792228e52e3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4153650191425948683, guid: efcc59ceadefdf94a9592792228e52e3,
         type: 3}

@@ -28,6 +28,7 @@ public class CoursesPage : MonoBehaviour
     [Header("Services")] public SpecimenStore store;
     public TrayPage trayPage;
     public StateController stateController;
+    public SelectorMenu selectorMenu;
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -119,7 +120,7 @@ public class CoursesPage : MonoBehaviour
 
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
-    private SelectorMenu selectorMenu;
+   
     private const string COURSES = "COURSES";
     private const string LABS = "LABS";
     private const string LOADING_SPECIMENS = "LOADING SPECIMENS...";
@@ -159,23 +160,35 @@ public class CoursesPage : MonoBehaviour
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
+        
+       UpdateUI();
+        // noContentText.gameObject.SetActive(false);
+        homeLabel.color = Color.blue; 
+        courseButton.onClick.AddListener(ShowCoursesPage);
+        courseButton.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
+
+        homeButton.onClick.AddListener(ShowHomeInfo);
+        homeButton.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
+
+        helpButton.onClick.AddListener(ShowHelpInfo);
+        atlasBtn.onClick.AddListener(ShowAtlasInfo);
+        atlasBtn.onClick.AddListener(() => {selectorMenu.ToggleToAtlas(); });
+        expandPanelBtn.onClick.AddListener(closeSidePanel);
+       
+    }
+
+    private void UpdateUI()
+    {
         firstLabel.text = "Home";
         secondLabel.text = "";
         thirdLabel.text = "";
         fourthLabel.text = "";
         fifthLabel.text = "";
         
-        
-       
-        // noContentText.gameObject.SetActive(false);
-        homeLabel.color = Color.blue; 
-        courseButton.onClick.AddListener(ShowCoursesPage);
-       // courseButton.onClick.AddListener(ToggleToLabs);
-        homeButton.onClick.AddListener(ShowHomeInfo);
-        helpButton.onClick.AddListener(ShowHelpInfo);
-        atlasBtn.onClick.AddListener(ShowAtlasInfo);
-        expandPanelBtn.onClick.AddListener(closeSidePanel);
-       
+        first.onClick.AddListener(ShowHomeInfo);
+        first.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
+        second.onClick.AddListener(ShowCoursesPage); //EDIT: this is a bug since it works only for courses
+        second.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
     }
 
     
@@ -320,18 +333,7 @@ public class CoursesPage : MonoBehaviour
         }
     }
 
-    private void BreadCrumbButton()
-    {
-        if (secondLabel.text == "> Help")
-        {
-            second.onClick.AddListener(ShowHelpInfo);
-        }
-        else if (secondLabel.text == "> Courses")
-        {
-            second.onClick.AddListener(ShowCoursesPage);
-        }
-        
-    }
+    
 
     public void CourseSelected(string courseId)
     {
@@ -341,6 +343,7 @@ public class CoursesPage : MonoBehaviour
         RenderCourseInfo(courseId);
         infoShowBtn.onClick.AddListener(() => RenderCourseInfo(courseId));
         third.onClick.AddListener(() => RenderCourseInfo(courseId));
+      //  third.onClick.AddListener(() => {selectorMenu.RenderCourseInfo(courseId); });
     }
 
     private void RenderCourseInfo(string title)
@@ -463,9 +466,10 @@ public class CoursesPage : MonoBehaviour
     {
         this.labId = labId;
         Populate();
-       // var newLabName = "This Lab is about " + labName;
+       var newLabName = "This Lab is about " + labName;
         RenderLabInfo(labName, labId, labImg);
         fourth.onClick.AddListener(() => RenderLabInfo(labName, labId, labImg));
+        fourth.onClick.AddListener(() => {selectorMenu.RenderLabInfo(labName, newLabName, labImg); });
    
     }
     // Scans all active selector buttons and sets them to active if they are a selected specimen
@@ -545,6 +549,10 @@ public class CoursesPage : MonoBehaviour
         fifthLabel.text = "";
         //  selectionTitle.text = $"Home > Courses > {courseName} > {labName}";
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
+        labPanelCourseBtn.onClick.AddListener(() => selectorMenu.CourseSelected(courseName));
+        labPanelCourseBtn.onClick.AddListener(() => selectorMenu.ClearOrganAndLabData());
+        labPanelCourseBtn.onClick.AddListener(()=> {selectorMenu.labInfoContent.SetActive(false); });
+
         specLabShowBtn.onClick.AddListener(ShowLabSpecDetails);
         labInfoShowBtn.onClick.AddListener(() => RenderLabInfo(title, labId, urlImg));
         labPageInfoLabel.color = Color.blue;
@@ -652,7 +660,7 @@ public class CoursesPage : MonoBehaviour
             foreach (var course in _loadedCourses.Take(3)) 
             {
                 CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
-                courseOption.Populate(course, this);
+                courseOption.Populate(course, this, selectorMenu);
                
             };
 
@@ -665,7 +673,7 @@ public class CoursesPage : MonoBehaviour
         {
         _loadedLabs.ForEach((lab) => {
                 LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
-                labOption.Populate(lab, this);
+                labOption.Populate(lab, this, selectorMenu);
             });
             
 
@@ -687,6 +695,7 @@ public class CoursesPage : MonoBehaviour
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
+                
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
@@ -726,9 +735,11 @@ public class CoursesPage : MonoBehaviour
             {
                 string id = _loadedSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
-                Debug.Log("btn used");
+                
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
+                btn.button.onClick.AddListener(() => trayPage.SelectAnalysis());
+                Debug.Log("btn is used");
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
@@ -839,7 +850,7 @@ public class CoursesPage : MonoBehaviour
         foreach (var course in _loadedCourses.Take(num))
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
-            courseOption.Populate(course, this);
+            courseOption.Populate(course, this, selectorMenu);
            
         };
         
@@ -912,7 +923,7 @@ public class CoursesPage : MonoBehaviour
         Clear();
         _loadedLabs.ForEach((lab) => {
             LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
-            labOption.Populate(lab, this);
+            labOption.Populate(lab, this, selectorMenu);
         });
     }
 
@@ -922,7 +933,7 @@ public class CoursesPage : MonoBehaviour
         foreach (var course in _loadedCourses)
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransform);
-            courseOption.Populate(course, this);
+            courseOption.Populate(course, this, selectorMenu);
           
         };
     }
@@ -933,43 +944,10 @@ public class CoursesPage : MonoBehaviour
         _loadedLabs.ForEach((lab) =>
         {
             LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
-            labOption.Populate(lab, this);
+            labOption.Populate(lab, this, selectorMenu);
         });
     }
-
-    // Called by EventTrigger on object
-    public void HoverShelfToggle()
-    {
-        anim.SetBool("PeekMenu", true);
-    }
-
-    private void ToggleToAtlas()
-    {
-        labButton.interactable = true;
-        atlasButtonMain.interactable = false;
-        atlasLabelMain.color = Color.blue;
-        labLabel.color = Color.white;
-        titleOnShelf.gameObject.SetActive(false);
-        titleOnShelf.text = "ANATOMICAL CATEGORIES";
-        titleOnShelf.gameObject.SetActive(true);
-        byLab = false;
-        labInfoContentMain.SetActive(false);
-        labInfoShowBtnMain.SetActive(false);
-        ClearSelectionData();
-    }
-
-    public void ToggleToLabs()
-    {
-        labButton.interactable = false;
-        atlasButtonMain.interactable = true;
-        labLabel.color = Color.blue;
-        atlasLabelMain.color = Color.white;
-        titleOnShelf.gameObject.SetActive(false);
-        titleOnShelf.text = "LAB COURSES";
-        titleOnShelf.gameObject.SetActive(true);
-        byLab = true;
-        ClearSelectionData();
-    }
+   
 
 
     

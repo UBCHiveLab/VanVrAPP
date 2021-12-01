@@ -16,15 +16,17 @@ public class LabDisplayOptions : MonoBehaviour
     public TextMeshProUGUI nameFrame;
 
     private CoursesPage _coursesPage;
+    private SelectorMenu _selectorMenu;
 
-    public void Populate(LabData data, CoursesPage courses)
+    public void Populate(LabData data, CoursesPage courses, SelectorMenu selectorMenu)
     {
       //  StartCoroutine(DownloadImage(data.imgUrl));
         idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _coursesPage = courses;
+        _selectorMenu = selectorMenu; 
         button.onClick.AddListener(() => { _coursesPage.LabSelected(data.labId, data.labName, data.imgUrl); });
-       
+        button.onClick.AddListener(() => { _selectorMenu.LabSelected(data.labId, data.labName, data.imgUrl); });
     }
 
 

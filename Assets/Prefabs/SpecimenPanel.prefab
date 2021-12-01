@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4646734479905634254}
   - component: {fileID: 3483446759422864235}
   - component: {fileID: 403473183183163394}
-  - component: {fileID: 5590382080091788574}
   - component: {fileID: 6085048203892100288}
   - component: {fileID: 8205045464789754876}
+  - component: {fileID: 1927175960914721890}
   m_Layer: 5
   m_Name: SpecimenPanel
   m_TagString: Untagged
@@ -79,25 +79,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5590382080091788574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 44225578108719511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c411209bfd8fe1479567b3985d608b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 3607098084785782003}
-  button: {fileID: 6085048203892100288}
-  indexValue: 0
-  icon: {fileID: 0}
-  children: {fileID: 0}
-  background: {fileID: 3713257797930313130}
-  loadingController: {fileID: 0}
 --- !u!114 &6085048203892100288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +141,27 @@ MonoBehaviour:
   children: {fileID: 0}
   background: {fileID: 3713257797930313130}
   loadingController: {fileID: 0}
+--- !u!114 &1927175960914721890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44225578108719511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afdcb3856f8eaa54c8fcd2d02f8e08f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionTime: 0.25
+  baseColor: {r: 0, g: 0, b: 0, a: 0}
+  hoverColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  disabled: 0
+  icon: {fileID: 0}
+  icon2: {fileID: 0}
+  label: {fileID: 0}
+  hoverBoldText: 0
 --- !u!1 &152628366718162010
 GameObject:
   m_ObjectHideFlags: 0

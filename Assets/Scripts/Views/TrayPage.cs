@@ -167,6 +167,8 @@ public class TrayPage : MonoBehaviour, IPage
         }
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
+
+        Debug.Log("analysis is on");
     }
 
     public void SelectCompare(string organ)
