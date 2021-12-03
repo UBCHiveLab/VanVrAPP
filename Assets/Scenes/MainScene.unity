@@ -76345,7 +76345,7 @@ PrefabInstance:
     - target: {fileID: 1832235365132202743, guid: 1253604cc53694c93846e5e20172c42c,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.34822768
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1871300972266930606, guid: 1253604cc53694c93846e5e20172c42c,
         type: 3}
@@ -83040,6 +83040,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ShelfButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8127390921471392070, guid: d6e8b56c1a008bd45bde6d84c8f967d6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8127390921471392071, guid: d6e8b56c1a008bd45bde6d84c8f967d6,
         type: 3}
@@ -108051,6 +108056,7 @@ MonoBehaviour:
   mode: 1
   coursesPage: {fileID: 1565333804}
   cameraEvents: {fileID: 1267055}
+  trayPage: {fileID: 1358552588}
 --- !u!114 &1966455997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120102,7 +120108,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8559560396392888660}
   m_HandleRect: {fileID: 5272612773572921329}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

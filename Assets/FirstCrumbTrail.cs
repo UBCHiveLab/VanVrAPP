@@ -18,6 +18,6 @@ public class FirstCrumbTrail : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        button.onClick.AddListener(() => _coursesPage.ShowHomeInfo());
+//        button.onClick.AddListener(() => _coursesPage.ShowHomeInfo());
     }
 }

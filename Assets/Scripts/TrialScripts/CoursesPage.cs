@@ -142,6 +142,7 @@ public class CoursesPage : MonoBehaviour
     private List<RegionData> _loadedRegions;
     private List<string> _loadedOrgans;
     private List<SpecimenData> _loadedSpecimens;
+    private List<SpecimenData> _loadedCourseSpecimens;
     private bool _loading = true;
     private List<LabData> _loadedLabs;
     private List<CourseData> _loadedCourses;
@@ -161,7 +162,7 @@ public class CoursesPage : MonoBehaviour
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
         
-       UpdateUI();
+        UpdateUI();
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
         courseButton.onClick.AddListener(ShowCoursesPage);
@@ -187,11 +188,7 @@ public class CoursesPage : MonoBehaviour
         
         first.onClick.AddListener(ShowHomeInfo);
         first.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
-        if (secondLabel.text == "> Courses")
-        {
-            second.onClick.AddListener(ShowCoursesPage);
-        }
-        Debug.Log(secondLabel.text == ">Courses");
+        
         //EDIT: this is a bug since it works only for courses
         second.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
     }
@@ -351,6 +348,10 @@ public class CoursesPage : MonoBehaviour
        // var newCourseName = "This Lab is about " + courseId;
         RenderCourseInfo(courseId);
         infoShowBtn.onClick.AddListener(() => RenderCourseInfo(courseId));
+        if (secondLabel.text == "> Courses")
+        {
+            second.onClick.AddListener(ShowCoursesPage);
+        }
         third.onClick.AddListener(() => RenderCourseInfo(courseId));
       //  third.onClick.AddListener(() => {selectorMenu.RenderCourseInfo(courseId); });
     }
@@ -435,8 +436,8 @@ public class CoursesPage : MonoBehaviour
         courseInfoContentText.SetActive(false);
         Tuple<string, List<SpecimenData>> courseSpecData = store.GetCourseData(courseId);
         //  selectionTitle.text = labData.Item1;
-        _loadedSpecimens = courseSpecData.Item2;
-        showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
+        _loadedCourseSpecimens = courseSpecData.Item2;
+        showNoContentText = _loadedCourseSpecimens == null || _loadedCourseSpecimens.Count < 1;
         Debug.Log("specs are loaded here");
         coursePageInfoLabel.color = Color.white;
         coursePageLabLabel.color = Color.white;
@@ -487,63 +488,6 @@ public class CoursesPage : MonoBehaviour
         fourth.onClick.AddListener(() => RenderLabInfo(labName, labId, labImg));
         fourth.onClick.AddListener(() => {selectorMenu.RenderLabInfo(labName, newLabName, labImg); });
    
-    }
-    // Scans all active selector buttons and sets them to active if they are a selected specimen
-    public void UpdateSelected()
-    {
-        if (currentMode != ListMode.SPECIMEN && currentMode != ListMode.LAB_SPECIMENS) return;
-        string primaryId = null;
-        string compareId = null;
-
-        if (stateController.currentSpecimenId != null) {
-            primaryId = stateController.currentSpecimenId;
-        }
-        if (stateController.CompareSpecimenData != null) {
-            compareId = stateController.CompareSpecimenData.id;
-        }
-
-        foreach (string key in idToButton.Keys)
-        {
-            if (key == primaryId || key == compareId)
-            {
-                SetSpecimenButtonToSelected(key);
-            }
-            else
-            {
-                SetSpecimenButtonToDeselected(key);
-            }
-        }
-    }
-
-    private void SetSpecimenButtonToSelected(string specId)
-    {
-
-        if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
-        SelectorButton btn = idToButton[specId];
-        btn.ShowBackground(true);
-        btn.icon.gameObject.SetActive(true);
-        btn.button.onClick.RemoveAllListeners();
-        btn.button.onClick.AddListener(() =>
-        {
-            trayPage.RemoveEitherActiveSpecimen(specId);
-        //    UpdateSelected();
-        });
-    }
-
-    private void SetSpecimenButtonToDeselected(string specId)
-    {
-
-        if (!idToButton.ContainsKey(specId)) return; //Current specimen not on screen
-        SelectorButton btn = idToButton[specId];
-        btn.ShowBackground(false);
-        btn.icon.gameObject.SetActive(false);
-        btn.button.onClick.RemoveAllListeners();
-        btn.button.onClick.AddListener(() => {
-            SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
-          //  OnCloseLabInfo();
-            btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
-       //     UpdateSelected();
-        });
     }
 
     private void RenderLabInfo(String title, int labId, String urlImg)
@@ -702,15 +646,15 @@ public class CoursesPage : MonoBehaviour
         {
             // Forgive me for the spaghetti below
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
-
-         //   backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
          
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
+                btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+               
                 idToButton.Add(id, btn);
                 
             }
@@ -727,11 +671,12 @@ public class CoursesPage : MonoBehaviour
         }
         else if (mode == ListMode.COURSE_SPECIMENS)
         {
-           for (int i = 0; i < _loadedSpecimens.Count; i++)
+           for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
             {
-                string id = _loadedSpecimens[i].id;
+                string id = _loadedCourseSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformCourseSpec);
-                btn.Populate(_loadedSpecimens[i].name, i, null);
+                btn.Populate(_loadedCourseSpecimens[i].name, i, null);
+                btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
                 idToButton.Add(id, btn);
             }
@@ -753,11 +698,11 @@ public class CoursesPage : MonoBehaviour
             {
                 string id = _loadedSpecimens[i].id;
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
-                
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
+                btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
-                Debug.Log("btn is used");
+                
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
@@ -785,6 +730,8 @@ public class CoursesPage : MonoBehaviour
             {
                 SelectorButton btn = Instantiate(selectorPrefab, listTransformCourses);
                 btn.Populate(_loadedRegions[i].name, i, _loadedRegions[i].icon);
+                
+                
                 idToButton.Add(_loadedRegions[i].name, btn);
 
                 // If a region is the currently selected, output the organs found as buttons below.
@@ -804,10 +751,9 @@ public class CoursesPage : MonoBehaviour
                         {
                             SelectorButton sbtn = Instantiate(lightSelectorPrefab, btn.children);
                             sbtn.Populate(_loadedOrgans[j], j, null);
-
-
                             // Bind a click listener that loads the specimen selection view
-                            sbtn.button.onClick.AddListener(() => { SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
+                            sbtn.button.onClick.AddListener(() => { selectorMenu.SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
+               //             sbtn.button.onClick.AddListener(() => { selectorMenu.SelectSpecimen(_loadedOrgans[j].name); });
                             idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);
                         }
                     }
@@ -822,9 +768,6 @@ public class CoursesPage : MonoBehaviour
                     btn.button.onClick.AddListener(() => { SelectRegion(_loadedRegions[btn.indexValue]); });
                 }
             }
-
-            // Bind a click listener that toggles the shelf menu
-          //  backButton.onClick.AddListener(trayPage.ToggleShelfMenu);
         }
         
     }
@@ -850,6 +793,10 @@ public class CoursesPage : MonoBehaviour
         page = CurrPage.COURSE;
         showSpec = false;
         showLabSpec = false;
+        if (secondLabel.text == "> Courses")
+        {
+            second.onClick.AddListener(ShowCoursesPage);
+        }
     }
 
     public void ShowHomeInfo()
@@ -913,7 +860,10 @@ public class CoursesPage : MonoBehaviour
         page = CurrPage.HELP;
         showSpec = false;
         showLabSpec = false;
-
+        if (secondLabel.text == "> Help")
+        {
+            second.onClick.AddListener(ShowHelpInfo);
+        }
     }
 
     public void ShowAtlasInfo()
@@ -933,7 +883,12 @@ public class CoursesPage : MonoBehaviour
         homeLabel.color = Color.black;
         atlasLabel.color = Color.blue;
         helpLabel.color = Color.black;
-        courseLabel.color = Color.black;
+        courseLabel.color = Color.black; 
+
+        if (secondLabel.text == "> 3D Atlas")
+        {
+            second.onClick.AddListener(ShowAtlasInfo );
+        } 
     }
 
     private void ShowAllLabs()

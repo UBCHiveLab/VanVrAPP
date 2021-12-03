@@ -40,6 +40,7 @@ public class TrayPage : MonoBehaviour, IPage
     void Start()
     {
         compareDifferentButton.onClick.AddListener(() => SelectCompare(null));
+        analyzeButton.gameObject.SetActive(false);
         analyzeButton.onClick.AddListener(SelectAnalysis);
         
         shelfToggle.onClick.AddListener(ToggleShelfMenu); 
@@ -107,12 +108,13 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void Deactivate() {
         uiObject.SetActive(false);
-        shelfToggle.gameObject.SetActive(true);
+        shelfToggle.gameObject.SetActive(false);
         showMenu = false;
     }
 
     public void SpecimenSelected(SpecimenData data)
     {
+        SetAnalyzeOn();
         analyzeButton.interactable = false;
 
         if (selectingCompareSpecimen)
@@ -329,6 +331,15 @@ public class TrayPage : MonoBehaviour, IPage
         //compareDifferentButton.interactable = true;
         removeCompareIndicator.UpdateState(false);
         startHover.Enable();
+    }
+
+    public void SetAnalyzeOn()
+    {
+        analyzeButton.gameObject.SetActive(true);
+    }
+    public void SetAnalyzeOff()
+    {
+        analyzeButton.gameObject.SetActive(false);
     }
 
 }

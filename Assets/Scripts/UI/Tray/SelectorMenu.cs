@@ -137,7 +137,7 @@ public class SelectorMenu : MonoBehaviour
             else
             {
                 mode = ListMode.LAB;
-                //backBttnTitle.text = COURSES;
+             //   backBttnTitle.text = COURSES;
                 selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
                 showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
@@ -153,14 +153,14 @@ public class SelectorMenu : MonoBehaviour
         else if (string.IsNullOrEmpty(organ))
         {
             mode = ListMode.REGION_EXPANDED;
-            //backBttnTitle.text = SHELF;
+           // backBttnTitle.text = SHELF;
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             _loadedOrgans = store.GetOrgansByRegion(region.name);
         }
         else
         {
             mode = ListMode.SPECIMEN;
-            //backBttnTitle.text = SPECIMEN_LIST;
+          //  backBttnTitle.text = SPECIMEN_LIST;
             selectionTitle.text = organ;
             _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
@@ -375,7 +375,7 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    private void SelectOrgan(string organ)
+    public void SelectOrgan(string organ)
     {
         this.organ = organ;
         Populate();
@@ -499,7 +499,6 @@ public class SelectorMenu : MonoBehaviour
                 SetSpecimenButtonToDeselected(key);
             }
         }
-        Debug.Log("update is selected for the selector menu");
     }
 
     // Called by EventTrigger on object

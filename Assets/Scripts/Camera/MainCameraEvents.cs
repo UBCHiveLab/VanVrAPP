@@ -20,7 +20,7 @@ public class MainCameraEvents : MonoBehaviour
     {
         maincamera.enabled = true;
         displayCamera.enabled = true;
-       // tray.ToggleShelfMenu();
+      //  tray.ToggleShelfMenu();
         
         cameraAnimation.GetComponent<Animator>().enabled = false;
       //  maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
