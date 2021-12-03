@@ -63,7 +63,8 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI fifthLabel;
     public Animator anim; 
      
-    public TextMeshPro noContentText;
+    public TextMeshProUGUI noContentText;
+
     public GameObject labAtlasToggle;
     public Button atlasButtonMain;
     public Button labButton;
@@ -631,6 +632,11 @@ public class CoursesPage : MonoBehaviour
         
         if (mode == ListMode.LAB)
         {
+            if (_loadedLabs.Count() == 0)
+            {
+                Debug.Log("no labs in this course");
+                noContentText.text = "No labs for this course";
+            }
         _loadedLabs.ForEach((lab) => {
                 LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
                 labOption.Populate(lab, this, selectorMenu);
@@ -646,7 +652,10 @@ public class CoursesPage : MonoBehaviour
         {
             // Forgive me for the spaghetti below
             // Loops through all loaded specimens of organ type and produces a clickable button for each.
-         
+            if (_loadedSpecimens.Count == 0)
+            {
+                Debug.Log("No Specimens found here");
+            }         
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
@@ -671,6 +680,11 @@ public class CoursesPage : MonoBehaviour
         }
         else if (mode == ListMode.COURSE_SPECIMENS)
         {
+
+            if (_loadedCourseSpecimens.Count == 0)
+            {
+                Debug.Log("No Specimens found here");
+            } 
            for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
             {
                 string id = _loadedCourseSpecimens[i].id;
@@ -691,6 +705,10 @@ public class CoursesPage : MonoBehaviour
 
         else if (mode == ListMode.LAB_SPECIMENS)
         {
+            if (_loadedSpecimens.Count == 0)
+            {
+                Debug.Log("No Specimens found here");
+            } 
             // Same as specimen mode, also provide additional content info rendering
          //   backButton.transform.GetChild(0).GetComponent<Image>().sprite = shelfBack;
 
@@ -752,7 +770,7 @@ public class CoursesPage : MonoBehaviour
                             SelectorButton sbtn = Instantiate(lightSelectorPrefab, btn.children);
                             sbtn.Populate(_loadedOrgans[j], j, null);
                             // Bind a click listener that loads the specimen selection view
-                            sbtn.button.onClick.AddListener(() => { selectorMenu.SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
+                            sbtn.button.onClick.AddListener(() => {SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
                //             sbtn.button.onClick.AddListener(() => { selectorMenu.SelectSpecimen(_loadedOrgans[j].name); });
                             idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);
                         }
@@ -894,6 +912,11 @@ public class CoursesPage : MonoBehaviour
     private void ShowAllLabs()
     {
         Clear();
+        if (_loadedLabs.Count() == 0)
+        {
+            Debug.Log("no labs in this course");
+            noContentText.text = "No labs for this course";
+        }
         _loadedLabs.ForEach((lab) => {
             LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
             labOption.Populate(lab, this, selectorMenu);
@@ -914,6 +937,7 @@ public class CoursesPage : MonoBehaviour
     private void ShowAllLabsText()
     {
         ClearLabText();
+        
         _loadedLabs.ForEach((lab) =>
         {
             LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
