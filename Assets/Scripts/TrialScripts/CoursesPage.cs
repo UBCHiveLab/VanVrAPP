@@ -322,10 +322,7 @@ public class CoursesPage : MonoBehaviour
         foreach (Transform child in listTransformLabs)
         {
             Destroy(child.gameObject);
-        }
-
-        
-    
+        } 
     }
 
     private void ClearLabText()
@@ -347,13 +344,14 @@ public class CoursesPage : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        if (labSpecName != null)
-        {
-            foreach (Transform child in listTransformLabName)
-            {
-                Destroy(child.gameObject);
-            }
-        }
+    //    if (labNamePrefab != null)
+    //    {
+    //        foreach (Transform child in listTransformLabName)
+    //         {
+    //             Destroy(child.gameObject);
+    //         }
+    //    }
+        
         
     }
 
@@ -384,14 +382,14 @@ public class CoursesPage : MonoBehaviour
         labInfoContent.SetActive(false);
         homeInfo.SetActive(false);
         labInfoContent.SetActive(false);
+        labNamePrefab.gameObject.SetActive(false);
         courseScrollRect.verticalNormalizedPosition = 1.5f;
         
         sidePanel.SetActive(true);
         defaultPanel.SetActive(true);
         expandedPanel.SetActive(false);
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
-
-        
+     
         courseTitle.text = title;
         courseName = title;
         coursePageInfoLabel.color = Color.cyan;
@@ -467,14 +465,15 @@ public class CoursesPage : MonoBehaviour
         Clear();
         mode = ListMode.COURSE_SPECIMENS;
         courseInfoContentText.SetActive(false);
+        courseScrollRect.verticalNormalizedPosition = 1.5f;
         
         List<Tuple<int, List<SpecimenData>>> courseSpecData = store.GetSpecimenData(courseId);
         foreach (Tuple<int, List<SpecimenData>> tuple in courseSpecData)
         {
+            labNamePrefab.gameObject.SetActive(true);
             labNamePrefab.text = $"Lab {tuple.Item1.ToString()}";
-            Instantiate(labNamePrefab, listTransformLabName);
+          //  Instantiate(labNamePrefab, listTransformLabName);
             Debug.Log(labNamePrefab.text);
-         //   labSpecName.text = tuple.Item1;
             _loadedCourseSpecimens = tuple.Item2;
             Layout(mode, showNoContentText);
             Debug.Log("load course specimens and show here in the foreach loop");
@@ -1006,7 +1005,6 @@ public class CoursesPage : MonoBehaviour
         ClearLabText();
         if (_loadedLabs.Count() == 0)
         {
-            Debug.Log("no labs in this course");
             noContentText.gameObject.SetActive(true);
             noContentText.text = "No labs for this course";
         }
@@ -1014,9 +1012,9 @@ public class CoursesPage : MonoBehaviour
         {
             _loadedLabs.ForEach((lab) =>
             {
-            LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
-            labOption.Populate(lab, this, selectorMenu);
-            noContentText.gameObject.SetActive(false);
+                LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
+                labOption.Populate(lab, this, selectorMenu);
+                noContentText.gameObject.SetActive(false);
             });
         }
         
