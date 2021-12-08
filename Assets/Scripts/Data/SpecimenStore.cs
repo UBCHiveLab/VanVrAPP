@@ -32,7 +32,7 @@ public class SpecimenStore : MonoBehaviour
     public Dictionary<string, CourseData> labCourses;
     public Dictionary<string, Dictionary<string, List<SpecimenData>>> specimensByRegionByOrgan;
     public Dictionary<string, RegionData> organToRegion;
-    public Dictionary<string, List<List<SpecimenData>>> courseSpecimens;
+    public Dictionary<string, List<Tuple<string, List<SpecimenData>>>> courseSpecimens;
 
     [Header("External Structure")] public ErrorPanel errorPanel;
     [Header("Region Icons")] public RegionIconEntry[] icons;
@@ -142,13 +142,79 @@ public class SpecimenStore : MonoBehaviour
 
         return new Tuple<string, List<SpecimenData>>(labs[labIndex].labName, specimenData);
     }
+
+    public Tuple<int, List<SpecimenData>> GetLabIdData(string courseId, int labId)
+    {
+        // find the course name and specimen data for the given lab for the specified course
+        List<SpecimenData> specimenData = new List<SpecimenData>();
+        List<LabData> labs = GetLabDataForCourse(courseId);
+        int labIndex = labs.FindIndex((lab) => lab.labId == labId);
+        if (labIndex < 0)
+        {
+            Debug.LogWarning($"No lab found with id {labId}");
+            return null;
+        }
+
+        foreach (string specimenId in labs[labIndex].specimenList)
+        {
+            if (!specimens.ContainsKey(specimenId))
+            {
+                Debug.LogWarning($"No specimen found with id {specimenId} for lab {labId}");
+                continue;
+            }
+
+            specimenData.Add(specimens[specimenId]);
+        }
+
+        return new Tuple<int, List<SpecimenData>>(labs[labIndex].labId, specimenData);
+    }
+
+    // public List<int> GetLabId(string courseId)
+    // {
+    //     List<CourseData> courses = labCourses.Values.ToList();
+    //     List<int> labName = new List<int>();
+    //     List<LabData> labs = GetLabDataForCourse(courseId);
+    //     int courseIndex = courses.FindIndex((course) => course.courseId == courseId);
+
+    //     foreach (LabData lab in courses[courseIndex].labs)
+    //     {
+    //       labName.Add(lab.labId);
+    //     }
+    //     return new List<int>(labName);
+    // }
+
+    public List<Tuple<int, List<SpecimenData>>> GetSpecimenData(string courseId)
+    {
+        List<CourseData> courses = labCourses.Values.ToList();
+        List<LabData> labs = GetLabDataForCourse(courseId);
+      //  List<SpecimenData> specimenData = new List<SpecimenData>();
+        List<Tuple<int, List<SpecimenData>>> courseSpecData = new List<Tuple<int, List<SpecimenData>>>();
+
+        int courseIndex = courses.FindIndex((course) => course.courseId == courseId);
+        
+        if (courseIndex < 0)
+        {
+            Debug.LogWarning($"No course found with id {courseId}");
+            return null;
+        }
+
+        foreach(LabData lab in courses[courseIndex].labs)
+        {
+            courseSpecData.Add(GetLabIdData(courseId, lab.labId));
+            
+           // specimenData.Add(courseSpecData.Item2);
+        }
     
-    public Tuple<string, List<SpecimenData>> GetCourseData(string courseId)
+        return new List<Tuple<int, List<SpecimenData>>> (courseSpecData);
+    }
+    
+    public Tuple<string, List<int>, List<SpecimenData>> GetCourseData(string courseId)
     {
         // find the lab name and specimen data for the given lab for the specified course
         List<CourseData> courses = labCourses.Values.ToList();
         List<SpecimenData> specimenData = new List<SpecimenData>();
         List<LabData> labs = GetLabDataForCourse(courseId);
+        List<int> labName = new List<int>();
         
         int courseIndex = courses.FindIndex((course) => course.courseId == courseId);
       //  List<LabData> corresLabData = courses[courseIndex].labs;
@@ -161,6 +227,9 @@ public class SpecimenStore : MonoBehaviour
         
         foreach (LabData lab in courses[courseIndex].labs)
         {
+            labName.Add(lab.labId);
+            GetLabData(courseId, lab.labId);
+           
             foreach (string specimenId in lab.specimenList)
             {
                 if (!specimens.ContainsKey(specimenId))
@@ -175,7 +244,7 @@ public class SpecimenStore : MonoBehaviour
             }
         }
         
-        return new Tuple<string, List<SpecimenData>>(courseId, specimenData);
+        return new Tuple<string, List<int>, List<SpecimenData>>(courseId, labName, specimenData);
     }
     
     

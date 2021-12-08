@@ -482,9 +482,11 @@ public class SelectorMenu : MonoBehaviour
 
         if (stateController.currentSpecimenId != null) {
             primaryId = stateController.currentSpecimenId;
+            Debug.Log("primaryId");
         }
         if (stateController.CompareSpecimenData != null) {
             compareId = stateController.CompareSpecimenData.id;
+            Debug.Log("state controller");
         }
 
         foreach (string key in idToButton.Keys)
@@ -492,11 +494,12 @@ public class SelectorMenu : MonoBehaviour
             if (key == primaryId || key == compareId)
             {
                 SetSpecimenButtonToSelected(key);
-                Debug.Log("set specimen button to be selected");
+                Debug.Log("3d atlas came to select");
             }
             else
             {
                 SetSpecimenButtonToDeselected(key);
+                Debug.Log("3d atlas btn came to here");
             }
         }
     }
