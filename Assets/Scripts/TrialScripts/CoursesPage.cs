@@ -96,6 +96,7 @@ public class CoursesPage : MonoBehaviour
     public GameObject welcomePanel;
     public GameObject expandedPanel;
     public GameObject defaultPanel;
+    public ScrollRect homeScrollRect;
 
     [Header("CourseContentRender")]
     public TextMeshProUGUI courseTitle;
@@ -355,6 +356,8 @@ public class CoursesPage : MonoBehaviour
         }
         third.onClick.AddListener(() => RenderCourseInfo(courseId));
       //  third.onClick.AddListener(() => {selectorMenu.RenderCourseInfo(courseId); });
+
+        
     }
 
     private void RenderCourseInfo(string title)
@@ -815,6 +818,7 @@ public class CoursesPage : MonoBehaviour
         {
             second.onClick.AddListener(ShowCoursesPage);
         }
+        homeScrollRect.verticalNormalizedPosition = 1.5f;
     }
 
     public void ShowHomeInfo()
