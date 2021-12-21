@@ -36,6 +36,7 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Vector2 vals = text.GetPreferredValues();
         if (vals.y < 64f) vals.y = 64f;
         gameObject.GetComponent<RectTransform>().sizeDelta = vals;
+        
     }
 
     public void SetLoading(bool loading)

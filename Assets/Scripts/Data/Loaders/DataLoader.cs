@@ -21,6 +21,8 @@ public abstract class DataLoader: MonoBehaviour
 
     [Header("Services")]
     public SpecimenStore store;
+    // public GameObject specimenLoadingPopUp;
+    // public GameObject specimenErrorLoadingPopUp; 
 
     [Header("Data")]
     public DataManifest manifest;
@@ -35,6 +37,7 @@ public abstract class DataLoader: MonoBehaviour
     private int _requestsResolved;
     private bool _loaded;
     private HashSet<string> _currentLoadingIds = new HashSet<string>(); // Keeps track of live requests so we don't double up
+
 
     protected abstract IEnumerator LoadManifest();
 
@@ -184,7 +187,9 @@ public abstract class DataLoader: MonoBehaviour
                     // if couldn't load the asset bundle and there's an alternative url for the asset's content, open a new tab with the alt content
                     OpenAlternativeContent(srd.altAssetUrl);
                 } else {
-                    SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
+                    
+                    store.ErrorPopUp(); //EDIT: trying to figure out where to add the error pop-up
+                  //  SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
                     yield break;
                 }
             } else

@@ -31,6 +31,7 @@ public class SpecimenCart : MonoBehaviour
     public void AddSpecimen(GameObject specimen, GameObject tray)
     {
         ClearTray(tray);
+        ResetPosition(specimen);
         if (specimen != null)
         {
             Vector3 specimenOldPos = specimen.transform.localPosition;
@@ -113,6 +114,7 @@ public class SpecimenCart : MonoBehaviour
     public void ResetPosition(GameObject specimen)
     {
         specimen.transform.localPosition = Vector3.zero;
+        Debug.Log("specimen reset");
     }
 
     public void SetTrayVisibility(bool hide)

@@ -15,9 +15,7 @@ using Random = UnityEngine.Random;
 public class CoursesPage : MonoBehaviour
 {
     private bool byLab = true;
-    private bool showLab = false;
-    private bool showLabSpec = false;
-    private bool showSpec = false;
+    
     private RegionData region = null;
     private string organ = "";
     private string courseId = "";
@@ -29,6 +27,7 @@ public class CoursesPage : MonoBehaviour
     public TrayPage trayPage;
     public StateController stateController;
     public SelectorMenu selectorMenu;
+    public AnalysisPage analysisPage; 
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -36,6 +35,7 @@ public class CoursesPage : MonoBehaviour
     public LabDisplayOptions labPrefab;
     public LabDisplayOptions labTextPrefab;
     public TextMeshProUGUI labNamePrefab;
+    public LabSpecDisplayOptions labSpecDisplayPrefab;
     public SelectorButton noSpecimensPrefab;
     public SelectorButton specimenPrefab;
     public Button seeAllButtonPrefab;
@@ -47,6 +47,7 @@ public class CoursesPage : MonoBehaviour
     public Transform listTransformCourseSpec;
     public Transform listTransformSpec; 
     public Transform listTransformLabName;
+    public Transform listTransformTab; 
     public Text backBttnTitle;
     public Button courseButton;
     public Button homeButton;
@@ -120,6 +121,10 @@ public class CoursesPage : MonoBehaviour
     public Button expandPanelBtn;
     public Sprite expand;
     public Sprite collapse;
+    public GameObject SpecimenLoadingPopUpScreen; 
+    public Button previewBtn; 
+    public Image previewImage; 
+    public TextMeshProUGUI previewText; 
     
 
 
@@ -323,6 +328,10 @@ public class CoursesPage : MonoBehaviour
         {
             Destroy(child.gameObject);
         } 
+        foreach (Transform child in listTransformTab)
+        {
+            Destroy (child.gameObject);
+        }
     }
 
     private void ClearLabText()
@@ -335,26 +344,31 @@ public class CoursesPage : MonoBehaviour
 
     private void ClearSpec()
     {
-        foreach (Transform child in listTransformCourseSpec)
-        {
-            Destroy(child.gameObject);
-        }
+        // foreach (Transform child in listTransformCourseSpec)
+        // {
+        //     Destroy(child.gameObject);
+        // }
         foreach (Transform child in listTransformSpec)
         {
             Destroy(child.gameObject);
         }
-
-    //    if (labNamePrefab != null)
-    //    {
-    //        foreach (Transform child in listTransformLabName)
-    //         {
-    //             Destroy(child.gameObject);
-    //         }
-    //    }
         
-        
+        // if (_loadedCourseSpecimens != null)
+        // {    
+        //     foreach (Transform child in listTransformLabName)
+        //     {
+        //         Destroy(child.gameObject);
+        //     }   
+        // }    
     }
 
+    private void ClearLabSpec()
+    {
+        foreach (Transform child in listTransformLabName)
+        {
+            Destroy(child.gameObject);
+        }
+    }
     
 
     public void CourseSelected(string courseId)
@@ -375,14 +389,14 @@ public class CoursesPage : MonoBehaviour
 
     private void RenderCourseInfo(string title)
     {
-        ClearSpec();
+        ClearLabSpec();
         courseInfoContent.SetActive(true);
         courseInfoContentText.SetActive(true);
 
         labInfoContent.SetActive(false);
         homeInfo.SetActive(false);
         labInfoContent.SetActive(false);
-        labNamePrefab.gameObject.SetActive(false);
+        labSpecDisplayPrefab.gameObject.SetActive(false);
         courseScrollRect.verticalNormalizedPosition = 1.5f;
         
         sidePanel.SetActive(true);
@@ -461,40 +475,69 @@ public class CoursesPage : MonoBehaviour
 
     private void ShowSpecimenDetails()
     {
-        ClearSpec();
-        Clear();
+        TextMeshProUGUI textObject; 
+     //   ClearSpec();
+    
+        ClearLabSpec();
         mode = ListMode.COURSE_SPECIMENS;
+        
+
+        // Clear();
         courseInfoContentText.SetActive(false);
         courseScrollRect.verticalNormalizedPosition = 1.5f;
-        
-        List<Tuple<int, List<SpecimenData>>> courseSpecData = store.GetSpecimenData(courseId);
-        foreach (Tuple<int, List<SpecimenData>> tuple in courseSpecData)
-        {
-            labNamePrefab.gameObject.SetActive(true);
-            labNamePrefab.text = $"Lab {tuple.Item1.ToString()}";
-          //  Instantiate(labNamePrefab, listTransformLabName);
-            Debug.Log(labNamePrefab.text);
-            _loadedCourseSpecimens = tuple.Item2;
-            Layout(mode, showNoContentText);
-            Debug.Log("load course specimens and show here in the foreach loop");
-        }  
-     //   Tuple<string, List<int>, List<SpecimenData>> courseSpecData = store.GetCourseData(courseId);
-        //  selectionTitle.text = labData.Item1;
-        
-     //   _loadedCourseSpecimens = courseSpecData.Item3;
-        showNoContentText = _loadedCourseSpecimens == null || _loadedCourseSpecimens.Count < 1;
-        Debug.Log("specs are loaded here");
         coursePageInfoLabel.color = Color.white;
         coursePageLabLabel.color = Color.white;
         coursePageSpecLabel.color = Color.cyan;
+        labSpecDisplayPrefab.gameObject.SetActive(true);
+        
+        List<Tuple<int, List<SpecimenData>>> courseSpecData = store.GetSpecimenData(courseId);
+       
+        foreach (Tuple<int, List<SpecimenData>> tuple in courseSpecData)
+        {
+           // labNamePrefab.text = $"Lab {tuple.Item1.ToString()}";
+            labSpecDisplayPrefab.gameObject.SetActive(true);
+            
+            textObject = labSpecDisplayPrefab.GetComponent<TextMeshProUGUI>();
+           // specimenPrefab = labSpecDisplayPrefab.transform.GetChild(0).GetChild(0).gameObject.GetComponent<SelectorButton>();
+           // listTransformCourseSpec = labSpecDisplayPrefab.transform.GetChild(0).gameObject.GetComponent<Transform>();
+
+         //   textObject.text = GetComponent<TextMeshProUGUI>().text; 
+            textObject.text = $"Lab {tuple.Item1.ToString()}";
+            Instantiate(labSpecDisplayPrefab, listTransformLabName);
+            Debug.Log(textObject.text);
+            _loadedCourseSpecimens = tuple.Item2;
+            for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
+            {
+                string id = _loadedCourseSpecimens[i].id;
+              //  listTransformCourseSpec = labSpecDisplayPrefab.transform.GetChild(0).gameObject.GetComponent<Transform>();
+                
+                SelectorButton btn = Instantiate(specimenPrefab, listTransformLabName);
+                btn.Populate(_loadedCourseSpecimens[i].name, i, null);
+                Debug.Log(_loadedCourseSpecimens[i].name);
+                btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
+                btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));        
+             //   idToButton.Add(id, btn);
+                Debug.Log("course specimen reached layout room");
+            }
+            
+        }  
+        
+        
         
     }
+
+    // public void RenderSpecimenInfo()
+    // { 
+        
+    //     mode = ListMode.COURSE_SPECIMENS;
+    //     Layout(mode, showNoContentText);
+    //     Debug.Log(mode);
+    // }
     private void ShowLabSpecDetails()
     {
         ClearSpec();
         mode = ListMode.LAB_SPECIMENS;
         labInfoContentText.SetActive(false);
-        
         
         Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
         //  selectionTitle.text = labData.Item1;
@@ -503,7 +546,7 @@ public class CoursesPage : MonoBehaviour
         Debug.Log("specs2 are loaded here");
         labPageSpecLabel.color = Color.blue;
         labPageInfoLabel.color = Color.white;
-        Layout(mode, showLabSpec);
+        Layout(mode, showNoContentText);
      //   labInfoShowBtn.onClick.AddListener(() => RenderLabInfo());
     }
 
@@ -549,7 +592,7 @@ public class CoursesPage : MonoBehaviour
         courseLabTitle.text = courseName;
         labInfoContentText.SetActive(true);
         labScrollRect.verticalNormalizedPosition = 1.5f;
-        ClearSpec();
+        //ClearSpec();
         //  labDescription.text = labDes;
         labInfoContent.SetActive(true);
         ShowAllLabs();
@@ -638,11 +681,11 @@ public class CoursesPage : MonoBehaviour
      * Lays out UI based on requested mode.
      * Called only through Populate() to ensure that correct data is available.
      */
-    private void Layout(ListMode mode, bool showNoContentText)
+    public void Layout(ListMode mode, bool showNoContentText)
     {
+        
         loadingIndicator.gameObject.SetActive(store.Loading());
-      //  selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
-      //  noContentText.gameObject.SetActive(showNoContentText);
+  
         /*
         labAtlasToggle.SetActive(
             !store.Loading() &&
@@ -717,12 +760,15 @@ public class CoursesPage : MonoBehaviour
                 if (secondLabel.text == "> 3D Atlas")
                 {
                     Debug.Log("secondLabel.text");
-                    selectorMenu.SelectSpecimen(id);
+                    SidePanelPreview(id);
+                  //  selectorMenu.SelectSpecimen(id);
                 }
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+                btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
+              
                
                 idToButton.Add(id, btn);
                 
@@ -751,10 +797,13 @@ public class CoursesPage : MonoBehaviour
                 for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
                 {
                     string id = _loadedCourseSpecimens[i].id;
+                    Debug.Log(id);
                     SelectorButton btn = Instantiate(specimenPrefab, listTransformCourseSpec);
                     btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                     btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+                    
+                    
                     idToButton.Add(id, btn);
                     Debug.Log("course specimen reached layout room");
                 }
@@ -789,7 +838,9 @@ public class CoursesPage : MonoBehaviour
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
                 btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
+                btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+            
                 
             }
 
@@ -816,7 +867,7 @@ public class CoursesPage : MonoBehaviour
             // Loops through loaded regions, producing a clickable button for each...
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
-                SelectorButton btn = Instantiate(selectorPrefab, listTransformCourses);
+                SelectorButton btn = Instantiate(selectorPrefab, listTransformTab);
                 btn.Populate(_loadedRegions[i].name, i, _loadedRegions[i].icon);
                 
                 
@@ -841,7 +892,7 @@ public class CoursesPage : MonoBehaviour
                             sbtn.Populate(_loadedOrgans[j], j, null);
                             // Bind a click listener that loads the specimen selection view
                             sbtn.button.onClick.AddListener(() => {SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
-               //             sbtn.button.onClick.AddListener(() => { selectorMenu.SelectSpecimen(_loadedOrgans[j].name); });
+              
                             idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);
                         }
                     }
@@ -862,6 +913,8 @@ public class CoursesPage : MonoBehaviour
     private void ShowCoursesPage()
     {
         Clear();
+
+        SidePanelPreviewOff();
         byLab = true;
         ShowAllCourses(listTransformCourses);
         homeInfo.SetActive(true);
@@ -879,8 +932,7 @@ public class CoursesPage : MonoBehaviour
         helpLabel.color = Color.black;
         courseLabel.color = Color.blue;
         page = CurrPage.COURSE;
-        showSpec = false;
-        showLabSpec = false;
+        
         if (secondLabel.text == "> Courses")
         {
             second.onClick.AddListener(ShowCoursesPage);
@@ -906,7 +958,7 @@ public class CoursesPage : MonoBehaviour
             courseOption.Populate(course, this, selectorMenu);
            
         };
-        
+        SidePanelPreviewOff();
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(true);
@@ -923,8 +975,7 @@ public class CoursesPage : MonoBehaviour
         fourthLabel.text = "";
         fifthLabel.text = "";
         page = CurrPage.HOME;
-        showSpec = false;
-        showLabSpec = false;
+        
     }
 
     public void ShowHelpInfo()
@@ -946,8 +997,7 @@ public class CoursesPage : MonoBehaviour
         courseLabel.color = Color.black;
 
         page = CurrPage.HELP;
-        showSpec = false;
-        showLabSpec = false;
+        
         if (secondLabel.text == "> Help")
         {
             second.onClick.AddListener(ShowHelpInfo);
@@ -957,6 +1007,7 @@ public class CoursesPage : MonoBehaviour
     public void ShowAtlasInfo()
     {
         Clear();
+        SidePanelPreviewOff();
         byLab = false; 
         ClearSelectionData();
         homeInfo.SetActive(true);
@@ -975,7 +1026,7 @@ public class CoursesPage : MonoBehaviour
 
         if (secondLabel.text == "> 3D Atlas")
         {
-            second.onClick.AddListener(ShowAtlasInfo );
+            second.onClick.AddListener(ShowAtlasInfo);
         } 
     }
 
@@ -1018,6 +1069,22 @@ public class CoursesPage : MonoBehaviour
             });
         }
         
+    }
+
+    private void SidePanelPreview(string id)
+    {
+        previewImage.gameObject.SetActive(true);
+        previewText.gameObject.SetActive(true);
+        previewText.text = id; 
+        previewBtn.gameObject.SetActive(true);
+        previewBtn.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+    }
+
+    private void SidePanelPreviewOff()
+    {
+        previewImage.gameObject.SetActive(false);
+        previewText.gameObject.SetActive(false);
+        previewBtn.gameObject.SetActive(false);
     }
    
 

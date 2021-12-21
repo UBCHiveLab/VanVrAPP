@@ -36,6 +36,7 @@ public class TrayPage : MonoBehaviour, IPage
     private float camDefaultFov = 60f;
 
     public SpecimenCart cart;
+    public AnalysisPage analysisPage; 
 
     void Start()
     {
@@ -115,6 +116,7 @@ public class TrayPage : MonoBehaviour, IPage
     public void SpecimenSelected(SpecimenData data)
     {
         SetAnalyzeOn();
+        
         analyzeButton.interactable = false;
 
         if (selectingCompareSpecimen)
@@ -127,7 +129,7 @@ public class TrayPage : MonoBehaviour, IPage
 
         }
         actionButtons.SetActive(true);
-
+       
     }
 
     private void OnAddPrimarySpecimen(GameObject obj)
@@ -284,7 +286,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     private void LayoutStatePrimaryOnly()
     {
-        compareSameButton.gameObject.SetActive(true);
+      //  compareSameButton.gameObject.SetActive(true);
         //compareDifferentButton.gameObject.SetActive(true);
         removeOnlyButton.gameObject.SetActive(true);
         removeCompareButton.gameObject.SetActive(false);
@@ -320,7 +322,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     private void LayoutStateCompareSpecimens()
     {
-        compareSameButton.gameObject.SetActive(true);
+      //  compareSameButton.gameObject.SetActive(true);
         //compareDifferentButton.gameObject.SetActive(true);
         removeOnlyButton.gameObject.SetActive(false);
         removeCompareButton.gameObject.SetActive(true);

@@ -89,6 +89,8 @@ public class AnalysisPage : MonoBehaviour, IPage
         // Sets up all configurations for Analysis mode
 
         currentSelectedObject = stateController.CurrentSpecimenObject;
+        ResetCameraPosition();
+
         currentSelectedData = stateController.CurrentSpecimenData;
         leftPanel.gameObject.SetActive(true);
         controlAssistant.gameObject.SetActive(controlAssistToggle.on);
@@ -129,7 +131,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     {
         orbitCam = mainCamera.GetComponent<OrbitCamera>();
         volume.profile.TryGetSettings(out depthOfField);
-
+        
         // Control Assistant Toggle
         controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
@@ -316,9 +318,10 @@ public class AnalysisPage : MonoBehaviour, IPage
 
 
     /**
-     * Resets specimen rotation and camera prosition
+     * Resets specimen rotation and camera position
      */
-    void ResetCameraPosition() {
+    public void ResetCameraPosition() {
+        Debug.Log("reset");
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
         _xRot = 0;
         _yRot = 0;

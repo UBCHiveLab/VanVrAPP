@@ -40,8 +40,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 0}
+  m_AnchoredPosition: {x: 23.000977, y: -3.0999756}
+  m_SizeDelta: {x: 46.00197, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1814117337008346280
 CanvasRenderer:
@@ -139,9 +139,9 @@ MonoBehaviour:
   button: {fileID: 6379315781347957131}
   indexValue: 0
   icon: {fileID: 0}
-  loadingSpinner: {fileID: 4738721686948941074}
   children: {fileID: 0}
   background: {fileID: 0}
+  loadingController: {fileID: 0}
 --- !u!114 &5823353384719736062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +171,8 @@ MonoBehaviour:
   transitionTime: 0.12
   baseColor: {r: 0, g: 0.043137256, b: 0.24705882, a: 1}
   hoverColor: {r: 0.34901962, g: 0.33333334, b: 1, a: 1}
+  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  disabled: 0
   icon: {fileID: 0}
   icon2: {fileID: 0}
   label: {fileID: 4933445673072673715}
@@ -210,7 +212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 39, y: 3.6550007}
+  m_AnchoredPosition: {x: 0, y: 3.6550007}
   m_SizeDelta: {x: -90, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6426955924199503404
@@ -269,21 +271,21 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 513
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_firstOverflowCharacterIndex: -1
@@ -476,12 +478,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce753c540c939ae48af958040a3ec8c8, type: 3}
---- !u!1 &4738721686948941074 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6718302441014057821, guid: ce753c540c939ae48af958040a3ec8c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 2089501168098104911}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4738721686948941075 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6718302441014057820, guid: ce753c540c939ae48af958040a3ec8c8,

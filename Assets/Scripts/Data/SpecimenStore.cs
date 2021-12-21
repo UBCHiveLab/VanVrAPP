@@ -26,6 +26,7 @@ public class SpecimenStore : MonoBehaviour
         loadAllSpecimenAssets; // Select this to load ALL specimen data at app start; otherwise, loads asset bundles with mesh/materials when selected
 
     public string testUrl = "http://google.com";
+    public GameObject SpecimenErrorLoadingPopUp;
 
     [Header("Stored Data")] public List<RegionData> regions;
     public Dictionary<string, SpecimenData> specimens;
@@ -168,20 +169,6 @@ public class SpecimenStore : MonoBehaviour
 
         return new Tuple<int, List<SpecimenData>>(labs[labIndex].labId, specimenData);
     }
-
-    // public List<int> GetLabId(string courseId)
-    // {
-    //     List<CourseData> courses = labCourses.Values.ToList();
-    //     List<int> labName = new List<int>();
-    //     List<LabData> labs = GetLabDataForCourse(courseId);
-    //     int courseIndex = courses.FindIndex((course) => course.courseId == courseId);
-
-    //     foreach (LabData lab in courses[courseIndex].labs)
-    //     {
-    //       labName.Add(lab.labId);
-    //     }
-    //     return new List<int>(labName);
-    // }
 
     public List<Tuple<int, List<SpecimenData>>> GetSpecimenData(string courseId)
     {
@@ -374,5 +361,10 @@ public class SpecimenStore : MonoBehaviour
 
         // Turn loading off so that any listening UI can query for values.
         _loading = false;
+    }
+
+    public void ErrorPopUp()
+    {
+        SpecimenErrorLoadingPopUp.SetActive(true);
     }
 }
