@@ -41,6 +41,7 @@ public class CoursesPage : MonoBehaviour
     public Button seeAllButtonPrefab;
 
     [Header("Internal Structures")] public Transform listTransformCourses;
+    public Transform listTransformAllCourses; 
     public Transform listTransformSideCourses;
     public Transform listTransformLabs;
     public Transform listTransformLabText; 
@@ -177,6 +178,7 @@ public class CoursesPage : MonoBehaviour
         if (store == null) store = FindObjectOfType<SpecimenStore>();
         
         UpdateUI();
+        homeScrollRect.verticalNormalizedPosition = 1.5f;
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
         courseButton.onClick.AddListener(ShowCoursesPage);
@@ -320,6 +322,11 @@ public class CoursesPage : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        foreach (Transform child in listTransformAllCourses)
+        {
+            Destroy(child.gameObject);
+        }
         foreach (Transform child in listTransformSideCourses)
         {
             Destroy(child.gameObject);
@@ -401,12 +408,13 @@ public class CoursesPage : MonoBehaviour
         labInfoContent.SetActive(false);
         labSpecDisplayPrefab.gameObject.SetActive(false);
         courseScrollRect.verticalNormalizedPosition = 1.5f;
-        
+        Debug.Log("course scroll rect");
+
         sidePanel.SetActive(true);
         defaultPanel.SetActive(true);
         expandedPanel.SetActive(false);
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
-     
+
         courseTitle.text = title;
         courseName = title;
         coursePageInfoLabel.color = Color.cyan;
@@ -416,14 +424,19 @@ public class CoursesPage : MonoBehaviour
         thirdLabel.text = $"> {courseName}";
         fourthLabel.text = "";
         fifthLabel.text = "";
-        
+        Debug.Log(thirdLabel.text);
         
         ShowAllCourses(listTransformSideCourses);
         _loadedLabs = store.GetLabDataForCourse(courseId);
-        if (_loadedLabs != null)
-        {
-            ShowAllLabsText();
-        }
+        Debug.Log(_loadedLabs.Count());
+
+        ShowAllLabsText();
+        Debug.Log("show all labs text");
+        // if (_loadedLabs != null)
+        // {
+        //     ShowAllLabsText();
+        //     Debug.Log("show all labs text");
+        // }
 
         Tuple<string, List<int>, List<SpecimenData>> courseSpecData = store.GetCourseData(courseId);
         
@@ -455,7 +468,7 @@ public class CoursesPage : MonoBehaviour
             if(page == CurrPage.HOME){
                 ShowHomeInfo(5);
             }else if(page == CurrPage.COURSE){
-                ShowAllCourses(listTransformCourses);
+                ShowAllCourses(listTransformAllCourses);
             }else if(page == CurrPage.HELP){
             }
             
@@ -470,7 +483,7 @@ public class CoursesPage : MonoBehaviour
             if(page == CurrPage.HOME){
                 ShowHomeInfo(3);
             }else if(page == CurrPage.COURSE){
-                ShowAllCourses(listTransformCourses);
+                ShowAllCourses(listTransformAllCourses);
             }
         }
         
@@ -528,14 +541,6 @@ public class CoursesPage : MonoBehaviour
         
         
     }
-
-    // public void RenderSpecimenInfo()
-    // { 
-        
-    //     mode = ListMode.COURSE_SPECIMENS;
-    //     Layout(mode, showNoContentText);
-    //     Debug.Log(mode);
-    // }
     private void ShowLabSpecDetails()
     {
         ClearSpec();
@@ -919,7 +924,7 @@ public class CoursesPage : MonoBehaviour
 
         SidePanelPreviewOff();
         byLab = true;
-        ShowAllCourses(listTransformCourses);
+        ShowAllCourses(listTransformAllCourses);
         homeInfo.SetActive(true);
         courseInfoContent.SetActive(false);
         RecentCourse.SetActive(false);
@@ -956,6 +961,7 @@ public class CoursesPage : MonoBehaviour
     {
         byLab = true;
         Clear();
+        homeScrollRect.verticalNormalizedPosition = 1.5f;
         foreach (var course in _loadedCourses.Take(num))
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
@@ -1058,10 +1064,12 @@ public class CoursesPage : MonoBehaviour
     private void ShowAllLabsText()
     {
         ClearLabText();
+        Debug.Log("after clearing lab text");
         if (_loadedLabs.Count() == 0)
         {
             noContentText.gameObject.SetActive(true);
             noContentText.text = "No labs for this course";
+            Debug.Log(noContentText.text); 
         }
         else 
         {
@@ -1070,6 +1078,7 @@ public class CoursesPage : MonoBehaviour
                 LabDisplayOptions labOption = Instantiate(labTextPrefab, listTransformLabText);
                 labOption.Populate(lab, this, selectorMenu);
                 noContentText.gameObject.SetActive(false);
+                Debug.Log("lab option");
             });
         }
         
