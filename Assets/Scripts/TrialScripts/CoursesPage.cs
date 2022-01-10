@@ -28,6 +28,7 @@ public class CoursesPage : MonoBehaviour
     public StateController stateController;
     public SelectorMenu selectorMenu;
     public AnalysisPage analysisPage; 
+    public ReadInput input; 
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -82,18 +83,7 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI helpLabel; 
     public GameObject RecentCourse;
     public GameObject loadingIndicator;
-    public GameObject courseInfoContent;
-    public GameObject labInfoContent;
-    public Button labShowBtn;
-    public Button infoShowBtn;
-    public Button specimenInfoShowBtn;
-    public TextMeshProUGUI coursePageLabLabel;
-    public TextMeshProUGUI coursePageInfoLabel;
-    public TextMeshProUGUI coursePageSpecLabel; 
-    public Button labInfoShowBtn;
-    public Button specLabShowBtn; 
-    public TextMeshProUGUI labPageSpecLabel;
-    public TextMeshProUGUI labPageInfoLabel; 
+    
     public GameObject homeInfo;
     
 
@@ -102,23 +92,35 @@ public class CoursesPage : MonoBehaviour
     public GameObject expandedPanel;
     public GameObject defaultPanel;
     public ScrollRect homeScrollRect;
+    public TextMeshProUGUI message; 
 
     [Header("CourseContentRender")]
+     public GameObject courseInfoContent;
     public TextMeshProUGUI courseTitle;
-    
-    public TextMeshProUGUI labTitle;
-    public TextMeshProUGUI labPanel;
-    public TextMeshProUGUI courseLabTitle;
-    public Button labPanelCourseBtn;
-    public RawImage labRenderedImg;
     public GameObject courseInfoContentText;
     public GameObject labInfoContentText;
     public ScrollRect courseScrollRect;
     public ScrollRect labScrollRect;
     public TextMeshProUGUI labSpecName;
+    public Button labShowBtn;
+    public Button infoShowBtn;
+    public Button specimenInfoShowBtn;
+    public TextMeshProUGUI coursePageLabLabel;
+    public TextMeshProUGUI coursePageInfoLabel;
+    public TextMeshProUGUI coursePageSpecLabel; 
 
 
     [Header("LabContentRender")]
+     public GameObject labInfoContent;
+    public TextMeshProUGUI labTitle;
+    public TextMeshProUGUI labPanel;
+    public TextMeshProUGUI courseLabTitle;
+    public Button labPanelCourseBtn;
+    public Button labInfoShowBtn;
+    public Button specLabShowBtn; 
+    public TextMeshProUGUI labPageSpecLabel;
+    public TextMeshProUGUI labPageInfoLabel; 
+    public RawImage labRenderedImg;
     public GameObject sidePanel;
     public Button expandPanelBtn;
     public Sprite expand;
@@ -178,6 +180,7 @@ public class CoursesPage : MonoBehaviour
         if (store == null) store = FindObjectOfType<SpecimenStore>();
         
         UpdateUI();
+        
         homeScrollRect.verticalNormalizedPosition = 1.5f;
         // noContentText.gameObject.SetActive(false);
         homeLabel.color = Color.blue; 
@@ -286,31 +289,40 @@ public class CoursesPage : MonoBehaviour
             Debug.Log("specimen is here");
             showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
         }
+      //  CheckStringInput(input.ReadStringInput(message.text));
         Layout(mode, showNoContentText);
     }
-/*Figure out a way to access the script read string input from the other class - look into this
+// Figure out a way to access the script read string input from the other class - look into this
     public void CheckStringInput(string message)
     {
-        foreach(var course in _loadedCourses)
+        string search; 
+        search = message; 
+        Debug.Log(search);
+        if (!string.IsNullOrEmpty(search))
         {
-             if (ReadStringInput(message) == courseName)
-             {
-                CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
-                courseOption.Populate(course, this);
-             }
+            foreach(var course in _loadedCourses)
+            {
+                if (message.Contains(courseName))
+                {
+                    CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformAllCourses);
+                    courseOption.Populate(course, this, selectorMenu);
+                    Debug.Log(courseName);
+                }
+            }
         }
-       foreach (var lab in _loadedLabs)
-       {
-           if (ReadStringInput(message) == labTitle)
-           {
-               LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
-               labOption.Populate(lab, this);
-           }
+        
+    //    foreach (var lab in _loadedLabs)
+    //    {
+    //        if (message == labTitle.text)
+    //        {
+    //            LabDisplayOptions labOption = Instantiate(labPrefab, listTransformAllCourses);
+    //            labOption.Populate(lab, this, selectorMenu);
+    //        }
 
-       } 
+    //    } 
        
     }
-    */
+    
 
     private void Clear()
     {
@@ -352,22 +364,10 @@ public class CoursesPage : MonoBehaviour
 
     private void ClearSpec()
     {
-        // foreach (Transform child in listTransformCourseSpec)
-        // {
-        //     Destroy(child.gameObject);
-        // }
         foreach (Transform child in listTransformSpec)
         {
             Destroy(child.gameObject);
-        }
-        
-        // if (_loadedCourseSpecimens != null)
-        // {    
-        //     foreach (Transform child in listTransformLabName)
-        //     {
-        //         Destroy(child.gameObject);
-        //     }   
-        // }    
+        }      
     }
 
     private void ClearLabSpec()
@@ -376,6 +376,7 @@ public class CoursesPage : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        
     }
     
 
@@ -513,21 +514,20 @@ public class CoursesPage : MonoBehaviour
            // labNamePrefab.text = $"Lab {tuple.Item1.ToString()}";
             labSpecDisplayPrefab.gameObject.SetActive(true);
             
-            textObject = labSpecDisplayPrefab.GetComponent<TextMeshProUGUI>();
+            textObject = labSpecDisplayPrefab.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
            // specimenPrefab = labSpecDisplayPrefab.transform.GetChild(0).GetChild(0).gameObject.GetComponent<SelectorButton>();
-           // listTransformCourseSpec = labSpecDisplayPrefab.transform.GetChild(0).gameObject.GetComponent<Transform>();
-
+          //  listTransformCourseSpec = labSpecDisplayPrefab.transform.GetChild(0).gameObject.GetComponent<Transform>();
+            Debug.Log(listTransformCourseSpec);
          //   textObject.text = GetComponent<TextMeshProUGUI>().text; 
             textObject.text = $"Lab {tuple.Item1.ToString()}";
-            Instantiate(labSpecDisplayPrefab, listTransformLabName);
+            LabSpecDisplayOptions options = Instantiate(labSpecDisplayPrefab, listTransformLabName);
             Debug.Log(textObject.text);
             _loadedCourseSpecimens = tuple.Item2;
             for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
             {
                 string id = _loadedCourseSpecimens[i].id;
-              //  listTransformCourseSpec = labSpecDisplayPrefab.transform.GetChild(0).gameObject.GetComponent<Transform>();
                 
-                SelectorButton btn = Instantiate(specimenPrefab, listTransformLabName);
+                SelectorButton btn = Instantiate(specimenPrefab, options.children);
                 btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                 Debug.Log(_loadedCourseSpecimens[i].name);
                 btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
@@ -600,7 +600,8 @@ public class CoursesPage : MonoBehaviour
         courseLabTitle.text = courseName;
         labInfoContentText.SetActive(true);
         labScrollRect.verticalNormalizedPosition = 1.5f;
-        //ClearSpec();
+        ClearSpec();
+        trayPage.SetActionOff();
         //  labDescription.text = labDes;
         labInfoContent.SetActive(true);
         ShowAllLabs();
@@ -810,6 +811,7 @@ public class CoursesPage : MonoBehaviour
                     btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                     btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+                    btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
                     
                     
                     idToButton.Add(id, btn);
@@ -848,6 +850,7 @@ public class CoursesPage : MonoBehaviour
                 btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+                btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
             
                 
             }
@@ -1100,6 +1103,17 @@ public class CoursesPage : MonoBehaviour
         previewBtn.gameObject.SetActive(false);
     }
    
+
+   public void SpecimenLoadingPopUpOn()
+   {
+       SpecimenLoadingPopUpScreen.SetActive(true);
+       
+   }
+
+   public void SpecimenLoadingPopUpOff()
+   {
+       SpecimenLoadingPopUpScreen.SetActive(false); 
+   }
 
 
     

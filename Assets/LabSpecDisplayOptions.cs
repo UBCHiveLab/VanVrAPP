@@ -14,6 +14,7 @@ public class LabSpecDisplayOptions : MonoBehaviour
     public List<SpecimenData> _loadedCourseSpecimens; 
     private CoursesPage _coursesPage; 
     private SelectorMenu _selectorMenu; 
+    public Transform children; 
     
 
 

@@ -21,6 +21,7 @@ public class CourseDisplayOptions : MonoBehaviour
        // nameFrame.text = data.courseCode;
         _coursesPage = coursesPage;
         _selectorMenu = selectorMenu;
+        
         button.onClick.AddListener(() => _coursesPage.CourseSelected(data.courseId));
         button.onClick.AddListener(() => _selectorMenu.CourseSelected(data.courseId));
     }

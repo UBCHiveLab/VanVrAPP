@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ReadInput : MonoBehaviour
 {
-    private string input;
+    public TextMeshProUGUI input;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,9 +19,20 @@ public class ReadInput : MonoBehaviour
     }
     public void ReadStringInput(string message)
     {
-        input = message;
+        input.text = message;
         Debug.Log(input);
     }
 
+    public bool CheckString(string message)
+    {
+        if (input.text == message)
+        {
+            return true; 
+        }
+        else 
+        {
+            return false;
+        }
+    }
     
 }

@@ -89,7 +89,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         // Sets up all configurations for Analysis mode
 
         currentSelectedObject = stateController.CurrentSpecimenObject;
-        ResetCameraPosition();
+       // ResetCameraPosition();
 
         currentSelectedData = stateController.CurrentSpecimenData;
         leftPanel.gameObject.SetActive(true);
@@ -311,6 +311,7 @@ public class AnalysisPage : MonoBehaviour, IPage
      */
     public void ChangeFocus(GameObject focusObject, SpecimenData focusData)
     {
+        Debug.Log("change focus");
         currentSelectedData = focusData;
         orbitCam.target = focusObject.transform;
         targetSpecimenLabel.text = currentSelectedData.name;
@@ -334,6 +335,7 @@ public class AnalysisPage : MonoBehaviour, IPage
 
     public void ResetRotation()
     {
+        Debug.Log("rotation");
         currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
         _xRot = 0;
         _yRot = 0;

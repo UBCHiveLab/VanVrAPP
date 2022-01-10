@@ -173,6 +173,7 @@ public class TrayPage : MonoBehaviour, IPage
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
         cameraEvents.SwitchCamera();
+        analysisPage.ResetCameraPosition();
     }
 
     public void SelectCompare(string organ)
@@ -338,10 +339,18 @@ public class TrayPage : MonoBehaviour, IPage
     public void SetAnalyzeOn()
     {
         analyzeButton.gameObject.SetActive(true);
+      //  actionButtons.gameObject.SetActive(true); 
     }
     public void SetAnalyzeOff()
     {
         analyzeButton.gameObject.SetActive(false);
+    }
+
+    public void SetActionOff()
+    {
+        analyzeButton.gameObject.SetActive(false); 
+        actionButtons.gameObject.SetActive(false); 
+        removeOnlyButton.gameObject.SetActive(false); 
     }
 
 }

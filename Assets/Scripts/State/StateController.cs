@@ -129,6 +129,7 @@ namespace Assets.Scripts.State
             StartCoroutine(InstantiateSpecimen(data, true)); 
             while (loadingPrimarySpecimen) yield return null;
             callback(CurrentSpecimenObject);
+           // analysisPage.ResetCameraPosition();
         }
 
         public IEnumerator AddCompareSpecimen(SpecimenData data, Action<GameObject> callback)
@@ -167,7 +168,7 @@ namespace Assets.Scripts.State
                 while (!store.specimens[data.id].dataLoaded) yield return null;
 
                 data = store.specimens[data.id];
-               // analysisPage.ResetCameraPosition();
+               
             }
 
             // If prefab found, instantiate that
@@ -209,6 +210,7 @@ namespace Assets.Scripts.State
             if (primary) {
                 CurrentSpecimenObject = spObj;
                 loadingPrimarySpecimen = false;
+                
                 
             } else {
                 CompareSpecimenObject = spObj;
