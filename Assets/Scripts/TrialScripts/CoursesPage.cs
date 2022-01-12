@@ -29,6 +29,7 @@ public class CoursesPage : MonoBehaviour
     public SelectorMenu selectorMenu;
     public AnalysisPage analysisPage; 
     public ReadInput input; 
+    public MainCameraEvents camera; 
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -128,6 +129,7 @@ public class CoursesPage : MonoBehaviour
     public GameObject SpecimenLoadingPopUpScreen; 
     public Button previewBtn; 
     public Image previewImage; 
+    public TextMeshProUGUI specimenText; 
     public TextMeshProUGUI previewText; 
     
 
@@ -531,7 +533,8 @@ public class CoursesPage : MonoBehaviour
                 btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                 Debug.Log(_loadedCourseSpecimens[i].name);
                 btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
-                btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));        
+                btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id)); 
+                btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));       
              //   idToButton.Add(id, btn);
                 Debug.Log("course specimen reached layout room");
             }
@@ -774,9 +777,12 @@ public class CoursesPage : MonoBehaviour
                 }
                 SelectorButton btn = Instantiate(specimenPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
+               
+                btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
+              //  btn.button.onClick.AddListener(() => camera.SwitchCamera());
                 btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
-                btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
+                    
               
                
                 idToButton.Add(id, btn);
@@ -809,9 +815,10 @@ public class CoursesPage : MonoBehaviour
                     Debug.Log(id);
                     SelectorButton btn = Instantiate(specimenPrefab, listTransformCourseSpec);
                     btn.Populate(_loadedCourseSpecimens[i].name, i, null);
+                    btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true)); 
+                  //  btn.button.onClick.AddListener(() => camera.SwitchCamera());
                     btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
-                    btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
                     
                     
                     idToButton.Add(id, btn);
@@ -1091,14 +1098,17 @@ public class CoursesPage : MonoBehaviour
     {
         previewImage.gameObject.SetActive(true);
         previewText.gameObject.SetActive(true);
-        previewText.text = id; 
+        specimenText.gameObject.SetActive(true); 
+        specimenText.text = id; 
         previewBtn.gameObject.SetActive(true);
         previewBtn.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
+        previewBtn.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
     }
 
     private void SidePanelPreviewOff()
     {
         previewImage.gameObject.SetActive(false);
+        specimenText.gameObject.SetActive(false); 
         previewText.gameObject.SetActive(false);
         previewBtn.gameObject.SetActive(false);
     }
@@ -1113,6 +1123,26 @@ public class CoursesPage : MonoBehaviour
    public void SpecimenLoadingPopUpOff()
    {
        SpecimenLoadingPopUpScreen.SetActive(false); 
+   }
+
+
+   public void LastEntry()
+   {
+       if (secondLabel.text == "> 3D Atlas")
+       {
+           ShowAtlasInfo(); 
+       }
+       else if (fourthLabel.text == $"> {labName}")
+       {
+         //  RenderLabInfo(labTitle.text, labName, ""); 
+           ShowLabSpecDetails(); 
+       }
+       else if (thirdLabel.text == $"> {courseName}")
+       {
+           RenderCourseInfo(courseName); 
+           ShowSpecimenDetails(); 
+       }
+
    }
 
 

@@ -20,7 +20,8 @@ public class ModeChangeButton : MonoBehaviour
         if (controller == null) controller = FindObjectOfType<StateController>();
         GetComponent<Button>().onClick.AddListener(() => {cameraEvents.SwitchCamera(); });
         GetComponent<Button>().onClick.AddListener(() => {controller.mode = mode; });
-        GetComponent<Button>().onClick.AddListener(() => {coursesPage.ShowHomeInfo(); });
+        GetComponent<Button>().onClick.AddListener(() => {coursesPage.LastEntry(); });
+      //  GetComponent<Button>().onClick.AddListener(() => {coursesPage.ShowHomeInfo(); });
         GetComponent<Button>().onClick.AddListener(() => {analysisPage.ResetCameraPosition(); });
         GetComponent<Button>().onClick.AddListener(() => {coursesPage.SpecimenLoadingPopUpOff(); });
         GetComponent<Button>().onClick.AddListener(() => {trayPage.SetActionOff(); });
