@@ -809,7 +809,7 @@ public class CoursesPage : MonoBehaviour
                     
                     
                     idToButton.Add(id, btn);
-                    Debug.Log("course specimen reached layout room");
+                  //  Debug.Log("course specimen reached layout room");
                 }
             }   
            
@@ -1090,8 +1090,10 @@ public class CoursesPage : MonoBehaviour
         specimenText.text = id; 
         previewBtn.gameObject.SetActive(true);
         previewBtn.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
-      //  previewBtn.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
-      //  previewBtn.onClick.AddListener(() => trayPage.SetAnalyzeOn());
+        Debug.Log("preview btn clicked"); 
+     //   previewBtn.onClick.AddListener(() => selectorMenu.UpdateSelected());
+        //  previewBtn.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
+        //  previewBtn.onClick.AddListener(() => trayPage.SetAnalyzeOn());
     }
 
     public void SidePanelPreviewOff()

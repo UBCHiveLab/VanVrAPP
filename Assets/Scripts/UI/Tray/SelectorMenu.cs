@@ -383,6 +383,7 @@ public class SelectorMenu : MonoBehaviour
 
     public void SelectSpecimen(string specimenId)
     {
+        Debug.Log("select specimen"); 
         SetSpecimenButtonToSelected(specimenId);
         trayPage.SpecimenSelected(store.specimens[specimenId]);
     }
@@ -447,6 +448,7 @@ public class SelectorMenu : MonoBehaviour
         {
             trayPage.RemoveEitherActiveSpecimen(specId);
             UpdateSelected();
+            Debug.Log("trayPage remove either active specimen");  
         });
     }
 
@@ -482,11 +484,11 @@ public class SelectorMenu : MonoBehaviour
 
         if (stateController.currentSpecimenId != null) {
             primaryId = stateController.currentSpecimenId;
-            Debug.Log("primaryId");
+            Debug.Log(primaryId);
         }
         if (stateController.CompareSpecimenData != null) {
             compareId = stateController.CompareSpecimenData.id;
-            Debug.Log("state controller");
+            Debug.Log(compareId);
         }
 
         foreach (string key in idToButton.Keys)
@@ -494,12 +496,14 @@ public class SelectorMenu : MonoBehaviour
             if (key == primaryId || key == compareId)
             {
                 SetSpecimenButtonToSelected(key);
-                Debug.Log("3d atlas came to select");
+                Debug.Log(key);
+                Debug.Log("set specimen button to selected"); 
             }
             else
             {
                 SetSpecimenButtonToDeselected(key);
-                Debug.Log("3d atlas btn came to here");
+                Debug.Log(key);
+                Debug.Log("set specimen button to deselected"); 
             }
         }
     }

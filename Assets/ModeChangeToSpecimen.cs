@@ -11,7 +11,7 @@ public class ModeChangeToSpecimen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Button>().onClick.AddListener(() => {coursesPage.ShowHomeInfo(); });
+        GetComponent<Button>().onClick.AddListener(() => {coursesPage.LastEntry(); });
         GetComponent<Button>().onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
         GetComponent<Button>().onClick.AddListener(() => {panel.SetActive(false); });
     }

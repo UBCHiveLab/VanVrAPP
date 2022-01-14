@@ -167,7 +167,8 @@ namespace Assets.Scripts.State
 
                 store.LoadSpecimen(data.id);
                 while (!store.specimens[data.id].dataLoaded) yield return null;
-
+                store.LoadingPopUp();
+                Debug.Log("loading pop-up"); 
                 data = store.specimens[data.id];
                
             }

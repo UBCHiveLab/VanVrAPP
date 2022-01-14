@@ -116,7 +116,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void SpecimenSelected(SpecimenData data)
     {
-        SetAnalyzeOn();
+      //  SetAnalyzeOn();
         
         analyzeButton.interactable = false;
 

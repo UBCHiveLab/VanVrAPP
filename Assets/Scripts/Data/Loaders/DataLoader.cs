@@ -195,8 +195,9 @@ public abstract class DataLoader: MonoBehaviour
             } else
             {
                 // Get downloaded asset bundle
-                store.LoadingPopUp(); 
-                Debug.Log("loading popup"); 
+                //store.LoadingPopUp(); 
+                //Debug.Log("loading popup");
+                //store.AnalyzeOn(); 
 
                 try
                 {
