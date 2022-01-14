@@ -89,7 +89,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         // Sets up all configurations for Analysis mode
 
         currentSelectedObject = stateController.CurrentSpecimenObject;
-       // ResetCameraPosition();
+        ResetCameraPosition();
 
         currentSelectedData = stateController.CurrentSpecimenData;
         leftPanel.gameObject.SetActive(true);
@@ -131,7 +131,6 @@ public class AnalysisPage : MonoBehaviour, IPage
     {
         orbitCam = mainCamera.GetComponent<OrbitCamera>();
         volume.profile.TryGetSettings(out depthOfField);
-        
         // Control Assistant Toggle
         controlAssistToggle.Bind((on) => controlAssistant.gameObject.SetActive(!controlAssistant.gameObject.activeSelf));
 
@@ -170,10 +169,10 @@ public class AnalysisPage : MonoBehaviour, IPage
         if (stateController.mode != ViewMode.ANALYSIS) return;
         HandleSpecimenRotation();
 
-        if(comparisonMode.isCompared == false)
-        {
-            HandleCamSelect();
-        }
+        // if(comparisonMode.isCompared == false)
+        // {
+        //     HandleCamSelect();
+        // }
 
         
     }
@@ -247,62 +246,62 @@ public class AnalysisPage : MonoBehaviour, IPage
         }
         
 
-            //scrolling control for zoom in/ out during the comparison mode
-            if (comparisonMode.isCompared == true)
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //scrolling control for zoom in/ out during the comparison mode
+        // if (comparisonMode.isCompared == true)
+        // {
+        //     RaycastHit hit;
+        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens")))
-            {
-                _tray = hit.transform.parent.parent.parent.gameObject;
+        //     if (Physics.Raycast(ray, out hit, 200f, ~LayerMask.NameToLayer("Specimens")))
+        //     {
+        //         _tray = hit.transform.parent.parent.parent.gameObject;
                 
-                if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-                {
-                    if(_tray.transform.localPosition.x < -0.75)
-                    {
-                        //tray2 zoomin
-                        _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f * mouseSpeed, 0, 0.1f * 0.886f * mouseSpeed);
-                        if (_tray.transform.localPosition.x >= -1.35)
-                        {
-                            _tray.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
-                        }
-                    }
-                    else
-                    {
-                        //tray1 zoomin
-                        _tray.transform.localPosition -= new Vector3(0.1f * 0.342f * mouseSpeed, 0, 0.1f * 0.94f * mouseSpeed);
-                        if (cart.tray1.transform.localPosition.x <= -0.42)
-                        {
-                            cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
-                        }
-                    }
-                }
-                else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-                {
+        //         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        //         {
+        //             if(_tray.transform.localPosition.x < -0.75)
+        //             {
+        //                 //tray2 zoomin
+        //                 _tray.transform.localPosition -= new Vector3(-0.1f * 0.5f * mouseSpeed, 0, 0.1f * 0.886f * mouseSpeed);
+        //                 if (_tray.transform.localPosition.x >= -1.35)
+        //                 {
+        //                     _tray.transform.localPosition = new Vector3(-1.35f, 2.25f, 0.2402f);
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 //tray1 zoomin
+        //                 _tray.transform.localPosition -= new Vector3(0.1f * 0.342f * mouseSpeed, 0, 0.1f * 0.94f * mouseSpeed);
+        //                 if (cart.tray1.transform.localPosition.x <= -0.42)
+        //                 {
+        //                     cart.tray1.transform.localPosition = new Vector3(-0.4210001f, 2.25f, -0.02999993f);
+        //                 }
+        //             }
+        //         }
+        //         else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        //         {
                     
-                    if (_tray.transform.localPosition.x < -0.75)
-                    {
-                        //tray2 zoomout
-                        _tray.transform.localPosition += new Vector3(-0.1f * 0.5f * mouseSpeed, 0, 0.1f * 0.886f * mouseSpeed);
-                        if (_tray.transform.localPosition.x <= -2.349999)
-                        {
-                            _tray.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
-                        }
-                    }
-                    else
-                    {
-                        //tray1 zoomout
-                        _tray.transform.localPosition += new Vector3(0.1f * 0.342f * mouseSpeed, 0, 0.1f * 0.94f * mouseSpeed);
-                        if (_tray.transform.localPosition.x >= -0.02359999)
-                        {
-                            _tray.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
-                        }
-                    }
-                }
-            }
+        //             if (_tray.transform.localPosition.x < -0.75)
+        //             {
+        //                 //tray2 zoomout
+        //                 _tray.transform.localPosition += new Vector3(-0.1f * 0.5f * mouseSpeed, 0, 0.1f * 0.886f * mouseSpeed);
+        //                 if (_tray.transform.localPosition.x <= -2.349999)
+        //                 {
+        //                     _tray.transform.localPosition = new Vector3(-2.349999f, 2.25f, 1.9722f);
+        //                 }
+        //             }
+        //             else
+        //             {
+        //                 //tray1 zoomout
+        //                 _tray.transform.localPosition += new Vector3(0.1f * 0.342f * mouseSpeed, 0, 0.1f * 0.94f * mouseSpeed);
+        //                 if (_tray.transform.localPosition.x >= -0.02359999)
+        //                 {
+        //                     _tray.transform.localPosition = new Vector3(-0.02359999f, 2.25f, 1.252f);
+        //                 }
+        //             }
+        //         }
+        //     }
 
-        }
+        // }
        
     }
 

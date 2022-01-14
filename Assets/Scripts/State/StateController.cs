@@ -16,6 +16,7 @@ namespace Assets.Scripts.State
         public AnalysisPage analysisPage;
         //public ComparisonMode comparisonMode;
         public SpecimenStore store;
+        public MainCameraEvents cameraEvents; 
 
         public bool loadingPrimarySpecimen;
         public bool loadingCompareSpecimen;

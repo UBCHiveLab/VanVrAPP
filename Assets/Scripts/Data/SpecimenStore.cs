@@ -27,6 +27,8 @@ public class SpecimenStore : MonoBehaviour
 
     public string testUrl = "http://google.com";
     public GameObject SpecimenErrorLoadingPopUp;
+    public GameObject SpecimenLoadingPopUp; 
+    public TrayPage trayPage;
 
     [Header("Stored Data")] public List<RegionData> regions;
     public Dictionary<string, SpecimenData> specimens;
@@ -276,6 +278,7 @@ public class SpecimenStore : MonoBehaviour
     public void LoadSpecimen(string id)
     {
         loader.LoadSpecimenAssets(id);
+      //  AnalyzeOn(); 
     }
 
     /**
@@ -366,5 +369,16 @@ public class SpecimenStore : MonoBehaviour
     public void ErrorPopUp()
     {
         SpecimenErrorLoadingPopUp.SetActive(true);
+    }
+
+
+    public void LoadingPopUp()
+    {
+        SpecimenLoadingPopUp.SetActive(true); 
+    }
+
+    public void AnalyzeOn()
+    {
+        trayPage.SetAnalyzeOn(); 
     }
 }

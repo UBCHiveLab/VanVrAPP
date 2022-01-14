@@ -19,8 +19,8 @@ public class MainCameraEvents : MonoBehaviour
     public void Start()
     {
         maincamera.enabled = true;
-        displayCamera.enabled = true;
-       // tray.ToggleShelfMenu();
+        displayCamera.enabled = true; 
+     //   tray.ToggleShelfMenu();
         
         cameraAnimation.GetComponent<Animator>().enabled = false;
         maincamera.transform.position = new Vector3(0.22f, 1.91f, 20.04f);
@@ -55,17 +55,18 @@ public class MainCameraEvents : MonoBehaviour
         */
     }
 
-    public void SwitchCamera()
+    //EDIT: make these two functions into one by adding a type of bool as parameter to decide which camera to switch to
+    public void SwitchToDisplay()
     {
-        if (displayCamera.enabled == true)
-        {
-            displayCamera.enabled = false; 
-        }
-        else if (displayCamera.enabled == false)
-        {
-            displayCamera.enabled = true;
-        }    
-        
-        Debug.Log("camera is switched");
+        displayCamera.enabled = true; 
+        maincamera.enabled = false; 
+        Debug.Log("camera is switched to display mode");
+    }
+
+    public void SwitchToAnalysis()
+    {
+        displayCamera.enabled = false; 
+        maincamera.enabled = true; 
+        Debug.Log("camera is switched to analysis mode"); 
     }
 }

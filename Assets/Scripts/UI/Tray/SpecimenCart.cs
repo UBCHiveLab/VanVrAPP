@@ -3,6 +3,9 @@
 public class SpecimenCart : MonoBehaviour
 {
     public GameObject trayPrefab;
+    public MainCameraEvents cameraEvents; 
+    public TrayPage trayPage; 
+    public AnalysisPage analysisPage; 
     public Vector3 singleTrayLocalOffset = new Vector3(-0.25f, 2.25f, 0.5f);
     public Vector3 compareTray1LocalOffset = new Vector3(-0.75f, 2.25f, 0.5f);
     public Vector3 compareTray2LocalOffset = new Vector3(0.5f, 2.25f, 0.5f);
@@ -40,9 +43,11 @@ public class SpecimenCart : MonoBehaviour
             holder.transform.SetParent(tray.transform);
             holder.transform.localPosition = specimenTrayOffset;
             specimen.transform.SetParent(holder.transform);
-
+            
             // make the specimen's local position, it's position before the holder was made its parent
             specimen.transform.localPosition = specimenOldPos;
+          //  cameraEvents.SwitchToAnalysis(); 
+          //  trayPage.SetAnalyzeOn(); 
         }
     }
 

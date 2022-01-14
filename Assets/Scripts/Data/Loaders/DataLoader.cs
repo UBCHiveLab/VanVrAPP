@@ -21,8 +21,6 @@ public abstract class DataLoader: MonoBehaviour
 
     [Header("Services")]
     public SpecimenStore store;
-    // public GameObject specimenLoadingPopUp;
-    // public GameObject specimenErrorLoadingPopUp; 
 
     [Header("Data")]
     public DataManifest manifest;
@@ -136,11 +134,13 @@ public abstract class DataLoader: MonoBehaviour
         // Wait until all requests are resolved
         while (_requestsResolved < manifest.specimenData.Length)
         {
-            status = $"Loading Specimens [{_requestsResolved}/{manifest.specimenData.Length}]";
-            yield return new WaitForSeconds(0.5f); // The wait allows for ui interactions while loading!
+            status = $"Loading Specimens [{_requestsResolved}/{manifest.specimenData.Length}]"; 
+            yield return new WaitForSeconds(1f); // The wait allows for ui interactions while loading!
+         
         }
         watch.Stop();
         status = "Load successful";
+
         // Listeners can now check IsLoading() and know that the loader has completed.
         _loaded = true;
 
@@ -195,6 +195,8 @@ public abstract class DataLoader: MonoBehaviour
             } else
             {
                 // Get downloaded asset bundle
+                store.LoadingPopUp(); 
+                Debug.Log("loading popup"); 
 
                 try
                 {
@@ -268,6 +270,7 @@ public abstract class DataLoader: MonoBehaviour
             _currentLoadingIds.Remove(srd.id);
             // Must resolve requests in order to trigger loading finished
             _requestsResolved++;
+            
         }
 
     }

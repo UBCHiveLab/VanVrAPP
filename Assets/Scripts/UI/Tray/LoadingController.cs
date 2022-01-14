@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LoadingController : MonoBehaviour
 {
     public GameObject loadingLargeSpinner;
+    public GameObject skyler; 
     public GameObject actionButtons;
 
     void Start()
@@ -23,6 +24,8 @@ public class LoadingController : MonoBehaviour
     public void OnLoadingProcess(bool loading)
     {
         loadingLargeSpinner.SetActive(!loading);
-        actionButtons.SetActive(loading);
+        skyler.SetActive(loading); 
+        Debug.Log(loading); 
+     //   actionButtons.SetActive(loading);
     }
 }

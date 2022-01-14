@@ -37,6 +37,7 @@ public class TrayPage : MonoBehaviour, IPage
 
     public SpecimenCart cart;
     public AnalysisPage analysisPage; 
+    public Animator animation; 
 
     void Start()
     {
@@ -125,10 +126,12 @@ public class TrayPage : MonoBehaviour, IPage
 
         } else
         {
+            // cameraEvents.SwitchCamera();
+            // SetAnalyzeOn(); 
             StartCoroutine(stateController.AddPrimarySpecimen(data, OnAddPrimarySpecimen));
 
         }
-        actionButtons.SetActive(true);
+      //  actionButtons.SetActive(true);
        
     }
 
@@ -164,7 +167,7 @@ public class TrayPage : MonoBehaviour, IPage
         /*camDefaultPosition = Camera.main.transform.position;
         camDefaultRotation = Camera.main.transform.rotation.eulerAngles;
         camDefaultFov = Camera.main.fieldOfView;*/
-        camSet = true;
+       // camSet = true;
 
         if (stateController.CompareSpecimenObject == null)
         {
@@ -172,7 +175,7 @@ public class TrayPage : MonoBehaviour, IPage
         }
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
-        cameraEvents.SwitchCamera();
+      //  cameraEvents.SwitchCamera();
         analysisPage.ResetCameraPosition();
     }
 
@@ -289,7 +292,7 @@ public class TrayPage : MonoBehaviour, IPage
     {
       //  compareSameButton.gameObject.SetActive(true);
         //compareDifferentButton.gameObject.SetActive(true);
-        removeOnlyButton.gameObject.SetActive(true);
+       // removeOnlyButton.gameObject.SetActive(true);
         removeCompareButton.gameObject.SetActive(false);
         removePrimaryButton.gameObject.SetActive(false);
         analyzeButton.interactable = true;
@@ -338,7 +341,15 @@ public class TrayPage : MonoBehaviour, IPage
 
     public void SetAnalyzeOn()
     {
-        analyzeButton.gameObject.SetActive(true);
+        // analyzeButton.gameObject.SetActive(true);
+        // actionButtons.gameObject.SetActive(true); 
+        // removeOnlyButton.gameObject.SetActive(true); 
+        // analyzeButton.onClick.AddListener(SelectAnalysis); 
+        
+      //  animation.StartCoroutine(CheckAnimationCompleted("SkylerProgress")); 
+        while (animation.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
+            SelectAnalysis(); 
+      //  analysisPage.ResetCameraPosition(); 
       //  actionButtons.gameObject.SetActive(true); 
     }
     public void SetAnalyzeOff()
@@ -352,5 +363,6 @@ public class TrayPage : MonoBehaviour, IPage
         actionButtons.gameObject.SetActive(false); 
         removeOnlyButton.gameObject.SetActive(false); 
     }
+
 
 }
