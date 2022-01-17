@@ -138,6 +138,7 @@ public class TrayPage : MonoBehaviour, IPage
     private void OnAddPrimarySpecimen(GameObject obj)
     {
         cart.AddSpecimenPrimary(obj);
+        SelectAnalysis(); 
         LayoutStatePrimaryOnly();
     }
 
@@ -175,7 +176,7 @@ public class TrayPage : MonoBehaviour, IPage
         }
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
-      //  cameraEvents.SwitchCamera();
+        cameraEvents.SwitchToAnalysis();
         analysisPage.ResetCameraPosition();
     }
 

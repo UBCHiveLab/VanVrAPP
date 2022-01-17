@@ -121,7 +121,7 @@ public class CoursesPage : MonoBehaviour
     public Button specLabShowBtn; 
     public TextMeshProUGUI labPageSpecLabel;
     public TextMeshProUGUI labPageInfoLabel; 
-    public RawImage labRenderedImg;
+    public RawImage specimenRenderedImg;
     public GameObject sidePanel;
     public Button expandPanelBtn;
     public Sprite expand;
@@ -453,7 +453,6 @@ public class CoursesPage : MonoBehaviour
         {
             specimenInfoShowBtn.interactable = true;
         }
-        // StartCoroutine(LoadLabImg(urlImg));
         labShowBtn.onClick.AddListener(ShowLabDetails);
         labShowBtn.onClick.AddListener(() => SidePanelPreviewOff());
         specimenInfoShowBtn.onClick.AddListener(ShowSpecimenDetails);
@@ -523,13 +522,14 @@ public class CoursesPage : MonoBehaviour
             for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
             {
                 string id = _loadedCourseSpecimens[i].id;
-                
+                string imgUrl = _loadedCourseSpecimens[i].imgUrl; 
                 SelectorButton btn = Instantiate(lightSelectorPrefab, options.children);
                 btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                 Debug.Log(_loadedCourseSpecimens[i].name);
-                btn.button.onClick.AddListener(() => SidePanelPreview(id));
+                btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
              //   idToButton.Add(id, btn);
                 Debug.Log("course specimen reached layout room");
+       
             }
             
         }  
@@ -614,25 +614,25 @@ public class CoursesPage : MonoBehaviour
         labInfoShowBtn.onClick.AddListener(() => SidePanelPreviewOff());
         labPageInfoLabel.color = Color.blue;
         labPageSpecLabel.color = Color.white;
-      //  StartCoroutine(LoadLabImg(urlImg));
     }
 
-    private IEnumerator LoadLabImg(String url)
+    private IEnumerator LoadSpecimenImg(String url)
     {
-        url = url.Trim();
+        // url = url.Trim();
 
-        if (url.Length > 0)
-        {
-            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-            yield return request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
-                Debug.Log(request.error);
+        // if (url.Length > 0)
+        // {
+        //     UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        //     yield return request.SendWebRequest();
+        //     if (request.isNetworkError || request.isHttpError)
+        //         Debug.Log(request.error);
 
-            else
-                labRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-        }
-        else
-        {
+        //     else
+        //         specimenRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        // }
+        // else
+        // {
+        
             url = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png";
             url = url.Trim();
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
@@ -641,8 +641,10 @@ public class CoursesPage : MonoBehaviour
                 Debug.Log(request.error);
 
             else
-                labRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-        }
+                specimenRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+                
+      //  }
+        
     }
     private void SelectRegion(RegionData region)
     {
@@ -762,15 +764,16 @@ public class CoursesPage : MonoBehaviour
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
+                string imgUrl = _loadedSpecimens[i].imgUrl; 
 
                 if (secondLabel.text == "> 3D Atlas")
                 {
-                    SidePanelPreview(id);
+                    SidePanelPreview(id, imgUrl);
                 }
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
              //   btn.button.onClick.AddListener(() => selectorMenu.UpdateSelected()); 
-                btn.button.onClick.AddListener(() => SidePanelPreview(id));
+                btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
             //     btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
             //     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));     
                 idToButton.Add(id, btn);        
@@ -798,16 +801,14 @@ public class CoursesPage : MonoBehaviour
                 for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
                 {
                     string id = _loadedCourseSpecimens[i].id;
-                    Debug.Log(id);
+                    string imgUrl = _loadedCourseSpecimens[i].imgUrl; 
                     SelectorButton btn = Instantiate(selectorPrefab, listTransformCourseSpec);
                     btn.Populate(_loadedCourseSpecimens[i].name, i, null);
-                    btn.button.onClick.AddListener(() => SidePanelPreview(id));
+                    btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
                 //     btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true)); 
                 //   //  btn.button.onClick.AddListener(() => camera.SwitchCamera());
                 //     btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
-                //     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
-                    
-                    
+                //     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));     
                     idToButton.Add(id, btn);
                   //  Debug.Log("course specimen reached layout room");
                 }
@@ -838,10 +839,11 @@ public class CoursesPage : MonoBehaviour
             for (int i = 0; i < _loadedSpecimens.Count; i++)
             {
                 string id = _loadedSpecimens[i].id;
+                string imgUrl = _loadedSpecimens[i].imgUrl; 
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
-                btn.button.onClick.AddListener(() => SidePanelPreview(id));
+                btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
                 // btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
                 // btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
                 // btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
@@ -1081,16 +1083,17 @@ public class CoursesPage : MonoBehaviour
         
     }
 
-    private void SidePanelPreview(string id)
+    private void SidePanelPreview(string id, string imgUrl)
     {
         Clear(); 
-        previewImage.gameObject.SetActive(true);
+        specimenRenderedImg.gameObject.SetActive(true);
         previewText.gameObject.SetActive(true);
         specimenText.gameObject.SetActive(true); 
         specimenText.text = id; 
         previewBtn.gameObject.SetActive(true);
         previewBtn.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
         Debug.Log("preview btn clicked"); 
+        StartCoroutine(LoadSpecimenImg(imgUrl)); 
      //   previewBtn.onClick.AddListener(() => selectorMenu.UpdateSelected());
         //  previewBtn.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
         //  previewBtn.onClick.AddListener(() => trayPage.SetAnalyzeOn());
@@ -1098,6 +1101,7 @@ public class CoursesPage : MonoBehaviour
 
     public void SidePanelPreviewOff()
     {
+        specimenRenderedImg.gameObject.SetActive(false);
         previewImage.gameObject.SetActive(false);
         specimenText.gameObject.SetActive(false); 
         previewText.gameObject.SetActive(false);

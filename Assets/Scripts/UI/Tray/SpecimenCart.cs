@@ -30,6 +30,8 @@ public class SpecimenCart : MonoBehaviour
     public void AddSpecimenCompare(GameObject specimen)
     {
         AddSpecimen(specimen, tray2);
+
+        trayPage.SetAnalyzeOn(); 
     }
 
     public void AddSpecimen(GameObject specimen, GameObject tray)

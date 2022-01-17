@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking; 
 using UnityEngine.UI;
 
 /**
@@ -11,6 +12,7 @@ using UnityEngine.UI;
 public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI text;
+    public RawImage imageFrame; 
     public Button button;
     public int indexValue;
     public Image icon;
@@ -82,5 +84,22 @@ public class SelectorButton : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (string.IsNullOrEmpty(value)) return value;
         return value.Length <= maxLength ? value : value.Substring(0, maxLength) + "...";
+    }
+
+    private IEnumerator DownloadImage(string url) {
+        url = url.Trim();
+        
+        if (url.Length > 0)
+        {
+            UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+            yield return request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+                Debug.Log(request.error);
+         
+            else
+                imageFrame.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
+
+
     }
 }

@@ -17,6 +17,7 @@ public class SpecimenData
     public List<AnnotationData> annotations;
     public GameObject prefab;
     public SpecimenRequestData request;
+    public string imgUrl; 
 
     public bool dataLoaded => mesh != null && material != null || prefab != null;
 }
