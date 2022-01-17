@@ -14,6 +14,7 @@ public class ModeChangeToSpecimen : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(() => {coursesPage.LastEntry(); });
         GetComponent<Button>().onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
         GetComponent<Button>().onClick.AddListener(() => {panel.SetActive(false); });
+        GetComponent<Button>().onClick.AddListener(() => {coursesPage.SidePanelPreviewOff(); });
     }
 
 
