@@ -2,6 +2,9 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using System.Collections;
+using UnityEngine.Networking; 
 /**
  * Defines logic and composes components for Tray mode.
  */
@@ -23,6 +26,7 @@ public class TrayPage : MonoBehaviour, IPage
     public ProportionIndicator proportionScript;
     public bool selectingCompareSpecimen;
     public Button shelfToggle;
+    public GameObject errorPopUp; 
     private bool showMenu;
     public SpecimenStore store;
     public MainCameraEvents cameraEvents; 
@@ -129,17 +133,26 @@ public class TrayPage : MonoBehaviour, IPage
             // cameraEvents.SwitchCamera();
             // SetAnalyzeOn(); 
             StartCoroutine(stateController.AddPrimarySpecimen(data, OnAddPrimarySpecimen));
-
+            
         }
-      //  actionButtons.SetActive(true);
-       
+     //  StartCoroutine(SpecimenLoading());
+        //  actionButtons.SetActive(true);
+
     }
 
     private void OnAddPrimarySpecimen(GameObject obj)
     {
         cart.AddSpecimenPrimary(obj);
+     //   StartCoroutine(SpecimenLoading()); 
         SelectAnalysis(); 
         LayoutStatePrimaryOnly();
+    }
+    
+    private IEnumerator SpecimenLoading()
+    {
+        store.LoadingPopUp();
+        Debug.Log("loading pop up"); 
+        yield return new WaitForSeconds(1.5f); 
     }
 
     private void OnAddCompareSpecimen(GameObject obj) {
@@ -168,7 +181,7 @@ public class TrayPage : MonoBehaviour, IPage
         /*camDefaultPosition = Camera.main.transform.position;
         camDefaultRotation = Camera.main.transform.rotation.eulerAngles;
         camDefaultFov = Camera.main.fieldOfView;*/
-       // camSet = true;
+        // camSet = true;
 
         if (stateController.CompareSpecimenObject == null)
         {
@@ -176,8 +189,8 @@ public class TrayPage : MonoBehaviour, IPage
         }
         proportionScript.HighlightProportionIndicator(); // Show proportion indicator
         stateController.mode = ViewMode.ANALYSIS;
-        cameraEvents.SwitchToAnalysis();
-        analysisPage.ResetCameraPosition();
+    //    cameraEvents.SwitchToAnalysis();
+     //   analysisPage.ResetCameraPosition();
     }
 
     public void SelectCompare(string organ)

@@ -24,8 +24,7 @@ public class LoadingController : MonoBehaviour
     public void OnLoadingProcess(bool loading)
     {
         loadingLargeSpinner.SetActive(!loading);
-        skyler.SetActive(loading); 
-        Debug.Log(loading); 
+       // skyler.SetActive(loading); 
      //   actionButtons.SetActive(loading);
     }
 }

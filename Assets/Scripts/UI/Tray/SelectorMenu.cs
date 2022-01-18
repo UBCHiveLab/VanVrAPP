@@ -22,6 +22,8 @@ public class SelectorMenu : MonoBehaviour
     [Header("Services")] public SpecimenStore store;
     public TrayPage trayPage;
     public StateController stateController;
+    public MainCameraEvents cameraEvents;
+    public CoursesPage coursesPage; 
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -463,7 +465,9 @@ public class SelectorMenu : MonoBehaviour
         btn.button.onClick.AddListener(() => {
             SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
             OnCloseLabInfo();
+            cameraEvents.SwitchToAnalysis();
             btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
+            Debug.Log("set loading until"); 
             UpdateSelected();
         });
     }
@@ -484,7 +488,6 @@ public class SelectorMenu : MonoBehaviour
 
         if (stateController.currentSpecimenId != null) {
             primaryId = stateController.currentSpecimenId;
-            Debug.Log(primaryId);
         }
         if (stateController.CompareSpecimenData != null) {
             compareId = stateController.CompareSpecimenData.id;
@@ -496,14 +499,12 @@ public class SelectorMenu : MonoBehaviour
             if (key == primaryId || key == compareId)
             {
                 SetSpecimenButtonToSelected(key);
-                Debug.Log(key);
-                Debug.Log("set specimen button to selected"); 
+             //   Debug.Log("set specimen button to selected"); 
             }
             else
             {
                 SetSpecimenButtonToDeselected(key);
-                Debug.Log(key);
-                Debug.Log("set specimen button to deselected"); 
+               // Debug.Log("set specimen button to deselected"); 
             }
         }
     }

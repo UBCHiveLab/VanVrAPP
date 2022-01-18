@@ -169,7 +169,7 @@ public abstract class DataLoader: MonoBehaviour
             yield break;
         }
 
-        _currentLoadingIds.Add(srd.id);
+      //  _currentLoadingIds.Add(srd.id); //Edit: trying to fix a bug
         string reqUri = srd.assetUrl;           // Default to standalone windows packages
 #if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
         reqUri = srd.assetUrlWebGl;             // WebGl packages
@@ -188,15 +188,19 @@ public abstract class DataLoader: MonoBehaviour
                     OpenAlternativeContent(srd.altAssetUrl);
                 } else {
                     
-                    store.ErrorPopUp(); //EDIT: trying to figure out where to add the error pop-up
+                    store.ErrorPopUp();
+                    store.CameraSwitchToDisplay(); 
                   //  SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
                     yield break;
                 }
             } else
             {
+                _currentLoadingIds.Add(srd.id);
                 // Get downloaded asset bundle
-                //store.LoadingPopUp(); 
-                //Debug.Log("loading popup");
+                store.LoadingPopUp(); 
+                Debug.Log("loading popup");
+                yield return new WaitForSeconds(1f);
+                store.CameraSwitchToAnalysis(); 
                 //store.AnalyzeOn(); 
 
                 try

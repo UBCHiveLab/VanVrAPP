@@ -127,12 +127,11 @@ namespace Assets.Scripts.State
         public IEnumerator AddPrimarySpecimen(SpecimenData data, Action<GameObject> callback) {
             RemovePrimarySpecimen();
             CurrentSpecimenData = data;
-            StartCoroutine(InstantiateSpecimen(data, true)); 
-             
+            //store.LoadingPopUp();
+          //  yield return new WaitForSeconds(1f);
+            StartCoroutine(InstantiateSpecimen(data, true));    
             while (loadingPrimarySpecimen) yield return null;
             callback(CurrentSpecimenObject);
-            
-           // analysisPage.ResetCameraPosition();
            
         }
 
@@ -170,8 +169,9 @@ namespace Assets.Scripts.State
 
                 store.LoadSpecimen(data.id);
                 while (!store.specimens[data.id].dataLoaded) yield return null;
-                store.LoadingPopUp();
-                Debug.Log("loading pop-up"); 
+                
+             //   cameraEvents.SwitchToAnalysis(); 
+              //  Debug.Log("loading pop-up"); 
                 
                 data = store.specimens[data.id];
                

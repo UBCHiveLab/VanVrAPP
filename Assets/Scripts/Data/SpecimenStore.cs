@@ -29,6 +29,7 @@ public class SpecimenStore : MonoBehaviour
     public GameObject SpecimenErrorLoadingPopUp;
     public GameObject SpecimenLoadingPopUp; 
     public TrayPage trayPage;
+    public MainCameraEvents cameraEvents; 
 
     [Header("Stored Data")] public List<RegionData> regions;
     public Dictionary<string, SpecimenData> specimens;
@@ -377,8 +378,13 @@ public class SpecimenStore : MonoBehaviour
         SpecimenLoadingPopUp.SetActive(true); 
     }
 
-    public void AnalyzeOn()
+    public void CameraSwitchToDisplay()
     {
-        trayPage.SetAnalyzeOn(); 
+        cameraEvents.SwitchToDisplay(); 
     }
+    public void CameraSwitchToAnalysis()
+    {
+        cameraEvents.SwitchToAnalysis(); 
+    }
+
 }
