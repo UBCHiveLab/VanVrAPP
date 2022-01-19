@@ -49,9 +49,6 @@ public class SpecimenCart : MonoBehaviour
             
             // make the specimen's local position, it's position before the holder was made its parent
             specimen.transform.localPosition = specimenOldPos;
-            //  cameraEvents.SwitchToAnalysis(); 
-            // coursesPage.SpecimenLoadingPopUpOn(); 
-           // trayPage.SetAnalyzeOn(); 
         }
     }
 

@@ -169,7 +169,7 @@ public abstract class DataLoader: MonoBehaviour
             yield break;
         }
 
-      //  _currentLoadingIds.Add(srd.id); //Edit: trying to fix a bug
+      //  _currentLoadingIds.Add(srd.id); 
         string reqUri = srd.assetUrl;           // Default to standalone windows packages
 #if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
         reqUri = srd.assetUrlWebGl;             // WebGl packages
@@ -186,8 +186,7 @@ public abstract class DataLoader: MonoBehaviour
                 if (srd.altAssetUrl != "") {
                     // if couldn't load the asset bundle and there's an alternative url for the asset's content, open a new tab with the alt content
                     OpenAlternativeContent(srd.altAssetUrl);
-                } else {
-                    
+                } else {  
                     store.ErrorPopUp();
                     store.CameraSwitchToDisplay(); 
                   //  SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");

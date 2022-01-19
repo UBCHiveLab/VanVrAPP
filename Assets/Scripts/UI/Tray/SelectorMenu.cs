@@ -465,7 +465,7 @@ public class SelectorMenu : MonoBehaviour
         btn.button.onClick.AddListener(() => {
             SelectSpecimen(_loadedSpecimens[btn.indexValue].id);
             OnCloseLabInfo();
-            cameraEvents.SwitchToAnalysis();
+          //  cameraEvents.SwitchToAnalysis();
             btn.SetLoadingUntil(() => store.specimens[_loadedSpecimens[btn.indexValue].id].dataLoaded);
             Debug.Log("set loading until"); 
             UpdateSelected();

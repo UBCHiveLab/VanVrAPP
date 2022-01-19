@@ -801,7 +801,7 @@ public class CoursesPage : MonoBehaviour
                 {
                     string id = _loadedCourseSpecimens[i].id;
                     string imgUrl = _loadedCourseSpecimens[i].imgUrl; 
-                    SelectorButton btn = Instantiate(selectorPrefab, listTransformCourseSpec);
+                    SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformCourseSpec);
                     btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                     btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
                 //     btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true)); 
@@ -898,6 +898,7 @@ public class CoursesPage : MonoBehaviour
                             // Bind a click listener that loads the specimen selection view
                           //  sbtn.button.onClick.AddListener(() => {SidePanelPreview(_loadedOrgans[sbtn.indexValue]); });
                             sbtn.button.onClick.AddListener(() => {SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
+
                             idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);
                         }
                     }
