@@ -312,16 +312,6 @@ public class CoursesPage : MonoBehaviour
                 }
             }
         }
-        
-    //    foreach (var lab in _loadedLabs)
-    //    {
-    //        if (message == labTitle.text)
-    //        {
-    //            LabDisplayOptions labOption = Instantiate(labPrefab, listTransformAllCourses);
-    //            labOption.Populate(lab, this, selectorMenu);
-    //        }
-
-    //    } 
        
     }
     
