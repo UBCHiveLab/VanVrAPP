@@ -51,6 +51,7 @@ public class CoursesPage : MonoBehaviour
     public Transform listTransformSpec; 
     public Transform listTransformLabName;
     public Transform listTransformTab; 
+    public Transform listTransformChildren; 
     public Text backBttnTitle;
     public Button courseButton;
     public Button homeButton;
@@ -86,6 +87,7 @@ public class CoursesPage : MonoBehaviour
     public GameObject loadingIndicator;
     
     public GameObject homeInfo;
+    public GameObject inputField; 
     
 
     [Header("HomeContentRender")]
@@ -101,7 +103,7 @@ public class CoursesPage : MonoBehaviour
     public GameObject courseInfoContentText;
     public GameObject labInfoContentText;
     public ScrollRect courseScrollRect;
-    public ScrollRect labScrollRect;
+    public Transform courseContent; 
     public TextMeshProUGUI labSpecName;
     public Button labShowBtn;
     public Button infoShowBtn;
@@ -121,6 +123,7 @@ public class CoursesPage : MonoBehaviour
     public Button specLabShowBtn; 
     public TextMeshProUGUI labPageSpecLabel;
     public TextMeshProUGUI labPageInfoLabel; 
+    public ScrollRect labScrollRect;
     public RawImage specimenRenderedImg;
     public GameObject sidePanel;
     public Button expandPanelBtn;
@@ -295,25 +298,25 @@ public class CoursesPage : MonoBehaviour
         Layout(mode, showNoContentText);
     }
 // Figure out a way to access the script read string input from the other class - look into this
-    public void CheckStringInput(string message)
-    {
-        string search; 
-        search = message; 
-        Debug.Log(search);
-        if (!string.IsNullOrEmpty(search))
-        {
-            foreach(var course in _loadedCourses)
-            {
-                if (message.Contains(courseName))
-                {
-                    CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformAllCourses);
-                    courseOption.Populate(course, this, selectorMenu);
-                    Debug.Log(courseName);
-                }
-            }
-        }
+    // public void CheckStringInput(string message)
+    // {
+    //     // message = inputField.GetComponent<Text>().text;
+    //     // Debug.Log(message); 
+    //     // if (!string.IsNullOrEmpty(search))
+    //     // {
+    //     for (int i = 0; i < _loadedCourses.Count; i++ )
+    //     {
+    //         if (CheckString().Contains(_loadedCourses[i].courseId))
+    //         {
+    //             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformAllCourses);
+    //               //  courseOption.Populate(course, this, selectorMenu);
+    //             Debug.Log(_loadedCourses[i].courseId);
+    //             Debug.Log("loaded search courses");    
+    //         }
+    //     }
+    //     //}
        
-    }
+    // }
     
 
     private void Clear()
@@ -343,6 +346,10 @@ public class CoursesPage : MonoBehaviour
         foreach (Transform child in listTransformTab)
         {
             Destroy (child.gameObject);
+        }
+        foreach (Transform child in listTransformChildren)
+        {
+            Destroy (child.gameObject); 
         }
     }
 
@@ -407,7 +414,8 @@ public class CoursesPage : MonoBehaviour
         defaultPanel.SetActive(true);
         expandedPanel.SetActive(false);
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = 3;
-
+        LayoutElement courseLayoutElement = courseContent.GetComponent<LayoutElement>(); 
+         
         courseTitle.text = title;
         courseName = title;
         coursePageInfoLabel.color = Color.cyan;
@@ -423,6 +431,7 @@ public class CoursesPage : MonoBehaviour
      //   Debug.Log(_loadedLabs.Count());
 
         ShowAllLabsText();
+      //  courseLayoutElement.preferredHeight 
      //   Debug.Log("show all labs text");
         // if (_loadedLabs != null)
         // {
@@ -499,7 +508,7 @@ public class CoursesPage : MonoBehaviour
         labSpecDisplayPrefab.gameObject.SetActive(true);
         
         List<Tuple<int, List<SpecimenData>>> courseSpecData = store.GetSpecimenData(courseId);
-       
+      //  if (courseSpecData.Count() )
         foreach (Tuple<int, List<SpecimenData>> tuple in courseSpecData)
         {
             labSpecDisplayPrefab.gameObject.SetActive(true); 
@@ -507,6 +516,29 @@ public class CoursesPage : MonoBehaviour
             textObject.text = $"Lab {tuple.Item1.ToString()}";
             LabSpecDisplayOptions options = Instantiate(labSpecDisplayPrefab, listTransformLabName);
             _loadedCourseSpecimens = tuple.Item2;
+            if (_loadedCourseSpecimens.Count() > 12)
+            {
+                listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 170;
+                options.children.GetComponent<GridLayoutGroup>().padding.top = 50; 
+                Debug.Log("count greater than 12"); 
+            } else if ((_loadedCourseSpecimens.Count() > 8) && (_loadedCourseSpecimens.Count() <= 12))
+            {
+                listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 100; 
+                options.children.GetComponent<GridLayoutGroup>().padding.top = 0; 
+                Debug.Log("count greater than 8"); 
+            } else if ((_loadedCourseSpecimens.Count() > 4) && (_loadedCourseSpecimens.Count() <= 8))
+            {
+                listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 100; 
+                options.children.GetComponent<GridLayoutGroup>().padding.top = -60; 
+                Debug.Log("count greater than 4"); 
+            }
+            else if ((_loadedCourseSpecimens.Count() <= 4))
+            {
+                listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 100; 
+                options.children.GetComponent<GridLayoutGroup>().padding.top = -100;
+                Debug.Log("count greater than 0");  
+            }
+
             for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
             {
                 string id = _loadedCourseSpecimens[i].id;
@@ -759,13 +791,16 @@ public class CoursesPage : MonoBehaviour
                     SidePanelPreview(id, imgUrl);
                     
                 }
-                SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformSpec);
-                btn.Populate(_loadedSpecimens[i].name, i, null);
+                else 
+                {
+                    SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformSpec);
+                    btn.Populate(_loadedSpecimens[i].name, i, null);
              //   btn.button.onClick.AddListener(() => selectorMenu.UpdateSelected()); 
-                btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
+                    btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
             //     btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
             //     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));     
-                idToButton.Add(id, btn);        
+                    idToButton.Add(id, btn);
+                }        
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
@@ -865,15 +900,17 @@ public class CoursesPage : MonoBehaviour
             for (int i = 0; i < _loadedRegions.Count; i++)
             {
                 SelectorButton btn = Instantiate(selectorPrefab, listTransformTab);
-                btn.Populate(_loadedRegions[i].name, i, _loadedRegions[i].icon); 
+                btn.Populate(_loadedRegions[i].name, i, _loadedRegions[i].icon);  
                 idToButton.Add(_loadedRegions[i].name, btn);
 
                 // If a region is the currently selected, output the organs found as buttons below.
                 if (_loadedRegions[i] == region)
                 {
+                    AdjustRegionLayout(btn, i); 
+                    Debug.Log("region is loaded region"); 
                     btn.ShowBackground(true);
                     btn.children.gameObject.SetActive(true);
-
+                    
                     if (_loadedOrgans.Count == 0)
                     {
                         SelectorButton sbtn = Instantiate(noSpecimensPrefab, btn.children);
@@ -886,15 +923,15 @@ public class CoursesPage : MonoBehaviour
                             SelectorButton sbtn = Instantiate(lightSelectorPrefab, btn.children);
                             sbtn.Populate(_loadedOrgans[j], j, null);
                             // Bind a click listener that loads the specimen selection view
-                          //  sbtn.button.onClick.AddListener(() => {SidePanelPreview(_loadedOrgans[sbtn.indexValue]); });
+                          //  sbtn.button.onClick.AddListener(() => {SelectSpecimen(_loadedOrgans[sbtn.indexValue]); });
                             sbtn.button.onClick.AddListener(() => {SelectOrgan(_loadedOrgans[sbtn.indexValue]); });
-
-                            idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);
+                            idToButton.Add(_loadedOrgans[sbtn.indexValue], sbtn);       
                         }
                     }
 
                     // Bind a click listener that closes the region accordion
                     btn.button.onClick.AddListener(UnselectRegion);
+                    btn.button.onClick.AddListener(ResetRegionLayout); 
                 }
                 else
                 {
@@ -905,6 +942,67 @@ public class CoursesPage : MonoBehaviour
             }
         }
         
+    }
+
+    public void AdjustRegionLayout(SelectorButton btn, int i)
+    {
+       // Clear(); 
+       Vector2 space = listTransformTab.GetComponent<GridLayoutGroup>().spacing; 
+       float f = btn.children.position.y;
+        if (_loadedOrgans.Count > 20)
+        {
+            space = new Vector2(150, 500);  
+            Debug.Log("selected 1"); 
+           // listTransformTab.RowSpacing()
+            //listTransformTab.GetComponent<LayoutElement>().preferredHeight = 1500; 
+        } else if ((_loadedOrgans.Count < 20) && (_loadedOrgans.Count > 10))
+        {
+            listTransformTab.GetComponent<GridLayoutGroup>().spacing = new Vector2(150, 250);  
+            Debug.Log("selected 2"); 
+            
+        }
+         else if (_loadedOrgans.Count == 10)
+        {
+            space = new Vector2(150, 180);  
+            Debug.Log("selected 3"); 
+        } else if (_loadedOrgans.Count < 10)
+        {
+            space = new Vector2(150, 80);  
+            Debug.Log("selected 3"); 
+        } 
+
+        if ((_loadedRegions[i] == _loadedRegions[6]) || (_loadedRegions[i] == _loadedRegions[7]))
+        {
+            space = new Vector2(150, 0);
+        }
+
+        for (int k = 0; k < 3; k++)
+            {
+                if (_loadedRegions[i] == _loadedRegions[k])
+                {
+                    btn.children = listTransformChildren;
+                }
+            }
+
+            for (int k = 3; k < 6; k++)
+            {
+                if (_loadedRegions[i] == _loadedRegions[k])
+                {
+               
+                    f = listTransformChildren.position.y + space.y; 
+                }
+            }
+        
+        // if ((_loadedRegions[i] == _loadedRegions[0]) || (_loadedRegions[i] == _loadedRegions[1]) || (_loadedRegions[i] == _loadedRegions[2]))
+        // {
+        //     btn.hildren.transform.localPosition = new Vector3(-2, -1, 0); 
+        // }
+    }
+
+    public void ResetRegionLayout()
+    {
+        listTransformTab.GetComponent<GridLayoutGroup>().spacing = new Vector2(150, 0); 
+        Debug.Log("reset"); 
     }
     private void ShowCoursesPage()
     {
