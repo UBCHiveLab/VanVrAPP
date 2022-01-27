@@ -516,27 +516,24 @@ public class CoursesPage : MonoBehaviour
             textObject.text = $"Lab {tuple.Item1.ToString()}";
             LabSpecDisplayOptions options = Instantiate(labSpecDisplayPrefab, listTransformLabName);
             _loadedCourseSpecimens = tuple.Item2;
+           
             if (_loadedCourseSpecimens.Count() > 12)
             {
                 listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 170;
-                options.children.GetComponent<GridLayoutGroup>().padding.top = 50; 
-                Debug.Log("count greater than 12"); 
+                options.children.GetComponent<GridLayoutGroup>().padding.top = 50;     
             } else if ((_loadedCourseSpecimens.Count() > 8) && (_loadedCourseSpecimens.Count() <= 12))
             {
                 listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 100; 
                 options.children.GetComponent<GridLayoutGroup>().padding.top = 0; 
-                Debug.Log("count greater than 8"); 
             } else if ((_loadedCourseSpecimens.Count() > 4) && (_loadedCourseSpecimens.Count() <= 8))
             {
-                listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 100; 
-                options.children.GetComponent<GridLayoutGroup>().padding.top = -60; 
-                Debug.Log("count greater than 4"); 
+                listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 140; 
+                options.children.GetComponent<GridLayoutGroup>().padding.top = -60;
             }
             else if ((_loadedCourseSpecimens.Count() <= 4))
             {
                 listTransformLabName.GetComponent<VerticalLayoutGroup>().spacing = 100; 
                 options.children.GetComponent<GridLayoutGroup>().padding.top = -100;
-                Debug.Log("count greater than 0");  
             }
 
             for (int i = 0; i < _loadedCourseSpecimens.Count; i++)
@@ -795,10 +792,7 @@ public class CoursesPage : MonoBehaviour
                 {
                     SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformSpec);
                     btn.Populate(_loadedSpecimens[i].name, i, null);
-             //   btn.button.onClick.AddListener(() => selectorMenu.UpdateSelected()); 
-                    btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
-            //     btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
-            //     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));     
+                    btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));   
                     idToButton.Add(id, btn);
                 }        
             }
@@ -829,10 +823,7 @@ public class CoursesPage : MonoBehaviour
                     SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformCourseSpec);
                     btn.Populate(_loadedCourseSpecimens[i].name, i, null);
                     btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
-                //     btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true)); 
-                //   //  btn.button.onClick.AddListener(() => camera.SwitchCamera());
-                //     btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
-                //     btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));     
+                    btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));     
                     idToButton.Add(id, btn);
                   //  Debug.Log("course specimen reached layout room");
                 }
@@ -867,13 +858,7 @@ public class CoursesPage : MonoBehaviour
                 SelectorButton btn = Instantiate(lightSelectorPrefab, listTransformSpec);
                 btn.Populate(_loadedSpecimens[i].name, i, null);
                 idToButton.Add(id, btn);
-                btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));
-                // btn.button.onClick.AddListener(() => trayPage.SetAnalyzeOn());
-                // btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
-                // btn.button.onClick.AddListener(() => selectorMenu.SelectSpecimen(id));
-                // btn.button.onClick.AddListener(() => SpecimenLoadingPopUpScreen.SetActive(true));
-            
-                
+                btn.button.onClick.AddListener(() => SidePanelPreview(id, imgUrl));    
             }
 
             if (stateController.CurrentSpecimenData != null && trayPage.selectingCompareSpecimen)
@@ -946,57 +931,73 @@ public class CoursesPage : MonoBehaviour
 
     public void AdjustRegionLayout(SelectorButton btn, int i)
     {
-       // Clear(); 
+        // List<SelectorButton> btns = listTransformTab.GetComponentsInChildren<SelectorButton>().ToList();
+        // btns.Remove(btn);
+        // foreach (SelectorButton rbtn in btns)
+        // {
+        //     rbtn.gameObject.SetActive(false); 
+        //     Debug.Log("remove bttn"); 
+        // }
+        
+        
+       float height; 
        Vector2 space = listTransformTab.GetComponent<GridLayoutGroup>().spacing; 
        float f = btn.children.position.y;
-        if (_loadedOrgans.Count > 20)
-        {
-            space = new Vector2(150, 500);  
-            Debug.Log("selected 1"); 
-           // listTransformTab.RowSpacing()
-            //listTransformTab.GetComponent<LayoutElement>().preferredHeight = 1500; 
-        } else if ((_loadedOrgans.Count < 20) && (_loadedOrgans.Count > 10))
-        {
-            listTransformTab.GetComponent<GridLayoutGroup>().spacing = new Vector2(150, 250);  
-            Debug.Log("selected 2"); 
+       float h = btn.children.position.x; 
+       float posx = listTransformChildren.position.x; 
+       height = btn.children.GetComponent<RectTransform>().rect.height; 
+       Vector2 newSpace = new Vector2(150, height); 
+       Debug.Log(height); 
+       listTransformTab.GetComponent<GridLayoutGroup>().spacing = newSpace; 
+        // if (_loadedOrgans.Count > 20)
+        // {
+        //     space = new Vector2(150, 500);  
+        //     Debug.Log("selected 1"); 
+        //    // listTransformTab.RowSpacing()
+        //     //listTransformTab.GetComponent<LayoutElement>().preferredHeight = 1500; 
+        // } else if ((_loadedOrgans.Count < 20) && (_loadedOrgans.Count > 10))
+        // {
+        //     listTransformTab.GetComponent<GridLayoutGroup>().spacing = new Vector2(150, 250);  
+        //     Debug.Log("selected 2"); 
             
-        }
-         else if (_loadedOrgans.Count == 10)
-        {
-            space = new Vector2(150, 180);  
-            Debug.Log("selected 3"); 
-        } else if (_loadedOrgans.Count < 10)
-        {
-            space = new Vector2(150, 80);  
-            Debug.Log("selected 3"); 
-        } 
+        // }
+        //  else if (_loadedOrgans.Count == 10)
+        // {
+        //     space = new Vector2(150, 180);  
+        //     Debug.Log("selected 3"); 
+        // } else if (_loadedOrgans.Count < 10)
+        // {
+        //     space = new Vector2(150, 80);  
+        //     Debug.Log("selected 3"); 
+        // } 
 
-        if ((_loadedRegions[i] == _loadedRegions[6]) || (_loadedRegions[i] == _loadedRegions[7]))
-        {
-            space = new Vector2(150, 0);
-        }
+        // EDIT this to the last items in the list
+        // if ((_loadedRegions[i] == _loadedRegions[6]) || (_loadedRegions[i] == _loadedRegions[7]))
+        // {
+        //     space = new Vector2(150, 0);
+        // }
 
-        for (int k = 0; k < 3; k++)
+        if (i >= 0 && i < 3)
+        {
+            for (int k = 0; k < 3; k++)
             {
                 if (_loadedRegions[i] == _loadedRegions[k])
                 {
                     btn.children = listTransformChildren;
                 }
             }
+        } else 
+        {
 
             for (int k = 3; k < 6; k++)
             {
                 if (_loadedRegions[i] == _loadedRegions[k])
                 {
-               
-                    f = listTransformChildren.position.y + space.y; 
+                    f = listTransformChildren.position.y + newSpace.y; 
+                    Debug.Log(f); 
                 }
             }
-        
-        // if ((_loadedRegions[i] == _loadedRegions[0]) || (_loadedRegions[i] == _loadedRegions[1]) || (_loadedRegions[i] == _loadedRegions[2]))
-        // {
-        //     btn.hildren.transform.localPosition = new Vector3(-2, -1, 0); 
-        // }
+        }
     }
 
     public void ResetRegionLayout()
