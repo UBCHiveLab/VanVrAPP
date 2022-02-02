@@ -400,6 +400,7 @@ public class CoursesPage : MonoBehaviour
 
     private void RenderCourseInfo(string title)
     {
+        SidePanelPreviewOff(); 
         ClearLabSpec();
         courseInfoContent.SetActive(true);
         courseInfoContentText.SetActive(true);
@@ -604,7 +605,7 @@ public class CoursesPage : MonoBehaviour
 
     private void RenderLabInfo(String title, int labId, String urlImg)
     {
-        
+        SidePanelPreviewOff(); 
         homeInfo.SetActive(false);
         courseInfoContent.SetActive(false);
         labTitle.text = title;
@@ -986,18 +987,7 @@ public class CoursesPage : MonoBehaviour
                     btn.children = listTransformChildren;
                 }
             }
-        } else 
-        {
-
-            for (int k = 3; k < 6; k++)
-            {
-                if (_loadedRegions[i] == _loadedRegions[k])
-                {
-                    f = listTransformChildren.position.y + newSpace.y; 
-                    Debug.Log(f); 
-                }
-            }
-        }
+        } 
     }
 
     public void ResetRegionLayout()
