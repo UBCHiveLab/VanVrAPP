@@ -29,7 +29,13 @@ public class SpecimenStore : MonoBehaviour
     public GameObject SpecimenErrorLoadingPopUp;
     public GameObject SpecimenLoadingPopUp; 
     public TrayPage trayPage;
-    public MainCameraEvents cameraEvents; 
+    public MainCameraEvents cameraEvents;
+    public GameObject SpecimenLoadingZero;
+    public GameObject SpecimenLoadingTwenty;
+    public GameObject SpecimenLoadingFourty;
+    public GameObject SpecimenLoadingSixty;
+    public GameObject SpecimenLoading80;
+    public GameObject SpecimenLoading100; 
 
     [Header("Stored Data")] public List<RegionData> regions;
     public Dictionary<string, SpecimenData> specimens;
@@ -385,6 +391,39 @@ public class SpecimenStore : MonoBehaviour
     public void CameraSwitchToAnalysis()
     {
         cameraEvents.SwitchToAnalysis(); 
+    }
+
+    public IEnumerator LoadingAnim(float loadPercentage)
+    {
+        Debug.Log("loadPercentage:" + loadPercentage); 
+        while (loadPercentage >= 20 & loadPercentage < 40)
+        {
+            SpecimenLoadingTwenty.SetActive(true);
+            Debug.Log("loading" + loadPercentage + "%"); 
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (loadPercentage >=40 & loadPercentage < 60)
+        {
+            SpecimenLoadingFourty.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (loadPercentage >=60 & loadPercentage < 80)
+        {
+            SpecimenLoadingSixty.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (loadPercentage >=80 & loadPercentage < 100)
+        {
+            SpecimenLoading80.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        if (loadPercentage == 100)
+        {
+            SpecimenLoading100.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+
     }
 
 }

@@ -35,6 +35,8 @@ public abstract class DataLoader: MonoBehaviour
     private int _requestsResolved;
     private bool _loaded;
     private HashSet<string> _currentLoadingIds = new HashSet<string>(); // Keeps track of live requests so we don't double up
+    private Transform loaderParent;
+    private bool isDownload = false; 
 
 
     protected abstract IEnumerator LoadManifest();
@@ -179,7 +181,13 @@ public abstract class DataLoader: MonoBehaviour
         using (UnityWebRequest req =
             UnityWebRequestAssetBundle.GetAssetBundle(reqUri, Convert.ToUInt32(srd.version), 0U))
         {
+            Debug.Log("Tryimg the bundle download");
+            isDownload = true;
+
+            StartCoroutine(progress(req)); 
+
             yield return req.SendWebRequest();
+            isDownload = false; 
 
             if (req.isNetworkError || req.isHttpError || srd.prefabPath == "")
             {
@@ -195,12 +203,16 @@ public abstract class DataLoader: MonoBehaviour
             } else
             {
                 _currentLoadingIds.Add(srd.id);
+               
+                yield return new WaitForSeconds(1f);
+
                 // Get downloaded asset bundle
+                /*
                 store.LoadingPopUp(); 
                 Debug.Log("loading popup");
-                yield return new WaitForSeconds(1f);
-                store.CameraSwitchToAnalysis(); 
+              
                 //store.AnalyzeOn(); 
+                */
 
                 try
                 {
@@ -225,7 +237,7 @@ public abstract class DataLoader: MonoBehaviour
                         }
 
                         _specimens.Add(specimenData);
-                        
+                        store.CameraSwitchToAnalysis();
                     }
                     else
                     {
@@ -277,6 +289,19 @@ public abstract class DataLoader: MonoBehaviour
             
         }
 
+    }
+
+    private IEnumerator progress (UnityWebRequest req)
+    {
+        while(isDownload)
+        {
+            float loadPercentage = req.downloadProgress * 100; 
+            Debug.Log("Downloading:" + req.downloadProgress * 100 + "%");
+            store.LoadingPopUp(); 
+             store.LoadingAnim(loadPercentage);
+            yield return new WaitForSeconds(0.1f);
+          
+        }
     }
 
 
