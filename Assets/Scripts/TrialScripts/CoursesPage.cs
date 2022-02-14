@@ -622,6 +622,7 @@ public class CoursesPage : MonoBehaviour
         fourthLabel.text = $"> {labName}";
         fifthLabel.text = "";
         //  selectionTitle.text = $"Home > Courses > {courseName} > {labName}";
+        third.onClick.AddListener(() => CourseSelected(courseName));
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
         labPanelCourseBtn.onClick.AddListener(() => selectorMenu.CourseSelected(courseName));
         labPanelCourseBtn.onClick.AddListener(() => selectorMenu.ClearOrganAndLabData());
