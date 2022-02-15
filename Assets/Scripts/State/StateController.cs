@@ -169,12 +169,7 @@ namespace Assets.Scripts.State
 
                 store.LoadSpecimen(data.id);
                 while (!store.specimens[data.id].dataLoaded) yield return null;
-                
-             //   cameraEvents.SwitchToAnalysis(); 
-              //  Debug.Log("loading pop-up"); 
-                
-                data = store.specimens[data.id];
-               
+                data = store.specimens[data.id];   
             }
 
             // If prefab found, instantiate that
