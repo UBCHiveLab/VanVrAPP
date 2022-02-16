@@ -131,6 +131,7 @@ public class CoursesPage : MonoBehaviour
     public Sprite expand;
     public Sprite collapse;
     public GameObject SpecimenLoadingPopUpScreen; 
+    public GameObject SpecimenLoadingZero; 
     public Button previewBtn; 
     public Image previewImage; 
     public TextMeshProUGUI specimenText; 
@@ -181,6 +182,9 @@ public class CoursesPage : MonoBehaviour
 
     private CurrPage page;
 
+    /*
+    Determines the functionality of the different buttons
+    */
     void Start()
     {
         if (store == null) store = FindObjectOfType<SpecimenStore>();
@@ -891,15 +895,6 @@ public class CoursesPage : MonoBehaviour
 
     public void AdjustRegionLayout(SelectorButton btn, int i)
     {
-        // List<SelectorButton> btns = listTransformTab.GetComponentsInChildren<SelectorButton>().ToList();
-        // btns.Remove(btn);
-        // foreach (SelectorButton rbtn in btns)
-        // {
-        //     rbtn.gameObject.SetActive(false); 
-        //     Debug.Log("remove bttn"); 
-        // }
-        
-        
        float height; 
        Vector2 space = listTransformTab.GetComponent<GridLayoutGroup>().spacing; 
        float f = btn.children.position.y;
@@ -1144,7 +1139,8 @@ public class CoursesPage : MonoBehaviour
    public IEnumerator SpecimenLoadingPopUpOn()
    {
        SpecimenLoadingPopUpScreen.SetActive(true);
-        yield return new WaitForSeconds(1.5f);
+       SpecimenLoadingZero.SetActive(true);
+        yield return new WaitForSeconds(1f);
    }
 
    public void SpecimenLoadingPopUpOff()
