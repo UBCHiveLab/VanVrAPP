@@ -393,7 +393,7 @@ public class SpecimenStore : MonoBehaviour
         cameraEvents.SwitchToAnalysis(); 
     }
 
-    //Edit the display UI of progress bar 
+    // Display the accurate progress % of loading a specimen based on loadPercentage
     public IEnumerator LoadingAnim(float loadPercentage)
     {
         Debug.Log("loadPercentage: " + loadPercentage);
@@ -438,8 +438,6 @@ public class SpecimenStore : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         
-
-
     }
 
 }

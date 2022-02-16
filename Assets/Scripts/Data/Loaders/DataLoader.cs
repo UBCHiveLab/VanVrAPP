@@ -204,7 +204,7 @@ public abstract class DataLoader: MonoBehaviour
             {
                // _currentLoadingIds.Add(srd.id);
                
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.1f);
 
                 // Get downloaded asset bundle
 

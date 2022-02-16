@@ -28,8 +28,6 @@ public class CoursesPage : MonoBehaviour
     public StateController stateController;
     public SelectorMenu selectorMenu;
     public AnalysisPage analysisPage; 
-    public ReadInput input; 
-    public MainCameraEvents camera; 
 
     [Header("Prefabs")] public SelectorButton selectorPrefab;
     public SelectorButton lightSelectorPrefab;
@@ -53,10 +51,10 @@ public class CoursesPage : MonoBehaviour
     public Transform listTransformTab; 
     public Transform listTransformChildren; 
     public Text backBttnTitle;
-    public Button courseButton;
-    public Button homeButton;
-    public Button atlasBtn;
-    public Button helpButton;
+    public TextMeshProUGUI noContentText;
+    public GameObject RecentCourse;
+
+    [Header("BreadCrumb")]
     public TextMeshProUGUI selectionTitle;
     public Button first;
     public TextMeshProUGUI firstLabel;
@@ -68,38 +66,30 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI fourthLabel;
     public Button fifth;
     public TextMeshProUGUI fifthLabel;
-    public Animator anim; 
-     
-    public TextMeshProUGUI noContentText;
 
-    public GameObject labAtlasToggle;
-    public Button atlasButtonMain;
-    public Button labButton;
-     public TextMeshProUGUI atlasLabelMain;
-    public TextMeshProUGUI labLabel;
-    public TextMeshProUGUI titleOnShelf;
-
-    public TextMeshProUGUI atlasLabel;
+    [Header("SideButtons")]
+    public Button courseButton;
     public TextMeshProUGUI courseLabel;
+    public Button homeButton;
     public TextMeshProUGUI homeLabel;
-    public TextMeshProUGUI helpLabel; 
-    public GameObject RecentCourse;
-    public GameObject loadingIndicator;
-    
-    public GameObject homeInfo;
-    public GameObject inputField; 
-    
+    public Button atlasBtn;
+    public TextMeshProUGUI atlasLabel;
+    public Button helpButton;
+    public TextMeshProUGUI helpLabel;
 
     [Header("HomeContentRender")]
+    public GameObject homeInfo;
     public GameObject welcomePanel;
     public GameObject expandedPanel;
     public GameObject defaultPanel;
     public ScrollRect homeScrollRect;
-    public TextMeshProUGUI message; 
+    public Button expandPanelBtn;
+    public Sprite expand;
+    public Sprite collapse;
 
     [Header("CourseContentRender")]
-     public GameObject courseInfoContent;
     public TextMeshProUGUI courseTitle;
+    public GameObject courseInfoContent;
     public GameObject courseInfoContentText;
     public GameObject labInfoContentText;
     public ScrollRect courseScrollRect;
@@ -125,20 +115,16 @@ public class CoursesPage : MonoBehaviour
     public TextMeshProUGUI labPageInfoLabel; 
     public ScrollRect labScrollRect;
     public RawImage specimenRenderedImg;
-    public GameObject sidePanel;
-    public ScrollRect sidePanelScrollRect; 
-    public Button expandPanelBtn;
-    public Sprite expand;
-    public Sprite collapse;
-    public GameObject SpecimenLoadingPopUpScreen; 
-    public GameObject SpecimenLoadingZero; 
+   
+    public GameObject SpecimenLoadingPopUpScreen;
+
+    [Header("SidePanel")]
     public Button previewBtn; 
     public Image previewImage; 
     public TextMeshProUGUI specimenText; 
-    public TextMeshProUGUI previewText; 
-    
-
-
+    public TextMeshProUGUI previewText;
+    public GameObject sidePanel;
+    public ScrollRect sidePanelScrollRect;
 
     private ListMode currentMode;
     private Dictionary<string, SelectorButton> idToButton = new Dictionary<string, SelectorButton>();
@@ -235,7 +221,6 @@ public class CoursesPage : MonoBehaviour
      */
     public void Populate()
     {
-        //  selectionTitle.text = "";
         mode = ListMode.LAB_COURSES;
         showNoContentText = false;
 
@@ -263,8 +248,6 @@ public class CoursesPage : MonoBehaviour
             else
             { 
                 mode = ListMode.LAB;
-                //  backBttnTitle.text = COURSES;
-            //    selectionTitle.text = courseId;
                 _loadedLabs = store.GetLabDataForCourse(courseId);
               //  Debug.Log("lab data is here");
                 showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;   
@@ -274,7 +257,6 @@ public class CoursesPage : MonoBehaviour
         else if (region == null)
         {
             mode = ListMode.REGION;
-            //  backBttnTitle.text = SHELF;
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             Debug.Log("region is here");
             showNoContentText = _loadedRegions == null || _loadedRegions.Count < 1;
@@ -283,7 +265,6 @@ public class CoursesPage : MonoBehaviour
         else if (string.IsNullOrEmpty(organ))
         {
             mode = ListMode.REGION_EXPANDED;
-            //  backBttnTitle.text = SHELF;
             Debug.Log("expanded is here");
             _loadedRegions = store.regions.OrderBy(r => r.order).ToList();
             _loadedOrgans = store.GetOrgansByRegion(region.name);
@@ -291,8 +272,6 @@ public class CoursesPage : MonoBehaviour
         else
         {
             mode = ListMode.SPECIMEN;
-            //   backBttnTitle.text = SPECIMEN_LIST;
-          //  selectionTitle.text = organ;
             _loadedOrgans = store.specimensByRegionByOrgan[region.name].Keys.ToList();
             _loadedSpecimens = store.specimensByRegionByOrgan[region.name][organ];
             Debug.Log("specimen is here");
@@ -527,7 +506,6 @@ public class CoursesPage : MonoBehaviour
         labInfoContentText.SetActive(false);
         
         Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
-        //  selectionTitle.text = labData.Item1;
         _loadedSpecimens = labData.Item2;
         showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
         labPageSpecLabel.color = Color.blue;
@@ -538,8 +516,6 @@ public class CoursesPage : MonoBehaviour
     private void ShowLabDetails()
     {
         mode = ListMode.LAB;
-        //  backBttnTitle.text = COURSES;
-        //    selectionTitle.text = courseId;
         sidePanel.SetActive(true);
         defaultPanel.SetActive(true);
         expandedPanel.SetActive(false);
@@ -583,7 +559,6 @@ public class CoursesPage : MonoBehaviour
         ShowAllLabs();
         fourthLabel.text = $"> {labName}";
         fifthLabel.text = "";
-        //  selectionTitle.text = $"Home > Courses > {courseName} > {labName}";
         third.onClick.AddListener(() => CourseSelected(courseName));
         labPanelCourseBtn.onClick.AddListener(() => CourseSelected(courseName));
         labPanelCourseBtn.onClick.AddListener(() => selectorMenu.CourseSelected(courseName));
@@ -672,17 +647,6 @@ public class CoursesPage : MonoBehaviour
      */
     public void Layout(ListMode mode, bool showNoContentText)
     {
-        
-        loadingIndicator.gameObject.SetActive(store.Loading());
-  
-        /*
-        labAtlasToggle.SetActive(
-            !store.Loading() &&
-            mode != ListMode.SPECIMEN &&
-            mode != ListMode.LAB_SPECIMENS
-        );
-        */
-
         // Clears data.
         Clear();
         idToButton = new Dictionary<string, SelectorButton>();
@@ -965,7 +929,6 @@ public class CoursesPage : MonoBehaviour
         thirdLabel.text = "";
         fourthLabel.text = "";
         fifthLabel.text = "";
-        //  selectionTitle.text = "Home > Courses";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
@@ -1009,7 +972,6 @@ public class CoursesPage : MonoBehaviour
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.black;
-      //  selectionTitle.text = "Home";
         listTransformCourses.GetComponent<GridLayoutGroup>().constraintCount = num;
         secondLabel.text = "";
         thirdLabel.text = "";
@@ -1032,7 +994,6 @@ public class CoursesPage : MonoBehaviour
         thirdLabel.text = "";
         fourthLabel.text = "";
         fifthLabel.text = "";
-     //   selectionTitle.text = "Home > Help";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.blue;
@@ -1075,7 +1036,7 @@ public class CoursesPage : MonoBehaviour
     private void ShowAllLabs()
     {
         Clear();
-        
+        sidePanelScrollRect.verticalNormalizedPosition = 1.5f; 
         _loadedLabs.ForEach((lab) => {
             LabDisplayOptions labOption = Instantiate(labPrefab, listTransformLabs);
             labOption.Populate(lab, this, selectorMenu);
@@ -1085,6 +1046,7 @@ public class CoursesPage : MonoBehaviour
     private void ShowAllCourses(Transform listTransform)
     {
         Clear();
+        sidePanelScrollRect.verticalNormalizedPosition = 1.5f; 
         foreach (var course in _loadedCourses)
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransform);
@@ -1135,14 +1097,6 @@ public class CoursesPage : MonoBehaviour
         previewBtn.gameObject.SetActive(false);
     }
    
-
-   public IEnumerator SpecimenLoadingPopUpOn()
-   {
-       SpecimenLoadingPopUpScreen.SetActive(true);
-       SpecimenLoadingZero.SetActive(true);
-        yield return new WaitForSeconds(1f);
-   }
-
    public void SpecimenLoadingPopUpOff()
    {
        SpecimenLoadingPopUpScreen.SetActive(false); 
