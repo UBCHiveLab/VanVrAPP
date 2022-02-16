@@ -393,36 +393,52 @@ public class SpecimenStore : MonoBehaviour
         cameraEvents.SwitchToAnalysis(); 
     }
 
+    //Edit the display UI of progress bar 
     public IEnumerator LoadingAnim(float loadPercentage)
     {
-        Debug.Log("loadPercentage:" + loadPercentage); 
-        while (loadPercentage >= 20 & loadPercentage < 40)
+        Debug.Log("loadPercentage: " + loadPercentage);
+        SpecimenLoadingTwenty.SetActive(false);
+        SpecimenLoadingFourty.SetActive(false);
+        SpecimenLoadingSixty.SetActive(false);
+        SpecimenLoading80.SetActive(false);
+        SpecimenLoading100.SetActive(false);
+       if (loadPercentage == -100)
+        {
+            SpecimenLoading100.SetActive(true); 
+        }
+        if (loadPercentage > 80 & loadPercentage <= 100)
+        {
+            SpecimenLoading100.SetActive(true);
+            Debug.Log("100 is active");
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        if (loadPercentage >= 0 & loadPercentage < 20)
         {
             SpecimenLoadingTwenty.SetActive(true);
-            Debug.Log("loading" + loadPercentage + "%"); 
+            Debug.Log("20 is active");
             yield return new WaitForSeconds(0.1f);
         }
-        if (loadPercentage >=40 & loadPercentage < 60)
+        if (loadPercentage >= 20 & loadPercentage < 40)
         {
             SpecimenLoadingFourty.SetActive(true);
+            Debug.Log("40 is active");
             yield return new WaitForSeconds(0.1f);
         }
-        if (loadPercentage >=60 & loadPercentage < 80)
+        if (loadPercentage >= 40 & loadPercentage < 60)
         {
             SpecimenLoadingSixty.SetActive(true);
+            Debug.Log("60 is active");
             yield return new WaitForSeconds(0.1f);
         }
-        if (loadPercentage >=80 & loadPercentage < 100)
+        if (loadPercentage >= 60 & loadPercentage < 80)
         {
             SpecimenLoading80.SetActive(true);
+            Debug.Log("80 is active");
             yield return new WaitForSeconds(0.1f);
         }
         
-        if (loadPercentage == 100)
-        {
-            SpecimenLoading100.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
-        }
+
 
     }
 

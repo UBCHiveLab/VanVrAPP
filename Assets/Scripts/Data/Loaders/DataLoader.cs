@@ -171,7 +171,7 @@ public abstract class DataLoader: MonoBehaviour
             yield break;
         }
 
-      //  _currentLoadingIds.Add(srd.id); 
+        _currentLoadingIds.Add(srd.id); 
         string reqUri = srd.assetUrl;           // Default to standalone windows packages
 #if UNITY_WEBGL || UNITY_WEBGL_API || PLATFORM_WEBGL
         reqUri = srd.assetUrlWebGl;             // WebGl packages
@@ -181,7 +181,7 @@ public abstract class DataLoader: MonoBehaviour
         using (UnityWebRequest req =
             UnityWebRequestAssetBundle.GetAssetBundle(reqUri, Convert.ToUInt32(srd.version), 0U))
         {
-            Debug.Log("Tryimg the bundle download");
+            Debug.Log("Trying the bundle download");
             isDownload = true;
 
             StartCoroutine(progress(req)); 
@@ -195,24 +195,18 @@ public abstract class DataLoader: MonoBehaviour
                     // if couldn't load the asset bundle and there's an alternative url for the asset's content, open a new tab with the alt content
                     OpenAlternativeContent(srd.altAssetUrl);
                 } else {  
-                    store.ErrorPopUp();
-                    store.CameraSwitchToDisplay(); 
+                    store.ErrorPopUp(); 
+                    store.CameraSwitchToDisplay(); // to ensure the camera is focused on the right screen 
                   //  SendError($"{req.error} : Could not find bundle for {srd.id}. Please contact the department if this problem persists.");
                     yield break;
                 }
             } else
             {
-                _currentLoadingIds.Add(srd.id);
+               // _currentLoadingIds.Add(srd.id);
                
                 yield return new WaitForSeconds(1f);
 
                 // Get downloaded asset bundle
-                /*
-                store.LoadingPopUp(); 
-                Debug.Log("loading popup");
-              
-                //store.AnalyzeOn(); 
-                */
 
                 try
                 {
@@ -291,6 +285,7 @@ public abstract class DataLoader: MonoBehaviour
 
     }
 
+    //Records progress % of downlaoding specimen
     private IEnumerator progress (UnityWebRequest req)
     {
         while(isDownload)
@@ -298,9 +293,8 @@ public abstract class DataLoader: MonoBehaviour
             float loadPercentage = req.downloadProgress * 100; 
             Debug.Log("Downloading:" + req.downloadProgress * 100 + "%");
             store.LoadingPopUp(); 
-             store.LoadingAnim(loadPercentage);
-            yield return new WaitForSeconds(0.1f);
-          
+            StartCoroutine(store.LoadingAnim(loadPercentage));
+            yield return new WaitForSeconds(0.1f);  
         }
     }
 
