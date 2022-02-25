@@ -661,7 +661,7 @@ public class CoursesPage : MonoBehaviour
         if (mode == ListMode.LAB_COURSES)
         {
             
-            foreach (var course in _loadedCourses.Take(3)) 
+            foreach (var course in _loadedCourses.Take(3 * 2)) 
             {
                 CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
                 courseOption.Populate(course, this, selectorMenu);
@@ -956,7 +956,7 @@ public class CoursesPage : MonoBehaviour
         byLab = true;
         Clear();
         homeScrollRect.verticalNormalizedPosition = 1.5f;
-        foreach (var course in _loadedCourses.Take(num))
+        foreach (var course in _loadedCourses.Take(num * 2))
         {
             CourseDisplayOptions courseOption = Instantiate(coursePrefab, listTransformCourses);
             courseOption.Populate(course, this, selectorMenu);
