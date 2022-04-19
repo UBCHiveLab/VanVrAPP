@@ -1,16 +1,11 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
-using Newtonsoft.Json;
-using SimpleJSON;
+﻿//using MongoDB.Bson;
+//using MongoDB.Driver;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Debug = UnityEngine.Debug;
-using System.Runtime.InteropServices;
 
 /**
  * Extends DataLoader. For fetching a manifest located at manifestPath as an http resource.
@@ -19,14 +14,13 @@ public class RemoteDataLoader : DataLoader
 {
 
     //MongoDB
-    MongoClient client = new MongoClient("mongodb://hive:8afDe1K6XwY1W5cy@van-vr-shard-00-00.zr7vf.mongodb.net:27017,van-vr-shard-00-01.zr7vf.mongodb.net:27017,van-vr-shard-00-02.zr7vf.mongodb.net:27017/test?authSource=admin&replicaSet=atlas-afl4g3-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
-    IMongoDatabase database;
+    //MongoClient client = new MongoClient("mongodb://hive:8afDe1K6XwY1W5cy@van-vr-shard-00-00.zr7vf.mongodb.net:27017,van-vr-shard-00-01.zr7vf.mongodb.net:27017,van-vr-shard-00-02.zr7vf.mongodb.net:27017/test?authSource=admin&replicaSet=atlas-afl4g3-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
+    //IMongoDatabase database;
 
     // http request
-    private string courseUrl = "https://vvr-server-dbp.azurewebsites.net/courses/get-courses";
-    private string labUrl = "https://vvr-server-dbp.azurewebsites.net/labs/get-labs";
     private string specimenUrl = "https://vvr-server-dbp.azurewebsites.net/specimens/get-specimens";
     private string regionUrl = "https://vvr-server-dbp.azurewebsites.net/specimens/get-regions";
+    private string labCourseUrl = "https://vvr-server-dbp.azurewebsites.net/labs/get-labs-by-courses";
 
 
     string fixRegionJson(string value)
@@ -40,14 +34,9 @@ public class RemoteDataLoader : DataLoader
         value = "{\"specimenData\":" + value + "}";
         return value;
     }
-    string fixLabJson(string value)
+    string fixLabCourseJson(string value)
     {
-        value = "{\"regions\":" + value + "}";
-        return value;
-    }
-    string fixCourseJson(string value)
-    {
-        value = "{\"regions\":" + value + "}";
+        value = "{\"labCourses\":" + value + "}";
         return value;
     }
 
@@ -93,34 +82,11 @@ public class RemoteDataLoader : DataLoader
         public SpecimenRequestData[] specimenData;
     }
 
-    IEnumerator DataRequest()
+    [Serializable]
+    public class CourseData2
     {
-        UnityWebRequest _courseReq = UnityWebRequest.Get(courseUrl);
-        yield return _courseReq.SendWebRequest();
-
-        UnityWebRequest _labReq = UnityWebRequest.Get(labUrl);
-        yield return _labReq.SendWebRequest();
-
-        UnityWebRequest _specimenReq = UnityWebRequest.Get(specimenUrl);
-        yield return _specimenReq.SendWebRequest();
-
-        UnityWebRequest _regionReq = UnityWebRequest.Get(regionUrl);
-        yield return _regionReq.SendWebRequest();
-
-        if (_regionReq.isNetworkError || _regionReq.isHttpError) Debug.Log(_regionReq.error);
-
-        var regionCollections = JsonUtility.FromJson<RegionData2>(fixRegionJson(_regionReq.downloadHandler.text));
-
-        //Debug.Log(_regionReq.downloadHandler.text);
-        //Debug.Log(fixRegionJson(_regionReq.downloadHandler.text));
-        //Debug.Log(regionCollections);
-
-        manifest = new DataManifest();
-        manifest.regions = new RegionData[regionCollections.regions.Length];
-        manifest.regions = regionCollections.regions;
-        Debug.Log(manifest.regions.Length);
+        public CourseData[] labCourses;
     }
-
 
     protected override IEnumerator LoadManifest()
     {
@@ -141,13 +107,10 @@ public class RemoteDataLoader : DataLoader
             }
         }*/
 
-        LoadManifestFromMongoDB();
+        manifest = new DataManifest();
 
-        UnityWebRequest _courseReq = UnityWebRequest.Get(courseUrl);
-        yield return _courseReq.SendWebRequest();
-
-        UnityWebRequest _labReq = UnityWebRequest.Get(labUrl);
-        yield return _labReq.SendWebRequest();
+        UnityWebRequest _labCourseReq = UnityWebRequest.Get(labCourseUrl);
+        yield return _labCourseReq.SendWebRequest();
 
         UnityWebRequest _specimenReq = UnityWebRequest.Get(specimenUrl);
         yield return _specimenReq.SendWebRequest();
@@ -157,9 +120,13 @@ public class RemoteDataLoader : DataLoader
 
         if (_regionReq.isNetworkError || _regionReq.isHttpError) Debug.Log(_regionReq.error);
         if (_specimenReq.isNetworkError || _specimenReq.isHttpError) Debug.Log(_specimenReq.error);
+        if (_labCourseReq.isNetworkError || _labCourseReq.isHttpError) Debug.Log(_labCourseReq.error);
+
 
         var specimenCollections = JsonUtility.FromJson<SpecimenRequestData2>(fixSpecimenJson(_specimenReq.downloadHandler.text));
         var regionCollections = JsonUtility.FromJson<RegionData2>(fixRegionJson(_regionReq.downloadHandler.text));
+        var labCourseCollections = JsonUtility.FromJson<CourseData2>(fixLabCourseJson(_labCourseReq.downloadHandler.text));
+
 
 
         manifest.regions = new RegionData[regionCollections.regions.Length];
@@ -168,20 +135,21 @@ public class RemoteDataLoader : DataLoader
         manifest.specimenData = new SpecimenRequestData[specimenCollections.specimenData.Length];
         manifest.specimenData = specimenCollections.specimenData;
 
-        Debug.Log(manifest.specimenData.Length);
-     
-        Debug.Log(manifest.regions.Length);
+        manifest.labCourses = new CourseData[labCourseCollections.labCourses.Length];
+        manifest.labCourses = labCourseCollections.labCourses;
+
+        //Debug.Log(manifest.specimenData.Length);
+        //Debug.Log(manifest.labCourses.Length);
+        //Debug.Log(manifest.regions.Length);
         
 
         manifestLoaded = true;
         yield break;
     }
 
-
-
-
     private void LoadManifestFromMongoDB()
     {
+        /*
         IMongoCollection<BsonDocument> specimenCollection, courseCollection, regionCollection, labsCollection;
         database = client.GetDatabase("vanvr");
         specimenCollection = database.GetCollection<BsonDocument>("specimens");
@@ -197,7 +165,7 @@ public class RemoteDataLoader : DataLoader
 
         manifest = new DataManifest();
 
-        /*
+        
         manifest.specimenData = new SpecimenRequestData[specimens.Count];
         for (int i = 0; i < specimens.Count; i++)
         {
@@ -242,7 +210,7 @@ public class RemoteDataLoader : DataLoader
         }
         
         */
-
+        /*
         manifest.labCourses = new CourseData[courses.Count];
         for (int i = 0; i < courses.Count; i++)
         {
@@ -277,9 +245,10 @@ public class RemoteDataLoader : DataLoader
             }
         }
 
-        
+        */
+
         //manifest.regions = new RegionData[regions.Count];
-        
+
         /*
         for (int i = 0; i < regions.Count; i++)
         {
