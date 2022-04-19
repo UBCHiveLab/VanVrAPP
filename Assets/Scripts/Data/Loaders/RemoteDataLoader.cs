@@ -1,8 +1,16 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json;
+using SimpleJSON;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using Debug = UnityEngine.Debug;
+using System.Runtime.InteropServices;
 
 /**
  * Extends DataLoader. For fetching a manifest located at manifestPath as an http resource.
@@ -13,6 +21,105 @@ public class RemoteDataLoader : DataLoader
     //MongoDB
     MongoClient client = new MongoClient("mongodb://hive:8afDe1K6XwY1W5cy@van-vr-shard-00-00.zr7vf.mongodb.net:27017,van-vr-shard-00-01.zr7vf.mongodb.net:27017,van-vr-shard-00-02.zr7vf.mongodb.net:27017/test?authSource=admin&replicaSet=atlas-afl4g3-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true");
     IMongoDatabase database;
+
+    // http request
+    private string courseUrl = "https://vvr-server-dbp.azurewebsites.net/courses/get-courses";
+    private string labUrl = "https://vvr-server-dbp.azurewebsites.net/labs/get-labs";
+    private string specimenUrl = "https://vvr-server-dbp.azurewebsites.net/specimens/get-specimens";
+    private string regionUrl = "https://vvr-server-dbp.azurewebsites.net/specimens/get-regions";
+
+
+    string fixRegionJson(string value)
+    {
+        value = "{\"regions\":" + value + "}";
+        return value;
+    }
+
+    string fixSpecimenJson(string value)
+    {
+        value = "{\"specimenData\":" + value + "}";
+        return value;
+    }
+    string fixLabJson(string value)
+    {
+        value = "{\"regions\":" + value + "}";
+        return value;
+    }
+    string fixCourseJson(string value)
+    {
+        value = "{\"regions\":" + value + "}";
+        return value;
+    }
+
+    public static class JsonHelper
+    {
+        public static T[] FromJson<T>(string json)
+        {
+            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
+            return wrapper.Items;
+        }
+
+        public static string ToJson<T>(T[] array)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.Items = array;
+            return JsonUtility.ToJson(wrapper);
+        }
+
+        public static string ToJson<T>(T[] array, bool prettyPrint)
+        {
+            Wrapper<T> wrapper = new Wrapper<T>();
+            wrapper.Items = array;
+            return JsonUtility.ToJson(wrapper, prettyPrint);
+        }
+
+        [Serializable]
+        private class Wrapper<T>
+        {
+            public T[] Items;
+        }
+    }
+
+
+    [Serializable]
+    public class RegionData2
+    {
+        public RegionData[] regions;
+    }
+
+    [Serializable]
+    public class SpecimenRequestData2
+    {
+        public SpecimenRequestData[] specimenData;
+    }
+
+    IEnumerator DataRequest()
+    {
+        UnityWebRequest _courseReq = UnityWebRequest.Get(courseUrl);
+        yield return _courseReq.SendWebRequest();
+
+        UnityWebRequest _labReq = UnityWebRequest.Get(labUrl);
+        yield return _labReq.SendWebRequest();
+
+        UnityWebRequest _specimenReq = UnityWebRequest.Get(specimenUrl);
+        yield return _specimenReq.SendWebRequest();
+
+        UnityWebRequest _regionReq = UnityWebRequest.Get(regionUrl);
+        yield return _regionReq.SendWebRequest();
+
+        if (_regionReq.isNetworkError || _regionReq.isHttpError) Debug.Log(_regionReq.error);
+
+        var regionCollections = JsonUtility.FromJson<RegionData2>(fixRegionJson(_regionReq.downloadHandler.text));
+
+        //Debug.Log(_regionReq.downloadHandler.text);
+        //Debug.Log(fixRegionJson(_regionReq.downloadHandler.text));
+        //Debug.Log(regionCollections);
+
+        manifest = new DataManifest();
+        manifest.regions = new RegionData[regionCollections.regions.Length];
+        manifest.regions = regionCollections.regions;
+        Debug.Log(manifest.regions.Length);
+    }
 
 
     protected override IEnumerator LoadManifest()
@@ -34,13 +141,43 @@ public class RemoteDataLoader : DataLoader
             }
         }*/
 
-        //Using MongoDB
-
         LoadManifestFromMongoDB();
 
+        UnityWebRequest _courseReq = UnityWebRequest.Get(courseUrl);
+        yield return _courseReq.SendWebRequest();
+
+        UnityWebRequest _labReq = UnityWebRequest.Get(labUrl);
+        yield return _labReq.SendWebRequest();
+
+        UnityWebRequest _specimenReq = UnityWebRequest.Get(specimenUrl);
+        yield return _specimenReq.SendWebRequest();
+
+        UnityWebRequest _regionReq = UnityWebRequest.Get(regionUrl);
+        yield return _regionReq.SendWebRequest();
+
+        if (_regionReq.isNetworkError || _regionReq.isHttpError) Debug.Log(_regionReq.error);
+        if (_specimenReq.isNetworkError || _specimenReq.isHttpError) Debug.Log(_specimenReq.error);
+
+        var specimenCollections = JsonUtility.FromJson<SpecimenRequestData2>(fixSpecimenJson(_specimenReq.downloadHandler.text));
+        var regionCollections = JsonUtility.FromJson<RegionData2>(fixRegionJson(_regionReq.downloadHandler.text));
+
+
+        manifest.regions = new RegionData[regionCollections.regions.Length];
+        manifest.regions = regionCollections.regions;
+        //Debug.Log(specimenCollections.specimenData.Length);
+        manifest.specimenData = new SpecimenRequestData[specimenCollections.specimenData.Length];
+        manifest.specimenData = specimenCollections.specimenData;
+
+        Debug.Log(manifest.specimenData.Length);
+     
+        Debug.Log(manifest.regions.Length);
+        
+
         manifestLoaded = true;
-        yield break; 
+        yield break;
     }
+
+
 
 
     private void LoadManifestFromMongoDB()
@@ -59,9 +196,9 @@ public class RemoteDataLoader : DataLoader
         var regions = regionCollection.Find(filter).ToList();
 
         manifest = new DataManifest();
+
+        /*
         manifest.specimenData = new SpecimenRequestData[specimens.Count];
-
-
         for (int i = 0; i < specimens.Count; i++)
         {
 
@@ -103,7 +240,8 @@ public class RemoteDataLoader : DataLoader
             }
 
         }
-
+        
+        */
 
         manifest.labCourses = new CourseData[courses.Count];
         for (int i = 0; i < courses.Count; i++)
@@ -139,8 +277,10 @@ public class RemoteDataLoader : DataLoader
             }
         }
 
-
-        manifest.regions = new RegionData[regions.Count];
+        
+        //manifest.regions = new RegionData[regions.Count];
+        
+        /*
         for (int i = 0; i < regions.Count; i++)
         {
             manifest.regions[i] = new RegionData();
@@ -154,7 +294,8 @@ public class RemoteDataLoader : DataLoader
                 manifest.regions[i].organs[y] = organs[y].AsString;
             }
         }
+        */
+
     }
 
 }
-

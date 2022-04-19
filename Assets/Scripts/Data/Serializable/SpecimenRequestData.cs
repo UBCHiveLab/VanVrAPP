@@ -6,6 +6,7 @@
 public class SpecimenRequestData
 {
     public string id;
+    public string _id;
     public string name;
     public int version;
     public string organ;

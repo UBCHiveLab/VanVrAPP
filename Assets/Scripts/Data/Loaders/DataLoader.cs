@@ -29,9 +29,9 @@ public abstract class DataLoader: MonoBehaviour
     public string status;
     public bool manifestVerified;
 
-    private List<CourseData> _courses;
-    private List<SpecimenData> _specimens;
-    private List<RegionData> _regions;
+    public List<CourseData> _courses;
+    public List<SpecimenData> _specimens;
+    public List<RegionData> _regions;
     private int _requestsResolved;
     private bool _loaded;
     private HashSet<string> _currentLoadingIds = new HashSet<string>(); // Keeps track of live requests so we don't double up
