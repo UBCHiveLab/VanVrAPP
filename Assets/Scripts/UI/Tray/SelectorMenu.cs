@@ -62,6 +62,8 @@ public class SelectorMenu : MonoBehaviour
     public TextMeshProUGUI shelfTitle;
     public TextMeshProUGUI labDescription;
     public RawImage labRenderedImg;
+    public TextMeshProUGUI downloadPdf;
+    public string labManualFileName;
 
     public enum ListMode
     {
@@ -188,12 +190,11 @@ public class SelectorMenu : MonoBehaviour
         Populate();
     }
 
-    public void LabSelected(int labId, String labName,String labImg)
+    public void LabSelected(int labId, String labName, String description, String labImg, Manual[] manuals, String[] links)
     {
         this.labId = labId;
         Populate();
-        var newLabName = "This Lab is about " + labName;
-        RenderLabInfo(labName, newLabName,labImg);
+        RenderLabInfo(labName, description, labImg, manuals, links);
     }
 
     /**
@@ -518,14 +519,24 @@ public class SelectorMenu : MonoBehaviour
     }
 
     //TODO: created img prefab and render prefab list for multi imgs
-    public void RenderLabInfo(String title, String labDes, String urlImg)
+    public void RenderLabInfo(String title, String descrition, String urlImg, Manual[] manuals, String[] links)
     {
         labInfoContent.SetActive(false);
         labInfoShowBtn.SetActive(false);
         shelfTitle.text = title;
-        labDescription.text = labDes;
+        labDescription.text = descrition;
         StartCoroutine(LoadLabImg(urlImg));
         labInfoContent.SetActive(true);
+        // lab maual
+        if(manuals.Length > 0)
+        {
+            labManualFileName = manuals[0].name;
+            downloadPdf.text = labManualFileName;
+        }else
+        {
+            downloadPdf.text = "Download module PDF";
+        }
+        
     }
 
     private IEnumerator LoadLabImg(String url)
@@ -553,6 +564,14 @@ public class SelectorMenu : MonoBehaviour
 
             else
                 labRenderedImg.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+        }
+    }
+
+    public void DownloadPdfManual()
+    {
+        if(downloadPdf.text != "Download module PDF")
+        {
+            Application.OpenURL("https://hivemodelstorage.blob.core.windows.net/pdfs/" + downloadPdf.text);
         }
     }
 

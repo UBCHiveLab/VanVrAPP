@@ -5445,6 +5445,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118002689}
   m_Mesh: {fileID: -485743578430441126, guid: a7b507c8ce0eba442a39bb3650d9d63a, type: 3}
+--- !u!114 &118932301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7858860712196563716, guid: d955290bf918c744eb598416caa3c0bd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1754845238877026016}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &120729498
 GameObject:
   m_ObjectHideFlags: 0
@@ -116624,6 +116636,36 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6453608619496356463, guid: d955290bf918c744eb598416caa3c0bd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453608619496356463, guid: d955290bf918c744eb598416caa3c0bd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453608619496356463, guid: d955290bf918c744eb598416caa3c0bd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453608619496356463, guid: d955290bf918c744eb598416caa3c0bd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4314778672157838897}
+    - target: {fileID: 6453608619496356463, guid: d955290bf918c744eb598416caa3c0bd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DownloadPdfManual
+      objectReference: {fileID: 0}
+    - target: {fileID: 6453608619496356463, guid: d955290bf918c744eb598416caa3c0bd,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7140152428597273975, guid: d955290bf918c744eb598416caa3c0bd,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -118330,6 +118372,8 @@ MonoBehaviour:
   shelfTitle: {fileID: 1283550170}
   labDescription: {fileID: 1944178416}
   labRenderedImg: {fileID: 1707425699}
+  downloadPdf: {fileID: 118932301}
+  labManualFileName: 
 --- !u!224 &4314778672157838898
 RectTransform:
   m_ObjectHideFlags: 0

@@ -23,9 +23,9 @@ public class LabOption : MonoBehaviour
         idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _selectorMenu = menu;
-      
+
         button.onClick.AddListener(() => { 
-            _selectorMenu.LabSelected(data.labId, data.labName, data.imgUrl);
+            _selectorMenu.LabSelected(data.labId, data.labName, data.description, data.imgUrl, data.manuals, data.links);
             
         });
     }
