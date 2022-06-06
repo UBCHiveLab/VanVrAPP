@@ -11,4 +11,5 @@ public class RegionData
     public string[] organs;
     public int order;
     public Sprite icon;
+    public string _id;
 }

@@ -29,9 +29,9 @@ public abstract class DataLoader: MonoBehaviour
     public string status;
     public bool manifestVerified;
 
-    private List<CourseData> _courses;
-    private List<SpecimenData> _specimens;
-    private List<RegionData> _regions;
+    public List<CourseData> _courses;
+    public List<SpecimenData> _specimens;
+    public List<RegionData> _regions;
     private int _requestsResolved;
     private bool _loaded;
     private HashSet<string> _currentLoadingIds = new HashSet<string>(); // Keeps track of live requests so we don't double up
@@ -92,12 +92,17 @@ public abstract class DataLoader: MonoBehaviour
             Debug.LogWarning("Some issues found with the given manifest.");
         }
 
+        //test
+
         // Regions and courses are stored directly in the manifests
         _regions = manifest.regions.ToList();
 
+        //mongo test
+        //_regions = manifest.regions.ToList();
+
         // having lab courses is optional (see VerifyManifest method). So, if no labs were loaded, make an empty list
         _courses = manifest.labCourses != null ? manifest.labCourses.ToList() : new List<CourseData>();
-
+        
         _specimens = new List<SpecimenData>();
 
         // Tracks the number of requests returned, even if failed
@@ -262,6 +267,10 @@ public abstract class DataLoader: MonoBehaviour
 
     }
 
+
+    /**
+     * Able to open an alternative link
+     */
     private void OpenAlternativeContent(string altContentLink) {
         #if!UNITY_EDITOR && UNITY_WEBGL
         OpenNewTab(altContentLink);

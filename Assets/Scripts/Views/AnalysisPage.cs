@@ -21,6 +21,7 @@ public class AnalysisPage : MonoBehaviour, IPage
     public Button focusModeButton;
     public Button compareButton;
     public Button resetButton;
+    public Button remoteControlButton;
 
     [Header("Proportion Indicator")]
     public ProportionIndicator proportionScript;
@@ -43,6 +44,8 @@ public class AnalysisPage : MonoBehaviour, IPage
     private Vector3 specimenRotation;
     private float _xRot;
     private float _yRot;
+    private float _zRot;
+
     private bool resetSpecimen;
 
     [Header("External")]
@@ -61,6 +64,12 @@ public class AnalysisPage : MonoBehaviour, IPage
     public ComparisonMode comparisonMode;
     public ControlAssist controlAssist;
     public float mouseSpeed = 1f;
+
+    [Header("Remote Control")]
+    public GameObject referenceRotation;
+    public GameObject remoteControlPanel;
+    public GameObject remoteControlContainer;
+    public bool isConnect= false;
 
 
     public void Activate()
@@ -143,6 +152,15 @@ public class AnalysisPage : MonoBehaviour, IPage
         //Compare mode
         comparisonMode = GameObject.Find("UIManager").GetComponent<ComparisonMode>();
 
+        //Remote Control Button
+        remoteControlButton.onClick.AddListener(() =>
+        {
+            isConnect = !isConnect;
+            remoteControlPanel.SetActive(isConnect);
+            remoteControlContainer.SetActive(isConnect);
+        }) ;
+
+
     }
 
     public void Update()
@@ -154,6 +172,7 @@ public class AnalysisPage : MonoBehaviour, IPage
         {
             HandleCamSelect();
         }
+
         
     }
 
@@ -214,8 +233,20 @@ public class AnalysisPage : MonoBehaviour, IPage
                 Quaternion.AngleAxis(_xRot, transform.up) * Quaternion.AngleAxis(_yRot, transform.right);
         }
 
-        //scrolling control for zoom in/ out during the comparison mode
-        if(comparisonMode.isCompared == true)
+        //remote control rotation
+        if(isConnect == true)
+        {
+            MatchReferenceRotation();
+            _rotatingSpecimen = GameObject.Find("SpecimenHolder").transform.GetChild(0).gameObject;
+            _rotatingSpecimen.transform.rotation =
+            //Quaternion.AngleAxis(_xRot, Vector3.up) * Quaternion.AngleAxis(_yRot, Vector3.right);
+            Quaternion.Euler(_xRot, _yRot, _zRot);
+           
+        }
+        
+
+            //scrolling control for zoom in/ out during the comparison mode
+            if (comparisonMode.isCompared == true)
         {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -347,5 +378,17 @@ public class AnalysisPage : MonoBehaviour, IPage
         leftPanel.gameObject.SetActive(!_focusOn);
         specimenLabel.gameObject.SetActive(!_focusOn);
         _focusIndicator.UpdateState(_focusOn);
+    }
+
+
+    //match specimen's rotation with the reference rotation
+    public void MatchReferenceRotation()
+    {
+        currentSelectedObject.transform.rotation = Quaternion.Euler(specimenRotation);
+        _xRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.x;
+        _yRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.y;
+        _zRot = referenceRotation.gameObject.transform.localRotation.eulerAngles.z;
+
+
     }
 }

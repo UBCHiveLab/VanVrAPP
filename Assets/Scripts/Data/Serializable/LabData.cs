@@ -15,4 +15,14 @@ public class LabData
     public int labId;
     public string[] specimenList;
     public string imgUrl;
+    public Manual[] manuals;
+    public string description;
+    public string[] links;
+}
+
+[System.Serializable]
+public class Manual
+{
+    public string name;
+    public string file;
 }

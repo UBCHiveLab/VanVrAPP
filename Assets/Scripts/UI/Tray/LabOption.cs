@@ -23,21 +23,29 @@ public class LabOption : MonoBehaviour
         idFrame.text = $"Lab {data.labId}";
         nameFrame.text = data.labName;
         _selectorMenu = menu;
-        button.onClick.AddListener(() => { _selectorMenu.LabSelected(data.labId); });
+
+        button.onClick.AddListener(() => { 
+            _selectorMenu.LabSelected(data.labId, data.labName, data.description, data.imgUrl, data.manuals, data.links);
+            
+        });
     }
 
 
     private IEnumerator DownloadImage(string url) {
         url = url.Trim();
+        
         if (url.Length > 0)
         {
             UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
             yield return request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
                 Debug.Log(request.error);
+         
             else
                 imageFrame.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
         }
+
+
     }
 
 }
