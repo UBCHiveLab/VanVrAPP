@@ -207,8 +207,8 @@ public class SelectorMenu : MonoBehaviour
         selectionTitle.gameObject.SetActive(selectionTitle.text.Length > 0);
         noContentText.gameObject.SetActive(showNoContentText);
         labAtlasToggle.SetActive(
-            !store.Loading() &&
-            mode != ListMode.SPECIMEN
+            !store.Loading() //&&
+            //mode != ListMode.LAB_SPECIMENS
             //fixing the bug: labCourses/labAtlasToggle disappearing when lab info shown
             //&&
             //mode != ListMode.LAB_SPECIMENS
