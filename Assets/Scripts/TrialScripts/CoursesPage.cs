@@ -95,6 +95,7 @@ public class CoursesPage : MonoBehaviour
     public ScrollRect courseScrollRect;
     public Transform courseContent; 
     public TextMeshProUGUI labSpecName;
+    //***
     public Button labShowBtn;
     public Button infoShowBtn;
     public Button specimenInfoShowBtn;
@@ -158,6 +159,9 @@ public class CoursesPage : MonoBehaviour
     private List<CourseData> _loadedCourses;
     private CourseData _loadedCourse;
 
+    private Color hiveBlue = new Color(18/255f,143/255f,191/255f);
+    private Color defaultBlue = new Color(0/255f,11/255f,63/255f);
+
     public enum CurrPage
     {
         HOME,
@@ -178,7 +182,7 @@ public class CoursesPage : MonoBehaviour
         UpdateUI();
         
         homeScrollRect.verticalNormalizedPosition = 1.5f;
-        homeLabel.color = Color.blue; 
+        homeLabel.color = hiveBlue; 
         courseButton.onClick.AddListener(ShowCoursesPage);
         courseButton.onClick.AddListener(() => {selectorMenu.ToggleToLabs(); });
 
@@ -379,9 +383,9 @@ public class CoursesPage : MonoBehaviour
          
         courseTitle.text = title;
         courseName = title;
-        coursePageInfoLabel.color = Color.cyan;
-        coursePageLabLabel.color = Color.white;
-        coursePageSpecLabel.color = Color.white;
+        coursePageInfoLabel.color = hiveBlue;
+        coursePageLabLabel.color = defaultBlue;
+        coursePageSpecLabel.color = defaultBlue;
         secondLabel.text = "> Courses";
         thirdLabel.text = $"> {courseName}";
         fourthLabel.text = "";
@@ -452,9 +456,9 @@ public class CoursesPage : MonoBehaviour
         
         courseInfoContentText.SetActive(false);
         courseScrollRect.verticalNormalizedPosition = 1.5f;
-        coursePageInfoLabel.color = Color.white;
-        coursePageLabLabel.color = Color.white;
-        coursePageSpecLabel.color = Color.cyan;
+        coursePageInfoLabel.color = defaultBlue;
+        coursePageLabLabel.color = defaultBlue;
+        coursePageSpecLabel.color = hiveBlue;
         labSpecDisplayPrefab.gameObject.SetActive(true);
         
         List<Tuple<int, List<SpecimenData>>> courseSpecData = store.GetSpecimenData(courseId);
@@ -508,8 +512,8 @@ public class CoursesPage : MonoBehaviour
         Tuple<string, List<SpecimenData>> labData = store.GetLabData(courseId, labId);
         _loadedSpecimens = labData.Item2;
         showNoContentText = _loadedSpecimens == null || _loadedSpecimens.Count < 1;
-        labPageSpecLabel.color = Color.blue;
-        labPageInfoLabel.color = Color.white;
+        labPageSpecLabel.color = hiveBlue;
+        labPageInfoLabel.color = defaultBlue;
         Layout(mode, showNoContentText);
     }
 
@@ -525,10 +529,11 @@ public class CoursesPage : MonoBehaviour
       //  Debug.Log("lab data is here");
         showNoContentText = _loadedLabs == null || _loadedLabs.Count < 1;
         Layout(mode, showNoContentText);
+
+        coursePageInfoLabel.color = defaultBlue;
+        coursePageLabLabel.color = hiveBlue;
+        coursePageSpecLabel.color = defaultBlue;
         
-        coursePageInfoLabel.color = Color.white;
-        coursePageLabLabel.color = Color.blue;
-        coursePageSpecLabel.color = Color.white;
     }
 
     public void LabSelected(int labId, String labName, String labImg)
@@ -568,8 +573,8 @@ public class CoursesPage : MonoBehaviour
         specLabShowBtn.onClick.AddListener(ShowLabSpecDetails);
         labInfoShowBtn.onClick.AddListener(() => RenderLabInfo(title, labId, urlImg));
         labInfoShowBtn.onClick.AddListener(() => SidePanelPreviewOff());
-        labPageInfoLabel.color = Color.blue;
-        labPageSpecLabel.color = Color.white;
+        labPageInfoLabel.color = hiveBlue;
+        labPageSpecLabel.color = defaultBlue;
     }
 
     private IEnumerator LoadSpecimenImg(String url)
@@ -932,7 +937,7 @@ public class CoursesPage : MonoBehaviour
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
-        courseLabel.color = Color.blue;
+        courseLabel.color = hiveBlue;
         page = CurrPage.COURSE;
         
         if (secondLabel.text == "> Courses")
@@ -968,7 +973,7 @@ public class CoursesPage : MonoBehaviour
         RecentCourse.SetActive(true);
         welcomePanel.SetActive(true);
         labInfoContent.SetActive(false);
-        homeLabel.color = Color.blue;
+        homeLabel.color = hiveBlue;
         atlasLabel.color = Color.black;
         helpLabel.color = Color.black;
         courseLabel.color = Color.black;
@@ -996,7 +1001,7 @@ public class CoursesPage : MonoBehaviour
         fifthLabel.text = "";
         homeLabel.color = Color.black;
         atlasLabel.color = Color.black;
-        helpLabel.color = Color.blue;
+        helpLabel.color = hiveBlue;
         courseLabel.color = Color.black;
 
         page = CurrPage.HELP;
@@ -1023,7 +1028,7 @@ public class CoursesPage : MonoBehaviour
         fourthLabel.text = "";
         fifthLabel.text = "";
         homeLabel.color = Color.black;
-        atlasLabel.color = Color.blue;
+        atlasLabel.color = hiveBlue;
         helpLabel.color = Color.black;
         courseLabel.color = Color.black; 
 
