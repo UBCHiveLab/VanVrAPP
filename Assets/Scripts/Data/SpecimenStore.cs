@@ -35,6 +35,7 @@ public class SpecimenStore : MonoBehaviour
 
     [Header("External Structure")] public ErrorPanel errorPanel;
     [Header("Region Icons")] public RegionIconEntry[] icons;
+    public DisclaimerPanel disclaimerPanel;
 
     private bool _loading = true;
     private DataLoader loader;
@@ -174,10 +175,15 @@ public class SpecimenStore : MonoBehaviour
         return "";
     }
 
-    private void Start()
+    public void Start()
     {
-        StartCoroutine(TestInternet());
-        StartCoroutine(LoadData());
+        Debug.Log(disclaimerPanel.understood);
+        if (disclaimerPanel.understood)
+        {
+            StartCoroutine(TestInternet());
+            StartCoroutine(LoadData(disclaimerPanel.schoolSelectionController.selectedSchool));
+        }
+
     }
 
     public void LoadSpecimen(string id)
@@ -203,9 +209,11 @@ public class SpecimenStore : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadData()
+    public IEnumerator LoadData(string school)
     {
         // Attachs the correct loader and sets the manifest path.
+        Debug.Log("insides"+ school);
+        Debug.Log("loading data start");
         if (manifestLocal)
         {
             loader = gameObject.AddComponent<LocalDataLoader>();
@@ -214,6 +222,7 @@ public class SpecimenStore : MonoBehaviour
         else
         {
             loader = gameObject.AddComponent<RemoteDataLoader>();
+            loader.school = school;
             loader.manifestPath = manifestUrlPath;
         }
 

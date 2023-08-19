@@ -22,6 +22,27 @@ public class RemoteDataLoader : DataLoader
     private string regionUrl = "https://vvr-server-dbp.azurewebsites.net/specimens/get-regions";
     private string labCourseUrl = "https://vvr-server-dbp.azurewebsites.net/labs/get-labs-by-courses";
 
+    //locl endpoints
+    //private string specimenUrl = "http://localhost:8080/specimens/get-specimens";
+    //private string regionUrl = "http://localhost:8080/specimens/get-regions";
+    //private string labCourseUrl = "http://localhost:8080/labs/get-labs-by-courses";
+
+
+
+    string otherSchool(string schoolName)
+    {
+        if(schoolName == "UBC")
+        {
+            return "";
+        }else if(schoolName == "UoM - MX")
+        {
+            return "-esmx";
+        }
+        else
+        {
+            return "";
+        }
+    }
 
     string fixRegionJson(string value)
     {
@@ -107,7 +128,23 @@ public class RemoteDataLoader : DataLoader
             }
         }*/
 
+
         manifest = new DataManifest();
+
+
+        Debug.Log("in remoteLoader"+school);
+
+        if (otherSchool(school).Length > 0)
+        {
+            labCourseUrl = labCourseUrl + otherSchool(school);
+            specimenUrl = specimenUrl + otherSchool(school);
+            regionUrl = regionUrl + otherSchool(school);
+            Debug.Log(labCourseUrl);
+            Debug.Log(specimenUrl);
+            Debug.Log(regionUrl);
+
+        }
+
 
         UnityWebRequest _labCourseReq = UnityWebRequest.Get(labCourseUrl);
         yield return _labCourseReq.SendWebRequest();

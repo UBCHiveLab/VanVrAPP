@@ -17,11 +17,12 @@ public class DisclaimerPanel : MonoBehaviour
     public GameObject arrowFrame;
     public Button enterButton;
     public GameObject warning;
+    public SchoolSelectionController schoolSelectionController;
 
     [Header("Actions")]
     public Action enterAction;
-
-    private bool understood;
+    public SpecimenStore specimenStore;
+    public bool understood;
 
     void Start()
     {
@@ -65,7 +66,19 @@ public class DisclaimerPanel : MonoBehaviour
         }
         else
         {
-            enterAction();
+            if (schoolSelectionController.selectedSchool.Length > 0)
+            {
+
+                Debug.Log(schoolSelectionController.selectedSchool);
+                //StartCoroutine(specimenStore.LoadData(schoolSelectionController.selectedSchool));
+                specimenStore.Start();
+            }
+            else
+            {
+                //StartCoroutine(specimenStore.LoadData(""));
+            }
+
+            enterAction();    
         }
         enterButton.OnDeselect(null);
     }

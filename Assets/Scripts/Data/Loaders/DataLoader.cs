@@ -21,6 +21,7 @@ public abstract class DataLoader: MonoBehaviour
 
     [Header("Services")]
     public SpecimenStore store;
+    public string school;
 
     [Header("Data")]
     public DataManifest manifest;
@@ -70,6 +71,10 @@ public abstract class DataLoader: MonoBehaviour
 
     private IEnumerator Loading(bool loadAllData)
     {
+        //school = GameObject.Find("SchoolSelectionController").GetComponent<SchoolSelectionController>().selectedSchool;
+        
+        //Debug.Log("in dataloader=>loading"+school);
+
         _loaded = false;
         manifestLoaded = false;
         Stopwatch watch = Stopwatch.StartNew();
