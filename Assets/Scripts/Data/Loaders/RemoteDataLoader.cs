@@ -31,10 +31,10 @@ public class RemoteDataLoader : DataLoader
 
     string otherSchool(string schoolName)
     {
-        if(schoolName == "UBC")
+        if(schoolName == "English")
         {
             return "";
-        }else if(schoolName == "UoM - MX")
+        }else if(schoolName == "Spanish")
         {
             return "-esmx";
         }
